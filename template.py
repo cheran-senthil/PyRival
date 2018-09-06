@@ -1,35 +1,40 @@
+# PYTHON3---------------------------------------------------------------------#
 from __future__ import division, print_function
+range = xrange
 
-import atexit
-import io
+# IMPORTS---------------------------------------------------------------------#
 import math
 import operator
 import random
-import sys
+from atexit import register
 from collections import Counter, defaultdict, deque
 from fractions import Fraction, gcd
+from io import BytesIO
 #from decimal import Decimal, getcontext
 from itertools import combinations, permutations, product
 from Queue import PriorityQueue, Queue
 from string import ascii_lowercase, ascii_uppercase
+from sys import __stdout__, setrecursionlimit, stdin, stdout
 
+# SETTINGS--------------------------------------------------------------------#
 #getcontext().prec = 100
+#setrecursionlimit(100000)
 
+# CONSTANTS-------------------------------------------------------------------#
 MOD = 10**9 + 7
 INF = float('+inf')
 
-sys.stdout = io.BytesIO()
-atexit.register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
-sys.stdin = io.BytesIO(sys.stdin.read()) # comment this line for interactive problems 
+# FASTIO----------------------------------------------------------------------#
+stdout = BytesIO()
+register(lambda: __stdout__.write(stdout.getvalue()))
+stdin = BytesIO(stdin.read()) # comment this line for interactive problems 
 
-input = lambda: sys.stdin.readline().rstrip()
-print = lambda *args: sys.stdout.write(' '.join(str(x) for x in args) + '\n')
-range = xrange
+input = lambda: stdin.readline().rstrip()
+print = lambda *args: stdout.write(' '.join(str(x) for x in args) + '\n')
 
-#---------------------------------------------------------------
-
+# MAIN------------------------------------------------------------------------#
 def main():
-    # write code here
+    # write Python3 code here
     print(input())
 
 if __name__ == '__main__':
