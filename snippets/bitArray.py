@@ -1,5 +1,6 @@
 import array
 
+
 class bitArray:
     def __init__(self, bit_size, fill=0):
         intSize = bit_size >> 5

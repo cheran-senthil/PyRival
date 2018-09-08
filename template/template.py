@@ -33,10 +33,12 @@ input = lambda: stdin.readline().rstrip()
 print = lambda *args: stdout.write(' '.join(str(x) for x in args) + '\n')
 flush = stdout.flush()
 
+
 # MAIN------------------------------------------------------------------------#
 def main():
     # write Python3 code here
     print(input())
+
 
 if __name__ == '__main__':
     main()
