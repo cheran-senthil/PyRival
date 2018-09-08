@@ -27,10 +27,11 @@ INF = float('+inf')
 # FASTIO----------------------------------------------------------------------#
 stdout = BytesIO()
 register(lambda: __stdout__.write(stdout.getvalue()))
-stdin = BytesIO(stdin.read()) # comment this line for interactive problems 
+#stdin = BytesIO(stdin.read())
 
 input = lambda: stdin.readline().rstrip()
 print = lambda *args: stdout.write(' '.join(str(x) for x in args) + '\n')
+flush = stdout.flush()
 
 # MAIN------------------------------------------------------------------------#
 def main():
