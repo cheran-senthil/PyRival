@@ -10,16 +10,23 @@ class bitArray:
         else:
             fill = 0
 
+        self.bit_size = bit_size
         self.bitArray = array.array('I')
         self.bitArray.extend((fill,) * intSize)
 
     def __getitem__(self, bit_num):
+        if isinstance(bit_num, slice):
+            return [self[i] for i in range(*bit_num.indices(self.bit_size))]
         record = bit_num >> 5
         offset = bit_num & 31
         mask = 1 << offset
-        return(self.bitArray[record] & mask)
+        return((self.bitArray[record] & mask) >> offset)
 
     def __setitem__(self, bit_num, value):
+        if isinstance(bit_num, slice):
+            for i in range(*bit_num.indices(self.bit_size)):
+                self[i] = value[i]
+            return
         if value:
             self.setBit(bit_num)
         else:
