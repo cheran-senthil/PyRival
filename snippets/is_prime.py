@@ -4,7 +4,7 @@ def _try_composite(a, d, n, s):
     for i in range(s):
         if pow(a, 2**i * d, n) == n-1:
             return False
-    return True  # n  is definitely composite
+    return True
 
 
 def is_prime(n, _precision_for_huge_n=16):
@@ -15,7 +15,9 @@ def is_prime(n, _precision_for_huge_n=16):
     d, s = n - 1, 0
     while not d % 2:
         d, s = d >> 1, s + 1
-    # Returns exact according to http://primes.utm.edu/prove/prove2_3.html
+
+    if n < 2047:
+        return not _try_composite(2, d, n, s)
     if n < 1373653:
         return not any(_try_composite(a, d, n, s) for a in (2, 3))
     if n < 25326001:
@@ -32,9 +34,7 @@ def is_prime(n, _precision_for_huge_n=16):
         return not any(_try_composite(a, d, n, s) for a in (2, 3, 5, 7, 11, 13, 17))
     if n < 3825123056546413051:
         return not any(_try_composite(a, d, n, s) for a in (2, 3, 5, 7, 11, 13, 17, 19, 23))
-    # otherwise
-    return not any(_try_composite(a, d, n, s)
-                   for a in _known_primes[:_precision_for_huge_n])
+    return not any(_try_composite(a, d, n, s) for a in _known_primes[:_precision_for_huge_n])
 
 
 _known_primes = [2, 3]
