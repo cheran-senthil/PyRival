@@ -17,15 +17,12 @@ class bitArray:
 
 def get_primes(n):
     # does not return 2 and 3
-    correction = n % 6 > 1
-    n = n + 6 - (n % 6)
-    sieve = bitArray(n//3)
-    for i in range(1, int(sqrt(n) // 3 + 1)):
+    m = n + 6 - (n % 6)
+    sieve = bitArray(m//3)
+    for i in range(1, int(sqrt(m) // 3 + 1)):
         if not sieve[i]:
             k = (3 * i + 1) | 1
-            for j in range(k * k // 3, n // 3, 2 * k):
-                sieve[j] = 1
-            for j in range(k * (k - 2 * (i & 1) + 4) // 3, n // 3, 2 * k):
-                sieve[j] = 1
+            for j in range(k * k // 3, m // 3, 2 * k): sieve[j] = 1
+            for j in range(k * (k - 2 * (i & 1) + 4) // 3, m // 3, 2 * k): sieve[j] = 1
 
-    return ((3*i + 1) | 1 for i in range(1, n//3 - correction) if not sieve[i])
+    return ((3*i + 1) | 1 for i in range(1, m//3 - (n % 6 > 1)) if not sieve[i])
