@@ -2,22 +2,14 @@ from functools import reduce
 from math import factorial, gcd
 from operator import mul
 
+fib = lambda n: reduce(lambda x, n: [x[1], x[0] + x[1]], range(n), [0, 1])[0]
 
-def nCr(n, r):
-    return reduce(mul, range(n-r+1, n+1), 1)//factorial(r)
+nCr = lambda n, r: reduce(mul, range(n-r+1, n+1), 1)//factorial(r)
 
+cat = lambda n: nCr(2*n, n)
 
-def cat(n):
-    return nCr(2*n, n)
+lcm = lambda a, b: a * b // gcd(a, b)
 
+lcmm = lambda *args: reduce(lcm, args)
 
-def mul_inv(a, p):
-    return pow(a, p-2, p)
-
-
-def lcm(a, b):
-    return a * b // gcd(a, b)
-
-
-def lcmm(*args):
-    return reduce(lcm, args)
+mul_inv = lambda a, p: pow(a, p-2, p)
