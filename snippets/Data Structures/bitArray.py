@@ -1,5 +1,6 @@
 from operator import rshift
 
+
 class bitArray:
     def __init__(self, size):
         self.bytes = bytearray(rshift(size, 3) + 1)
