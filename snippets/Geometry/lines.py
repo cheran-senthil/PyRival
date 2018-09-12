@@ -3,8 +3,8 @@ from math import cos, sin
 
 # 2d line: ax + by + c = 0  is  (a, b, c)
 
-# 3d line: ax + by + c = 0     ((a, b, c),
-#          dx + ez + f = 0  is  (d, e, f),
+#          ax + by + c = 0     ((a, b, c),
+# 3d line: dx + ez + f = 0  is  (d, e, f),
 #          gy + hz + i = 0      (g, h, i))
 
 dist = lambda p1, p2: sum((a - b)*(a - b) for a, b in zip(p1, p2))**0.5
