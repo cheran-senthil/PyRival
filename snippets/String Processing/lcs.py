@@ -1,21 +1,23 @@
-def memodict(f):
-    """ Memoization decorator for a function taking a single argument """
-    class memodict(dict):
-        def __missing__(self, key):
-            ret = self[key] = f(key)
-            return ret
-    return memodict().__getitem__
+from pickle import dumps
 
+class MemoizeMutable:
+    def __init__(self, fn):
+        self.fn = fn
+        self.memo = {}
+    def __call__(self, *args, **kwds):
+        key = dumps(args, 1) + dumps(kwds, 1)
+        if not (key in self.memo): 
+            self.memo[key] = self.fn(*args, **kwds)
 
-@memodict
-def lcs(s):
-    """ s = (s1, s2) """
-    s1, s2 = s
+        return self.memo[key]
+
+@MemoizeMutable
+def lcs(s1, s2):
     if not s1 or not s2:
-        return ''
+        return type(s1)()
 
     return (
-        lcs((s1[:-1], s2[:-1])) + s1[-1]
+        lcs(s1[:-1], s2[:-1]) + type(s1)(s1[-1])
         if s1[-1] == s2[-1] else
-        max(lcs((s1[:-1], s2)), lcs((s1, s2[:-1])), key=len)
+        max(lcs(s1[:-1], s2), lcs(s1, s2[:-1]), key=len)
     )
