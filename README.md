@@ -16,7 +16,7 @@
 - Snippets
   - Data Structures
     - Bit Array
-    - Memoize Decorator
+    - Memoize Decorators
   - Geometry
     - Line Functions
     - Vector Functions
@@ -30,6 +30,7 @@
     - Other Small Miscellaneous Functions
   - Strings
     - Knuth–Morris–Pratt Algorithm
+    - Longest Common Subsequence
     - Manacher's Algorithm
 
 ### License
