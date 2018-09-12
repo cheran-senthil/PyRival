@@ -1,5 +1,4 @@
 from functools import reduce
-from itertools import izip
 from operator import mul
 
 
@@ -8,7 +7,7 @@ def chinese_remainder(a, n):
     x = 0
     prod = reduce(mul, n)
 
-    for a_i, n_i in izip(a, n):
+    for a_i, n_i in zip(a, n):
         p = prod // n_i
         x += a_i * pow(p, n_i - 2, n_i) * p
 

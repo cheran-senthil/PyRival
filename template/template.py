@@ -1,8 +1,6 @@
-# PYTHON3---------------------------------------------------------------------#
-from __future__ import division, print_function
-range = xrange
-
 # IMPORTS---------------------------------------------------------------------#
+from __future__ import division, print_function
+
 import math
 import operator
 import random
@@ -11,10 +9,16 @@ from collections import Counter, defaultdict, deque
 from fractions import Fraction, gcd
 from io import BytesIO
 #from decimal import Decimal, getcontext
-from itertools import combinations, permutations, product
+from itertools import combinations, ifilter, imap, izip, permutations, product
 from Queue import PriorityQueue, Queue
 from string import ascii_lowercase, ascii_uppercase
 from sys import __stdout__, setrecursionlimit, stdin, stdout
+
+# PYTHON3---------------------------------------------------------------------#
+range = xrange
+filter = ifilter
+map = imap
+zip = izip
 
 # SETTINGS--------------------------------------------------------------------#
 #getcontext().prec = 100
