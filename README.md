@@ -5,8 +5,8 @@
 </div>
 
 ### About
-- Standard Template written for use in pypy2
-- Optimized code snippets written in Python3
+- Standard Template written for use in PyPy 2
+- Optimized code snippets written in Python 3
 
 ### Features
 - Template
@@ -18,8 +18,8 @@
     - Bit Array
     - Memoize Decorator
   - Geometry
-    - Point Functions
     - Line Functions
+    - Vector Functions
   - Mathematics
     - Alpha–Beta Pruning
     - Chinese Remainder Theorem
