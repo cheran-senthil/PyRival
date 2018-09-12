@@ -1,6 +1,5 @@
 from itertools import combinations
 from math import cos, sin
-from operator import mul
 
 # 2d line: ax + by + c = 0  is  (a, b, c)
 

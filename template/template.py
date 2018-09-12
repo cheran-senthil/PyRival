@@ -2,12 +2,12 @@
 from __future__ import division, print_function
 
 import math
-import operator
+import operator as op
 import random
-from atexit import register
+#from atexit import register
 from collections import Counter, defaultdict, deque
 from fractions import Fraction, gcd
-from io import BytesIO
+#from io import BytesIO
 #from decimal import Decimal, getcontext
 from itertools import combinations, ifilter, imap, izip, permutations, product
 from Queue import PriorityQueue, Queue
@@ -25,23 +25,22 @@ zip = izip
 #setrecursionlimit(100000)
 
 # CONSTANTS-------------------------------------------------------------------#
-MOD = 10**9 + 7
+MOD = 1000000007
 INF = float('+inf')
 
 # FASTIO----------------------------------------------------------------------#
-stdout = BytesIO()
-register(lambda: __stdout__.write(stdout.getvalue()))
+#stdout = BytesIO()
+#register(lambda: __stdout__.write(stdout.getvalue()))
 #stdin = BytesIO(stdin.read())
 
+# IO--------------------------------------------------------------------------#
 input = lambda: stdin.readline().rstrip()
 print = lambda *args: stdout.write(' '.join(str(x) for x in args) + '\n')
-flush = stdout.flush()
-
+#flush = stdout.flush()
 
 # MAIN------------------------------------------------------------------------#
 def main():
-    # write Python3 code here
-    print(input())
+    pass
 
 
 if __name__ == '__main__':
