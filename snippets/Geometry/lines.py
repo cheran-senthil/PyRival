@@ -1,4 +1,4 @@
-from itertools import imap
+from itertools import imap, izip
 from math import acos
 from operator import mul
 
@@ -8,7 +8,7 @@ pointsToLine = lambda p1, p2: (p2[1] - p1[1], p1[0] - p2[0], p1[1]*p2[0] - p1[0]
 
 areParallel = lambda l1, l2: l1[0] * l2[1] == l2[0] * l1[1]
 
-toVec = lambda a, b: (i - j for i, j in zip(a, b))
+toVec = lambda a, b: (i - j for i, j in izip(a, b))
 
 dot = lambda A, B: sum(imap(mul, A, B))
 
