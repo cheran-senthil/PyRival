@@ -30,7 +30,9 @@
     - Other Small Miscellaneous Functions
   - Strings
     - Knuth–Morris–Pratt Algorithm
+    - Longest Common Substring
     - Longest Common Subsequence
+    - Longest Palindromic Subsequence
     - Manacher's Algorithm
 
 ### License
