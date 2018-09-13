@@ -14,7 +14,8 @@ def cycleFinding(f, x0):
     # Find the position of the first repetition of length λ
     mu = 0
     tortoise = hare = x0
-    for _ in range(lam): hare = f(hare)
+    for _ in range(lam):
+        hare = f(hare)
     # The distance between the hare and tortoise is now λ.
 
     # Next, the hare and tortoise move at same speed until they agree
