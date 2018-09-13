@@ -20,6 +20,7 @@
   - Geometry
     - Line Functions
     - Vector Functions
+    - Convex Hull
   - Mathematics
     - Alpha–Beta Pruning
     - Chinese Remainder Theorem
