@@ -1,4 +1,4 @@
-def longestPalindrome(s):
+def LPSubstr(s):
     T = '#'.join('^{}$'.format(s))
     n = len(T)
     P = [0] * n
