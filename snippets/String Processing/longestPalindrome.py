@@ -9,7 +9,7 @@ def longestPalindrome(s):
         while T[i + 1 + P[i]] == T[i - 1 - P[i]]:
             P[i] += 1
 
-        # If palindrome centered at i expand past R, adjust center based on expanded palindrome.
+        # If palindrome centered at i expand past R, adjust center.
         if i + P[i] > R:
             C, R = i, i + P[i]
 

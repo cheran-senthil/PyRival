@@ -1,15 +1,18 @@
 from pickle import dumps
 
+
 class MemoizeMutable:
     def __init__(self, fn):
         self.fn = fn
         self.memo = {}
+
     def __call__(self, *args, **kwds):
         key = dumps(args, 1) + dumps(kwds, 1)
-        if not (key in self.memo): 
+        if not (key in self.memo):
             self.memo[key] = self.fn(*args, **kwds)
 
         return self.memo[key]
+
 
 @MemoizeMutable
 def lcs(s1, s2):
