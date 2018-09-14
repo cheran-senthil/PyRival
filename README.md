@@ -18,23 +18,23 @@
     - Bit Array
     - Memoize Decorators
   - Geometry
+    - Convex Hull
     - Line Functions
     - Vector Functions
-    - Convex Hull
   - Mathematics
     - Alpha–Beta Pruning
-    - Chinese Remainder Theorem
     - Brent's Algorithm for Cycle Detection
-    - Pollard's Rho Algorithm
+    - Chinese Remainder Theorem
     - Deterministic Miller-Rabin Primality Test
+    - Pollard's Rho Algorithm
     - Sieve of Eratosthenes
-    - Other Small Miscellaneous Functions
+    - Tonelli–Shanks Algorithm
+    - Fibonacci Numbers, Binomial Coefficients, and Catalan Numbers
+    - Least Common Multiple and Multiplicative Inverse
   - Strings
     - Knuth–Morris–Pratt Algorithm
-    - Longest Common Substring
-    - Longest Common Subsequence
-    - Longest Palindromic Subsequence
-    - Manacher's Algorithm
+    - Longest Common Subsequence & String
+    - Longest Palindromic Subsequence & String
 
 ### License
 [MIT](LICENSE)
