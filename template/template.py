@@ -23,6 +23,14 @@ from itertools import ifilter, imap, izip
 # from Queue import PriorityQueue, Queue
 
 # PYTHON3---------------------------------------------------------------------#
+class dict(dict):
+    def keys(self):
+        return dict.iterkeys(self)
+    def items(self):
+        return dict.iteritems(self)
+    def values(self):
+        return dict.itervalues(self)
+
 filter = ifilter
 map = imap
 zip = izip
