@@ -1,47 +1,54 @@
+"""
+Ares hates those who hesitate.
+
+https://github.com/Cheran-Senthil/PyRival
+Copyright (c) 2018 Cheran Senthilkumar
+"""
 # IMPORTS---------------------------------------------------------------------#
 from __future__ import division, print_function
+from functools import reduce
+from itertools import ifilter, imap, izip
 
-import math
-import operator as op
-import random
-#from atexit import register
-from collections import Counter, defaultdict, deque
-from fractions import Fraction, gcd
-#from io import BytesIO
-#from decimal import Decimal, getcontext
-from itertools import combinations, ifilter, imap, izip, permutations, product
-from Queue import PriorityQueue, Queue
-from string import ascii_lowercase, ascii_uppercase
-from sys import __stdout__, setrecursionlimit, stdin, stdout
+# from atexit import register
+# from io import BytesIO
+# from sys import __stdout__, stdin, stdout
 
+# import math
+# import operator as op
+# import random
+
+# from collections import Counter, defaultdict, deque
+# from fractions import Fraction, gcd
+# from decimal import Decimal, getcontext
+# from Queue import PriorityQueue, Queue
 
 # PYTHON3---------------------------------------------------------------------#
-range = xrange
 filter = ifilter
 map = imap
 zip = izip
 
+range = xrange
+input = raw_input
 
 # SETTINGS--------------------------------------------------------------------#
-#getcontext().prec = 100
-#setrecursionlimit(100000)
+# getcontext().prec = 100
+# setrecursionlimit(100000)
 
+# FASTIO----------------------------------------------------------------------#
+# stdout = BytesIO()
+# register(lambda: __stdout__.write(stdout.getvalue()))
+# stdin = BytesIO(stdin.read())
+
+# input = lambda: stdin.readline().rstrip()
+# print = lambda *args: stdout.write(' '.join(str(x) for x in args) + '\n')
+# flush = stdout.flush()
 
 # CONSTANTS-------------------------------------------------------------------#
 MOD = 1000000007
 INF = float('+inf')
 
-
-# FASTIO----------------------------------------------------------------------#
-#stdout = BytesIO()
-#register(lambda: __stdout__.write(stdout.getvalue()))
-#stdin = BytesIO(stdin.read())
-
-
-# IO--------------------------------------------------------------------------#
-input = lambda: stdin.readline().rstrip()
-print = lambda *args: stdout.write(' '.join(str(x) for x in args) + '\n')
-#flush = stdout.flush()
+ASCII_LOWERCASE = 'abcdefghijklmnopqrstuvwxyz'
+ASCII_UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 
 # MAIN------------------------------------------------------------------------#
