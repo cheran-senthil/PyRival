@@ -17,22 +17,12 @@ class Matrix(object):
         s = '\n'.join([' '.join([str(item) for item in row]) for row in self.rows])
         return s + '\n'
 
-    def reset(self):
-        self.rows = [[] for x in range(self.m)]
-
     def transpose(self):
-        self.m, self.n = self.n, self.m
-        self.rows = [list(item) for item in zip(*self.rows)]
-
-    def getTranspose(self):
         m, n = self.n, self.m
         mat = Matrix(m, n)
         mat.rows = [list(item) for item in zip(*self.rows)]
 
         return mat
-
-    def getRank(self):
-        return (self.m, self.n)
 
     def __eq__(self, mat):
         return (mat.rows == self.rows)
@@ -56,9 +46,9 @@ class Matrix(object):
         return ret
 
     def __mul__(self, mat):
-        matm, matn = mat.getRank()
+        matm, matn = mat.m, mat.n
 
-        mat_t = mat.getTranspose()
+        mat_t = mat.transpose()
         mulmat = Matrix(self.m, matn)
 
         for x in range(self.m):
@@ -82,6 +72,29 @@ class Matrix(object):
         self.rows = tempmat.rows[:]
         self.m, self.n = tempmat.getRank()
         return self
+
+    def __pow__(self, power):
+        if power == 0:
+            return self.makeId(self.m)
+
+        powers = '{0:b}'.format(power)[::-1]
+
+        matrices = [None for _ in powers]
+        matrices[0] = self
+
+        for i in range(1, len(powers)):
+            matrices[i] = matrices[i - 1] * matrices[i - 1]
+
+        result = None
+
+        for matrix, power in zip(matrices, powers):
+            if power == '1':
+                if result is None:
+                    result = matrix
+                else:
+                    result = result * matrix
+
+        return result
 
     @classmethod
     def _makeMatrix(cls, rows):
@@ -113,3 +126,7 @@ class Matrix(object):
     def fromList(cls, listoflists):
         rows = listoflists[:]
         return cls._makeMatrix(rows)
+
+
+m = Matrix.fromList([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+print(m**2)
