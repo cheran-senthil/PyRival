@@ -11,7 +11,9 @@ mat_mul = lambda mat1, mat2: [[sum(i * j for i, j in zip(row, col)) for col in t
 
 
 def mat_pow(mat, power):
-    result = [[1 if i == j else 0 for j in range(len(mat))] for i in range(len(mat))]
+    result = [[0]*len(mat) for _ in mat]
+    for i, row in enumerate(result):
+        row[i] = 1
 
     if power == 0:
         return result

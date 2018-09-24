@@ -6,4 +6,3 @@ def phi(n):
                 sieve[j] = (sieve[j] // i) * (i - 1)
 
     return sieve
-
