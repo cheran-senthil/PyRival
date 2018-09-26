@@ -11,11 +11,15 @@
 ### Features
 - Template
   - Python 3 Compatibility
+    - dict.keys = dict.iterkeys; dict.items = dict.iteritems; dict.values = dict.itervalues
+    - filter = itertools.filter; map = itertools.map; zip = itertools.zip
+    - range = xrange; input = raw_input
   - Useful Imports & Constants
   - Fast I/O
 - Snippets
   - Data Structures
     - Bit Array
+    - Binary Indexed (Fenwick) Tree
     - Memoize Decorators
   - Geometry
     - Convex Hull
@@ -23,12 +27,16 @@
     - Vector Functions
   - Mathematics
     - Alpha–Beta Pruning
-    - Brent's Algorithm for Cycle Detection
+    - Binary Search
     - Chinese Remainder Theorem
-    - Deterministic Miller-Rabin Primality Test
+    - Brent's Algorithm for Cycle Detection
     - Pollard's Rho Algorithm
-    - Sieve of Eratosthenes
+    - Deterministic Miller-Rabin Primality Test
     - Tonelli–Shanks Algorithm
+    - Partition Function
+    - Euler's Phi Function
+    - Sieve of Eratosthenes
+    - Derangements
     - Fibonacci Numbers, Binomial Coefficients, and Catalan Numbers
     - Least Common Multiple and Multiplicative Inverse
   - Strings
