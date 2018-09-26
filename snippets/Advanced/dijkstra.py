@@ -12,4 +12,4 @@ def dijkstra(graph, start):
                 if A[w] is None:
                     heappush(queue, (path_len + edge_len, w))
 
-    return [float('inf') if x is None else x for x in A] 
+    return [float('inf') if x is None else x for x in A]
