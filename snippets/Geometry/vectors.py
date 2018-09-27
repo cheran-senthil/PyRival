@@ -24,15 +24,15 @@ angle = lambda oa, ob: acos(dot(oa, ob) / (norm_sq(oa) * norm_sq(ob))**0.5)
 projection = lambda a, b, c: dot(toVec(a, c), toVec(a, b)) / norm_sq(toVec(a, b))
 
 
+lineDistance = lambda p, a, b: translate(a, dot(toVec(a, p), toVec(a, b)) / norm_sq(toVec(a, b)))
+
+
+segmentDistance = lambda p, a, b: a if projection(a, b, p) < 0 else b if projection(a, b, p) > 1 else lineDistance(p, a, b)
+
+
 cross2d = lambda v1, v2: v1[0] * v2[1] - v1[1] * v2[0]
 
 
-cross = lambda v1, v2: (v1[1] * v2[2] - v1[2] * v2[1],
-                        v1[2] * v2[0] - v1[0] * v2[2],
-                        v1[0] * v2[1] - v1[1] * v2[0])
-
-
-closest_point_line = lambda p, a, b: translate(a, dot(toVec(a, p), toVec(a, b)) / norm_sq(toVec(a, b)))
-
-
-closest_point_segment = lambda p, a, b: a if projection(a, b, p) < 0 else b if projection(a, b, p) > 1 else closest_point_line(p, a, b)
+cross3d = lambda v1, v2: (v1[1] * v2[2] - v1[2] * v2[1],
+                          v1[2] * v2[0] - v1[0] * v2[2],
+                          v1[0] * v2[1] - v1[1] * v2[0])
