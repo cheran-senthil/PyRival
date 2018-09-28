@@ -1,25 +1,25 @@
-def partitions(n):
-    # The list `a`'s leading elements contain the partition in which
-    # y is the biggest element and x is either the same as y or the
-    # 2nd largest element; v and w are adjacent element indices
-    # to which x and y are being assigned, respectively.
-    a = [1]*n
-    y = -1
-    v = n
-    while v > 0:
-        v -= 1
-        x = a[v] + 1
-        while y >= 2 * x:
-            a[v] = x
-            y -= x
-            v += 1
-        w = v + 1
-        while x <= y:
-            a[v] = x
-            a[w] = y
-            yield a[:w + 1]
-            x += 1
-            y -= 1
-        a[v] = x + y
-        y = a[v] - 1
-        yield a[:w]
+def memoize(f):
+    """ Memoization decorator for a function taking one or more arguments. """
+    class memodict(dict):
+        def __getitem__(self, *key):
+            return dict.__getitem__(self, key)
+
+        def __missing__(self, key):
+            ret = self[key] = f(*key)
+            return ret
+
+    return memodict().__getitem__
+
+
+@memoize
+def partition(n, k=None):
+    if k is None:
+        k = n + 1
+    if k == 0:
+        return 0
+    if n == 0:
+        return 1
+    if n < 0:
+        return 0
+
+    return partition(n, k - 1) + partition(n - k, k)
