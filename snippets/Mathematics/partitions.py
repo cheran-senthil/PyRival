@@ -14,12 +14,14 @@ def memoize(f):
 @memoize
 def partition(n, k=None):
     if k is None:
-        k = n + 1
-    if k == 0:
+        k = n
+    if n < 0:
         return 0
     if n == 0:
         return 1
-    if n < 0:
+    if k == 0:
         return 0
+    if n == 1:
+        return 1
 
     return partition(n, k - 1) + partition(n - k, k)
