@@ -25,6 +25,7 @@
 - Data Structures
   - Binary Indexed (Fenwick) Tree
   - Range Query Data Structure
+  - Segment Tree
   - Disjoint-Set Data Structure
   - Bit Array
   - Memoize Decorators

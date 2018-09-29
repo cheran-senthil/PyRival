@@ -19,15 +19,14 @@ class SegmentTree:
     def __getitem__(self, pos):
         return self.query(pos, pos + 1)
 
-    def que(self, pos, l, r, lo, hi):
-        if (r <= lo) or (hi <= l):
+    def que(self, pos, left, right, lo, hi):
+        if (right <= lo) or (hi <= left):
             return self.low
-        if (l <= lo) and (hi <= r):
+        if (left <= lo) and (hi <= right):
             return self.s[pos]
 
-        return self.func(self.que(2 * pos, l, r, lo, (lo + hi) / 2),
-                         self.que(2*pos + 1, l, r, (lo + hi) / 2, hi))
+        return self.func(self.que(2 * pos, left, right, lo, (lo + hi) / 2),
+                         self.que(2*pos + 1, left, right, (lo + hi) / 2, hi))
 
-    def query(self, l, r):
-        return self.que(1, l, r, 0, self.n)
-
+    def query(self, left, right):
+        return self.que(1, left, right, 0, self.n)
