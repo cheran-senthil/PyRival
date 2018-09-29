@@ -1,4 +1,4 @@
-def cycleFinding(f, x0):
+def cycle_finding(f, x0):
     # main phase: search successive powers of two
     power = lam = 1
     tortoise = x0

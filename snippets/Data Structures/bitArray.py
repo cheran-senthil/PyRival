@@ -1,7 +1,7 @@
 from operator import rshift
 
 
-class bitArray:
+class BitArray:
     def __init__(self, size):
         self.bytes = bytearray(rshift(size, 3) + 1)
 
