@@ -67,6 +67,7 @@
 - Numerical
   - Fast Fourier Transform
   - Gaussian Elimination
+  - Polynomial Interpolation
   - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
 - String Processing
   - Knuth–Morris–Pratt Algorithm
