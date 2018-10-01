@@ -49,6 +49,7 @@
   - Vector Functions
 - Graphs
   - Dijkstra's Algorithm
+  - Floyd-Warshall Algorithm
 - Mathematics
   - Continued Fractions
   - Alpha–Beta Pruning
