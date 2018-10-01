@@ -13,11 +13,24 @@
 
 ### Template
 - Python 3 Compatibility
-  - dict.keys = dict.iterkeys; dict.items = dict.iteritems; dict.values = dict.itervalues
-  - filter = itertools.filter; map = itertools.map; zip = itertools.zip
-  - range = xrange; input = raw_input
-- Useful Imports & Constants
+  ```python
+  dict.items = dict.iteritems
+  dict.keys = dict.iterkeys
+  dict.values = dict.itervalues
+  ```
+  ```python
+  filter = itertools.filter
+  map = itertools.map
+  zip = itertools.zip
+  ```
+  ```python
+  input = raw_input
+  range = xrange
+  ```
+- Standard Imports
 - Fast I/O
+- Decimal and Recursion Limit Settings
+- Useful Constants
 
 ##
 
