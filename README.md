@@ -61,6 +61,7 @@
   - Pollard's Rho Algorithm
   - Deterministic Miller-Rabin Primality Test
   - Tonelli–Shanks Algorithm
+  - Lucas's Theorem
   - Partition Function
   - Euler's Phi Function
   - Sieve of Eratosthenes

@@ -4,6 +4,8 @@ from functools import reduce
 
 nCr = lambda n, r: reduce(op.mul, range(n-r+1, n+1), 1)//math.factorial(r)
 
+multinomial = lambda k: math.factorial(sum(k)) // reduce(op.mul, (math.factorial(i) for i in k))
+
 derangements = lambda n: int(math.factorial(n) / math.e + 0.5)
 
 cat = lambda n: nCr(2*n, n)
