@@ -51,8 +51,9 @@
   - Euler's Phi Function
   - Sieve of Eratosthenes
 - Numerical
-  - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
+  - Fast Fourier Transform
   - Gaussian Elimination
+  - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
 - String Processing
   - Knuth–Morris–Pratt Algorithm
   - Longest Common Subsequence & String

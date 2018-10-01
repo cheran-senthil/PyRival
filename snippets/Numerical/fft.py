@@ -1,5 +1,6 @@
 import cmath
 
+
 def fft(x, roots):
     n = len(x)
 
@@ -18,6 +19,7 @@ def fft(x, roots):
         fft_x[i + n//2] = even[i] - t
 
     return fft_x
+
 
 def conv(a, b):
     s = len(a) + len(b) - 1
