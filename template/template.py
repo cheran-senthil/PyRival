@@ -1,5 +1,5 @@
 """
-Ares hates those who hesitate.
+What I cannot create, I do not understand.
 
 https://github.com/Cheran-Senthil/PyRival
 Copyright (c) 2018 Cheran Senthilkumar
@@ -8,22 +8,31 @@ Copyright (c) 2018 Cheran Senthilkumar
 from __future__ import division, print_function
 
 import itertools
+import sys
+from atexit import register
+from io import BytesIO
+
 # import math
 # import operator as op
 # import random
+# from bisect import bisect, bisect_left
 # from collections import Counter, defaultdict, deque
+# from copy import deepcopy
+# from cPickle import dumps
+# from decimal import Decimal, getcontext
+# from difflib import SequenceMatcher
 # from fractions import Fraction, gcd
-# from itertools import combinations, permutations, product
+# from heapq import heappop, heappush
 # from Queue import PriorityQueue, Queue
 
 
 # PYTHON3---------------------------------------------------------------------#
 class dict(dict):
-    def keys(self):
-        return dict.iterkeys(self)
-
     def items(self):
         return dict.iteritems(self)
+
+    def keys(self):
+        return dict.iterkeys(self)
 
     def values(self):
         return dict.itervalues(self)
@@ -33,30 +42,23 @@ filter = itertools.ifilter
 map = itertools.imap
 zip = itertools.izip
 
-range = xrange
 input = raw_input
+range = xrange
 
 
 # FASTIO----------------------------------------------------------------------#
-# from atexit import register
-# from io import BytesIO
-# from sys import __stdout__, stdin, stdout
+# sys.stdout = BytesIO()
+# register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
+# sys.stdin = BytesIO(sys.stdin.read())
 
-# stdout = BytesIO()
-# register(lambda: __stdout__.write(stdout.getvalue()))
-# stdin = BytesIO(stdin.read())
-
-# input = lambda: stdin.readline().rstrip()
-# print = lambda *args: stdout.write(' '.join(str(x) for x in args) + '\n')
-# flush = stdout.flush()
+# input = lambda: sys.stdin.readline().rstrip()
+# print = lambda *args: sys.stdout.write(' '.join(str(x) for x in args) + '\n')
+# flush = sys.stdout.flush
 
 
 # SETTINGS--------------------------------------------------------------------#
-# from decimal import Decimal, getcontext
-# from sys import setrecursionlimit
-
 # getcontext().prec = 100
-# setrecursionlimit(100000)
+# sys.setrecursionlimit(100000)
 
 
 # CONSTANTS-------------------------------------------------------------------#

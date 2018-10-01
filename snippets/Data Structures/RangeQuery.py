@@ -1,4 +1,4 @@
-from itertools import product
+import itertools
 
 
 class RangeQuery(object):
@@ -6,7 +6,7 @@ class RangeQuery(object):
         self.rq = rq = {(i, 0): item for i, item in enumerate(items)}
         self.func = func
         n = len(items)
-        for step, i in product(range(1, n.bit_length()), range(n)):
+        for step, i in itertools.product(range(1, n.bit_length()), range(n)):
             j = i + (1 << (step - 1))
             rq[i, step] = func(rq[i, step - 1], rq[j, step - 1]) if j < n else rq[i, step - 1]
 

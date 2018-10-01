@@ -1,5 +1,5 @@
+import random
 from fractions import gcd
-from random import randint
 
 _known_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]
 
@@ -48,7 +48,7 @@ def factor(N):
         if N % i == 0:
             return i
 
-    y, c, m = randint(1, N-1), randint(1, N-1), randint(1, N-1)
+    y, c, m = random.randint(1, N-1), random.randint(1, N-1), random.randint(1, N-1)
     g, r, q = 1, 1, 1
 
     while g == 1:

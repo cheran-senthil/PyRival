@@ -1,5 +1,5 @@
+import operator as op
 from copy import deepcopy
-from operator import mul
 
 transpose = lambda mat: list(map(list, zip(*mat)))
 
@@ -9,7 +9,7 @@ mat_add = lambda *mat: [[sum(elements) for elements in zip(*row)] for row in zip
 
 mat_sub = lambda mat1, mat2: [[i - j for i, j in zip(*row)] for row in zip(mat1, mat2)]
 
-mat_mul = lambda mat1, mat2: list(map(lambda row: list(map(lambda *column: sum(map(mul, row, column)), *mat2)), mat1))
+mat_mul = lambda mat1, mat2: list(map(lambda row: list(map(lambda *column: sum(map(op.mul, row, column)), *mat2)), mat1))
 
 
 def eye(m):
