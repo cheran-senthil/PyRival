@@ -16,7 +16,7 @@ from io import BytesIO
 # import math
 # import operator as op
 # import random
-# from bisect import bisect, bisect_left
+# from bisect import bisect_left as bl, bisect_right as br
 # from collections import Counter, defaultdict, deque
 # from copy import deepcopy
 # from cPickle import dumps
@@ -59,7 +59,7 @@ range = xrange
 
 # SETTINGS--------------------------------------------------------------------#
 # getcontext().prec = 100
-# sys.setrecursionlimit(100000)
+# sys.setrecursionlimit(30000)
 
 
 # CONSTANTS-------------------------------------------------------------------#
