@@ -59,7 +59,7 @@ range = xrange
 
 # SETTINGS--------------------------------------------------------------------#
 # getcontext().prec = 100
-# sys.setrecursionlimit(30000)
+# sys.setrecursionlimit(32768)
 
 
 # CONSTANTS-------------------------------------------------------------------#
