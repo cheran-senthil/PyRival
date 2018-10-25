@@ -1,9 +1,8 @@
 def kmpSearch(T, P):
-    m = len(P)
-    b = [-1] * (m + 1)
+    b = [-1] * (len(P) + 1)
 
     j = -1
-    for i in range(m):
+    for i in range(len(P)):
         while (j >= 0) and (P[i] != P[j]):
             j = b[j]
         j += 1
@@ -14,6 +13,6 @@ def kmpSearch(T, P):
         while (j >= 0) and (T[i] != P[j]):
             j = b[j]
         j += 1
-        if j == m:
+        if j == len(P):
             yield i + 1 - j
             j = b[j]
