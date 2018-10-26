@@ -1,7 +1,15 @@
 import random
+from collections import Counter
 from fractions import gcd
 
-_known_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]
+
+def memodict(f):
+    """ Memoization decorator for a function taking a single argument """
+    class memodict(dict):
+        def __missing__(self, key):
+            ret = self[key] = f(key)
+            return ret
+    return memodict().__getitem__
 
 
 def _try_composite(a, d, n, s):
@@ -13,10 +21,10 @@ def _try_composite(a, d, n, s):
     return True
 
 
-def is_prime(n, _precision_for_huge_n=16):
-    if n in _known_primes or n in (0, 1):
+def is_prime(n):
+    if n in [0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43]:
         return True
-    if any((n % p) == 0 for p in _known_primes):
+    if any((n % p) == 0 for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]):
         return False
     d, s = n - 1, 0
     while not d % 2:
@@ -31,20 +39,20 @@ def is_prime(n, _precision_for_huge_n=16):
     if n < 118670087467:
         if n == 3215031751:
             return False
-        return not any(_try_composite(a, d, n, s) for a in (2, 3, 5, 7))
+        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7])
     if n < 2152302898747:
-        return not any(_try_composite(a, d, n, s) for a in (2, 3, 5, 7, 11))
+        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11])
     if n < 3474749660383:
-        return not any(_try_composite(a, d, n, s) for a in (2, 3, 5, 7, 11, 13))
+        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13])
     if n < 341550071728321:
-        return not any(_try_composite(a, d, n, s) for a in (2, 3, 5, 7, 11, 13, 17))
+        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13, 17])
     if n < 3825123056546413051:
-        return not any(_try_composite(a, d, n, s) for a in (2, 3, 5, 7, 11, 13, 17, 19, 23))
-    return not any(_try_composite(a, d, n, s) for a in _known_primes[:_precision_for_huge_n])
+        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13, 17, 19, 23])
+    return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53])
 
 
 def factor(N):
-    for i in _known_primes:
+    for i in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]:
         if N % i == 0:
             return i
 
@@ -75,16 +83,13 @@ def factor(N):
     return g
 
 
+@memodict
 def factors(N):
     if is_prime(N):
-        yield N
+        return Counter([N])
     else:
         f = factor(N)
         if f == N:
-            for i in factors(N):
-                yield i
+            return factors(N)
         else:
-            for i in factors(f):
-                yield i
-            for i in factors(N//f):
-                yield i
+            return factors(f) + factors(N//f)
