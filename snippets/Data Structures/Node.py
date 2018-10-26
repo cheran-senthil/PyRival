@@ -8,3 +8,10 @@ class Node(object):
         if not self:
             return '%s()' % (self.__class__.__name__,)
         return '%s(%r)' % (self.__class__.__name__, self.value)
+
+
+class BinaryNode():
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
