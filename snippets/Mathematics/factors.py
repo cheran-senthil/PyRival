@@ -16,7 +16,7 @@ def _try_composite(a, d, n, s):
     if pow(a, d, n) == 1:
         return False
     for i in range(s):
-        if pow(a, 2**i * d, n) == n-1:
+        if pow(a, 2**i * d, n) == n - 1:
             return False
     return True
 
@@ -33,9 +33,9 @@ def is_prime(n):
     if n < 2047:
         return not _try_composite(2, d, n, s)
     if n < 1373653:
-        return not any(_try_composite(a, d, n, s) for a in (2, 3))
+        return not any(_try_composite(a, d, n, s) for a in [2, 3])
     if n < 25326001:
-        return not any(_try_composite(a, d, n, s) for a in (2, 3, 5))
+        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5])
     if n < 118670087467:
         if n == 3215031751:
             return False
@@ -56,7 +56,7 @@ def factor(N):
         if N % i == 0:
             return i
 
-    y, c, m = random.randint(1, N-1), random.randint(1, N-1), random.randint(1, N-1)
+    y, c, m = random.randint(1, N - 1), random.randint(1, N - 1), random.randint(1, N - 1)
     g, r, q = 1, 1, 1
 
     while g == 1:
