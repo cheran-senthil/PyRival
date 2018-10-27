@@ -6,7 +6,7 @@
 ---
 
 ### About
-- Standard Template written for use in PyPy 2
+- Standard Template written for use in all flavours of Python
 - Optimized code snippets written in Python 3
 
 ##
@@ -30,18 +30,22 @@
 - Standard Imports
 - Fast I/O
 - Decimal and Recursion Limit Settings
-- Useful Constants
 
 ##
 
 ### Snippets
 - Data Structures
-  - Binary Indexed (Fenwick) Tree
-  - Range Query Data Structure
-  - Segment Tree
-  - Disjoint-Set Data Structure
+  - AVL Tree
   - Bit Array
+  - Binary Indexed (Fenwick) Tree
+  - Linked List
   - Memoize Decorators
+  - Generic Nodes
+  - Range Query Data Structure
+  - Red-Black Tree
+  - Segment Tree
+  - Trie Tree
+  - Disjoint-Set (Union Find) Data Structure
 - Geometry
   - Convex Hull
   - Line Functions
@@ -51,9 +55,9 @@
   - Dijkstra's Algorithm
   - Floyd-Warshall Algorithm
 - Mathematics
-  - Continued Fractions
   - Alpha–Beta Pruning
   - Binary Search
+  - Continued Fractions
   - Chinese Remainder Theorem
   - General Purpose Numbers
   - Brent's Algorithm for Cycle Detection
@@ -68,6 +72,7 @@
 - Numerical
   - Fast Fourier Transform
   - Gaussian Elimination
+  - Approximate Integration
   - Polynomial Interpolation
   - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
 - String Processing
