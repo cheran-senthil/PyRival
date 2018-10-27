@@ -9,8 +9,6 @@ from __future__ import division, print_function
 
 import itertools
 import sys
-from atexit import register
-from io import BytesIO
 
 # import cmath
 # import math
@@ -28,15 +26,15 @@ from io import BytesIO
 
 
 # PYTHON3---------------------------------------------------------------------#
-try:
+if sys.version_info[0] < 3:
     # from cPickle import dumps
+
+    input = raw_input
+    range = xrange
 
     filter = itertools.ifilter
     map = itertools.imap
     zip = itertools.izip
-
-    input = raw_input
-    range = xrange
 
     class dict(dict):
         def items(self):
@@ -47,26 +45,31 @@ try:
 
         def values(self):
             return dict.itervalues(self)
-
-except:
+else:
     # from functools import reduce
     # from pickle import dumps
     pass
 
 
-# FASTIO----------------------------------------------------------------------#
-# sys.stdout = BytesIO()
-# register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
-# sys.stdin = BytesIO(sys.stdin.read())
-
-# input = lambda: sys.stdin.readline().rstrip()
-# print = lambda *args: sys.stdout.write(' '.join(str(x) for x in args) + '\n')
-# flush = sys.stdout.flush
-
-
 # SETTINGS--------------------------------------------------------------------#
+sys.setrecursionlimit(14800)
 # getcontext().prec = 100
-# sys.setrecursionlimit(32768)
+
+
+# IO--------------------------------------------------------------------------#
+fastio = False
+flush = sys.stdout.flush
+
+if fastio:
+    from atexit import register
+    from io import BytesIO
+
+    sys.stdout = BytesIO()
+    register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
+    sys.stdin = BytesIO(sys.stdin.read())
+
+    input = lambda: sys.stdin.readline().rstrip()
+    print = lambda *args: sys.stdout.write(' '.join(str(x) for x in args)+'\n')
 
 
 # MAIN------------------------------------------------------------------------#
