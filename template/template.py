@@ -19,32 +19,39 @@ from io import BytesIO
 # from bisect import bisect_left as bl, bisect_right as br
 # from collections import Counter, defaultdict, deque
 # from copy import deepcopy
-# from cPickle import dumps
 # from decimal import Decimal, getcontext
 # from difflib import SequenceMatcher
 # from fractions import Fraction, gcd
 # from heapq import heappop, heappush
 # from Queue import PriorityQueue, Queue
+# from string import ascii_lowercase, ascii_uppercase
 
 
 # PYTHON3---------------------------------------------------------------------#
-class dict(dict):
-    def items(self):
-        return dict.iteritems(self)
+try:
+    # from cPickle import dumps
 
-    def keys(self):
-        return dict.iterkeys(self)
+    filter = itertools.ifilter
+    map = itertools.imap
+    zip = itertools.izip
 
-    def values(self):
-        return dict.itervalues(self)
+    input = raw_input
+    range = xrange
 
+    class dict(dict):
+        def items(self):
+            return dict.iteritems(self)
 
-filter = itertools.ifilter
-map = itertools.imap
-zip = itertools.izip
+        def keys(self):
+            return dict.iterkeys(self)
 
-input = raw_input
-range = xrange
+        def values(self):
+            return dict.itervalues(self)
+
+except:
+    # from functools import reduce
+    # from pickle import dumps
+    pass
 
 
 # FASTIO----------------------------------------------------------------------#
@@ -60,14 +67,6 @@ range = xrange
 # SETTINGS--------------------------------------------------------------------#
 # getcontext().prec = 100
 # sys.setrecursionlimit(32768)
-
-
-# CONSTANTS-------------------------------------------------------------------#
-MOD = 1000000007
-INF = float('+inf')
-
-ASCII_LOWERCASE = 'abcdefghijklmnopqrstuvwxyz'
-ASCII_UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 
 # MAIN------------------------------------------------------------------------#
