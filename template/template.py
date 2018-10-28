@@ -7,27 +7,26 @@ Copyright (c) 2018 Cheran Senthilkumar
 # IMPORTS---------------------------------------------------------------------#
 from __future__ import division, print_function
 
+import cmath
 import itertools
+import math
+import operator as op
 import sys
+from bisect import bisect_left, bisect_right
+from string import ascii_lowercase, ascii_uppercase
 
-# import cmath
-# import math
-# import operator as op
-# import random
-# from bisect import bisect_left as bl, bisect_right as br
-# from collections import Counter, defaultdict, deque
+# from collections import Counter, MutableSequence, defaultdict, deque
 # from copy import deepcopy
 # from decimal import Decimal, getcontext
 # from difflib import SequenceMatcher
-# from fractions import Fraction, gcd
 # from heapq import heappop, heappush
-# from Queue import PriorityQueue, Queue
-# from string import ascii_lowercase, ascii_uppercase
-
 
 # PYTHON3---------------------------------------------------------------------#
 if sys.version_info[0] < 3:
+    # import random
     # from cPickle import dumps
+    # from fractions import Fraction, gcd
+    # from Queue import PriorityQueue, Queue
 
     input = raw_input
     range = xrange
@@ -46,13 +45,16 @@ if sys.version_info[0] < 3:
         def values(self):
             return dict.itervalues(self)
 else:
+    # from fractions import Fraction
     # from functools import reduce
+    # from math import gcd
     # from pickle import dumps
+    # from queue import PriorityQueue, Queue
     pass
 
 
 # SETTINGS--------------------------------------------------------------------#
-sys.setrecursionlimit(14800)
+sys.setrecursionlimit(10000)
 # getcontext().prec = 100
 
 
