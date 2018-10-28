@@ -1,8 +1,3 @@
-BLACK = 'BLACK'
-RED = 'RED'
-NIL = 'NIL'
-
-
 class Node:
     def __init__(self, value, color, parent, left=None, right=None):
         self.value = value
@@ -15,16 +10,16 @@ class Node:
         return '{color} {val} Node'.format(color=self.color, val=self.value)
 
     def __iter__(self):
-        if self.left.color != NIL:
+        if self.left.color != 'NIL':
             yield from self.left.__iter__()
 
         yield self.value
 
-        if self.right.color != NIL:
+        if self.right.color != 'NIL':
             yield from self.right.__iter__()
 
     def __eq__(self, other):
-        if self.color == NIL and self.color == other.color:
+        if self.color == 'NIL' and self.color == other.color:
             return True
 
         if self.parent is None or other.parent is None:
@@ -37,13 +32,13 @@ class Node:
         return bool(self.get_children_count())
 
     def get_children_count(self) -> int:
-        if self.color == NIL:
+        if self.color == 'NIL':
             return 0
-        return sum([int(self.left.color != NIL), int(self.right.color != NIL)])
+        return sum([int(self.left.color != 'NIL'), int(self.right.color != 'NIL')])
 
 
 class RedBlackTree:
-    NIL_LEAF = Node(value=None, color=NIL, parent=None)
+    NIL_LEAF = Node(value=None, color='NIL', parent=None)
 
     def __init__(self):
         self.count = 0
@@ -60,13 +55,13 @@ class RedBlackTree:
 
     def add(self, value):
         if not self.root:
-            self.root = Node(value, color=BLACK, parent=None, left=self.NIL_LEAF, right=self.NIL_LEAF)
+            self.root = Node(value, color='BLACK', parent=None, left=self.NIL_LEAF, right=self.NIL_LEAF)
             self.count += 1
             return
         parent, node_dir = self._find_parent(value)
         if node_dir is None:
             return
-        new_node = Node(value=value, color=RED, parent=parent, left=self.NIL_LEAF, right=self.NIL_LEAF)
+        new_node = Node(value=value, color='RED', parent=parent, left=self.NIL_LEAF, right=self.NIL_LEAF)
         if node_dir == 'L':
             parent.left = new_node
         else:
@@ -141,13 +136,13 @@ class RedBlackTree:
             if not_nil_child != self.NIL_LEAF:
                 self.root = not_nil_child
                 self.root.parent = None
-                self.root.color = BLACK
+                self.root.color = 'BLACK'
             else:
                 self.root = None
-        elif node.color == RED:
+        elif node.color == 'RED':
             self._remove_leaf(node)
         else:
-            if not_nil_child.color == RED:
+            if not_nil_child.color == 'RED':
                 node.value = not_nil_child.value
                 node.left = not_nil_child.left
                 node.right = not_nil_child.right
@@ -166,35 +161,35 @@ class RedBlackTree:
 
     def __case_1(self, node):
         if self.root == node:
-            node.color = BLACK
+            node.color = 'BLACK'
             return
         self.__case_2(node)
 
     def __case_2(self, node):
         parent = node.parent
         sibling, direction = self._get_sibling(node)
-        if sibling.color == RED and parent.color == BLACK and sibling.left.color != RED and sibling.right.color != RED:
+        if sibling.color == 'RED' and parent.color == 'BLACK' and sibling.left.color != 'RED' and sibling.right.color != 'RED':
             self.ROTATIONS[direction](node=None, parent=sibling, grandfather=parent)
-            parent.color = RED
-            sibling.color = BLACK
+            parent.color = 'RED'
+            sibling.color = 'BLACK'
             return self.__case_1(node)
         self.__case_3(node)
 
     def __case_3(self, node):
         parent = node.parent
         sibling, _ = self._get_sibling(node)
-        if (sibling.color == BLACK and parent.color == BLACK
-           and sibling.left.color != RED and sibling.right.color != RED):
-            sibling.color = RED
+        if (sibling.color == 'BLACK' and parent.color == 'BLACK'
+           and sibling.left.color != 'RED' and sibling.right.color != 'RED'):
+            sibling.color = 'RED'
             return self.__case_1(parent)
 
         self.__case_4(node)
 
     def __case_4(self, node):
         parent = node.parent
-        if parent.color == RED:
+        if parent.color == 'RED':
             sibling, _ = self._get_sibling(node)
-            if sibling.color == BLACK and sibling.left.color != RED and sibling.right.color != RED:
+            if sibling.color == 'BLACK' and sibling.left.color != 'RED' and sibling.right.color != 'RED':
                 parent.color, sibling.color = sibling.color, parent.color
                 return
         self.__case_5(node)
@@ -203,13 +198,13 @@ class RedBlackTree:
         sibling, direction = self._get_sibling(node)
         closer_node = sibling.right if direction == 'L' else sibling.left
         outer_node = sibling.left if direction == 'L' else sibling.right
-        if closer_node.color == RED and outer_node.color != RED and sibling.color == BLACK:
+        if closer_node.color == 'RED' and outer_node.color != 'RED' and sibling.color == 'BLACK':
             if direction == 'L':
                 self._left_rotation(node=None, parent=closer_node, grandfather=sibling)
             else:
                 self._right_rotation(node=None, parent=closer_node, grandfather=sibling)
-            closer_node.color = BLACK
-            sibling.color = RED
+            closer_node.color = 'BLACK'
+            sibling.color = 'RED'
 
         self.__case_6(node)
 
@@ -221,10 +216,10 @@ class RedBlackTree:
             parent_color = sibling.parent.color
             self.ROTATIONS[direction](node=None, parent=sibling, grandfather=sibling.parent)
             sibling.color = parent_color
-            sibling.right.color = BLACK
-            sibling.left.color = BLACK
+            sibling.right.color = 'BLACK'
+            sibling.left.color = 'BLACK'
 
-        if sibling.color == BLACK and outer_node.color == RED:
+        if sibling.color == 'BLACK' and outer_node.color == 'RED':
             return __case_6_rotation(direction)
 
     def _try_rebalance(self, node):
@@ -232,7 +227,7 @@ class RedBlackTree:
         value = node.value
         if (parent is None
            or parent.parent is None
-           or (node.color != RED or parent.color != RED)):
+           or (node.color != 'RED' or parent.color != 'RED')):
             return
         grandfather = parent.parent
         node_dir = 'L' if parent.value > value else 'R'
@@ -240,7 +235,7 @@ class RedBlackTree:
         uncle = grandfather.right if parent_dir == 'L' else grandfather.left
         general_direction = node_dir + parent_dir
 
-        if uncle == self.NIL_LEAF or uncle.color == BLACK:
+        if uncle == self.NIL_LEAF or uncle.color == 'BLACK':
             if general_direction == 'LL':
                 self._right_rotation(node, parent, grandfather, to_recolor=True)
             elif general_direction == 'RR':
@@ -276,9 +271,9 @@ class RedBlackTree:
         old_right.parent = grandfather
 
         if to_recolor:
-            parent.color = BLACK
-            node.color = RED
-            grandfather.color = RED
+            parent.color = 'BLACK'
+            node.color = 'RED'
+            grandfather.color = 'RED'
 
     def _left_rotation(self, node, parent, grandfather, to_recolor=False):
         grand_grandfather = grandfather.parent
@@ -292,15 +287,15 @@ class RedBlackTree:
         old_left.parent = grandfather
 
         if to_recolor:
-            parent.color = BLACK
-            node.color = RED
-            grandfather.color = RED
+            parent.color = 'BLACK'
+            node.color = 'RED'
+            grandfather.color = 'RED'
 
     def _recolor(self, grandfather):
-        grandfather.right.color = BLACK
-        grandfather.left.color = BLACK
+        grandfather.right.color = 'BLACK'
+        grandfather.left.color = 'BLACK'
         if grandfather != self.root:
-            grandfather.color = RED
+            grandfather.color = 'RED'
         self._try_rebalance(grandfather)
 
     def _find_parent(self, value):
@@ -308,11 +303,11 @@ class RedBlackTree:
             if value == parent.value:
                 return None, None
             elif parent.value < value:
-                if parent.right.color == NIL:
+                if parent.right.color == 'NIL':
                     return parent, 'R'
                 return inner_find(parent.right)
             elif value < parent.value:
-                if parent.left.color == NIL:
+                if parent.left.color == 'NIL':
                     return parent, 'L'
                 return inner_find(parent.left)
 
