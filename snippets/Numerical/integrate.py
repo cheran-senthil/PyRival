@@ -1,6 +1,6 @@
 from sys import setrecursionlimit
 
-setrecursionlimit(100000)
+setrecursionlimit(10000)
 
 
 def quad(func, a, b, n=1000):
