@@ -4,7 +4,6 @@ What I cannot create, I do not understand.
 https://github.com/Cheran-Senthil/PyRival
 Copyright (c) 2018 Cheran Senthilkumar
 """
-# IMPORTS---------------------------------------------------------------------#
 from __future__ import division, print_function
 
 import cmath
@@ -15,26 +14,30 @@ import sys
 from bisect import bisect_left, bisect_right
 from string import ascii_lowercase, ascii_uppercase
 
+# import random
 # from collections import Counter, MutableSequence, defaultdict, deque
 # from copy import deepcopy
-# from decimal import Decimal, getcontext
+# from decimal import Decimal
 # from difflib import SequenceMatcher
 # from heapq import heappop, heappush
 
-# PYTHON3---------------------------------------------------------------------#
+
 if sys.version_info[0] < 3:
-    # import random
+    # from fractions import Fraction
+    # from fractions import gcd
     # from cPickle import dumps
-    # from fractions import Fraction, gcd
     # from Queue import PriorityQueue, Queue
+    pass
+else:
+    # from functools import reduce
+    # from fractions import Fraction
+    # from math import gcd
+    # from pickle import dumps
+    # from queue import PriorityQueue, Queue
+    pass
 
-    input = raw_input
-    range = xrange
 
-    filter = itertools.ifilter
-    map = itertools.imap
-    zip = itertools.izip
-
+if sys.version_info[0] < 3:
     class dict(dict):
         def items(self):
             return dict.iteritems(self)
@@ -44,40 +47,51 @@ if sys.version_info[0] < 3:
 
         def values(self):
             return dict.itervalues(self)
-else:
-    # from fractions import Fraction
-    # from functools import reduce
-    # from math import gcd
-    # from pickle import dumps
-    # from queue import PriorityQueue, Queue
-    pass
+
+    input = raw_input
+    range = xrange
+
+    filter = itertools.ifilter
+    map = itertools.imap
+    zip = itertools.izip
 
 
-# SETTINGS--------------------------------------------------------------------#
-sys.setrecursionlimit(10000)
-# getcontext().prec = 100
+def sync_with_stdio(sync=True):
+    """
+    Sets whether the standard Python streams are allowed to buffer their I/O.
+
+    Parameters
+    ----------
+    sync : bool
+        the new synchronization setting
+
+    """
+    global input, flush
+
+    if sync:
+        flush = sys.stdout.flush
+    else:
+        from atexit import register
+
+        if sys.version_info[0] < 3:
+            from io import BytesIO
+
+            input = iter(sys.stdin.read().splitlines()).next
+            sys.stdout = BytesIO()
+        else:
+            from io import StringIO
+
+            input = iter(sys.stdin.read().splitlines()).__next__
+            sys.stdout = StringIO()
+
+        register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
 
 
-# IO--------------------------------------------------------------------------#
-fastio = False
-flush = sys.stdout.flush
-
-if fastio:
-    from atexit import register
-    from io import BytesIO
-
-    sys.stdout = BytesIO()
-    register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
-    sys.stdin = BytesIO(sys.stdin.read())
-
-    input = lambda: sys.stdin.readline().rstrip()
-    print = lambda *args: sys.stdout.write(' '.join(str(x) for x in args)+'\n')
-
-
-# MAIN------------------------------------------------------------------------#
 def main():
     pass
 
 
 if __name__ == '__main__':
+    sys.setrecursionlimit(10000)
+    sync_with_stdio()
     main()
