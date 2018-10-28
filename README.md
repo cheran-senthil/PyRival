@@ -6,30 +6,15 @@
 ---
 
 ### About
-- Standard Template written for use in all flavours of Python
+- A Master Template optimized for performance in PyPy 2
 - Optimized code snippets written in Python 3
 
 ##
 
 ### Template
-- Python 3 Compatibility
-  ```python
-  dict.items = dict.iteritems
-  dict.keys = dict.iterkeys
-  dict.values = dict.itervalues
-  ```
-  ```python
-  filter = itertools.filter
-  map = itertools.map
-  zip = itertools.zip
-  ```
-  ```python
-  input = raw_input
-  range = xrange
-  ```
-- Standard Imports
-- Fast I/O
-- Decimal and Recursion Limit Settings
+- [Master Template](template/template.py)
+- [Python 3 Compatibility](template/py3k.py)
+- [Fast I/O](template/sync_with_stdio.py)
 
 ##
 
