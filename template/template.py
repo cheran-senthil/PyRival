@@ -11,6 +11,7 @@ import itertools
 import math
 import operator as op
 import sys
+from atexit import register
 from bisect import bisect_left, bisect_right
 from string import ascii_lowercase, ascii_uppercase
 
@@ -21,20 +22,19 @@ from string import ascii_lowercase, ascii_uppercase
 # from difflib import SequenceMatcher
 # from heapq import heappop, heappush
 
-
 if sys.version_info[0] < 3:
+    from io import BytesIO as stream
     # from fractions import Fraction
     # from fractions import gcd
     # from cPickle import dumps
     # from Queue import PriorityQueue, Queue
-    pass
 else:
+    from io import StringIO as stream
     # from functools import reduce
     # from fractions import Fraction
     # from math import gcd
     # from pickle import dumps
     # from queue import PriorityQueue, Queue
-    pass
 
 
 if sys.version_info[0] < 3:
@@ -71,19 +71,10 @@ def sync_with_stdio(sync=True):
     if sync:
         flush = sys.stdout.flush
     else:
-        from atexit import register
+        sys.stdin = stream(sys.stdin.read())
+        input = lambda: sys.stdin.readline().rstrip('\r\n')
 
-        if sys.version_info[0] < 3:
-            from io import BytesIO
-
-            input = iter(sys.stdin.read().splitlines()).next
-            sys.stdout = BytesIO()
-        else:
-            from io import StringIO
-
-            input = iter(sys.stdin.read().splitlines()).__next__
-            sys.stdout = StringIO()
-
+        sys.stdout = stream()
         register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
 
 
@@ -93,5 +84,5 @@ def main():
 
 if __name__ == '__main__':
     sys.setrecursionlimit(10000)
-    sync_with_stdio()
+    sync_with_stdio(False)
     main()
