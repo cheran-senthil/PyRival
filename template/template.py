@@ -63,7 +63,7 @@ def sync_with_stdio(sync=True):
     Parameters
     ----------
     sync : bool
-        the new synchronization setting
+        The new synchronization setting.
 
     """
     global input, flush
