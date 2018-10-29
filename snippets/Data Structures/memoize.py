@@ -24,6 +24,7 @@ def memoize(f):
 
 
 class MemoizeMutable:
+    """ Memoization decorator for a function mutable arguments. """
     def __init__(self, fn):
         self.fn = fn
         self.memo = {}
