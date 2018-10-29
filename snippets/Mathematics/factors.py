@@ -4,7 +4,7 @@ from fractions import gcd
 
 
 def memodict(f):
-    """ Memoization decorator for a function taking a single argument """
+    """ Memoization decorator for a function taking a single argument. """
     class memodict(dict):
         def __missing__(self, key):
             ret = self[key] = f(key)
@@ -22,10 +22,26 @@ def _try_composite(a, d, n, s):
 
 
 def is_prime(n):
-    if n in [0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43]:
+    """
+    Deterministic variant of the Miller-Rabin primality test to determine
+    whether a given number is prime.
+
+    Parameters
+    ----------
+    n : int
+        n >= 0, an integer to be tested for primality.
+
+    Returns
+    -------
+    bool
+        False if n is composite, otherwise True.
+    """
+    if n in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]:
         return True
-    if any((n % p) == 0 for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]):
+
+    if (any((n % p) == 0 for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37])) or (n in [0, 1]):
         return False
+
     d, s = n - 1, 0
     while not d % 2:
         d, s = d >> 1, s + 1
@@ -48,35 +64,35 @@ def is_prime(n):
         return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13, 17])
     if n < 3825123056546413051:
         return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13, 17, 19, 23])
-    return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53])
+    return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37])
 
 
-def factor(N):
-    for i in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]:
-        if N % i == 0:
+def _factor(n):
+    for i in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]:
+        if n % i == 0:
             return i
 
-    y, c, m = random.randint(1, N - 1), random.randint(1, N - 1), random.randint(1, N - 1)
+    y, c, m = random.randint(1, n - 1), random.randint(1, n - 1), random.randint(1, n - 1)
     g, r, q = 1, 1, 1
 
     while g == 1:
         x = y
         for i in range(r):
-            y = ((y * y) % N + c) % N
+            y = ((y * y) % n + c) % n
         k = 0
         while (k < r) and (g == 1):
             ys = y
             for i in range(min(m, r - k)):
-                y = ((y * y) % N + c) % N
-                q = q * (abs(x - y)) % N
-            g = gcd(q, N)
+                y = ((y * y) % n + c) % n
+                q = q * (abs(x - y)) % n
+            g = gcd(q, n)
             k = k + m
         r = r * 2
 
-    if g == N:
+    if g == n:
         while True:
-            ys = ((ys * ys) % N + c) % N
-            g = gcd(abs(x - ys), N)
+            ys = ((ys * ys) % n + c) % n
+            g = gcd(abs(x - ys), n)
             if g > 1:
                 break
 
@@ -84,12 +100,26 @@ def factor(N):
 
 
 @memodict
-def factors(N):
-    if is_prime(N):
-        return Counter([N])
+def factors(n):
+    """
+    Integer factorization using Pollard's rho algorithm.
+
+    Parameters
+    ----------
+    n : int
+        n > 1, an integer to be factorized.
+
+    Returns
+    -------
+    Counter
+        Counter of the prime factors of n.
+    """
+    if is_prime(n):
+        return Counter([n])
     else:
-        f = factor(N)
-        if f == N:
-            return factors(N)
+        f = _factor(n)
+        if f == n:
+            return factors(n)
         else:
-            return factors(f) + factors(N//f)
+            return factors(f) + factors(n//f)
+
