@@ -1,6 +1,4 @@
-"""
-Python 3 compatibility tools.
-"""
+"""Python 3 compatibility tools."""
 from __future__ import division, print_function
 
 import itertools

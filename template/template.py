@@ -64,7 +64,6 @@ def sync_with_stdio(sync=True):
     ----------
     sync : bool, optional
         The new synchronization setting. Default is True.
-
     """
     global input, flush
 
