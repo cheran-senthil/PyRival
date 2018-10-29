@@ -1,4 +1,10 @@
 import sys
+from atexit import register
+
+if sys.version_info[0] < 3:
+    from io import BytesIO as stream
+else:
+    from io import StringIO as stream
 
 
 def sync_with_stdio(sync=True):
@@ -16,17 +22,8 @@ def sync_with_stdio(sync=True):
     if sync:
         flush = sys.stdout.flush
     else:
-        from atexit import register
+        sys.stdin = stream(sys.stdin.read())
+        input = lambda: sys.stdin.readline().rstrip('\r\n')
 
-        if sys.version_info[0] < 3:
-            from io import BytesIO
-
-            input = iter(sys.stdin.read().splitlines()).next
-            sys.stdout = BytesIO()
-        else:
-            from io import StringIO
-
-            input = iter(sys.stdin.read().splitlines()).__next__
-            sys.stdout = StringIO()
-
+        sys.stdout = stream()
         register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
