@@ -1,15 +1,20 @@
-import operator as op
-
-
 class BitArray:
+    """
+    A class to repesent fixed-size sequence of bits.
+
+    Parameters
+    ----------
+    size : int
+        The number of bits to allocate storage for.
+    """
     def __init__(self, size):
-        self.bytes = bytearray(op.rshift(size, 3) + 1)
+        self.bytes = bytearray((size >> 3) + 1)
 
     def __getitem__(self, index):
-        return op.rshift(self.bytes[op.rshift(index, 3)], (index & 0b111)) & 1
+        return (self.bytes[index >> 3] >> (index & 0b111)) & 1
 
     def __setitem__(self, index, value):
         if value:
-            self.bytes[op.rshift(index, 3)] |= 1 << (index & 0b111)
+            self.bytes[index >> 3] |= 1 << (index & 0b111)
         else:
-            self.bytes[op.rshift(index, 3)] &= ~(1 << (index & 0b111))
+            self.bytes[index >> 3] &= ~(1 << (index & 0b111))
