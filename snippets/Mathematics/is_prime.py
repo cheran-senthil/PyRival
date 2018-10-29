@@ -15,17 +15,19 @@ def is_prime(n):
     Parameters
     ----------
     n : int
-        n > 1, an integer to be tested for primality.
+        n >= 0, an integer to be tested for primality.
 
     Returns
     -------
     bool
         False if n is composite, otherwise True.
     """
-    if n in [0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]:
+    if n in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]:
         return True
-    if any((n % p) == 0 for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]):
+
+    if (any((n % p) == 0 for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37])) or (n in [0, 1]):
         return False
+
     d, s = n - 1, 0
     while not d % 2:
         d, s = d >> 1, s + 1
