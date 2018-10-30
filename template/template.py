@@ -1,5 +1,10 @@
 """
-What I cannot create, I do not understand.
+________        _____________              ______
+___  __ \____  ____  __ \__(_)__   _______ ___  /
+__  /_/ /_  / / /_  /_/ /_  /__ | / /  __ `/_  /
+_  ____/_  /_/ /_  _, _/_  / __ |/ // /_/ /_  /
+/_/     _\__, / /_/ |_| /_/  _____/ \__,_/ /_/
+        /____/
 
 https://github.com/Cheran-Senthil/PyRival
 Copyright (c) 2018 Cheran Senthilkumar
@@ -82,5 +87,5 @@ def main():
 
 if __name__ == '__main__':
     sys.setrecursionlimit(10000)
-    sync_with_stdio(True)
+    sync_with_stdio(False)
     main()
