@@ -122,4 +122,3 @@ def factors(n):
             return factors(n)
         else:
             return factors(f) + factors(n//f)
-
