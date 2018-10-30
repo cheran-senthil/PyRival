@@ -1,13 +1,11 @@
 from collections import defaultdict
 
-INF = float('+inf')
-
 
 def floyd_warshall(graph):
     dist, pred = dict(), dict()
 
     for u, neighbours in graph.items():
-        dist[u] = defaultdict(lambda: INF)
+        dist[u] = defaultdict(lambda: float('+inf'))
         pred[u] = defaultdict(lambda: None)
 
         for v, d in neighbours.items():

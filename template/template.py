@@ -13,7 +13,6 @@ import operator as op
 import sys
 from atexit import register
 from bisect import bisect_left, bisect_right
-from string import ascii_lowercase, ascii_uppercase
 
 # import random
 # from collections import Counter, MutableSequence, defaultdict, deque
@@ -83,5 +82,5 @@ def main():
 
 if __name__ == '__main__':
     sys.setrecursionlimit(10000)
-    sync_with_stdio(False)
+    sync_with_stdio(True)
     main()
