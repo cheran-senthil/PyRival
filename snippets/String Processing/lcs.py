@@ -1,30 +1,31 @@
-from pickle import dumps
+def lcs(a, b):
+    lengths = [[0]*(len(b)+1) for i in range(len(a)+1)]
 
+    for i, x in enumerate(a):
+        for j, y in enumerate(b):
+            if x == y:
+                lengths[i+1][j+1] = lengths[i][j] + 1
+            else:
+                lengths[i+1][j+1] = max(lengths[i+1][j], lengths[i][j+1])
 
-class MemoizeMutable:
-    def __init__(self, fn):
-        self.fn = fn
-        self.memo = {}
+    result = []
+    x, y = len(a), len(b)
+    while x != 0 and y != 0:
+        if lengths[x][y] == lengths[x-1][y]:
+            x -= 1
+        elif lengths[x][y] == lengths[x][y-1]:
+            y -= 1
+        else:
+            result.append(a[x-1])
+            x -= 1
+            y -= 1
 
-    def __call__(self, *args, **kwds):
-        key = dumps(args, 1) + dumps(kwds, 1)
-        if not (key in self.memo):
-            self.memo[key] = self.fn(*args, **kwds)
-
-        return self.memo[key]
-
-
-@MemoizeMutable
-def lcs(s1, s2):
-    if (not s1) or (not s2):
-        return []
-
-    return (
-        lcs(s1[:-1], s2[:-1]) + [s1[-1]]
-        if s1[-1] == s2[-1] else
-        max(lcs(s1[:-1], s2), lcs(s1, s2[:-1]), key=len)
-    )
+    return result[::-1]
 
 
 def lis(arr):
     return lcs(arr, sorted(arr))
+
+
+def lps(s):
+    return lcs(s, s[::-1])
