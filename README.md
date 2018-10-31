@@ -62,9 +62,9 @@
   - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
 - String Processing
   - Knuth–Morris–Pratt Algorithm
-  - Longest Common Subsequence & String
-  - Longest Palindromic Subsequence & String
-  - Longest Increasing Subsequence
+  - Longest Common/Increasing/Palindromic Subsequences
+  - Longest Common Substring
+  - Manacher's Algorithm
 
 ##
 
