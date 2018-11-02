@@ -40,6 +40,7 @@
   - Bellman-Ford Algorithm
   - Dijkstra's Algorithm
   - Floyd-Warshall Algorithm
+  - Topological Sorting
 - Mathematics
   - Alpha–Beta Pruning
   - Binary Search
