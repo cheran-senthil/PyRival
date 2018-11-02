@@ -68,6 +68,7 @@
   - Longest Common/Palindromic Subsequences
   - Longest Common Substring
   - Manacher's Algorithm
+  - Lydon Factorization
 
 ##
 
