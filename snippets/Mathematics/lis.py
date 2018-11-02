@@ -1,14 +1,14 @@
-def lis(arr):
-    P = [0] * len(arr)
-    M = [0] * (len(arr) + 1)
+def lis(nums):
+    P = [0] * len(nums)
+    M = [0] * (len(nums) + 1)
     L = 0
 
-    for i in range(len(arr)):
+    for i in range(len(nums)):
         lo, hi = 1, L
 
         while lo <= hi:
             mid = (lo + hi) // 2
-            if arr[M[mid]] < arr[i]:
+            if nums[M[mid]] < nums[i]:
                 lo = mid + 1
             else:
                 hi = mid - 1
@@ -23,6 +23,6 @@ def lis(arr):
     k = M[L]
 
     for i in range(L - 1, -1, -1):
-        S[i], k = arr[k], P[k]
+        S[i], k = nums[k], P[k]
 
     return S
