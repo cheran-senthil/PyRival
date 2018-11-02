@@ -1,24 +1,22 @@
-from collections import defaultdict
+def floyd_warshall(n, edges):
+    dist = [[0 if i == j else float('inf') for i in range(n)] for j in range(n)]
+    pred = [[None] * n for _ in range(n)]
 
+    for u, v, d in edges:
+        dist[u][v] = d
+        pred[u][v] = u
 
-def floyd_warshall(graph):
-    dist, pred = dict(), dict()
-
-    for u, neighbours in graph.items():
-        dist[u] = defaultdict(lambda: float('+inf'))
-        pred[u] = defaultdict(lambda: None)
-
-        for v, d in neighbours.items():
-            dist[u][v] = d
-            pred[u][v] = u
-
-        dist[u][u] = 0
-
-    for k in graph:
-        for i in graph:
-            for j in graph:
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
                 if dist[i][k] + dist[k][j] < dist[i][j]:
                     dist[i][j] = dist[i][k] + dist[k][j]
                     pred[i][j] = pred[k][j]
+
+    """Sanity Check
+    for u, v, d in edges:
+        if dist[u] + d < dist[v]:
+            return None
+    """
 
     return dist, pred
