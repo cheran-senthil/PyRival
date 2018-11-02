@@ -23,9 +23,5 @@ def lcs(a, b):
     return result[::-1]
 
 
-def lis(arr):
-    return lcs(arr, sorted(arr))
-
-
 def lps(s):
     return lcs(s, s[::-1])
