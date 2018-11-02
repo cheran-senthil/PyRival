@@ -37,6 +37,7 @@
   - Polygon Functions
   - Vector Functions
 - Graphs
+  - Bellman-Ford Algorithm
   - Dijkstra's Algorithm
   - Floyd-Warshall Algorithm
 - Mathematics
@@ -70,4 +71,4 @@
 ##
 
 ### License
-[MIT](LICENSE)
+[MIT](LICENSE) © Cheran Senthilkumar
