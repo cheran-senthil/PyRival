@@ -49,6 +49,7 @@
   - Least Common Multiple and Multiplicative Inverse
   - Pollard's Rho Algorithm
   - Deterministic Miller-Rabin Primality Test
+  - Longest Increasing Subsequence
   - Tonelli–Shanks Algorithm
   - Lucas's Theorem
   - Partition Function
@@ -62,7 +63,7 @@
   - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
 - String Processing
   - Knuth–Morris–Pratt Algorithm
-  - Longest Common/Increasing/Palindromic Subsequences
+  - Longest Common/Palindromic Subsequences
   - Longest Common Substring
   - Manacher's Algorithm
 
