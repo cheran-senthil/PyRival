@@ -13,11 +13,10 @@ import cmath
 import itertools
 import math
 import operator as op
+# import random
 import sys
 from atexit import register
 from bisect import bisect_left, bisect_right
-
-# import random
 # from collections import Counter, MutableSequence, defaultdict, deque
 # from copy import deepcopy
 # from decimal import Decimal
@@ -26,15 +25,20 @@ from bisect import bisect_left, bisect_right
 # from heapq import heappop, heappush
 
 if sys.version_info[0] < 3:
-    from io import BytesIO as stream
     # from cPickle import dumps
+    from io import BytesIO as stream
     # from Queue import PriorityQueue, Queue
 else:
+    # from functools import reduce
     from io import StringIO as stream
     from math import gcd
-    # from functools import reduce
     # from pickle import dumps
     # from queue import PriorityQueue, Queue
+
+if 'PyPy' in sys.version:
+    from _continuation import continulet
+else:
+    import threading
 
 
 if sys.version_info[0] < 3:
@@ -106,8 +110,6 @@ if __name__ == '__main__':
     sync_with_stdio(False)
 
     if 'PyPy' in sys.version:
-        from _continuation import continulet
-
         def bootstrap(c):
             callable, arg = c.switch()
             while True:
@@ -120,10 +122,9 @@ if __name__ == '__main__':
         main()
 
     else:
-        import threading
-
         sys.setrecursionlimit(2097152)
         threading.stack_size(134217728)
+
         main_thread = threading.Thread(target=main)
         main_thread.start()
         main_thread.join()
