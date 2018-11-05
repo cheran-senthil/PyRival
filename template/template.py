@@ -80,7 +80,7 @@ if sys.version_info[0] < 3:
 
 def sync_with_stdio(sync=True):
     """
-    Sets whether the standard Python streams are allowed to buffer their I/O.
+    Set whether the standard Python streams are allowed to buffer their I/O.
 
     Parameters
     ----------
