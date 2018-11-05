@@ -1,14 +1,12 @@
-"""
-________        _____________              ______
-___  __ \____  ____  __ \__(_)__   _______ ___  /
-__  /_/ /_  / / /_  /_/ /_  /__ | / /  __ `/_  /
-_  ____/_  /_/ /_  _, _/_  / __ |/ // /_/ /_  /
-/_/     _\__, / /_/ |_| /_/  _____/ \__,_/ /_/
-        /____/
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyright (c) 2018 Cheran Senthilkumar
+#
+# This file is part of https://github.com/Cheran-Senthil/PyRival
+#
+# PyRival is licensed under the MIT License
 
-https://github.com/Cheran-Senthil/PyRival
-Copyright (c) 2018 Cheran Senthilkumar
-"""
 from __future__ import division, print_function
 
 import cmath
@@ -24,19 +22,17 @@ from bisect import bisect_left, bisect_right
 # from copy import deepcopy
 # from decimal import Decimal
 # from difflib import SequenceMatcher
+# from fractions import Fraction
 # from heapq import heappop, heappush
 
 if sys.version_info[0] < 3:
     from io import BytesIO as stream
-    # from fractions import Fraction
-    # from fractions import gcd
     # from cPickle import dumps
     # from Queue import PriorityQueue, Queue
 else:
     from io import StringIO as stream
+    from math import gcd
     # from functools import reduce
-    # from fractions import Fraction
-    # from math import gcd
     # from pickle import dumps
     # from queue import PriorityQueue, Queue
 
@@ -51,6 +47,24 @@ if sys.version_info[0] < 3:
 
         def values(self):
             return dict.itervalues(self)
+
+    def gcd(a, b):
+        """
+        Calculate the Greatest Common Divisor of a and b.
+
+        Parameters
+        ----------
+        a, b : int
+
+        Returns
+        -------
+        int
+            The greatest common divisor of the integers a and b.
+
+        """
+        while b:
+            a, b = b, a % b
+        return a
 
     input = raw_input
     range = xrange
@@ -68,6 +82,7 @@ def sync_with_stdio(sync=True):
     ----------
     sync : bool, optional
         The new synchronization setting. Default is True.
+
     """
     global input, flush
 
@@ -82,10 +97,12 @@ def sync_with_stdio(sync=True):
 
 
 def main():
+    """Dattebayo!"""
     pass
 
 
 if __name__ == '__main__':
+    # Will only be executed when this module is run directly.
     sync_with_stdio(False)
 
     if 'PyPy' in sys.version:
