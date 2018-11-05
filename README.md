@@ -12,9 +12,10 @@
 ##
 
 ### Template
-- [Master Template](template/template.py)
+- [Infinite Recursion](template/infinite_recursion.py)
 - [Python 3 Compatibility](template/py3k.py)
 - [Fast I/O](template/sync_with_stdio.py)
+- [Master Template](template/template.py)
 
 ##
 
