@@ -5,18 +5,14 @@ import itertools
 import sys
 
 if sys.version_info[0] < 3:
-    # from fractions import Fraction
-    # from fractions import gcd
     # from cPickle import dumps
     # from Queue import PriorityQueue, Queue
     pass
 else:
+    from math import gcd
     # from functools import reduce
-    # from fractions import Fraction
-    # from math import gcd
     # from pickle import dumps
     # from queue import PriorityQueue, Queue
-    pass
 
 
 if sys.version_info[0] < 3:
@@ -29,6 +25,24 @@ if sys.version_info[0] < 3:
 
         def values(self):
             return dict.itervalues(self)
+
+    def gcd(a, b):
+        """
+        Calculate the Greatest Common Divisor of a and b.
+
+        Parameters
+        ----------
+        a, b : int
+
+        Returns
+        -------
+        int
+            The greatest common divisor of the integers a and b.
+
+        """
+        while b:
+            a, b = b, a % b
+        return a
 
     input = raw_input
     range = xrange
