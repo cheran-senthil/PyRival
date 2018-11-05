@@ -1,6 +1,6 @@
 import random
 from collections import Counter
-from fractions import gcd
+from math import gcd
 
 
 def memodict(f):
