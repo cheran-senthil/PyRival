@@ -1,12 +1,13 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#
-# Copyright (c) 2018 Cheran Senthilkumar
-#
-# This file is part of https://github.com/Cheran-Senthil/PyRival
-#
-# PyRival is licensed under the MIT License
+"""
+This file is part of https://github.com/Cheran-Senthil/PyRival.
 
+Copyright 2018 Cheran Senthilkumar all rights reserved,
+Cheran Senthilkumar <hello@cheran.io>
+Permission to use, modify, and distribute this software is given under the
+terms of the MIT License.
+
+"""
 from __future__ import division, print_function
 
 import cmath
@@ -35,36 +36,25 @@ else:
     # from pickle import dumps
     # from queue import PriorityQueue, Queue
 
-if 'PyPy' in sys.version:
-    from _continuation import continulet
-else:
-    import threading
-
 
 if sys.version_info[0] < 3:
     class dict(dict):
+        """dict() -> new empty dictionary"""
         def items(self):
+            """D.items() -> a set-like object providing a view on D's items"""
             return dict.iteritems(self)
 
         def keys(self):
+            """D.keys() -> a set-like object providing a view on D's keys"""
             return dict.iterkeys(self)
 
         def values(self):
+            """D.values() -> an object providing a view on D's values"""
             return dict.itervalues(self)
 
-    def gcd(a, b):
-        """
-        Calculate the Greatest Common Divisor of a and b.
-
-        Parameters
-        ----------
-        a, b : int
-
-        Returns
-        -------
-        int
-            The greatest common divisor of the integers a and b.
-
+    def gcd(x, y):
+        """gcd(x, y) -> int
+        greatest common divisor of x and y
         """
         while b:
             a, b = b, a % b
@@ -79,13 +69,10 @@ if sys.version_info[0] < 3:
 
 
 def sync_with_stdio(sync=True):
-    """
-    Set whether the standard Python streams are allowed to buffer their I/O.
+    """Set whether the standard Python streams are allowed to buffer their I/O.
 
-    Parameters
-    ----------
-    sync : bool, optional
-        The new synchronization setting. Default is True.
+    Args:
+        sync (bool, optional): The new synchronization setting.
 
     """
     global input, flush
@@ -101,15 +88,15 @@ def sync_with_stdio(sync=True):
 
 
 def main():
-    """Dattebayo!"""
     pass
 
 
 if __name__ == '__main__':
-    # Will only be executed when this module is run directly.
     sync_with_stdio(False)
 
     if 'PyPy' in sys.version:
+        from _continuation import continulet
+
         def bootstrap(c):
             callable, arg = c.switch()
             while True:
@@ -122,6 +109,8 @@ if __name__ == '__main__':
         main()
 
     else:
+        import threading
+
         sys.setrecursionlimit(2097152)
         threading.stack_size(134217728)
 
