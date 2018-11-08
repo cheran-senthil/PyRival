@@ -54,3 +54,6 @@ def inverse(m):
                 [-1 * m[1][0] / determinant, m[0][0] / determinant]]
 
     return transpose([[(pow(-1, i + j) * det(minor(m, i, j))) / determinant for j in range(len(m))] for i in range(len(m))])
+
+
+linear_recurrence = lambda trans_matrix, known_values, k: mat_mul(mat_pow(trans_matrix, k), known_values)
