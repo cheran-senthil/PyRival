@@ -12,9 +12,7 @@ def memoize(f):
 
 
 @memoize
-def partition(n, k=None):
-    if k is None:
-        k = n
+def partition(n, k):
     if n < 0:
         return 0
     if n == 0:
