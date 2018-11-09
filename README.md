@@ -64,6 +64,7 @@
   - Approximate Integration
   - Polynomial Interpolation
   - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
+  - Linear Recurrence Matrix
 - String Processing
   - Knuth–Morris–Pratt Algorithm
   - Longest Common/Palindromic Subsequences
