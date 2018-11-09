@@ -56,9 +56,9 @@ if sys.version_info[0] < 3:
         """gcd(x, y) -> int
         greatest common divisor of x and y
         """
-        while b:
-            a, b = b, a % b
-        return a
+        while y:
+            x, y = y, x % y
+        return x
 
     input = raw_input
     range = xrange

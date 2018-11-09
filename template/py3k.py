@@ -26,23 +26,13 @@ if sys.version_info[0] < 3:
         def values(self):
             return dict.itervalues(self)
 
-    def gcd(a, b):
+    def gcd(x, y):
+        """gcd(x, y) -> int
+        greatest common divisor of x and y
         """
-        Calculate the Greatest Common Divisor of a and b.
-
-        Parameters
-        ----------
-        a, b : int
-
-        Returns
-        -------
-        int
-            The greatest common divisor of the integers a and b.
-
-        """
-        while b:
-            a, b = b, a % b
-        return a
+        while y:
+            x, y = y, x % y
+        return x
 
     input = raw_input
     range = xrange
