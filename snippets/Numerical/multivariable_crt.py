@@ -20,9 +20,11 @@ def modinv(a, m):
     amodm = a % m
     g, x, _ = egcd(amodm, m)
 
-    if g == 1:
-        return x % m
-    return None
+    """Sanity Check
+    if g != 1:
+        return None
+    """
+    return x % m
 
 
 def pivot(A, m):
@@ -54,7 +56,7 @@ def mcrt(A, b, m):
     for i, Ai in enumerate(A):
         tot = sum(Ai[k] * x[k] for k in range(len(A)))
         tmp = (modinv(m_prod * Ai[piv[i]], m[i]) * (b[i] - tot)) % m[i]
-        x[piv[i]] = x[piv[i]] + tmp * m_prod
+        x[piv[i]] += tmp * m_prod
         m_prod *= m[i]
 
     return x
