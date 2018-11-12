@@ -1,5 +1,6 @@
 import itertools
 import math
+from math import gcd
 
 # 2d line: ax + by + c = 0  is  (a, b, c)
 
@@ -7,9 +8,24 @@ import math
 # 3d line: dx + ez + f = 0  is  (d, e, f),
 #          gy + hz + i = 0      (g, h, i))
 
-dist = lambda p1, p2: sum((a - b)*(a - b) for a, b in zip(p1, p2))**0.5
 
-pointsToLine2d = lambda p1, p2: (p2[1] - p1[1], p1[0] - p2[0], p1[1]*p2[0] - p1[0]*p2[1])
+def gcdm(a, *r):
+    for b in r:
+        a = gcd(a, b)
+    return a
+
+
+def pointsToLine2d(p1, p2):
+    if p1 == p2:
+        return (0, 0, 0)
+    _p1, _p2 = sorted((p1, p2))
+
+    g = gcdm(*filter(lambda x: x != 0, (_p2[1] - _p1[1], _p1[0] - _p2[0], _p1[1]*_p2[0] - _p1[0]*_p2[1])))
+
+    return ((_p2[1] - _p1[1]) // g, (_p1[0] - _p2[0]) // g, (_p1[1]*_p2[0] - _p1[0]*_p2[1]) // g)
+
+
+dist = lambda p1, p2: sum((a - b)*(a - b) for a, b in zip(p1, p2))**0.5
 
 pointsToLines = lambda p1, p2: map(pointsToLine2d, itertools.combinations(p1, 2), itertools.combinations(p2, 2))
 
