@@ -87,42 +87,10 @@ def sync_with_stdio(sync=True):
         register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
 
 
-def read_ints():
-    numb, sign = 0, 1
-    res = []
-
-    s = sys.stdin.read()
-    for i in range(len(s)):
-        if s[i] >= '0':
-            numb = 10 * numb + ord(s[i]) - 48
-        else:
-            if s[i] == '-':
-                sign = -1
-            else:
-                res.append(sign * numb)
-                numb, sign = 0, 1
-
-    if s[-1] >= '0':
-        res.append(sign * numb)
-
-    return res
-
-
 def main():
     pass
 
 
 if __name__ == '__main__':
     sync_with_stdio(False)
-
-    if 'PyPy' in sys.version:
-        main()
-    else:
-        import threading
-
-        sys.setrecursionlimit(2097152)
-        threading.stack_size(134217728)
-
-        main_thread = threading.Thread(target=main)
-        main_thread.start()
-        main_thread.join()
+    main()
