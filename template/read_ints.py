@@ -2,17 +2,23 @@ import sys
 
 
 def read_ints():
+    s = sys.stdin.read()
     numb, sign = 0, 1
 
-    for char in sys.stdin.read():
-        if char >= '0':
-            numb = 10 * numb + ord(char) - 48
+    res = []
+    res_append = res.append
+
+    for i in range(len(s)):
+        if s[i] >= '0':
+            numb = 10 * numb + ord(s[i]) - 48
         else:
-            if char == '-':
+            if s[i] == '-':
                 sign = -1
             else:
-                yield sign * numb
+                res_append(sign * numb)
                 numb, sign = 0, 1
 
-    if char >= '0':
-        yield sign * numb
+    if s[-1] >= '0':
+        res_append(sign * numb)
+
+    return res
