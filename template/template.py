@@ -87,6 +87,23 @@ def sync_with_stdio(sync=True):
         register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
 
 
+def read_ints():
+    numb, sign = 0, 1
+
+    for char in sys.stdin.read():
+        if char >= '0':
+            numb = 10 * numb + ord(char) - 48
+        else:
+            if char == '-':
+                sign = -1
+            else:
+                yield sign * numb
+                numb, sign = 0, 1
+
+    if char >= '0':
+        yield sign * numb
+
+
 def main():
     pass
 
@@ -95,19 +112,7 @@ if __name__ == '__main__':
     sync_with_stdio(False)
 
     if 'PyPy' in sys.version:
-        from _continuation import continulet
-
-        def bootstrap(c):
-            callable, arg = c.switch()
-            while True:
-                to = continulet(lambda _, f, x: f(x), callable, arg)
-                callable, arg = c.switch(to=to)
-
-        c = continulet(bootstrap)
-        c.switch()
-
         main()
-
     else:
         import threading
 
