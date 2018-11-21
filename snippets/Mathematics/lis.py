@@ -1,4 +1,4 @@
-def lis(nums):
+def lis(nums, cmp=lambda x, y: x < y):
     P = [0] * len(nums)
     M = [0] * (len(nums) + 1)
     L = 0
@@ -8,7 +8,7 @@ def lis(nums):
 
         while lo <= hi:
             mid = (lo + hi) // 2
-            if nums[M[mid]] < nums[i]:
+            if cmp(nums[M[mid]], nums[i]):
                 lo = mid + 1
             else:
                 hi = mid - 1
