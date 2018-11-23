@@ -1,19 +1,19 @@
 class SegmentTree:
     def __init__(self, m, d=0, func=max, low=-float('inf')):
-        self.n = n = 1 << m.bit_length()
-        self.s = s = [d if i < n + m else low for i in range(2*n)]
+        self.n = 1 << m.bit_length()
+        self.s = [d if i < self.n + m else low for i in range(2*self.n)]
         self.func = func
         self.low = low
 
-        for i in range(n - 1, 0, -1):
-            s[i] = func(s[i * 2], s[i*2 + 1])
+        for i in range(self.n - 1, 0, -1):
+            self.s[i] = func(self.s[2*i], self.s[2*i + 1])
 
     def __setitem__(self, pos, val):
         pos += self.n
         self.s[pos] = val
         pos //= 2
         while pos >= 1:
-            self.s[pos] = self.func(self.s[pos * 2], self.s[pos*2 + 1])
+            self.s[pos] = self.func(self.s[2*pos], self.s[2*pos + 1])
             pos //= 2
 
     def __getitem__(self, pos):
