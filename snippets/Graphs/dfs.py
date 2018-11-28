@@ -1,11 +1,6 @@
-from collections import deque
-
-
-def dfs(tree, start=0):
-    stack = deque([start])
-    out = []
-    while stack:
-        cur_node = stack.popleft()
-        out.append(cur_node)
-        stack.extendleft(tree[cur_node])
+def dfs(tree):
+    out = [-1] * len(tree)
+    for i, j in enumerate(tree):
+        for k in j:
+            out[k] = i
     return out
