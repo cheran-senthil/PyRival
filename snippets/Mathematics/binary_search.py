@@ -1,14 +1,12 @@
 def binary_search(a, x):
-    """Locate the value exactly equal to x"""
-    low, high = 0, len(a) - 1
+    """Locate the first value greater than x"""
+    lo, hi = 0, len(a) - 1
 
-    while low <= high:
-        mid = (low + high) // 2
-        if a[mid] > x:
-            high = mid - 1
-        elif a[mid] < x:
-            low = mid + 1
+    while lo < hi:
+        mi = (lo + hi) // 2
+        if a[mi] > x:
+            hi = mi
         else:
-            return mid
+            lo = mi + 1
 
-    return -1
+    return lo
