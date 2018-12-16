@@ -1,7 +1,7 @@
-def dfs(tree):
-    parents = [-1] * len(tree)
-    for v, children in enumerate(tree):
+def dfs(graph):
+    parents = [[]] * len(graph)
+    for v, children in enumerate(graph):
         for w in children:
-            parents[w] = v
+            parents[w].append(v)
 
     return parents
