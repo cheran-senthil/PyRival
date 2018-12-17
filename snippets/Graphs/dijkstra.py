@@ -3,7 +3,7 @@ from heapq import heappop, heappush
 
 def dijkstra(graph, start):
     """
-    Uses Dijkstra's algortihm to find the shortest path between nodes in a graph.
+    Uses Dijkstra's algortihm to find the shortest path between in a graph.
 
     Parameters
     ----------
