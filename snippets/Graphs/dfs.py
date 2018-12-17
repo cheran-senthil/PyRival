@@ -1,5 +1,5 @@
 def dfs(graph):
-    parents = [[]] * len(graph)
+    parents = [[] for _ in range(len(graph))]
     for v, children in enumerate(graph):
         for w in children:
             parents[w].append(v)
