@@ -53,9 +53,7 @@ if sys.version_info[0] < 3:
             return dict.itervalues(self)
 
     def gcd(x, y):
-        """gcd(x, y) -> int
-        greatest common divisor of x and y
-        """
+        """greatest common divisor of x and y"""
         while y:
             x, y = y, x % y
         return x
