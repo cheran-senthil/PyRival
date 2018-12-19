@@ -1,6 +1,5 @@
 def dfs(n, graph, start=0, depth=0):
-    parents = [[] for _ in range(n)]
-    visited = [False] * n
+    parents, visited = [[] for _ in range(n)], [False] * n
     stack = [(start, depth)]
 
     while stack:
