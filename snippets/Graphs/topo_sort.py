@@ -1,11 +1,11 @@
 from heapq import heappop, heappush
 
 
-def topo_sort(n, edges):
+def topo_sort(n, graph):
     idx, indeg = [0] * n, [0] * n
 
     for i in range(n):
-        for e in edges[i]:
+        for e in graph[i]:
             indeg[e] += 1
 
     queue = []
@@ -17,7 +17,7 @@ def topo_sort(n, edges):
     while queue:
         i = -heappop(queue)
         idx[i], nr = nr, nr + 1
-        for e in edges[i]:
+        for e in graph[i]:
             indeg[e] -= 1
             if indeg[e] == 0:
                 heappush(queue, -e)
