@@ -1,4 +1,4 @@
-from heapq import heappop, heappush
+# from heapq import heappop, heappush
 
 
 def topo_sort(n, graph):
@@ -8,18 +8,18 @@ def topo_sort(n, graph):
         for e in graph[i]:
             indeg[e] += 1
 
-    queue = []
+    q = []
     for i in range(n):
         if indeg[i] == 0:
-            heappush(queue, -i)
+            q.append(-i)  # heappush(q, -i)
 
     nr = 0
-    while queue:
-        i = -heappop(queue)
+    while q:
+        i = -q.pop()  # -heappop(q)
         idx[i], nr = nr, nr + 1
         for e in graph[i]:
             indeg[e] -= 1
             if indeg[e] == 0:
-                heappush(queue, -e)
+                q.append(-e)  # heappush(q, -e)
 
     return idx, nr == n
