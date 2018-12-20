@@ -1,10 +1,10 @@
-def bellman_ford(vertices, edges, start):
-    dist = [float('inf')] * len(vertices)
-    pred = [None] * len(vertices)
+def bellman_ford(n, edges, start):
+    dist = [float('inf')] * n
+    pred = [None] * n
 
     dist[start] = 0
 
-    for _ in range(len(vertices)):
+    for _ in range(n):
         for u, v, d in edges:
             if dist[u] + d < dist[v]:
                 dist[v] = dist[u] + d

@@ -1,7 +1,7 @@
 from heapq import heappop, heappush
 
 
-def dijkstra(graph, start):
+def dijkstra(n, graph, start):
     """
     Uses Dijkstra's algortihm to find the shortest path between in a graph.
 
@@ -21,9 +21,9 @@ def dijkstra(graph, start):
     """
     queue = [(0, start)]
 
-    parents = [-1] * len(graph)
-    visited = [False] * len(graph)
-    dist = [float('inf')] * len(graph)
+    parents = [-1] * n
+    visited = [False] * n
+    dist = [float('inf')] * n
 
     dist[start] = 0
 

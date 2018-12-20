@@ -1,9 +1,9 @@
-def euler_walk(n, g):
+def euler_walk(n, adj):
     deg = [0] * n
 
     for i in range(n):
         for j in range(n):
-            deg[i] += g[i][j]
+            deg[i] += adj[i][j]
 
     first = 0
     while deg[first] == 0:
@@ -22,8 +22,8 @@ def euler_walk(n, g):
                 bad = True
 
     if v1 != -1:
-        g[v1][v2] += 1
-        g[v2][v1] += 1
+        adj[v1][v2] += 1
+        adj[v2][v1] += 1
 
     st, res = [first], []
 
@@ -32,13 +32,13 @@ def euler_walk(n, g):
         flag = False
 
         for i in range(n):
-            if g[v][i]:
+            if adj[v][i]:
                 flag = True
                 break
 
         if flag:
-            g[v][i] -= 1
-            g[i][v] -= 1
+            adj[v][i] -= 1
+            adj[i][v] -= 1
             st.append(i)
         else:
             res.append(v)
@@ -52,7 +52,7 @@ def euler_walk(n, g):
 
     for i in range(n):
         for j in range(n):
-            if g[i][j]:
+            if adj[i][j]:
                 bad = True
 
     if bad:

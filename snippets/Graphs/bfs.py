@@ -1,5 +1,5 @@
-def bfs(graph, start=0):
-    used = [False] * len(graph)
+def bfs(n, graph, start=0):
+    used = [False] * n
     used[start] = True
 
     q, ret = [start], []
