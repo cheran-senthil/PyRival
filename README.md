@@ -41,6 +41,7 @@
 - Graphs
   - Bellman-Ford Algorithm
   - Breadth First Search
+  - Connected Components Search
   - Depth First Search
   - Dijkstra's Algorithm
   - Eulerian Path
