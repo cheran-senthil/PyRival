@@ -40,8 +40,15 @@
   - Vector Functions
 - Graphs
   - Bellman-Ford Algorithm
+  - Breadth First Search
+  - Depth First Search
   - Dijkstra's Algorithm
+  - Eulerian Path
+  - Path Constructor
   - Floyd-Warshall Algorithm
+  - Bipartite Graph Check
+  - Kruskal's Algorithm with Disjoin Set Union
+  - Prim's Algorithm
   - Topological Sorting
 - Mathematics
   - Alpha–Beta Pruning
@@ -52,16 +59,21 @@
   - Brent's Algorithm for Cycle Detection
   - Least Common Multiple and Multiplicative Inverse
   - Pollard's Rho Algorithm
+  - Integer Roots
   - Deterministic Miller-Rabin Primality Test
   - Longest Increasing Subsequence
   - Tonelli–Shanks Algorithm
   - Lucas's Theorem
+  - K-th Order Statistic
   - Partition Function
   - Euler's Phi Function
   - Sieve of Eratosthenes
+  - Ternary Search
 - Numerical
   - Fast Fourier Transform
   - Gaussian Elimination
+  - Golden Section Search
+  - Hill Climbing Algorithm
   - Approximate Integration
   - Polynomial Interpolation
   - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
