@@ -8,13 +8,11 @@ else:
 
 
 def sync_with_stdio(sync=True):
-    """
-    Sets whether the standard Python streams are allowed to buffer their I/O.
+    """Set whether the standard Python streams are allowed to buffer their I/O.
 
-    Parameters
-    ----------
-    sync : bool, optional
-        The new synchronization setting. Default is True.
+    Args:
+        sync (bool, optional): The new synchronization setting.
+
     """
     global input, flush
 

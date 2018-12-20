@@ -2,6 +2,7 @@ import sys
 
 
 def read_ints():
+    """Read integers from underlying buffer until we hit EOF."""
     numb, sign = 0, 1
     res = []
 
