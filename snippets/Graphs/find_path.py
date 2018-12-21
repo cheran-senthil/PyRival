@@ -16,9 +16,10 @@ def find_path(start, end, parents):
     path : list[int]
         The path from start to end.
     """
-    path = []
-    parent = end
+    path, parent = [], end
+
     while parent != parents[start]:
         path.append(parent)
         parent = parents[parent]
+
     return path[::-1]
