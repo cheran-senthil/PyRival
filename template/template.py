@@ -32,7 +32,6 @@ if sys.version_info[0] < 3:
 else:
     # from functools import reduce
     from io import StringIO as stream
-    from math import gcd
     # from pickle import dumps
     # from queue import PriorityQueue, Queue
 
@@ -51,12 +50,6 @@ if sys.version_info[0] < 3:
         def values(self):
             """D.values() -> an object providing a view on D's values"""
             return dict.itervalues(self)
-
-    def gcd(x, y):
-        """greatest common divisor of x and y"""
-        while y:
-            x, y = y, x % y
-        return x
 
     input = raw_input
     range = xrange
@@ -83,6 +76,13 @@ def sync_with_stdio(sync=True):
 
         sys.stdout = stream()
         register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
+
+
+def gcd(x, y):
+    """greatest common divisor of x and y"""
+    while y:
+        x, y = y, x % y
+    return x
 
 
 def main():
