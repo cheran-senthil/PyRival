@@ -19,21 +19,16 @@ def dijkstra(n, graph, start):
     parents : list[int]
         The parent of a vertex on its path to start.
     """
-    queue = [(0, start)]
-
-    parents = [-1] * n
-    visited = [False] * n
-    dist = [float('inf')] * n
-
+    dist, parents = [float('inf')] * n, [-1] * n
     dist[start] = 0
 
+    queue = [(0, start)]
     while queue:
         path_len, v = heappop(queue)
-        if not visited[v]:
+        if path_len == dist[v]:
             for (w, edge_len) in graph[v]:
-                if (not visited[w]) and (edge_len + path_len < dist[w]):
+                if edge_len + path_len < dist[w]:
                     dist[w], parents[w] = edge_len + path_len, v
                     heappush(queue, (edge_len + path_len, w))
-            visited[v] = True
 
     return dist, parents
