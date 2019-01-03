@@ -1,5 +1,8 @@
+import operator as op
+
+
 class SegmentTree:
-    def __init__(self, m, d=0, func=max, low=-float('inf')):
+    def __init__(self, m, d=0, func=op.add, low=0):
         self.n = 1 << m.bit_length()
         self.s = [d if i < self.n + m else low for i in range(2*self.n)]
         self.func = func
