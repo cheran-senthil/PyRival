@@ -13,19 +13,10 @@ def memodict(f):
     return memodict().__getitem__
 
 
-def _try_composite(a, d, n, s):
-    if pow(a, d, n) == 1:
-        return False
-    for i in range(s):
-        if pow(a, 2**i * d, n) == n - 1:
-            return False
-    return True
-
-
 def is_prime(n):
     """
     Deterministic variant of the Miller-Rabin primality test to determine
-    whether a given number is prime.
+    whether a given number (upto 2**64) is prime.
 
     Parameters
     ----------
@@ -37,93 +28,107 @@ def is_prime(n):
     bool
         False if n is composite, otherwise True.
     """
-    if n in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]:
+    if n in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837]:
         return True
 
-    if (any((n % p) == 0 for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37])) or (n in [0, 1]):
+    if (n in [0, 1]) or (any((n % p) == 0 for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837])):
         return False
 
     d, s = n - 1, 0
     while not d % 2:
         d, s = d >> 1, s + 1
 
-    if n < 2047:
-        return not _try_composite(2, d, n, s)
-    if n < 1373653:
-        return not any(_try_composite(a, d, n, s) for a in [2, 3])
-    if n < 25326001:
-        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5])
-    if n < 118670087467:
-        if n == 3215031751:
+    def try_composite(a):
+        if pow(a, d, n) == 1:
             return False
-        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7])
-    if n < 2152302898747:
-        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11])
-    if n < 3474749660383:
-        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13])
-    if n < 341550071728321:
-        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13, 17])
-    if n < 3825123056546413051:
-        return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13, 17, 19, 23])
-    return not any(_try_composite(a, d, n, s) for a in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37])
+        for i in range(s):
+            if pow(a, 2**i * d, n) == n - 1:
+                return False
+        return True
+
+    return not any(try_composite(w) for w in [2, 325, 9375, 28178, 450775, 9780504, 1795265022])
 
 
-def _factor(n):
-    for i in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]:
-        if n % i == 0:
-            return i
+@memodict
+def pollard_rho(n):
+    if n <= 1:
+        return Counter()
+
+    if is_prime(n):
+        return Counter({n: 1})
 
     y, c, m = random.randint(1, n - 1), random.randint(1, n - 1), random.randint(1, n - 1)
     g, r, q = 1, 1, 1
 
     while g == 1:
-        x = y
+        x, k = y, 0
+
         for i in range(r):
-            y = ((y * y) % n + c) % n
-        k = 0
+            y = (y*y + c) % n
+
         while (k < r) and (g == 1):
             ys = y
+
             for i in range(min(m, r - k)):
-                y = ((y * y) % n + c) % n
-                q = q * (abs(x - y)) % n
+                y = (y*y + c) % n
+                q = (q * abs(x - y)) % n
+
             g = gcd(q, n)
-            k = k + m
-        r = r * 2
+            k += m
+
+        r *= 2
 
     if g == n:
         while True:
-            ys = ((ys * ys) % n + c) % n
+            ys = (ys*ys + c) % n
             g = gcd(abs(x - ys), n)
             if g > 1:
                 break
 
-    return g
+    return pollard_rho(g) + pollard_rho(n // g)
 
 
-@memodict
 def factors(n):
     """
-    Integer factorization using Pollard's rho algorithm.
+    Prime factorization using Pollard's rho algorithm.
 
     Parameters
     ----------
     n : int
-        n > 1, an integer to be factorized.
+        n > 0, an integer to be factorized.
 
     Returns
     -------
-    Counter
+    prime_factors : Counter
         Counter of the prime factors of n.
     """
-    if is_prime(n):
-        return Counter([n])
-    else:
-        f = _factor(n)
-        if f == n:
-            return factors(n)
-        else:
-            return factors(f) + factors(n//f)
+    prime_factors = Counter()
+
+    def ilog(n, p):
+        cnt = 0
+        while not n % p:
+            n, cnt = n // p, cnt + 1
+        return n, cnt
+
+    n, prime_factors[2] = ilog(n, 2)
+    n, prime_factors[3] = ilog(n, 3)
+
+    i = 5
+    while i * i <= min(n, 4294967295):
+        n, prime_factors[i] = ilog(n, i)
+        i += 2 if i % 3 == 2 else 4
+
+    if n <= 1:
+        return prime_factors
+
+    if n <= 4294967295:
+        prime_factors[n] = 1
+        return prime_factors
+
+    return prime_factors + pollard_rho(n)
 
 
-all_factors = lambda n: set(reduce(list.__add__,
-                            ([i, n//i] for i in range(1, int(n**0.5) + 1, 2 if n % 2 else 1) if n % i == 0)))
+@memodict
+def all_factors(n):
+    return set(reduce(list.__add__,
+               ([i, n//i] for i in range(1, int(n**0.5) + 1, 2 if n % 2 else 1) if n % i == 0)))
