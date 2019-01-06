@@ -63,13 +63,13 @@ def pollard_rho(n):
     while g == 1:
         x, k = y, 0
 
-        for i in range(r):
+        for _ in range(r):
             y = (y*y + c) % n
 
         while (k < r) and (g == 1):
             ys = y
 
-            for i in range(min(m, r - k)):
+            for _ in range(min(m, r - k)):
                 y = (y*y + c) % n
                 q = (q * abs(x - y)) % n
 
