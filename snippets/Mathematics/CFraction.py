@@ -1,9 +1,5 @@
-from fractions import Fraction
-
-
 def CFraction(frac):
-    num = frac.numerator
-    den = frac.denominator
+    num, den = frac
     yield num // den
     num %= den
     while den != 1:
@@ -16,4 +12,4 @@ def CFrac2Frac(cfrac):
     num, den = 1, 0
     for u in reversed(cfrac):
         num, den = den + num*u, num
-    return Fraction(num, den)
+    return (num, den)
