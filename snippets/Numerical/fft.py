@@ -1,40 +1,48 @@
 import cmath
 
 
-def fft(x, roots):
-    n = len(x)
+def fft(a, invert=False):
+    j = 0
+    for i in range(1, len(a)):
+        bit = len(a) >> 1
+        while j & bit:
+            j ^= bit
+            bit >>= 1
+        j ^= bit
 
-    if n <= 1:
-        return x
+        if i < j:
+            a[i], a[j] = a[j], a[i]
 
-    rs = roots[0::2]
-    even = fft(x[0::2], rs)
-    odd = fft(x[1::2], rs)
+    length = 2
+    while length <= len(a):
+        for i in range(0, len(a), length):
+            for j in range(length // 2):
+                u = a[i + j]
+                v = a[i + j + length//2] * cmath.rect(1, (-1 if invert else 1) * 2 * cmath.pi * j / length)
 
-    fft_x = x[:]
+                a[i + j] = u + v
+                a[i + j + length//2] = u - v
 
-    for i in range(n//2):
-        t = roots[i] * odd[i]
-        fft_x[i] = even[i] + t
-        fft_x[i + n//2] = even[i] - t
+        length <<= 1
 
-    return fft_x
+    if invert:
+        for i in range(len(a)):
+            a[i] /= len(a)
 
 
 def conv(a, b):
     s = len(a) + len(b) - 1
     n = 1 << s.bit_length()
 
-    if s <= 0:
-        return []
+    fa = a + [0] * (n - len(a))
+    fb = b + [0] * (n - len(b))
 
-    roots = [cmath.rect(1, -2 * cmath.pi * i / n) for i in range(n)]
+    fft(fa)
+    fft(fb)
 
-    av = fft(a + [0] * (n - len(a)), roots)
-    bv = fft(b + [0] * (n - len(b)), roots)
+    for i in range(n):
+        fa[i] *= fb[i]
 
-    roots = [i.conjugate() for i in roots]
+    fft(fa, True)
 
-    cv = fft([i*j for i, j in zip(av, bv)], roots)
-
-    return [i.real / n for i in cv]
+    return [fa[i].real for i in range(s)]
