@@ -17,10 +17,10 @@ def ntt(a, mod=998244353, root=3, inv=False):
         if i < rev[i]:
             a[i], a[rev[i]] = a[rev[i]], a[i]
 
-    cnt = 2
-    while cnt <= n:
-        half, diff = cnt >> 1, n // cnt
-        for i in range(0, n, cnt):
+    length = 2
+    while length <= n:
+        half, diff = length >> 1, n // length
+        for i in range(0, n, length):
             pw = 0
             for j in range(i, i + half):
                 v = a[j + half] * w[pw] % mod
@@ -28,7 +28,7 @@ def ntt(a, mod=998244353, root=3, inv=False):
                 a[j] = a[j] + v if a[j] + v < mod else a[j] + v - mod
                 pw += diff
 
-        cnt <<= 1
+        length <<= 1
 
     if inv:
         inv_n = pow(n, mod - 2, mod)
