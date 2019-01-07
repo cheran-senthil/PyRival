@@ -2,32 +2,37 @@ import cmath
 
 
 def fft(a, invert=False):
-    j = 0
-    for i in range(1, len(a)):
-        bit = len(a) >> 1
-        while j & bit:
-            j ^= bit
-            bit >>= 1
-        j ^= bit
+    n = len(a)
+    w = [1] * (n >> 1)
 
-        if i < j:
-            a[i], a[j] = a[j], a[i]
+    w[1] = cmath.rect(1, (-2 if invert else 2) * cmath.pi / n)
+    for i in range(2, (n >> 1)):
+        w[i] = w[i - 1] * w[1]
+
+    rev = [0] * n
+    for i in range(n):
+        rev[i] = rev[i >> 1] >> 1
+        if i & 1:
+            rev[i] |= (n >> 1)
+        if i < rev[i]:
+            a[i], a[rev[i]] = a[rev[i]], a[i]
 
     length = 2
-    while length <= len(a):
-        for i in range(0, len(a), length):
-            for j in range(length // 2):
-                u = a[i + j]
-                v = a[i + j + length//2] * cmath.rect(1, (-1 if invert else 1) * 2 * cmath.pi * j / length)
-
-                a[i + j] = u + v
-                a[i + j + length//2] = u - v
+    while length <= n:
+        half, diff = length >> 1, n // length
+        for i in range(0, n, length):
+            pw = 0
+            for j in range(i, i + half):
+                v = a[j + half] * w[pw]
+                a[j + half] = a[j] - v
+                a[j] += v
+                pw += diff
 
         length <<= 1
 
     if invert:
-        for i in range(len(a)):
-            a[i] /= len(a)
+        for i in range(n):
+            a[i] /= n
 
 
 def conv(a, b):
