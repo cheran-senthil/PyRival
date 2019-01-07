@@ -110,12 +110,15 @@ def factors(n):
             n, cnt = n // p, cnt + 1
         return n, cnt
 
-    n, prime_factors[2] = ilog(n, 2)
-    n, prime_factors[3] = ilog(n, 3)
+    if n % 2 == 0:
+        n, prime_factors[2] = ilog(n, 2)
+    if n % 3 == 0:
+        n, prime_factors[3] = ilog(n, 3)
 
     i = 5
     while i * i <= min(n, 4294967295):
-        n, prime_factors[i] = ilog(n, i)
+        if n % i == 0:
+            n, prime_factors[i] = ilog(n, i)
         i += 2 if i % 3 == 2 else 4
 
     if n <= 1:
