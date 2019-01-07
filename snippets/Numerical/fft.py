@@ -3,11 +3,7 @@ import cmath
 
 def fft(a, invert=False):
     n = len(a)
-    w = [1] * (n >> 1)
-
-    w[1] = cmath.rect(1, (-2 if invert else 2) * cmath.pi / n)
-    for i in range(2, (n >> 1)):
-        w[i] = w[i - 1] * w[1]
+    w = [cmath.rect(1, (-2 if invert else 2) * cmath.pi * i / n) for i in range(n >> 1)]
 
     rev = [0] * n
     for i in range(n):
