@@ -66,6 +66,8 @@ def perfect_base(n):
 
 
 def primitive_root(p):
+    if p == 2:
+        return 1
     if p == 4:
         return 3
     if -p & p == p:
