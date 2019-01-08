@@ -37,14 +37,51 @@ def mat_pow(mat, power):
     return result
 
 
-def det(mat):
-    if len(mat) == 1:
+def det(mat, mod=0):
+    n = len(mat)
+
+    if n == 1:
         return mat[0][0]
-
-    if len(mat) == 2:
+    if n == 2:
         return mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0]
+    if n == 3:
+        return (mat[0][0] * (mat[1][1] * mat[2][2] - mat[1][2] * mat[2][1]) -
+                mat[0][1] * (mat[1][0] * mat[2][2] - mat[1][2] * mat[2][0]) +
+                mat[0][2] * (mat[1][0] * mat[2][1] - mat[1][1] * mat[2][0]))
 
-    return sum(pow(-1, i) * mat[0][i] * det(minor(mat, 0, i)) for i in range(len(mat)))
+    flag, tmp = False, 1
+
+    for i in range(n):
+        if not mat[i][i]:
+            for j in range(i + 1, n):
+                if mat[j][i]:
+                    for k in range(i, n):
+                        mat[j][k], mat[i][k] = mat[i][k], mat[j][k]
+                    flag = not flag
+                    break
+
+        if not mat[i][i]:
+            return 0
+
+        for j in range(i + 1, n):
+            if mat[j][i]:
+                tmp = tmp * mat[i][i] if mod == 0 else tmp * mat[i][i] % mod
+                t = mat[j][i]
+
+                for k in range(i, n):
+                    if mod == 0:
+                        mat[j][k] = mat[j][k] * mat[i][i] - mat[i][k] * t
+                    else:
+                        mat[j][k] = (mat[j][k] * mat[i][i] - mat[i][k]) % mod
+
+    res = pow(tmp, mod - 2, mod) if mod else 1
+
+    for i in range(n):
+        res = res * mat[i][i] % mod if mod else res * mat[i][i]
+    if flag:
+        return mod - res
+
+    return res if mod else res // tmp
 
 
 def inverse(m):
