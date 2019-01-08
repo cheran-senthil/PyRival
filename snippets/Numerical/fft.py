@@ -13,10 +13,10 @@ def fft(a, invert=False):
         if i < rev[i]:
             a[i], a[rev[i]] = a[rev[i]], a[i]
 
-    length = 2
-    while length <= n:
-        half, diff = length >> 1, n // length
-        for i in range(0, n, length):
+    step = 2
+    while step <= n:
+        half, diff = step >> 1, n // step
+        for i in range(0, n, step):
             pw = 0
             for j in range(i, i + half):
                 v = a[j + half] * w[pw]
@@ -24,7 +24,7 @@ def fft(a, invert=False):
                 a[j] += v
                 pw += diff
 
-        length <<= 1
+        step <<= 1
 
     if invert:
         for i in range(n):
