@@ -29,7 +29,6 @@
   - Memoize Decorators
   - Generic Nodes
   - Range Query Data Structure
-  - Red-Black Tree
   - Segment Tree
   - Trie Tree
   - Disjoint-Set (Union Find) Data Structure
