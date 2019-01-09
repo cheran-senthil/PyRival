@@ -57,7 +57,7 @@
   - Chinese Remainder Theorem
   - General Purpose Numbers
   - Brent's Algorithm for Cycle Detection
-  - Least Common Multiple and Multiplicative Inverse
+  - Least Common Multiple
   - Pollard's Rho Algorithm
   - Integer Roots
   - Deterministic Miller-Rabin Primality Test
@@ -71,6 +71,7 @@
   - Ternary Search
 - Numerical
   - Fast Fourier Transform
+  - Fast Subset Transform
   - Gaussian Elimination
   - Golden Section Search
   - Hill Climbing Algorithm
@@ -79,6 +80,7 @@
   - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
   - Linear Recurrence Matrix
   - Multivariable Chinese Remainder Theorem
+  - Number Theoretic Transform
 - String Processing
   - Knuth–Morris–Pratt Algorithm
   - Longest Common/Palindromic Subsequences
