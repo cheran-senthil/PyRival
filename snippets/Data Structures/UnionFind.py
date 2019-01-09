@@ -1,25 +1,34 @@
 class UnionFind:
     def __init__(self, n):
-        self.e = [-1] * n
+        self.parent = list(range(n))
+        self.size = [1] * n
+        self.num_sets = n
 
-    def find(self, x):
-        if self.e[x] < 0:
-            return x
-        self.e[x] = self.find(self.e[x])
-        return self.e[x]
+    def find(self, a):
+        to_update = []
 
-    def same_set(self, a, b):
-        return self.find(a) == self.find(b)
+        while a != self.parent[a]:
+            to_update.append(a)
+            a = self.parent[a]
 
-    def size(self, x):
-        return -self.e[self.find(x)]
+        for b in to_update:
+            self.parent[b] = a
 
-    def join(self, a, b):
-        a1 = self.find(a)
-        b1 = self.find(b)
+        return self.parent[a]
 
-        if (a1 != b1):
-            if self.e[a1] > self.e[b1]:
-                a1, b1 = b1, a1
-            self.e[a] += self.e[b]
-            self.e[b] = a
+    def merge(self, a, b):
+        a = self.find(a)
+        b = self.find(b)
+
+        if a == b:
+            return
+
+        if self.size[a] < self.size[b]:
+            a, b = b, a
+
+        self.num_sets -= 1
+        self.parent[b] = a
+        self.size[a] += self.size[b]
+
+    def set_size(self, a):
+        return self.size[self.find(a)]
