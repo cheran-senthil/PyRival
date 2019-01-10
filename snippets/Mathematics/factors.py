@@ -51,7 +51,7 @@ def is_prime(n):
 
 @memodict
 def pollard_rho(n):
-    if n <= 1:
+    if n == 1:
         return Counter()
 
     if is_prime(n):
@@ -106,7 +106,7 @@ def factors(n):
 
     def ilog(n, p):
         cnt = 0
-        while not n % p:
+        while n % p == 0:
             n, cnt = n // p, cnt + 1
         return n, cnt
 
@@ -121,7 +121,7 @@ def factors(n):
             n, prime_factors[i] = ilog(n, i)
         i += 2 if i % 3 == 2 else 4
 
-    if n <= 1:
+    if n == 1:
         return prime_factors
 
     if n <= 4294967295:
