@@ -28,11 +28,10 @@ def mat_pow(mat, power):
     if power == 0:
         return result
 
-    matrix = mat
     for i in '{0:b}'.format(power)[::-1]:
         if i == '1':
-            result = mat_mul(result, matrix)
-        matrix = mat_mul(matrix, matrix)
+            result = mat_mul(result, mat)
+        mat = mat_mul(mat, mat)
 
     return result
 
