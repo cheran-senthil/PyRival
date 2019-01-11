@@ -2,8 +2,8 @@ from queue import Queue
 
 
 def is_bipartite(n, graph):
+    bipartite = True
     side = [-1] * n
-    res = True
     q = Queue()
 
     for st in range(n):
@@ -17,6 +17,6 @@ def is_bipartite(n, graph):
                         side[u] = side[v] ^ 1
                         q.put(u)
                     else:
-                        res &= (side[u] != side[v])
+                        bipartite &= side[u] != side[v]
 
-    return res
+    return bipartite
