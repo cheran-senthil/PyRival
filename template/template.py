@@ -18,12 +18,10 @@ from bisect import bisect_left, bisect_right
 # from copy import deepcopy
 # from decimal import Decimal
 # from difflib import SequenceMatcher
+# from functools import reduce
 # from heapq import heappop, heappush
 from io import BytesIO, FileIO, StringIO
 
-
-INP_FILE = 0
-OUT_FILE = 1
 
 if sys.version_info[0] < 3:
     class dict(dict):
@@ -40,16 +38,22 @@ if sys.version_info[0] < 3:
             """D.values() -> an object providing a view on D's values"""
             return dict.itervalues(self)
 
-    input = iter(FileIO(INP_FILE).read().splitlines()).next
+    input = raw_input
     range = xrange
 
     filter = itertools.ifilter
     map = itertools.imap
     zip = itertools.izip
 
+
+INP_FILE = 0
+OUT_FILE = 1
+
+if sys.version_info[0] < 3:
+    input = iter(FileIO(INP_FILE).read().splitlines()).next
+
     sys.stdout = BytesIO()
     register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue()))
-
 else:
     input = iter(FileIO(INP_FILE).read().splitlines()).__next__
 
