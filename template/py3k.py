@@ -9,10 +9,10 @@ if sys.version_info[0] < 3:
     # from Queue import PriorityQueue, Queue
     pass
 else:
-    from math import gcd
     # from functools import reduce
     # from pickle import dumps
     # from queue import PriorityQueue, Queue
+    pass
 
 
 if sys.version_info[0] < 3:
@@ -30,15 +30,16 @@ if sys.version_info[0] < 3:
             """D.values() -> an object providing a view on D's values"""
             return dict.itervalues(self)
 
-    def gcd(x, y):
-        """greatest common divisor of x and y"""
-        while y:
-            x, y = y, x % y
-        return x
-
     input = raw_input
     range = xrange
 
     filter = itertools.ifilter
     map = itertools.imap
     zip = itertools.izip
+
+
+def gcd(x, y):
+    """greatest common divisor of x and y"""
+    while y:
+        x, y = y, x % y
+    return x
