@@ -14,9 +14,10 @@
 ### Template
 - [Infinite Recursion](template/infinite_recursion.py)
 - [Python 3 Compatibility](template/py3k.py)
-- [Fast I/O](template/sync_with_stdio.py)
+- [Fast I/O](template/fastio.py)
 - [Fast Integer Input](template/read_ints.py)
 - [Master Template](template/template.py)
+- [Lite Template](template/lite.py)
 
 ##
 
