@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 """
 This file is part of https://github.com/Cheran-Senthil/PyRival.
-
-Copyright 2018 Cheran Senthilkumar all rights reserved,
-Cheran Senthilkumar <hello@cheran.io>
-Permission to use, modify, and distribute this software is given under the
-terms of the MIT License.
+Copyright 2019 Cheran Senthilkumar <hello@cheran.io>
 
 """
 from __future__ import division, print_function
@@ -18,23 +14,16 @@ import operator as op
 import sys
 from atexit import register
 from bisect import bisect_left, bisect_right
-# from collections import Counter, MutableSequence, defaultdict, deque
+# from collections import Counter, defaultdict, deque
 # from copy import deepcopy
 # from decimal import Decimal
 # from difflib import SequenceMatcher
-# from fractions import Fraction
 # from heapq import heappop, heappush
+from io import BytesIO, FileIO, StringIO
 
-if sys.version_info[0] < 3:
-    # from cPickle import dumps
-    from io import BytesIO as stream
-    # from Queue import PriorityQueue, Queue
-else:
-    # from functools import reduce
-    from io import StringIO as stream
-    # from pickle import dumps
-    # from queue import PriorityQueue, Queue
 
+INP_FILE = 0
+OUT_FILE = 1
 
 if sys.version_info[0] < 3:
     class dict(dict):
@@ -51,38 +40,21 @@ if sys.version_info[0] < 3:
             """D.values() -> an object providing a view on D's values"""
             return dict.itervalues(self)
 
-    input = raw_input
+    input = iter(FileIO(INP_FILE).read().splitlines()).next
     range = xrange
 
     filter = itertools.ifilter
     map = itertools.imap
     zip = itertools.izip
 
+    sys.stdout = BytesIO()
+    register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue()))
 
-def sync_with_stdio(sync=True):
-    """Set whether the standard Python streams are allowed to buffer their I/O.
+else:
+    input = iter(FileIO(INP_FILE).read().splitlines()).__next__
 
-    Args:
-        sync (bool, optional): The new synchronization setting.
-
-    """
-    global input, flush
-
-    if sync:
-        flush = sys.stdout.flush
-    else:
-        sys.stdin = stream(sys.stdin.read())
-        input = lambda: sys.stdin.readline().rstrip('\r\n')
-
-        sys.stdout = stream()
-        register(lambda: sys.__stdout__.write(sys.stdout.getvalue()))
-
-
-def gcd(x, y):
-    """greatest common divisor of x and y"""
-    while y:
-        x, y = y, x % y
-    return x
+    sys.stdout = StringIO()
+    register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue().encode()))
 
 
 def main():
@@ -90,5 +62,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sync_with_stdio(False)
     main()
