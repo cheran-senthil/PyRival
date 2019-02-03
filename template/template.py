@@ -54,7 +54,7 @@ if sys.version_info[0] < 3:
     sys.stdout = BytesIO()
     register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue()))
 else:
-    input = iter(FileIO(INP_FILE).read().splitlines()).__next__
+    input = iter(FileIO(INP_FILE).read().decode().splitlines()).__next__
     sys.stdout = StringIO()
     register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue().encode()))
 
