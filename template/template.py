@@ -50,11 +50,15 @@ INP_FILE = 0
 OUT_FILE = 1
 
 if sys.version_info[0] < 3:
-    input = iter(FileIO(INP_FILE).read().splitlines()).next
+    sys.stdin = BytesIO(FileIO(INP_FILE).read())
+    input = lambda: sys.stdin.readline().rstrip('\r\n')
+
     sys.stdout = BytesIO()
     register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue()))
 else:
-    input = iter(FileIO(INP_FILE).read().decode().splitlines()).__next__
+    sys.stdin = BytesIO(FileIO(INP_FILE).read())
+    input = lambda: sys.stdin.readline().decode().rstrip('\r\n')
+
     sys.stdout = StringIO()
     register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue().encode()))
 
