@@ -51,16 +51,14 @@ OUT_FILE = 1
 
 if sys.version_info[0] < 3:
     sys.stdin = BytesIO(FileIO(INP_FILE).read())
-    input = lambda: sys.stdin.readline().rstrip('\r\n')
-
     sys.stdout = BytesIO()
     register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue()))
 else:
-    sys.stdin = BytesIO(FileIO(INP_FILE).read())
-    input = lambda: sys.stdin.readline().decode().rstrip('\r\n')
-
+    sys.stdin = StringIO(FileIO(INP_FILE).read().decode())
     sys.stdout = StringIO()
     register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue().encode()))
+
+input = lambda: sys.stdin.readline().rstrip('\r\n')
 
 
 def main():
