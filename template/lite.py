@@ -3,7 +3,9 @@ import sys
 from atexit import register
 from io import FileIO, StringIO
 
-input = iter(FileIO(0).read().decode().splitlines()).__next__
+sys.stdin = StringIO(FileIO(0).read().decode())
+input = lambda: sys.stdin.readline().rstrip('\r\n')
+
 sys.stdout = StringIO()
 register(lambda: FileIO(1, 'w').write(sys.stdout.getvalue().encode()))
 
