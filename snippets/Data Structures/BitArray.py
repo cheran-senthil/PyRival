@@ -7,6 +7,7 @@ class BitArray:
     size : int
         The number of bits to allocate storage for.
     """
+
     def __init__(self, size):
         self.bytes = bytearray((size >> 3) + 1)
 

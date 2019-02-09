@@ -6,7 +6,7 @@ def kmpSearch(T, P):
         while (j >= 0) and (P[i] != P[j]):
             j = b[j]
         j += 1
-        b[i+1] = j
+        b[i + 1] = j
 
     j = 0
     for i in range(len(T)):

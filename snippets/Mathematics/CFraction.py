@@ -11,5 +11,5 @@ def CFraction(frac):
 def CFrac2Frac(cfrac):
     num, den = 1, 0
     for u in reversed(cfrac):
-        num, den = den + num*u, num
+        num, den = den + num * u, num
     return (num, den)

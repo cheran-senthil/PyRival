@@ -110,7 +110,8 @@ class AVLTree():
     def delete(self, key):
         if self.node is not None:
             if self.node.key == key:
-                if (self.node.left.node is None) and (self.node.right.node is None):
+                if (self.node.left.node is None) and (self.node.right.node is
+                                                      None):
                     self.node = None
                 elif self.node.left.node is None:
                     self.node = self.node.right.node

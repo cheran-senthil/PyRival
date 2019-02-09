@@ -9,7 +9,7 @@ class Node(object):
 
     def __repr__(self):
         if not self:
-            return '%s()' % (self.__class__.__name__,)
+            return '%s()' % (self.__class__.__name__, )
         return '%s(%r)' % (self.__class__.__name__, self.value)
 
 
@@ -58,7 +58,7 @@ class LinkedList(MutableSequence):
 
     def __repr__(self):
         if not self:
-            return '%s()' % (self.__class__.__name__,)
+            return '%s()' % (self.__class__.__name__, )
         list_ = [self.__get_node(i).value for i in range(len(self))]
         return '%s(%r)' % (self.__class__.__name__, list_)
 

@@ -14,10 +14,11 @@ else:
     # from queue import PriorityQueue, Queue
     pass
 
-
 if sys.version_info[0] < 3:
+
     class dict(dict):
         """dict() -> new empty dictionary"""
+
         def items(self):
             """D.items() -> a set-like object providing a view on D's items"""
             return dict.iteritems(self)

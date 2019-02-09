@@ -5,7 +5,8 @@ def is_prime(n):
     if n in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837]:
         return True
 
-    if (n in [0, 1]) or (any((n % p) == 0 for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837])):
+    if (n in [0, 1]) or (any(
+        (n % p) == 0 for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837])):
         return False
 
     d, s = n - 1, 0
@@ -20,7 +21,9 @@ def is_prime(n):
                 return False
         return True
 
-    return not any(try_composite(w) for w in [2, 325, 9375, 28178, 450775, 9780504, 1795265022])
+    return not any(
+        try_composite(w)
+        for w in [2, 325, 9375, 28178, 450775, 9780504, 1795265022])
 
 
 def factors(n):
@@ -51,7 +54,7 @@ def factors(n):
 def perfect_base(n):
     b = n.bit_length()
     for a in range(b, 0, -1):
-        lo, hi = 1, 1 << (b//a + 1)
+        lo, hi = 1, 1 << (b // a + 1)
         while lo < hi:
             mi = (lo + hi) // 2
 

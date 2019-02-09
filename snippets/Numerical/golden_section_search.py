@@ -1,5 +1,5 @@
 def golden_section_search(a, b, func, esp=1e-7):
-    r = ((5 ** 0.5) - 1) / 2
+    r = ((5**0.5) - 1) / 2
 
     x1 = b - r * (b - a)
     f1 = func(b - r * (b - a))

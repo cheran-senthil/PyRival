@@ -12,6 +12,7 @@ def main():
 
 if __name__ == '__main__':
     if 'PyPy' in sys.version:
+
         def bootstrap(c):
             callable, arg = c.switch()
             while True:

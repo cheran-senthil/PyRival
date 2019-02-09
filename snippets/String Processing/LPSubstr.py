@@ -3,8 +3,8 @@ def LPSubstr(s):
     n = len(T)
     P = [0] * n
     C = R = 0
-    for i in range(1, n-1):
-        P[i] = (R > i) and min(R - i, P[2*C - i])
+    for i in range(1, n - 1):
+        P[i] = (R > i) and min(R - i, P[2 * C - i])
         while T[i + 1 + P[i]] == T[i - 1 - P[i]]:
             P[i] += 1
 
@@ -12,4 +12,4 @@ def LPSubstr(s):
             C, R = i, i + P[i]
 
     maxLen, centerIndex = max((n, i) for i, n in enumerate(P))
-    return s[(centerIndex - maxLen)//2: (centerIndex + maxLen)//2]
+    return s[(centerIndex - maxLen) // 2:(centerIndex + maxLen) // 2]

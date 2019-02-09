@@ -5,7 +5,8 @@ setrecursionlimit(10000)
 
 def quad(func, a, b, n=1000):
     h = (b - a) / 2 / n
-    v = func(a) + func(b) + sum(func(a + i * h) * (4 if i & 1 else 2) for i in range(1, 2 * n))
+    v = func(a) + func(b) + sum(
+        func(a + i * h) * (4 if i & 1 else 2) for i in range(1, 2 * n))
     return v * h / 3
 
 

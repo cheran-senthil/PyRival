@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-This file is part of https://github.com/Cheran-Senthil/PyRival.
+This file is part of https://github.com/cheran-senthil/PyRival
 Copyright 2019 Cheran Senthilkumar <hello@cheran.io>
 
 """
@@ -22,10 +22,11 @@ from bisect import bisect_left, bisect_right
 # from heapq import heappop, heappush
 from io import BytesIO, FileIO, StringIO
 
-
 if sys.version_info[0] < 3:
+
     class dict(dict):
         """dict() -> new empty dictionary"""
+
         def items(self):
             """D.items() -> a set-like object providing a view on D's items"""
             return dict.iteritems(self)
@@ -45,7 +46,6 @@ if sys.version_info[0] < 3:
     map = itertools.imap
     zip = itertools.izip
 
-
 INP_FILE = 0
 OUT_FILE = 1
 
@@ -56,7 +56,8 @@ if sys.version_info[0] < 3:
 else:
     sys.stdin = StringIO(FileIO(INP_FILE).read().decode())
     sys.stdout = StringIO()
-    register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue().encode()))
+    register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue().encode(
+    )))
 
 input = lambda: sys.stdin.readline().rstrip('\r\n')
 
