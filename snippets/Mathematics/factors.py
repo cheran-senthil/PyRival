@@ -34,11 +34,12 @@ def is_prime(n):
         return True
 
     if (n in [0, 1]) or (any(
-        (n % p) == 0 for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837])):
+            n % p == 0
+            for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837])):
         return False
 
     d, s = n - 1, 0
-    while not d % 2:
+    while not d & 1:
         d, s = d >> 1, s + 1
 
     def try_composite(a):
@@ -117,7 +118,7 @@ def factors(n):
             n, cnt = n // p, cnt + 1
         return n, cnt
 
-    if n % 2 == 0:
+    if not n & 1:
         n, prime_factors[2] = ilog(n, 2)
     if n % 3 == 0:
         n, prime_factors[3] = ilog(n, 3)
@@ -142,6 +143,7 @@ def factors(n):
 def all_factors(n):
     return set(
         reduce(list.__add__,
-               ([i, n // i] for i in range(1,
-                                           int(n**0.5) + 1, 2 if n % 2 else 1)
+               ([i, n // i]
+                for i in range(1,
+                               int(n**0.5) + 1, 2 if not n & 1 else 1)
                 if n % i == 0)))

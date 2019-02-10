@@ -17,11 +17,12 @@ def is_prime(n):
         return True
 
     if (n in [0, 1]) or (any(
-        (n % p) == 0 for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837])):
+            n % p == 0
+            for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837])):
         return False
 
     d, s = n - 1, 0
-    while not d % 2:
+    while not d & 1:
         d, s = d >> 1, s + 1
 
     def try_composite(a):
