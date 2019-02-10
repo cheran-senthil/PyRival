@@ -6,38 +6,31 @@ class Node():
 
 
 class AVLTree():
-    def __init__(self, *args):
+    def __init__(self, nodes=[]):
         self.node = None
         self.height = -1
         self.balance = 0
 
-        if len(args) == 1:
-            for i in args[0]:
-                self.insert(i)
+        for node in nodes:
+            self.insert(node)
 
     def height(self):
-        if self.node:
-            return self.node.height
-        else:
-            return 0
+        return self.node.height if self.node else 0
 
     def is_leaf(self):
-        return (self.height == 0)
+        return self.height == 0
 
     def insert(self, key):
         tree = self.node
-
         newnode = Node(key)
 
         if tree is None:
             self.node = newnode
             self.node.left = AVLTree()
             self.node.right = AVLTree()
-
-        elif key < tree.key:
+        elif key <= tree.key:
             self.node.left.insert(key)
-
-        elif key > tree.key:
+        else:
             self.node.right.insert(key)
 
         self.rebalance()
@@ -45,6 +38,7 @@ class AVLTree():
     def rebalance(self):
         self.update_heights(False)
         self.update_balances(False)
+
         while self.balance < -1 or self.balance > 1:
             if self.balance > 1:
                 if self.node.left.balance < 0:
@@ -96,7 +90,9 @@ class AVLTree():
             self.height = -1
 
     def update_balances(self, recurse=True):
-        if self.node is not None:
+        if self.node is None:
+            self.balance = 0
+        else:
             if recurse:
                 if self.node.left is not None:
                     self.node.left.update_balances()
@@ -104,8 +100,6 @@ class AVLTree():
                     self.node.right.update_balances()
 
             self.balance = self.node.left.height - self.node.right.height
-        else:
-            self.balance = 0
 
     def delete(self, key):
         if self.node is not None:
@@ -122,17 +116,12 @@ class AVLTree():
                     if replacement is not None:
                         self.node.key = replacement.key
                         self.node.right.delete(replacement.key)
-
-                self.rebalance()
-                return
             elif key < self.node.key:
                 self.node.left.delete(key)
-            elif key > self.node.key:
+            else:
                 self.node.right.delete(key)
 
             self.rebalance()
-        else:
-            return
 
     def logical_predecessor(self, node):
         node = node.left.node
@@ -140,8 +129,7 @@ class AVLTree():
             while node.right is not None:
                 if node.right.node is None:
                     return node
-                else:
-                    node = node.right.node
+                node = node.right.node
         return node
 
     def logical_successor(self, node):
@@ -150,8 +138,7 @@ class AVLTree():
             while node.left is not None:
                 if node.left.node is None:
                     return node
-                else:
-                    node = node.left.node
+                node = node.left.node
         return node
 
     def inorder_traverse(self):
