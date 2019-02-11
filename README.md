@@ -6,18 +6,19 @@
 ---
 
 ### About
-- A Master Template optimized for performance in PyPy 2
+- A Master Template optimized for performance in all flavors of Python
+- A Lite version for use in Python/PyPy 3 
 - Optimized code snippets written in Python 3
 
 ##
 
 ### Template
-- [Infinite Recursion](template/infinite_recursion.py)
-- [Python 3 Compatibility](template/py3k.py)
-- [Fast I/O](template/fastio.py)
-- [Fast Integer Input](template/read_ints.py)
 - [Master Template](template/template.py)
 - [Lite Template](template/lite.py)
+- [Fast I/O](template/fastio.py)
+- [Fast Integer Input](template/read_ints.py)
+- [Infinite Recursion](template/infinite_recursion.py)
+- [Python 3 Compatibility](template/py3k.py)
 
 ##
 
@@ -30,7 +31,7 @@
   - Memoize Decorators
   - Generic Nodes
   - Range Query Data Structure
-  - Segment Tree
+  - (Lazy) Segment Tree
   - Trie Tree
   - Disjoint-Set (Union Find) Data Structure
 - Geometry
