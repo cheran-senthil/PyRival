@@ -46,6 +46,14 @@ if sys.version_info[0] < 3:
     map = itertools.imap
     zip = itertools.izip
 
+
+def gcd(x, y):
+    """greatest common divisor of x and y"""
+    while y:
+        x, y = y, x % y
+    return x
+
+
 INP_FILE = 0
 OUT_FILE = 1
 
