@@ -1,15 +1,8 @@
+from functools import reduce
 from math import gcd
+
+gcdm = lambda *args: reduce(gcd, args, 0)
 
 lcm = lambda a, b: a * b // gcd(a, b)
 
-
-def gcdm(a, *r):
-    for b in r:
-        a = gcd(a, b)
-    return a
-
-
-def lcmm(a, *r):
-    for b in r:
-        a = lcm(a, b)
-    return a
+lcmm = lambda *args: reduce(lcm, args, 1)

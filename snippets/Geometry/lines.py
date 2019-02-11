@@ -1,5 +1,6 @@
 import itertools
 import math
+from functools import reduce
 from math import gcd
 
 # 2d line: ax + by + c = 0  is  (a, b, c)
@@ -8,11 +9,7 @@ from math import gcd
 # 3d line: dx + ez + f = 0  is  (d, e, f),
 #          gy + hz + i = 0      (g, h, i))
 
-
-def gcdm(a, *r):
-    for b in r:
-        a = gcd(a, b)
-    return a
+gcdm = lambda *args: reduce(gcd, args, 0)
 
 
 def pointsToLine2d(p1, p2):
