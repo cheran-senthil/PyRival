@@ -40,8 +40,7 @@ class SegmentTree:
         self.data[2 * seg_ind + 1] += q
 
         # Remove queries from seg_ind
-        self.data[seg_ind] = max(self.data[2 * seg_ind],
-                                 self.data[2 * seg_ind + 1])
+        self.data[seg_ind] = max(self.data[2 * seg_ind], self.data[2 * seg_ind + 1])
         self.query[seg_ind] = 0
 
     # Updates the node seg_ind to know of all queries
@@ -62,9 +61,7 @@ class SegmentTree:
     def build(self, seg_ind):
         seg_ind //= 2
         while seg_ind > 0:
-            self.data[seg_ind] = max(
-                self.data[2 * seg_ind],
-                self.data[2 * seg_ind + 1]) + self.query[seg_ind]
+            self.data[seg_ind] = max(self.data[2 * seg_ind], self.data[2 * seg_ind + 1]) + self.query[seg_ind]
             seg_ind //= 2
 
     # Lazily add value to [l,r)

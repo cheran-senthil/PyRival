@@ -4,11 +4,7 @@ class Node:
         self.children = children
 
 
-def alphabeta(node,
-              depth,
-              alpha=float('-inf'),
-              beta=float('+inf'),
-              maximizingPlayer=True):
+def alphabeta(node, depth, alpha=float('-inf'), beta=float('+inf'), maximizingPlayer=True):
     if (depth == 0) or (node.children is None):
         return node.value
     if maximizingPlayer:

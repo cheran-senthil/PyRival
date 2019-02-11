@@ -46,10 +46,8 @@ def euler_walk(n, adj):
 
     if v1 != -1:
         for i in range(len(res) - 1):
-            if ((res[i] == v1) and (res[i + 1] == v2)) or ((res[i] == v2) and
-                                                           (res[i + 1] == v1)):
-                res = [res[j] for j in range(i + 1, len(res))
-                       ] + [res[j] for j in range(1, i + 1)]
+            if ((res[i] == v1) and (res[i + 1] == v2)) or ((res[i] == v2) and (res[i + 1] == v1)):
+                res = [res[j] for j in range(i + 1, len(res))] + [res[j] for j in range(1, i + 1)]
                 break
 
     for i in range(n):

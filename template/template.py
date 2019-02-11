@@ -56,8 +56,7 @@ if sys.version_info[0] < 3:
 else:
     sys.stdin = StringIO(FileIO(INP_FILE).read().decode())
     sys.stdout = StringIO()
-    register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue().encode(
-    )))
+    register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue().encode()))
 
 input = lambda: sys.stdin.readline().rstrip('\r\n')
 

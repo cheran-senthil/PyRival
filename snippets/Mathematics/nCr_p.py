@@ -20,8 +20,7 @@ def nCr_p(n, r, p):
         a, b = n % p, r % p
         if a < b:
             return 0
-        ans = (ans * factorial_p(a, p) * pow(factorial_p(b, p), p - 2, p) *
-               pow(factorial_p(a - b, p), p - 2, p)) % p
+        ans = (ans * factorial_p(a, p) * pow(factorial_p(b, p), p - 2, p) * pow(factorial_p(a - b, p), p - 2, p)) % p
         n //= p
         r //= p
 

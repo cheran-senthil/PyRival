@@ -4,11 +4,9 @@ def fst(a, op='AND', inv=False):
         for i in range(0, len(a), 2 * step):
             for j in range(i, i + step):
                 if op == 'AND':
-                    a[j], a[j + step] = a[j + step] - a[j], a[j] if inv else a[
-                        j + step], a[j] + a[j + step]
+                    a[j], a[j + step] = a[j + step] - a[j], a[j] if inv else a[j + step], a[j] + a[j + step]
                 elif op == 'OR':
-                    a[j], a[j + step] = a[j + step], a[j] - a[
-                        j + step] if inv else a[j] + a[j + step], a[j]
+                    a[j], a[j + step] = a[j + step], a[j] - a[j + step] if inv else a[j] + a[j + step], a[j]
                 elif op == 'XOR':
                     a[j], a[j + step] = a[j] + a[j + step], a[j] - a[j + step]
 

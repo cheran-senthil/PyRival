@@ -6,8 +6,7 @@ def lcs(a, b):
             if x == y:
                 lengths[i + 1][j + 1] = lengths[i][j] + 1
             else:
-                lengths[i + 1][j + 1] = max(lengths[i + 1][j],
-                                            lengths[i][j + 1])
+                lengths[i + 1][j + 1] = max(lengths[i + 1][j], lengths[i][j + 1])
 
     result = []
     x, y = len(a), len(b)

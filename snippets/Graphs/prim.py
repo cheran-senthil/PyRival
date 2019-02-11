@@ -9,8 +9,7 @@ def prim(n, adj):
         v = -1
 
         for j in range(n):
-            if (not selected[j]) and ((v == -1) or
-                                      (min_e[j][0] < min_e[v][0])):
+            if (not selected[j]) and ((v == -1) or (min_e[j][0] < min_e[v][0])):
                 v = j
 
         if min_e[v][0] == float('inf'):

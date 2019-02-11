@@ -1,6 +1,5 @@
 def floyd_warshall(n, edges):
-    dist = [[0 if i == j else float('inf') for i in range(n)]
-            for j in range(n)]
+    dist = [[0 if i == j else float('inf') for i in range(n)] for j in range(n)]
     pred = [[None] * n for _ in range(n)]
 
     for u, v, d in edges:

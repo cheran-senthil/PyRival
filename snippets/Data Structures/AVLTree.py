@@ -84,8 +84,7 @@ class AVLTree():
                 if self.node.right is not None:
                     self.node.right.update_heights()
 
-            self.height = max(self.node.left.height,
-                              self.node.right.height) + 1
+            self.height = max(self.node.left.height, self.node.right.height) + 1
         else:
             self.height = -1
 
@@ -104,8 +103,7 @@ class AVLTree():
     def delete(self, key):
         if self.node is not None:
             if self.node.key == key:
-                if (self.node.left.node is None) and (self.node.right.node is
-                                                      None):
+                if (self.node.left.node is None) and (self.node.right.node is None):
                     self.node = None
                 elif self.node.left.node is None:
                     self.node = self.node.right.node

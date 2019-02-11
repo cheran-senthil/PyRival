@@ -8,8 +8,7 @@ class RangeQuery(object):
         n = len(items)
         for step, i in itertools.product(range(1, n.bit_length()), range(n)):
             j = i + (1 << (step - 1))
-            rq[i, step] = func(rq[i, step - 1],
-                               rq[j, step - 1]) if j < n else rq[i, step - 1]
+            rq[i, step] = func(rq[i, step - 1], rq[j, step - 1]) if j < n else rq[i, step - 1]
 
     def query(self, start, stop):
         j = (stop - start).bit_length() - 1

@@ -14,5 +14,4 @@ else:
     input = iter(FileIO(INP_FILE).read().splitlines()).__next__
 
     sys.stdout = StringIO()
-    register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue().encode(
-    )))
+    register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue().encode()))
