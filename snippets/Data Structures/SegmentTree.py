@@ -18,16 +18,16 @@ Currently it allows for two operations, both running in O(log n),
 
 class SegmentTree:
     def __init__(self, data):
-        self.n = len(data)
-        self.m = 1 << self.n.bit_length()
-        self.data = [0] * (2 * self.m)
+        m = 1 << len(data).bit_length()
+        self.m = m
+        self.data = [0] * (2 * m)
 
         for i in range(len(data)):
-            self.data[i + self.m] = data[i]
-        for i in reversed(range(self.m)):
+            self.data[i + m] = data[i]
+        for i in reversed(range(m)):
             self.data[i] = max(self.data[2 * i], self.data[2 * i + 1])
 
-        self.query = [0] * (2 * self.m)
+        self.query = [0] * (2 * m)
 
     def push(self, seg_ind):
         """Push the query on seg_ind to its children"""
