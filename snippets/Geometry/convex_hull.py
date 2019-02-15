@@ -13,4 +13,5 @@ def convex_hull(points):
             hull.pop()
         hull.append(p)
 
-    return hull[:-1]
+    hull.pop()
+    return hull
