@@ -94,7 +94,7 @@
 ### Acknowledgements
 
 - Testing and debugging by [Mukundan314](https://github.com/Mukundan314).
-- Faster I/O techniques by [Görre Mörre](https://www.codechef.com/users/gorre_morre) from [SPOJ](https://www.spoj.com/ranks/INTEST/lang=PYPY2.4) testing.
+- Faster I/O techniques by [Görre Mörre](https://www.codechef.com/users/gorre_morre).
 
 ##
 
