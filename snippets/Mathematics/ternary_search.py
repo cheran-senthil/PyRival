@@ -13,3 +13,22 @@ def ternary_search(f, left, right, absolute_precision):
             left = left_third
         else:
             right = right_third
+
+
+def discrete_ternary_search(a):
+    """
+    Find the first maximum of unimodal array a
+    """
+    left, right = 0, len(a) - 1
+
+    while left <= right:
+        third = (right - left) // 3
+        left_third = left + third
+        right_third = max(left + 2 * third, left + third + (1 if left < right else 0))
+
+        if a[left_third] < a[right_third]:
+            left = left_third + 1
+        else:
+            right = right_third - 1
+
+    return left
