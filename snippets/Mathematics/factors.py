@@ -15,26 +15,10 @@ def memodict(f):
     return memodict().__getitem__
 
 
-def is_prime(n):
-    """
-    Deterministic variant of the Miller-Rabin primality test to determine
-    whether a given number (upto 2**64) is prime.
-
-    Parameters
-    ----------
-    n : int
-        n >= 0, an integer to be tested for primality.
-
-    Returns
-    -------
-    bool
-        False if n is composite, otherwise True.
-    """
-    if n in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837]:
-        return True
-
-    if (n in [0, 1]) or (any(n % p == 0 for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837])):
-        return False
+@memodict
+def pollard_rho(n):
+    if n == 1:
+        return Counter()
 
     d, s = n - 1, 0
     while not d & 1:
@@ -48,15 +32,7 @@ def is_prime(n):
                 return False
         return True
 
-    return not any(try_composite(w) for w in [2, 325, 9375, 28178, 450775, 9780504, 1795265022])
-
-
-@memodict
-def pollard_rho(n):
-    if n == 1:
-        return Counter()
-
-    if is_prime(n):
+    if not any(try_composite(w) for w in [2, 325, 9375, 28178, 450775, 9780504, 1795265022]):
         return Counter({n: 1})
 
     y, c, m = random.randint(1, n - 1), random.randint(1, n - 1), random.randint(1, n - 1)
@@ -90,7 +66,8 @@ def pollard_rho(n):
     return pollard_rho(g) + pollard_rho(n // g)
 
 
-def factors(n):
+@memodict
+def prime_factors(n):
     """
     Prime factorization using Pollard's rho algorithm.
 
@@ -101,40 +78,21 @@ def factors(n):
 
     Returns
     -------
-    prime_factors : Counter
+    factors : Counter
         Counter of the prime factors of n.
     """
-    prime_factors = Counter()
+    factors = Counter()
 
-    def ilog(n, p):
-        cnt = 0
-        while n % p == 0:
-            n, cnt = n // p, cnt + 1
-        return n, cnt
+    for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837]:
+        if n % p == 0:
+            cnt = 0
+            while n % p == 0:
+                n, cnt = n // p, cnt + 1
+            factors[p] = cnt
 
-    if not n & 1:
-        n, prime_factors[2] = ilog(n, 2)
-    if n % 3 == 0:
-        n, prime_factors[3] = ilog(n, 3)
-
-    i = 5
-    while i * i <= min(n, 4294967295):
-        if n % i == 0:
-            n, prime_factors[i] = ilog(n, i)
-        i += 2 if i % 3 == 2 else 4
-
-    if n == 1:
-        return prime_factors
-
-    if n <= 4294967295:
-        prime_factors[n] = 1
-        return prime_factors
-
-    return prime_factors + pollard_rho(n)
+    return factors + pollard_rho(n)
 
 
 @memodict
 def all_factors(n):
-    return set(
-        reduce(list.__add__, ([i, n // i] for i in range(1,
-                                                         int(n**0.5) + 1, 2 if not n & 1 else 1) if n % i == 0)))
+    return set(reduce(list.__add__, ([i, n // i] for i in range(1, int(n**0.5) + 1, 2 if n & 1 else 1) if n % i == 0)))
