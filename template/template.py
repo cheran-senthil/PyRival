@@ -10,6 +10,7 @@ import cmath
 import itertools
 import math
 import operator as op
+import os
 # import random
 import sys
 from atexit import register
@@ -20,7 +21,7 @@ from bisect import bisect_left, bisect_right
 # from difflib import SequenceMatcher
 # from functools import reduce
 # from heapq import heappop, heappush
-from io import BytesIO, FileIO, StringIO
+from io import BytesIO, StringIO
 
 if sys.version_info[0] < 3:
 
@@ -54,17 +55,14 @@ def gcd(x, y):
     return x
 
 
-INP_FILE = 0
-OUT_FILE = 1
-
 if sys.version_info[0] < 3:
-    sys.stdin = BytesIO(FileIO(INP_FILE).read())
+    sys.stdin = BytesIO(os.read(0, os.fstat(0).st_size))
     sys.stdout = BytesIO()
-    register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue()))
+    register(lambda: os.write(1, sys.stdout.getvalue()))
 else:
-    sys.stdin = StringIO(FileIO(INP_FILE).read().decode())
+    sys.stdin = StringIO(os.read(0, os.fstat(0).st_size).decode())
     sys.stdout = StringIO()
-    register(lambda: FileIO(OUT_FILE, 'w').write(sys.stdout.getvalue().encode()))
+    register(lambda: os.write(1, sys.stdout.getvalue()).encode())
 
 input = lambda: sys.stdin.readline().rstrip('\r\n')
 

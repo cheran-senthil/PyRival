@@ -1,4 +1,4 @@
-import sys
+import os
 
 
 def read_ints():
@@ -6,7 +6,7 @@ def read_ints():
     numb, sign = 0, 1
     res = []
 
-    s = sys.stdin.read()
+    s = os.read(0, os.fstat(0).st_size)
     for i in range(len(s)):
         if s[i] >= '0':
             numb = 10 * numb + ord(s[i]) - 48
