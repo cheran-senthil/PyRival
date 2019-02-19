@@ -22,9 +22,8 @@ def discrete_ternary_search(a):
     left, right = 0, len(a) - 1
 
     while left <= right:
-        third = (right - left) // 3
-        left_third = left + third
-        right_third = max(left + 2 * third, left + third + (1 if left < right else 0))
+        left_third = left + (right - left) // 3
+        right_third = left + (right - left) // 3 + (1 if 0 < right - left < 3 else (right - left) // 3)
 
         if a[left_third] < a[right_third]:
             left = left_third + 1
