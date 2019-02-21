@@ -1,10 +1,20 @@
-def binary_search(a, x):
-    """Locate the first value greater than x"""
-    lo, hi = 0, len(a) - 1
+def binary_search(func, lo, hi, abs_prec):
+    """Locate the first value x s.t. func(x) = True within [lo, hi]"""
+    while abs(hi - lo) < abs_prec:
+        mi = (lo + hi) / 2
+        if func(mi):
+            hi = mi
+        else:
+            lo = mi
 
+    return lo
+
+
+def discrete_binary_search(func, lo, hi):
+    """Locate the first value x s.t. func(x) = True within [lo, hi]"""
     while lo < hi:
         mi = (lo + hi) // 2
-        if a[mi] > x:
+        if func(mi):
             hi = mi
         else:
             lo = mi + 1

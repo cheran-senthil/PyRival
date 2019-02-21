@@ -1,33 +1,31 @@
-def ternary_search(f, left, right, absolute_precision):
+def ternary_search(func, lo, hi, abs_prec):
     """
-    Find maximum of unimodal function f() within [left, right]
+    Find maximum of unimodal function func() within [lo, hi]
     """
     while True:
-        if abs(right - left) < absolute_precision:
-            return (left + right) / 2
+        if abs(hi - lo) < abs_prec:
+            return (lo + hi) / 2
 
-        left_third = left + (right - left) / 3
-        right_third = right - (right - left) / 3
+        lo_third = lo + (hi - lo) / 3
+        hi_third = hi - (hi - lo) / 3
 
-        if f(left_third) < f(right_third):
-            left = left_third
+        if func(lo_third) < func(hi_third):
+            lo = lo_third
         else:
-            right = right_third
+            hi = hi_third
 
 
-def discrete_ternary_search(a):
+def discrete_ternary_search(func, lo, hi):
     """
-    Find the first maximum of unimodal array a
+    Find the first maximum of unimodal function func() within [lo, hi]
     """
-    left, right = 0, len(a) - 1
+    while lo <= hi:
+        lo_third = lo + (hi - lo) // 3
+        hi_third = lo + (hi - lo) // 3 + (1 if 0 < hi - lo < 3 else (hi - lo) // 3)
 
-    while left <= right:
-        left_third = left + (right - left) // 3
-        right_third = left + (right - left) // 3 + (1 if 0 < right - left < 3 else (right - left) // 3)
-
-        if a[left_third] < a[right_third]:
-            left = left_third + 1
+        if func(lo_third) < func(hi_third):
+            lo = lo_third + 1
         else:
-            right = right_third - 1
+            hi = hi_third - 1
 
-    return left
+    return lo
