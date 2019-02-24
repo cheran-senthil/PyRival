@@ -10,6 +10,6 @@ if sys.version_info[0] < 3:
 else:
     sys.stdin = StringIO(os.read(0, os.fstat(0).st_size).decode())
     sys.stdout = StringIO()
-    register(lambda: os.write(1, sys.stdout.getvalue()).encode())
+    register(lambda: os.write(1, sys.stdout.getvalue().encode()))
 
 input = lambda: sys.stdin.readline().rstrip('\r\n')
