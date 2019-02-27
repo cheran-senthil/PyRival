@@ -1,5 +1,4 @@
 import math
-import operator as op
 
 # oa = toVec(o, a), ob = toVec(o, b)
 
@@ -9,7 +8,7 @@ scale = lambda v, s: (i * s for i in v)
 
 translate = lambda p, v: (pi + vi for pi, vi in zip(p, v))
 
-dot = lambda v1, v2: sum(map(op.mul, v1, v2))
+dot = lambda v1, v2: sum(i * j for i, j in zip(v1, v2))
 
 norm_sq = lambda v: sum(i * i for i in v)
 
