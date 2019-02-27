@@ -1,6 +1,4 @@
-import operator as op
-
-transpose = lambda mat: list(map(list, zip(*mat)))
+transpose = lambda mat: [list(col) for col in zip(*mat)]
 
 minor = lambda mat, i, j: [row[:j] + row[j + 1:] for row in (mat[:i] + mat[i + 1:])]
 
@@ -8,9 +6,9 @@ mat_add = lambda *mat: [[sum(elements) for elements in zip(*row)] for row in zip
 
 mat_sub = lambda A, B: [[i - j for i, j in zip(*row)] for row in zip(A, B)]
 
-mat_mul = lambda A, B: list(map(lambda row: list(map(lambda *column: sum(map(op.mul, row, column)), *B)), A))
+mat_mul = lambda A, B: [[sum(i * j for i, j in zip(row, col)) for col in zip(*B)] for row in A]
 
-vec_mul = lambda vec, mat: [sum(vec_i * col[i] for i, vec_i in enumerate(vec)) for col in zip(*mat)]
+vec_mul = lambda vec, mat: [sum(i * j for i, j in zip(vec, col)) for col in zip(*mat)]
 
 
 def mat_mul_mod(A, B, mod):

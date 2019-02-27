@@ -1,10 +1,8 @@
-import operator as op
 from math import gcd
 
-mat_sub = lambda mat1, mat2: [[i - j for i, j in zip(*row)] for row in zip(mat1, mat2)]
+mat_sub = lambda A, B: [[i - j for i, j in zip(*row)] for row in zip(A, B)]
 
-mat_mul = lambda mat1, mat2: list(
-    map(lambda row: list(map(lambda *column: sum(map(op.mul, row, column)), *mat2)), mat1))
+mat_mul = lambda A, B: [[sum(i * j for i, j in zip(row, col)) for col in zip(*B)] for row in A]
 
 
 def egcd(a, m):
@@ -20,7 +18,7 @@ def modinv(a, m):
     """Find Modular Inverse"""
     amodm = a % m
     g, x, _ = egcd(amodm, m)
-    """Sanity Check
+    """
     if g != 1:
         return None
     """
