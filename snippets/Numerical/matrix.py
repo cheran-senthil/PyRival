@@ -6,10 +6,30 @@ minor = lambda mat, i, j: [row[:j] + row[j + 1:] for row in (mat[:i] + mat[i + 1
 
 mat_add = lambda *mat: [[sum(elements) for elements in zip(*row)] for row in zip(*mat)]
 
-mat_sub = lambda mat1, mat2: [[i - j for i, j in zip(*row)] for row in zip(mat1, mat2)]
+mat_sub = lambda A, B: [[i - j for i, j in zip(*row)] for row in zip(A, B)]
 
-mat_mul = lambda mat1, mat2: list(
-    map(lambda row: list(map(lambda *column: sum(map(op.mul, row, column)), *mat2)), mat1))
+mat_mul = lambda A, B: list(map(lambda row: list(map(lambda *column: sum(map(op.mul, row, column)), *B)), A))
+
+vec_mul = lambda vec, mat: [sum(vec_i * col[i] for i, vec_i in enumerate(vec)) for col in zip(*mat)]
+
+
+def mat_mul_mod(A, B, mod):
+    n, p = len(A), len(B[0])
+    fmod = float(mod)
+
+    B = [[(Bij & (2**16 - 1)) + 1j * (Bij >> 16) for Bij in Bi] for Bi in B]
+    C = [[0] * p for _ in range(n)]
+
+    for i, Ai in enumerate(A):
+        row = [0.0] * p
+        for j, Bj in enumerate(B):
+            Aij = Ai[j] + 1j * ((Ai[j] << 16) % mod)
+            for k, Bjk in enumerate(Bj):
+                row[k] += Aij.real * Bjk.real + Aij.imag * Bjk.imag
+
+        C[i] = [int(j % fmod) for j in row]
+
+    return C
 
 
 def eye(m):
@@ -29,7 +49,7 @@ def mat_pow(mat, power):
     if power == 0:
         return result
 
-    for i in '{0:b}'.format(power)[::-1]:
+    for i in bin(power)[:1:-1]:
         if i == '1':
             result = mat_mul(result, mat)
         mat = mat_mul(mat, mat)
@@ -84,14 +104,12 @@ def det(mat, mod=0):
     return res if mod else res // tmp
 
 
-def inverse(m):
-    determinant = det(m)
-    if len(m) == 2:
-        return [[m[1][1] / determinant, -1 * m[0][1] / determinant],
-                [-1 * m[1][0] / determinant, m[0][0] / determinant]]
+def inverse(mat):
+    n = len(mat)
+    determinant = det(mat)
 
-    return transpose(
-        [[(pow(-1, i + j) * det(minor(m, i, j))) / determinant for j in range(len(m))] for i in range(len(m))])
+    if n == 2:
+        return [[mat[1][1] / determinant, -1 * mat[0][1] / determinant],
+                [-1 * mat[1][0] / determinant, mat[0][0] / determinant]]
 
-
-linear_recurrence = lambda trans_matrix, known_values, k: mat_mul(mat_pow(trans_matrix, k), known_values)
+    return transpose([[(pow(-1, i + j) * det(minor(mat, i, j))) / determinant for j in range(n)] for i in range(n)])
