@@ -8,14 +8,15 @@ mat_sub = lambda A, B: [[i - j for i, j in zip(*row)] for row in zip(A, B)]
 
 mat_mul = lambda A, B: [[sum(i * j for i, j in zip(row, col)) for col in zip(*B)] for row in A]
 
-vec_mul = lambda vec, mat: [sum(i * j for i, j in zip(vec, col)) for col in zip(*mat)]
+vec_mul = lambda mat, vec: [sum(a * b for a, b in zip(row, vec)) for row in mat]
 
 
 def mat_mul_mod(A, B, mod):
     n, p = len(A), len(B[0])
     fmod = float(mod)
+    float_prec = float((1 << 51) - 1)
 
-    B = [[(Bij & (2**16 - 1)) + 1j * (Bij >> 16) for Bij in Bi] for Bi in B]
+    B = [[(Bij & ((1 << 16) - 1)) - 1j * (Bij >> 16) for Bij in Bi] for Bi in B]
     C = [[0] * p for _ in range(n)]
 
     for i, Ai in enumerate(A):
@@ -23,7 +24,9 @@ def mat_mul_mod(A, B, mod):
         for j, Bj in enumerate(B):
             Aij = Ai[j] + 1j * ((Ai[j] << 16) % mod)
             for k, Bjk in enumerate(Bj):
-                row[k] += Aij.real * Bjk.real + Aij.imag * Bjk.imag
+                row[k] += (Aij * Bjk).real
+                if row[k] > float_prec:
+                    row[k] %= fmod
 
         C[i] = [int(j % fmod) for j in row]
 
