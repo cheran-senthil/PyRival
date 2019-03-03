@@ -1,6 +1,7 @@
 import math
 
 FMOD = 1000000007.0
+PREC = 7881299347898367.0
 SHRT = 65536.0
 
 fmod = lambda x: x - FMOD * math.trunc(x / FMOD)
@@ -20,7 +21,6 @@ vec_mul = lambda mat, vec: [sum(a * b for a, b in zip(row, vec)) for row in mat]
 
 def mat_mul_mod(A, B):
     n, p = len(A), len(B[0])
-    float_prec = 7881299347898367.0
 
     B = [[(Bij - SHRT * math.trunc(Bij / SHRT)) - 1j * (math.trunc(Bij / SHRT)) for Bij in Bi] for Bi in B]
     C = [[0.0] * p for _ in range(n)]
@@ -31,7 +31,7 @@ def mat_mul_mod(A, B):
             Aij = Ai[j] + 1j * fmod(Ai[j] * SHRT)
             for k, Bjk in enumerate(Bj):
                 Ci[k] += (Aij * Bjk).real
-                if Ci[k] > float_prec:
+                if Ci[k] > PREC:
                     Ci[k] = fmod(Ci[k])
 
         C[i] = [fmod(Cij) for Cij in Ci]
