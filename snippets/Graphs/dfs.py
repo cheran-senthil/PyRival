@@ -8,8 +8,7 @@ def dfs(n, graph, start=0, depth=0):
         if visited[start]:
             stack.pop()
             continue
-        else:
-            visited[start] = True
+        visited[start] = True
 
         for i in graph[start]:
             if not visited[i]:
