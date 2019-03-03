@@ -20,10 +20,8 @@ vec_mul = lambda mat, vec: [sum(a * b for a, b in zip(row, vec)) for row in mat]
 
 
 def mat_mul_mod(A, B):
-    n, p = len(A), len(B[0])
-
     B = [[(Bij - SHRT * math.trunc(Bij / SHRT)) - 1j * (math.trunc(Bij / SHRT)) for Bij in Bi] for Bi in B]
-    C = [[0.0] * p for _ in range(n)]
+    C = [[0.0] * len(B[0]) for _ in range(len(A))]
 
     for i, Ai in enumerate(A):
         Ci = C[i]
