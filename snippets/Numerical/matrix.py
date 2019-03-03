@@ -1,3 +1,10 @@
+import math
+
+FMOD = 1000000007.0
+SHRT = 65536.0
+
+fmod = lambda x: x - FMOD * math.trunc(x / FMOD)
+
 transpose = lambda mat: [list(col) for col in zip(*mat)]
 
 minor = lambda mat, i, j: [row[:j] + row[j + 1:] for row in (mat[:i] + mat[i + 1:])]
@@ -11,24 +18,23 @@ mat_mul = lambda A, B: [[sum(i * j for i, j in zip(row, col)) for col in zip(*B)
 vec_mul = lambda mat, vec: [sum(a * b for a, b in zip(row, vec)) for row in mat]
 
 
-def mat_mul_mod(A, B, mod):
+def mat_mul_mod(A, B):
     n, p = len(A), len(B[0])
-    fmod = float(mod)
-    float_prec = float((1 << 51) - 1)
+    float_prec = 7881299347898367.0
 
-    B = [[(Bij & ((1 << 16) - 1)) - 1j * (Bij >> 16) for Bij in Bi] for Bi in B]
-    C = [[0] * p for _ in range(n)]
+    B = [[(Bij - SHRT * math.trunc(Bij / SHRT)) - 1j * (math.trunc(Bij / SHRT)) for Bij in Bi] for Bi in B]
+    C = [[0.0] * p for _ in range(n)]
 
     for i, Ai in enumerate(A):
-        row = [0.0] * p
+        Ci = C[i]
         for j, Bj in enumerate(B):
-            Aij = Ai[j] + 1j * ((Ai[j] << 16) % mod)
+            Aij = Ai[j] + 1j * fmod(Ai[j] * SHRT)
             for k, Bjk in enumerate(Bj):
-                row[k] += (Aij * Bjk).real
-                if row[k] > float_prec:
-                    row[k] %= fmod
+                Ci[k] += (Aij * Bjk).real
+                if Ci[k] > float_prec:
+                    Ci[k] = fmod(Ci[k])
 
-        C[i] = [int(j % fmod) for j in row]
+        C[i] = [fmod(Cij) for Cij in Ci]
 
     return C
 
