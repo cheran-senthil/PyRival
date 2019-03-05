@@ -72,5 +72,5 @@ def conv(a, b):
     for i in range(n):
         a[i] = fmul(a[i], b[i])
 
-    ntt(a, inv=True)
+    ntt(a, True)
     del a[s:]
