@@ -1,14 +1,14 @@
 import cmath
 
 
-def fft(a, invert=False):
+def fft(a, inv=False):
     n = len(a)
-    w = [cmath.rect(1, (-2 if invert else 2) * cmath.pi * i / n) for i in range(n >> 1)]
+    w = [cmath.rect(1, (-2 if inv else 2) * cmath.pi * i / n) for i in range(n >> 1)]
 
     rev = [0] * n
     for i in range(n):
         rev[i] = rev[i >> 1] >> 1
-        if i & 1:
+        if i & 1 == 1:
             rev[i] |= (n >> 1)
         if i < rev[i]:
             a[i], a[rev[i]] = a[rev[i]], a[i]
@@ -26,7 +26,7 @@ def fft(a, invert=False):
 
         step <<= 1
 
-    if invert:
+    if inv:
         for i in range(n):
             a[i] /= n
 
@@ -35,15 +35,14 @@ def conv(a, b):
     s = len(a) + len(b) - 1
     n = 1 << s.bit_length()
 
-    fa = a + [0] * (n - len(a))
-    fb = b + [0] * (n - len(b))
+    a.extend([0.0] * (n - len(a)))
+    b.extend([0.0] * (n - len(b)))
 
-    fft(fa)
-    fft(fb)
+    fft(a)
+    fft(b)
 
     for i in range(n):
-        fa[i] *= fb[i]
+        a[i] *= b[i]
 
-    fft(fa, True)
-
-    return [fa[i].real for i in range(s)]
+    fft(a, True)
+    a = [a[i].real for i in range(s)]
