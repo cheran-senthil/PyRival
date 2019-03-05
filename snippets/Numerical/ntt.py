@@ -6,30 +6,16 @@ SHRT = float(1 << 16)
 ROOT = 3.0
 
 fmod = lambda x: x - MODF * math.trunc(x / MODF)
-mod_prod = lambda a, b: fmod(math.trunc(a / SHRT) * fmod(b * SHRT) + (a - SHRT * math.trunc(a / SHRT)) * b)
+fmul = lambda a, b: fmod(math.trunc(a / SHRT) * fmod(b * SHRT) + (a - SHRT * math.trunc(a / SHRT)) * b)
 
 
-def memoize(f):
-    """ Memoization decorator for a function taking one or more arguments. """
-
-    class memodict(dict):
-        def __getitem__(self, *key):
-            return dict.__getitem__(self, key)
-
-        def __missing__(self, key):
-            ret = self[key] = f(*key)
-            return ret
-
-    return memodict().__getitem__
-
-
-@memoize
 def fpow(x, y):
     res = 1.0
     while y > 0:
         if y & 1 == 1:
-            res = mod_prod(res, x)
-        x = mod_prod(x, x)
+            res = fmul(res, x)
+        if y > 1:
+            x = fmul(x, x)
         y >>= 1
 
     return res
@@ -44,7 +30,7 @@ def ntt(a, inv=False):
         w[1] = fpow(w[1], MOD - 2)
 
     for i in range(2, (n >> 1)):
-        w[i] = mod_prod(w[i - 1], w[1])
+        w[i] = fmul(w[i - 1], w[1])
 
     rev = [0] * n
     for i in range(n):
@@ -60,7 +46,7 @@ def ntt(a, inv=False):
         for i in range(0, n, step):
             pw = 0
             for j in range(i, i + half):
-                v = mod_prod(a[j + half], w[pw])
+                v = fmul(w[pw], a[j + half])
                 a[j + half] = a[j] - v
                 a[j] += v
                 pw += diff
@@ -70,7 +56,7 @@ def ntt(a, inv=False):
     if inv:
         inv_n = fpow(n, MOD - 2)
         for i in range(n):
-            a[i] = mod_prod(a[i], inv_n)
+            a[i] = fmul(a[i], inv_n)
 
 
 def conv(a, b):
@@ -84,7 +70,7 @@ def conv(a, b):
     ntt(b)
 
     for i in range(n):
-        a[i] = mod_prod(a[i], b[i])
+        a[i] = fmul(a[i], b[i])
 
     ntt(a, inv=True)
     del a[s:]
