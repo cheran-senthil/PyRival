@@ -1,22 +1,6 @@
-"""
-A very nice implementation of a maximum segment tree with
-some inspiration taken from https://codeforces.com/blog/entry/18051
-
-This implementation should be able to be modified to do pretty
-much anything one would want to do with segment trees apart from
-persistance.
-
-Note that especially in python this implementation is much much better
-than most other approches because how slow python can be with function
-calls.
-
-Currently it allows for two operations, both running in O(log n),
-'add(l,r,value)' adds value to [l,r)
-'maxi(l,r)' returns the biggest value on l:r
-"""
-
-
 class SegmentTree:
+    """ Maximum Segment Tree """
+
     def __init__(self, data):
         m = 1 << len(data).bit_length()
         self.m = m
@@ -30,7 +14,7 @@ class SegmentTree:
         self.query = [0] * (2 * m)
 
     def push(self, seg_ind):
-        """Push the query on seg_ind to its children"""
+        """ Push the query on seg_ind to its children """
         # Let the children know of the queries
         q = self.query[seg_ind]
 
@@ -45,7 +29,7 @@ class SegmentTree:
         self.query[seg_ind] = 0
 
     def update(self, seg_ind):
-        """Updates the node seg_ind to know of all queries applied to it via its ancestors"""
+        """ Updates the node seg_ind to know of all queries applied to it via its ancestors """
         # Find all indecies to be updated
         seg_ind >>= 1
         inds = []
@@ -58,14 +42,14 @@ class SegmentTree:
             self.push(ind)
 
     def build(self, seg_ind):
-        """Make the changes to seg_ind be known to its ancestors"""
+        """ Make the changes to seg_ind be known to its ancestors """
         seg_ind >>= 1
         while seg_ind > 0:
             self.data[seg_ind] = max(self.data[2 * seg_ind], self.data[2 * seg_ind + 1]) + self.query[seg_ind]
             seg_ind >>= 1
 
     def add(self, start, end, value):
-        """Lazily add value to [start, end)"""
+        """ Lazily add value to [start, end) """
         start += self.m
         end += self.m
         _start, _end = start, end
@@ -89,7 +73,7 @@ class SegmentTree:
         self.build(end - 1)
 
     def maxi(self, start, end):
-        """Max of data[start, end)"""
+        """ Max of data[start, end) """
         start += self.m
         end += self.m
 

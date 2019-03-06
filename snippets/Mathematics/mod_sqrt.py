@@ -1,20 +1,5 @@
 def mod_sqrt(n, p):
-    """
-    Uses the Tonelli-Shanks algorithm to solve for r in a congruence of the
-    form r**2 = n (mod p), where p is prime.
-
-    Parameters
-    ----------
-    n : int
-        An element of (Z/pZ)**d such that solutions to the congruence r**2 = n exist.
-    p : int
-        A prime.
-
-    Returns
-    -------
-    r, p - r : int, int
-        r, p - r in (Z/pZ)**d such r**2 = (p - r)**2 = n
-    """
+    """ Uses the Tonelli-Shanks algorithm to solve for r in a congruence of the form r**2 = n (mod p). """
     if p == 2:
         return n % 2
 

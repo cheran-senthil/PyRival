@@ -1,18 +1,5 @@
 def is_prime(n):
-    """
-    Deterministic variant of the Miller-Rabin primality test to determine
-    whether a given number (upto 2**64) is prime.
-
-    Parameters
-    ----------
-    n : int
-        n >= 0, an integer to be tested for primality.
-
-    Returns
-    -------
-    bool
-        False if n is composite, otherwise True.
-    """
+    """ Deterministic variant of the Miller-Rabin primality test. """
     if n in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837]:
         return True
 

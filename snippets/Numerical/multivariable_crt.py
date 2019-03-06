@@ -6,7 +6,7 @@ mat_mul = lambda A, B: [[sum(i * j for i, j in zip(row, col)) for col in zip(*B)
 
 
 def egcd(a, m):
-    """Extended GCD"""
+    """ Extended GCD """
     if a == 0:
         return (m, 0, 1)
 
@@ -15,7 +15,7 @@ def egcd(a, m):
 
 
 def modinv(a, m):
-    """Find Modular Inverse"""
+    """ Find Modular Inverse """
     amodm = a % m
     g, x, _ = egcd(amodm, m)
     """
@@ -26,7 +26,7 @@ def modinv(a, m):
 
 
 def pivot(A, m):
-    """Finds the pivot of A and m"""
+    """ Finds the pivot of A and m """
     result = [0] * len(A)
     for i, Ai in enumerate(A):
         for j, Aij in enumerate(Ai):
@@ -37,7 +37,7 @@ def pivot(A, m):
 
 
 def is_sol(A, x, b, m):
-    """Checks if Ax = b mod m"""
+    """ Checks if Ax = b mod m """
     ax_b = mat_sub(mat_mul(A, x), b)
     for i, mod in enumerate(m):
         if ax_b[i] % mod != 0:
@@ -46,7 +46,7 @@ def is_sol(A, x, b, m):
 
 
 def mcrt(A, b, m):
-    """Returns for x in Ax = b mod m"""
+    """ Returns for x in Ax = b mod m """
     piv = pivot(A, m)
     x = [0] * len(A)
     m_prod = 1

@@ -1,12 +1,5 @@
 class BitArray:
-    """
-    A class to repesent fixed-size sequence of bits.
-
-    Parameters
-    ----------
-    size : int
-        The number of bits to allocate storage for.
-    """
+    """ A class to repesent fixed-size sequence of bits. """
 
     def __init__(self, size):
         self.bytes = bytearray((size >> 3) + 1)

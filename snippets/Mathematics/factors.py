@@ -68,19 +68,7 @@ def pollard_rho(n):
 
 @memodict
 def prime_factors(n):
-    """
-    Prime factorization using Pollard's rho algorithm.
-
-    Parameters
-    ----------
-    n : int
-        n > 0, an integer to be factorized.
-
-    Returns
-    -------
-    factors : Counter
-        Counter of the prime factors of n.
-    """
+    """ Prime factorization using Pollard's rho algorithm. """
     factors = Counter()
 
     for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837]:

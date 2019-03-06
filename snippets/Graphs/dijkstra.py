@@ -2,23 +2,7 @@ from heapq import heappop, heappush
 
 
 def dijkstra(n, graph, start):
-    """
-    Uses Dijkstra's algortihm to find the shortest path between in a graph.
-
-    Parameters
-    ----------
-    graph : list[list[tuple]]
-        A list of lists of adjacent vertices and their weights.
-    start : int
-        The vertex relative to which distances and paths are calculated.
-
-    Returns
-    -------
-    dist : list[int]
-        The relative distances of vertices relative to start.
-    parents : list[int]
-        The parent of a vertex on its path to start.
-    """
+    """ Uses Dijkstra's algortihm to find the shortest path between in a graph. """
     dist, parents = [float('inf')] * n, [-1] * n
     dist[start] = 0
 
