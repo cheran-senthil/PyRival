@@ -1,24 +1,28 @@
-import math
-
 MOD = 998244353
-MODF = float(MOD)
-SHRT = float(1 << 16)
-ROOT = 3.0
 
-fmod = lambda x: x - MODF * math.trunc(x / MODF)
-fmul = lambda a, b: fmod(math.trunc(a / SHRT) * fmod(b * SHRT) + (a - SHRT * math.trunc(a / SHRT)) * b)
+ROOT = 3.0
+FMOD = float(MOD)
+SHRT = float(1 << 16)
+
+FMOD_INV = 1.0 / FMOD
+SHRT_INV = 1.0 / SHRT
+
+fmod = lambda x: x - FMOD * int(x * FMOD_INV)
+fmul = lambda a, b, c=0.0: fmod(fmod(a * SHRT) * int(SHRT_INV * b) + a * (b - SHRT * int(b * SHRT_INV)) + c)
 
 
 def fpow(x, y):
+    if y == 0:
+        return 1.0
+
     res = 1.0
-    while y > 0:
+    while y > 1:
         if y & 1 == 1:
             res = fmul(res, x)
-        if y > 1:
-            x = fmul(x, x)
+        x = fmul(x, x)
         y >>= 1
 
-    return res
+    return fmul(res, x)
 
 
 def ntt(a, inv=False):
