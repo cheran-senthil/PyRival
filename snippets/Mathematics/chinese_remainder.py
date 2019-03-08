@@ -23,8 +23,7 @@ def egcd(a, m):
 
 
 def modinv(a, m):
-    amodm = a % m
-    g, x, _ = egcd(amodm, m)
+    g, x, _ = egcd(a % m, m)
     """Sanity Check
     if g != 1:
         return None
