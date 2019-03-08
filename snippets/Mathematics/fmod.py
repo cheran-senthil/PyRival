@@ -1,10 +1,10 @@
-FMOD = 1000000007.0
+MODF = 1000000007.0
 SHRT = 65536.0
 
-FMOD_INV = 1.0 / FMOD
+MODF_INV = 1.0 / MODF
 SHRT_INV = 1.0 / SHRT
 
-fmod = lambda x: x - FMOD * int(x * FMOD_INV)
+fmod = lambda x: x - MODF * int(x * MODF_INV)
 fmul = lambda a, b, c=0.0: fmod(fmod(a * SHRT) * int(SHRT_INV * b) + a * (b - SHRT * int(b * SHRT_INV)) + c)
 
 

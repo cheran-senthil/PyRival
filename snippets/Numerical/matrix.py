@@ -1,10 +1,10 @@
 import math
 
-FMOD = 1000000007.0
+MODF = 1000000007.0
 PREC = 7881299347898367.0
 SHRT = 65536.0
 
-fmod = lambda x: x - FMOD * math.trunc(x / FMOD)
+fmod = lambda x: x - MODF * math.trunc(x / MODF)
 
 transpose = lambda mat: [list(col) for col in zip(*mat)]
 
