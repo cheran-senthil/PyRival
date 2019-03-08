@@ -7,7 +7,7 @@ def is_prime(n):
         return False
 
     d, s = n - 1, 0
-    while not d & 1:
+    while d & 1 == 0:
         d, s = d >> 1, s + 1
 
     def try_composite(a):
