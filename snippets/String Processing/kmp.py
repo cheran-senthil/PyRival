@@ -1,18 +1,19 @@
-def kmpSearch(T, P):
-    b = [-1] * (len(P) + 1)
+def pi(s):
+    p = [0] * len(s)
+    for i in range(1, len(s)):
+        g = p[i - 1]
+        while g and (s[i] != s[g]):
+            g = p[g - 1]
+        p[i] = g + int(s[i] == s[g])
 
-    j = -1
-    for i in range(len(P)):
-        while (j >= 0) and (P[i] != P[j]):
-            j = b[j]
-        j += 1
-        b[i + 1] = j
+    return p
 
-    j = 0
-    for i in range(len(T)):
-        while (j >= 0) and (T[i] != P[j]):
-            j = b[j]
-        j += 1
-        if j == len(P):
-            yield i + 1 - j
-            j = b[j]
+
+def match(s, pat):
+    res = []
+    p = pi(pat + '\0' + s)
+    for i in range(len(p) - len(s), len(p)):
+        if p[i] == len(pat):
+            res.append(i - 2 * len(pat))
+
+    return res
