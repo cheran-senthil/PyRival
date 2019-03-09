@@ -1,11 +1,15 @@
-MODF = 1000000007.0
+MOD = 10**9 + 7
+
+MAGIC = 6755399441055744.0
+MODF = float(MOD)
 SHRT = 65536.0
 
 MODF_INV = 1.0 / MODF
 SHRT_INV = 1.0 / SHRT
 
-fmod = lambda x: x - MODF * int(x * MODF_INV)
-fmul = lambda a, b, c=0.0: fmod(fmod(a * SHRT) * int(SHRT_INV * b) + a * (b - SHRT * int(b * SHRT_INV)) + c)
+fround = lambda x: (x + MAGIC) - MAGIC
+fmod = lambda a: a - MODF * fround(MODF_INV * a)
+fmul = lambda a, b, c=0.0: fmod(fmod(a * SHRT) * fround(SHRT_INV * b) + a * (b - SHRT * fround(b * SHRT_INV)) + c)
 
 
 def fpow(x, y):
