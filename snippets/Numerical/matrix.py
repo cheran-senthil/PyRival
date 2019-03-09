@@ -1,10 +1,15 @@
-import math
+MOD = 10**9 + 7
 
-MODF = 1000000007.0
-PREC = 7881299347898367.0
+MAGIC = 6755399441055744.0
+MODF = float(MOD)
 SHRT = 65536.0
 
-fmod = lambda x: x - MODF * math.trunc(x / MODF)
+MODF_INV = 1.0 / MODF
+SHRT_INV = 1.0 / SHRT
+
+fround = lambda x: (x + MAGIC) - MAGIC
+fmod = lambda a: a - MODF * fround(MODF_INV * a)
+fmul = lambda a, b: fmod(fmod(a * SHRT) * fround(SHRT_INV * b) + a * (b - SHRT * fround(b * SHRT_INV)))
 
 transpose = lambda mat: [list(col) for col in zip(*mat)]
 
@@ -20,20 +25,13 @@ vec_mul = lambda mat, vec: [sum(a * b for a, b in zip(row, vec)) for row in mat]
 
 
 def mat_mul_mod(A, B):
-    B = [[(Bij - SHRT * math.trunc(Bij / SHRT)) - 1j * (math.trunc(Bij / SHRT)) for Bij in Bi] for Bi in B]
     C = [[0.0] * len(B[0]) for _ in range(len(A))]
-
-    for i, Ai in enumerate(A):
-        Ci = C[i]
-        for j, Bj in enumerate(B):
-            Aij = Ai[j] + 1j * fmod(Ai[j] * SHRT)
-            for k, Bjk in enumerate(Bj):
-                Ci[k] += (Aij * Bjk).real
-                if Ci[k] > PREC:
-                    Ci[k] = fmod(Ci[k])
-
-        C[i] = [fmod(Cij) for Cij in Ci]
-
+    for i, A_i in enumerate(A):
+        C_i = C[i]
+        for j, B_j in enumerate(B):
+            Aij = A_i[j]
+            for k, Bjk in enumerate(B_j):
+                C_i[k] = fmul(Bjk, Aij, C_i[k])
     return C
 
 
