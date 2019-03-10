@@ -1,7 +1,7 @@
 MOD = 10**9 + 7
+MODF = float(MOD)
 
 MAGIC = 6755399441055744.0
-MODF = float(MOD)
 SHRT = 65536.0
 
 MODF_INV = 1.0 / MODF
