@@ -5,32 +5,14 @@ import itertools
 import sys
 
 if sys.version_info[0] < 3:
-    # from cPickle import dumps
-    # from Queue import PriorityQueue, Queue
-    pass
+    from cPickle import dumps
+    from Queue import PriorityQueue, Queue
 else:
-    # from functools import reduce
-    # from pickle import dumps
-    # from queue import PriorityQueue, Queue
-    pass
+    from functools import reduce
+    from pickle import dumps
+    from queue import PriorityQueue, Queue
 
 if sys.version_info[0] < 3:
-
-    class dict(dict):
-        """ dict() -> new empty dictionary """
-
-        def items(self):
-            """ D.items() -> a set-like object providing a view on D's items """
-            return dict.iteritems(self)
-
-        def keys(self):
-            """ D.keys() -> a set-like object providing a view on D's keys """
-            return dict.iterkeys(self)
-
-        def values(self):
-            """ D.values() -> an object providing a view on D's values """
-            return dict.itervalues(self)
-
     input = raw_input
     range = xrange
 
