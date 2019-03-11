@@ -13,22 +13,6 @@ from atexit import register
 from io import BytesIO, StringIO
 
 if sys.version_info[0] < 3:
-
-    class dict(dict):
-        """ dict() -> new empty dictionary """
-
-        def items(self):
-            """ D.items() -> a set-like object providing a view on D's items """
-            return dict.iteritems(self)
-
-        def keys(self):
-            """ D.keys() -> a set-like object providing a view on D's keys """
-            return dict.iterkeys(self)
-
-        def values(self):
-            """ D.values() -> an object providing a view on D's values """
-            return dict.itervalues(self)
-
     range = xrange
 
     filter = itertools.ifilter
