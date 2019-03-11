@@ -13,20 +13,19 @@ def main():
 if __name__ == '__main__':
     if 'PyPy' in sys.version:
 
-        def bootstrap(c):
-            callable, arg = c.switch()
+        def bootstrap(cont):
+            call, arg = cont.switch()
             while True:
-                to = continulet(lambda _, f, x: f(x), callable, arg)
-                callable, arg = c.switch(to=to)
+                call, arg = cont.switch(to=continulet(lambda _, f, args: f(*args), call, arg))
 
-        c = continulet(bootstrap)
-        c.switch()
+        cont = continulet(bootstrap)
+        cont.switch()
 
         main()
 
     else:
-        sys.setrecursionlimit(2097152)
-        threading.stack_size(134217728)
+        sys.setrecursionlimit(1 << 30)
+        threading.stack_size(1 << 27)
 
         main_thread = threading.Thread(target=main)
         main_thread.start()
