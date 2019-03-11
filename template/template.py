@@ -19,15 +19,6 @@ if sys.version_info[0] < 3:
     map = itertools.imap
     zip = itertools.izip
 
-
-def gcd(x, y):
-    """ greatest common divisor of x and y """
-    while y:
-        x, y = y, x % y
-    return x
-
-
-if sys.version_info[0] < 3:
     sys.stdin = BytesIO(os.read(0, os.fstat(0).st_size))
     sys.stdout = BytesIO()
     register(lambda: os.write(1, sys.stdout.getvalue()))
@@ -37,6 +28,13 @@ else:
     register(lambda: os.write(1, sys.stdout.getvalue().encode()))
 
 input = lambda: sys.stdin.readline().rstrip('\r\n')
+
+
+def gcd(x, y):
+    """ greatest common divisor of x and y """
+    while y:
+        x, y = y, x % y
+    return x
 
 
 def main():

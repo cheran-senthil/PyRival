@@ -12,14 +12,6 @@ import sys
 from atexit import register
 from io import BytesIO
 
-
-def gcd(x, y):
-    """ greatest common divisor of x and y """
-    while y:
-        x, y = y, x % y
-    return x
-
-
 range = xrange
 
 filter = itertools.ifilter
@@ -31,6 +23,13 @@ sys.stdout = BytesIO()
 register(lambda: os.write(1, sys.stdout.getvalue()))
 
 input = lambda: sys.stdin.readline().rstrip('\r\n')
+
+
+def gcd(x, y):
+    """ greatest common divisor of x and y """
+    while y:
+        x, y = y, x % y
+    return x
 
 
 def main():
