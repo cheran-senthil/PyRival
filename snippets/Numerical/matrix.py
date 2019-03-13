@@ -9,7 +9,22 @@ SHRT_INV = 1.0 / SHRT
 
 fround = lambda x: (x + MAGIC) - MAGIC
 fmod = lambda a: a - MODF * fround(MODF_INV * a)
-fmul = lambda a, b: fmod(fmod(a * SHRT) * fround(SHRT_INV * b) + a * (b - SHRT * fround(b * SHRT_INV)))
+fmul = lambda a, b, c=0.0: fmod(fmod(a * SHRT) * fround(SHRT_INV * b) + a * (b - SHRT * fround(b * SHRT_INV)) + c)
+
+
+def fpow(x, y):
+    if y == 0:
+        return 1.0
+
+    res = 1.0
+    while y > 1:
+        if y & 1 == 1:
+            res = fmul(res, x)
+        x = fmul(x, x)
+        y >>= 1
+
+    return fmul(res, x)
+
 
 transpose = lambda mat: [list(col) for col in zip(*mat)]
 
@@ -52,12 +67,13 @@ def mat_pow(mat, power):
     if power == 0:
         return result
 
-    for i in bin(power)[:1:-1]:
-        if i == '1':
+    while power > 1:
+        if power & 1 == 1:
             result = mat_mul(result, mat)
         mat = mat_mul(mat, mat)
+        power >>= 1
 
-    return result
+    return mat_mul(result, mat)
 
 
 def det(mat, mod=0):
@@ -88,19 +104,19 @@ def det(mat, mod=0):
 
         for j in range(i + 1, n):
             if mat[j][i]:
-                tmp = tmp * mat[i][i] if mod == 0 else tmp * mat[i][i] % mod
+                tmp = tmp * mat[i][i] if mod == 0 else fmul(tmp, mat[i][i])
                 t = mat[j][i]
 
                 for k in range(i, n):
                     if mod == 0:
                         mat[j][k] = mat[j][k] * mat[i][i] - mat[i][k] * t
                     else:
-                        mat[j][k] = (mat[j][k] * mat[i][i] - mat[i][k]) % mod
+                        mat[j][k] = fmul(mat[j][k], mat[i][i], -mat[i][k])
 
-    res = pow(tmp, mod - 2, mod) if mod else 1
+    res = fpow(tmp, mod - 2) if mod else 1
 
     for i in range(n):
-        res = res * mat[i][i] % mod if mod else res * mat[i][i]
+        res = fmul(res, mat[i][i]) if mod else res * mat[i][i]
     if flag:
         return mod - res
 
