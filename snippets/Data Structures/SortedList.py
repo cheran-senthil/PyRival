@@ -1080,7 +1080,3 @@ class SortedKeyList(SortedList):
 
 
 SortedListWithKey = SortedKeyList
-
-a = SortedList([7, 3, 7, 3, 2, 6])
-print(a)
-print(a.key)
