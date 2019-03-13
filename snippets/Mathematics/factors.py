@@ -1,7 +1,7 @@
-import random
 from collections import Counter
 from functools import reduce
 from math import gcd
+from random import randint
 
 
 def memodict(f):
@@ -35,7 +35,7 @@ def pollard_rho(n):
     if not any(try_composite(w) for w in [2, 325, 9375, 28178, 450775, 9780504, 1795265022]):
         return Counter({n: 1})
 
-    y, c, m = random.randint(1, n - 1), random.randint(1, n - 1), random.randint(1, n - 1)
+    y, c, m = randint(1, n - 1), randint(1, n - 1), randint(1, n - 1)
     g, r, q = 1, 1, 1
 
     while g == 1:
