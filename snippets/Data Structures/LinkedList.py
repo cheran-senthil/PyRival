@@ -1,6 +1,3 @@
-from collections import MutableSequence
-
-
 class Node(object):
     def __init__(self, value):
         self.value = value
@@ -13,7 +10,7 @@ class Node(object):
         return '%s(%r)' % (self.__class__.__name__, self.value)
 
 
-class LinkedList(MutableSequence):
+class LinkedList():
     def __init__(self, iterable=None):
         self.sentinel = Node(None)
         self.sentinel.next = self.sentinel
