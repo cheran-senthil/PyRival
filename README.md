@@ -23,7 +23,6 @@
 
 ### Snippets
 - Data Structures
-  - AVL Tree
   - Bit Array
   - Binary Indexed (Fenwick) Tree
   - Linked List
@@ -31,6 +30,7 @@
   - Generic Nodes
   - Range Query Data Structure
   - (Lazy) Segment Tree
+  - Sorted List
   - Trie Tree
   - Disjoint-Set (Union Find) Data Structure
 - Geometry
