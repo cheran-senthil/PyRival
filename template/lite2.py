@@ -10,7 +10,7 @@ import itertools
 import os
 import sys
 from atexit import register
-from io import BytesIO
+from cStringIO import StringIO
 
 range = xrange
 
@@ -18,8 +18,8 @@ filter = itertools.ifilter
 map = itertools.imap
 zip = itertools.izip
 
-sys.stdin = BytesIO(os.read(0, os.fstat(0).st_size))
-sys.stdout = BytesIO()
+sys.stdin = StringIO(os.read(0, os.fstat(0).st_size))
+sys.stdout = StringIO()
 register(lambda: os.write(1, sys.stdout.getvalue()))
 
 input = lambda: sys.stdin.readline().rstrip('\r\n')
