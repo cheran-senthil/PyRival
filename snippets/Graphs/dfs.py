@@ -1,18 +1,31 @@
-def dfs(n, graph, start=0, depth=0):
-    parents, visited = [[] for _ in range(n)], [False] * n
-    stack = [(start, depth)]
+def dfs(graph, start=0):
+    n = len(graph)
 
+    dp = [0] * n
+    visited, finished = [False] * n, [False] * n
+
+    stack = [start]
     while stack:
-        start, depth = stack[-1]
+        start = stack[-1]
 
-        if visited[start]:
+        # push unvisited children into stack
+        if not visited[start]:
+            visited[start] = True
+            for child in graph[start]:
+                if not visited[child]:
+                    stack.append(child)
+
+        else:
             stack.pop()
-            continue
-        visited[start] = True
 
-        for i in graph[start]:
-            if not visited[i]:
-                parents[i].append(start)
-                stack.append((i, depth + 1))
+            # base case
+            dp[start] += 1
 
-    return parents, visited
+            # update with finished children
+            for child in graph[start]:
+                if finished[child]:
+                    dp[start] += dp[child]
+
+            finished[start] = True
+
+    return visited, dp
