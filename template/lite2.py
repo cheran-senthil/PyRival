@@ -18,9 +18,9 @@ filter = itertools.ifilter
 map = itertools.imap
 zip = itertools.izip
 
-input = StringIO(os.read(0, os.fstat(0).st_size)).readline
 sys.stdout = StringIO()
 register(lambda: os.write(1, sys.stdout.getvalue()))
+input = StringIO(os.read(0, os.fstat(0).st_size)).readline
 
 
 def main():
