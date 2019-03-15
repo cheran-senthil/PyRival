@@ -7,13 +7,14 @@ Copyright 2019 Cheran Senthilkumar <hello@cheran.io>
 import os
 import sys
 from atexit import register
-from io import StringIO
+from io import BytesIO
 
-sys.stdin = StringIO(os.read(0, os.fstat(0).st_size).decode())
-sys.stdout = StringIO()
-register(lambda: os.write(1, sys.stdout.getvalue().encode()))
+input = BytesIO(os.read(0, os.fstat(0).st_size)).readline
+sys.stdout = BytesIO()
+register(lambda: os.write(1, sys.stdout.getvalue()))
 
-input = lambda: sys.stdin.readline().rstrip('\r\n')
+_write = sys.stdout.write
+sys.stdout.write = lambda s: _write(s.encode())
 
 
 def main():

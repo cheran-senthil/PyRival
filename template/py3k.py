@@ -6,9 +6,11 @@ import sys
 
 if sys.version_info[0] < 3:
     from cPickle import dumps
+    from cStringIO import StringIO
     from Queue import PriorityQueue, Queue
 else:
     from functools import reduce
+    from io import BytesIO
     from pickle import dumps
     from queue import PriorityQueue, Queue
 
