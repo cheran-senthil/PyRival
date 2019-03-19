@@ -1,26 +1,20 @@
 """ Python 3 compatibility tools. """
 from __future__ import division, print_function
 
-import itertools
 import sys
 
 if sys.version_info[0] < 3:
-    from cPickle import dumps
     from cStringIO import StringIO
-    from Queue import PriorityQueue, Queue
+    from itertools import ifilter, imap, izip
+    from Queue import Queue
 else:
     from functools import reduce
-    from io import BytesIO
-    from pickle import dumps
-    from queue import PriorityQueue, Queue
+    from io import BytesIO as StringIO
+    from queue import Queue
 
 if sys.version_info[0] < 3:
-    input = raw_input
-    range = xrange
-
-    filter = itertools.ifilter
-    map = itertools.imap
-    zip = itertools.izip
+    input, range = raw_input, xrange
+    filter, map, zip = ifilter, imap, izip
 
 
 def gcd(x, y):

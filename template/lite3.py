@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
 This file is part of https://github.com/cheran-senthil/PyRival
-Copyright 2019 Cheran Senthilkumar <hello@cheran.io>
-
+Cheran Senthilkumar <hello@cheran.io>
 """
 import os
 import sys

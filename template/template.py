@@ -1,28 +1,24 @@
 #!/usr/bin/env python
 """
 This file is part of https://github.com/cheran-senthil/PyRival
-Copyright 2019 Cheran Senthilkumar <hello@cheran.io>
-
+Cheran Senthilkumar <hello@cheran.io>
 """
 from __future__ import division, print_function
 
-import itertools
 import os
 import sys
 from atexit import register
 
 if sys.version_info[0] < 3:
     from cStringIO import StringIO
+    from itertools import ifilter, imap, izip
 else:
     from io import BytesIO as StringIO
 
 sys.stdout = StringIO()
 if sys.version_info[0] < 3:
     range = xrange
-
-    filter = itertools.ifilter
-    map = itertools.imap
-    zip = itertools.izip
+    filter, map, zip = ifilter, imap, izip
 else:
     _write = sys.stdout.write
     sys.stdout.write = lambda s: _write(s.encode())
