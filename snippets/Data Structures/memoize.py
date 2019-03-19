@@ -1,6 +1,3 @@
-from pickle import dumps
-
-
 def memodict(f):
     """ Memoization decorator for a function taking a single argument. """
 
@@ -24,18 +21,3 @@ def memoize(f):
             return ret
 
     return memodict().__getitem__
-
-
-class MemoizeMutable:
-    """ Memoization decorator for a function mutable arguments. """
-
-    def __init__(self, fn):
-        self.fn = fn
-        self.memo = {}
-
-    def __call__(self, *args, **kwds):
-        key = dumps(args, 1) + dumps(kwds, 1)
-        if not (key in self.memo):
-            self.memo[key] = self.fn(*args, **kwds)
-
-        return self.memo[key]
