@@ -1,8 +1,5 @@
 #!/usr/bin/env python2
-"""
-This file is part of https://github.com/cheran-senthil/PyRival
-Cheran Senthilkumar <hello@cheran.io>
-"""
+""" https://github.com/cheran-senthil/PyRival <hello@cheran.io> """
 from __future__ import division, print_function
 
 import os
