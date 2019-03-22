@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """ https://github.com/cheran-senthil/PyRival <hello@cheran.io> """
+
 import os
 import sys
 from atexit import register
