@@ -4,14 +4,10 @@ import os
 import sys
 from atexit import register
 from cStringIO import StringIO
-from itertools import ifilter, imap, izip
+from future_builtins import *
 
-#region py3k
 input = lambda: sys.stdin.readline().rstrip('\r\n')
 range = xrange
-filter, map, zip = ifilter, imap, izip
-
-#endregion
 
 #region fastio
 input = StringIO(os.read(0, os.fstat(0).st_size)).readline

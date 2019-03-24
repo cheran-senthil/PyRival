@@ -5,14 +5,13 @@ import atexit
 import os
 import sys
 
-#region p3k
+input = lambda: sys.stdin.readline().rstrip('\r\n')
+
+#region py3k
 if sys.version_info[0] < 3:
-    from itertools import ifilter, imap, izip
+    from future_builtins import *
 
     range = xrange
-    filter, map, zip = ifilter, imap, izip
-
-input = lambda: sys.stdin.readline().rstrip('\r\n')
 
 #endregion
 
