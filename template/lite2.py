@@ -4,7 +4,7 @@ import os
 import sys
 from atexit import register
 from cStringIO import StringIO
-from future_builtins import *
+from future_builtins import ascii, filter, hex, map, oct, zip
 
 input = lambda: sys.stdin.readline().rstrip('\r\n')
 range = xrange

@@ -9,7 +9,7 @@ input = lambda: sys.stdin.readline().rstrip('\r\n')
 
 #region py3k
 if sys.version_info[0] < 3:
-    from future_builtins import *
+    from future_builtins import ascii, filter, hex, map, oct, zip
 
     range = xrange
 
