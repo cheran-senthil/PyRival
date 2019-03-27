@@ -1,6 +1,6 @@
+import io
 import os
 import sys
-import io
 
 input = lambda: sys.stdin.readline().rstrip('\r\n')
 

@@ -1,8 +1,8 @@
 from __future__ import division, print_function
 
+import io
 import os
 import sys
-import io
 from cStringIO import StringIO
 from future_builtins import ascii, filter, hex, map, oct, zip
 
