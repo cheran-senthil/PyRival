@@ -1,11 +1,10 @@
+#!/usr/bin/env python3
 import os
 import sys
 from io import BytesIO
 
 
-class FastI():
-    """ FastI for PyPy3 by Pajenegod """
-
+class FastI:
     def __init__(self):
         self.stream = BytesIO()
         self.newlines = 0
@@ -46,9 +45,7 @@ class FastI():
         return numbers
 
 
-class FastO():
-    """ FastO for PyPy3 by Pajenegod """
-
+class FastO:
     def __init__(self):
         stream = BytesIO()
         self.flush = lambda: os.write(1, stream.getvalue()) and not stream.truncate(0) and stream.seek(0)

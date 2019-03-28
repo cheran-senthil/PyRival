@@ -3,9 +3,7 @@ import sys
 from io import BytesIO
 
 
-class FastI():
-    """ FastI for PyPy3 by Pajenegod """
-
+class FastI:
     def __init__(self):
         self.stream = BytesIO()
         self.newlines = 0
@@ -18,7 +16,7 @@ class FastI():
         return self.stream.read() if self.stream.tell() else self.stream.getvalue()
 
     def readline(self, b=b'\n'):
-        while b and self.newlines == 0:
+        while b and not self.newlines:
             b, ptr = os.read(0, (1 << 13) + os.fstat(0).st_size), self.stream.tell()
             self.stream.seek(0, 2), self.stream.write(b), self.stream.seek(ptr)
             self.newlines += b.count(b'\n')
@@ -46,9 +44,7 @@ class FastI():
         return numbers
 
 
-class FastO():
-    """ FastO for PyPy3 by Pajenegod """
-
+class FastO:
     def __init__(self):
         stream = BytesIO()
         self.flush = lambda: os.write(1, stream.getvalue()) and not stream.truncate(0) and stream.seek(0)
