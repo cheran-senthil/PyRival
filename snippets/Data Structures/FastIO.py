@@ -8,11 +8,11 @@ sys.stdout.write = stream.write if sys.version_info[0] < 3 else lambda s: stream
 
 
 class FastI():
-    """ FastIO for PyPy2 and PyPy3 by Pajenegod """
+    """ FastIO for PyPy3 by Pajenegod """
     stream = BytesIO()
     newlines = 0
 
-    def _read(self):
+    def read1(self):
         s, ptr = os.read(0, (1 << 13) + os.fstat(0).st_size), self.stream.tell()
         self.stream.seek(0, 2)
         self.stream.write(s)
@@ -21,13 +21,13 @@ class FastI():
         return s
 
     def read(self):
-        while self._read():
+        while self.read1():
             pass
         return self.stream.read() if self.stream.tell() else self.stream.getvalue()
 
     def readline(self):
         while self.newlines == 0:
-            s = self._read()
+            s = self.read1()
             self.newlines += s.count(b'\n') + (not s)
         self.newlines -= 1
 
@@ -40,7 +40,7 @@ class FastI():
         numb, sign = var(0), 1
         for char in buffer:
             if char >= b'0' [0]:
-                numb = 10 * numb + ((ord(char) if sys.version_info[0] < 3 else char) - 48)
+                numb = 10 * numb + char - 48
             elif char == b'-' [0]:
                 sign = -1
             elif char != b'\r' [0]:
