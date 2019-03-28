@@ -7,15 +7,19 @@ def is_prime(n):
         return False
 
     d, s = n - 1, 0
-    while d & 1 == 0:
+    while not d & 1:
         d, s = d >> 1, s + 1
 
     def try_composite(a):
         if pow(a, d, n) == 1:
             return False
+
+        p = pow(a, d, n)
         for i in range(s):
-            if pow(a, (1 << i) * d, n) == n - 1:
+            if p == n - 1:
                 return False
+            p = (p * p) % n
+
         return True
 
     return not any(try_composite(w) for w in [2, 325, 9375, 28178, 450775, 9780504, 1795265022])
