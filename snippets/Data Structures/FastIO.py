@@ -1,35 +1,28 @@
-import io
 import os
 import sys
-
-sys.stdout, stream = io.IOBase(), io.BytesIO()
-sys.stdout.flush = lambda: os.write(1, stream.getvalue()) and not stream.truncate(0) and stream.seek(0)
-sys.stdout.write = stream.write if sys.version_info[0] < 3 else lambda s: stream.write(s.encode())
+from io import BytesIO
 
 
 class FastI():
-    """ FastIO for PyPy3 by Pajenegod """
-    stream = io.BytesIO()
-    newlines = 0
+    """ FastI for PyPy3 by Pajenegod """
 
-    def read1(self):
-        b, ptr = os.read(0, (1 << 13) + os.fstat(0).st_size), self.stream.tell()
-        self.stream.seek(0, 2)
-        self.stream.write(b)
-        self.stream.seek(ptr)
+    def __init__(self):
+        self.stream = BytesIO()
+        self.newlines = 0
 
-        return b
+    def read(self, b=b'\n'):
+        while b:
+            b, ptr = os.read(0, (1 << 13) + os.fstat(0).st_size), self.stream.tell()
+            self.stream.seek(0, 2), self.steram.write(b), self.stream.seek(ptr)
 
-    def read(self):
-        while self.read1():
-            pass
         return self.stream.read() if self.stream.tell() else self.stream.getvalue()
 
-    def readline(self):
-        while self.newlines == 0:
-            b = self.read1()
-            self.newlines += b.count(b'\n') + (not b)
-        self.newlines -= 1
+    def readline(self, b=b'\n'):
+        while b and self.newlines == 0:
+            b, ptr = os.read(0, (1 << 13) + os.fstat(0).st_size), self.stream.tell()
+            self.stream.seek(0, 2), self.stream.write(b), self.stream.seek(ptr)
+            self.newlines += b.count(b'\n')
+        self.newlines -= bool(b)
 
         return self.stream.readline()
 
@@ -53,5 +46,14 @@ class FastI():
         return numbers
 
 
-sys.stdin = FastI()
-input = sys.stdin.readline
+class FastO():
+    """ FastO for PyPy3 by Pajenegod """
+
+    def __init__(self):
+        stream = BytesIO()
+        self.flush = lambda: os.write(1, stream.getvalue()) and not stream.truncate(0) and stream.seek(0)
+        self.write = lambda s: stream.write(s.encode())
+
+
+sys.stdin, sys.stdout = FastI(), FastO()
+input, flush = sys.stdin.readline, sys.stdout.flush
