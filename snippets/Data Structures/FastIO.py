@@ -13,12 +13,12 @@ class FastI():
     newlines = 0
 
     def read1(self):
-        s, ptr = os.read(0, (1 << 13) + os.fstat(0).st_size), self.stream.tell()
+        b, ptr = os.read(0, (1 << 13) + os.fstat(0).st_size), self.stream.tell()
         self.stream.seek(0, 2)
-        self.stream.write(s)
+        self.stream.write(b)
         self.stream.seek(ptr)
 
-        return s
+        return b
 
     def read(self):
         while self.read1():
@@ -27,28 +27,28 @@ class FastI():
 
     def readline(self):
         while self.newlines == 0:
-            s = self.read1()
-            self.newlines += s.count(b'\n') + (not s)
+            b = self.read1()
+            self.newlines += b.count(b'\n') + (not b)
         self.newlines -= 1
 
         return self.stream.readline()
 
     def readnumbers(self, var=int):
         """ Read numbers till EOF. Use var to change type. """
-        numbers, buffer = [], self.read()
+        numbers, b = [], self.read()
 
-        numb, sign = var(0), 1
-        for char in buffer:
+        num, sign = var(0), 1
+        for char in b:
             if char >= b'0' [0]:
-                numb = 10 * numb + char - 48
+                num = 10 * num + char - 48
             elif char == b'-' [0]:
                 sign = -1
             elif char != b'\r' [0]:
-                numbers.append(sign * numb)
-                numb, sign = var(0), 1
+                numbers.append(sign * num)
+                num, sign = var(0), 1
 
-        if buffer and buffer[-1] >= b'0' [0]:
-            numbers.append(sign * numb)
+        if b and b[-1] >= b'0' [0]:
+            numbers.append(sign * num)
 
         return numbers
 
