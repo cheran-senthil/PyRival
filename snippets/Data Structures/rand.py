@@ -6,11 +6,10 @@ random = Random.random
 
 
 def randrange(start, stop, step=1):
-    width = stop - start
-    if step == 1 and width > 0:
-        return int(start + int(random() * width))
+    if step == 1 and stop > start:
+        return start + int(random() * (stop - start))
 
-    n = (width + step + (1 if step < 0 else -1)) // step
+    n = (stop - start + step + [1, -1][step < 0]) // step
     return start + step * int(random() * n)
 
 
