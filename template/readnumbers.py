@@ -8,15 +8,15 @@ def readnumbers(var=int):
 
     num, sign = var(0), 1
     for char in b:
-        if char >= b'0' [0]:
-            num = 10 * num + (ord(char) if sys.version_info[0] < 3 else char) - 48
-        elif char == b'-' [0]:
+        if char >= 48:
+            num = 10 * num + char - 48
+        elif char == 45:
             sign = -1
-        elif char != b'\r' [0]:
+        elif char != 13:
             numbers.append(sign * num)
             num, sign = var(0), 1
 
-    if b and b[-1] >= b'0' [0]:
+    if b and b[-1] >= 48:
         numbers.append(sign * num)
 
     return numbers
