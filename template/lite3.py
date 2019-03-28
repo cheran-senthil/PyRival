@@ -12,12 +12,12 @@ class FastI:
     def read(self, b=b'\n'):
         while b:
             b, ptr = os.read(0, (1 << 13) + os.fstat(0).st_size), self.stream.tell()
-            self.stream.seek(0, 2), self.steram.write(b), self.stream.seek(ptr)
+            self.stream.seek(0, 2), self.stream.write(b), self.stream.seek(ptr)
 
         return self.stream.read() if self.stream.tell() else self.stream.getvalue()
 
     def readline(self, b=b'\n'):
-        while b and self.newlines == 0:
+        while b and not self.newlines:
             b, ptr = os.read(0, (1 << 13) + os.fstat(0).st_size), self.stream.tell()
             self.stream.seek(0, 2), self.stream.write(b), self.stream.seek(ptr)
             self.newlines += b.count(b'\n')
@@ -26,7 +26,6 @@ class FastI:
         return self.stream.readline()
 
     def readnumbers(self, var=int):
-        """ Read numbers till EOF. Use var to change type. """
         numbers, b = [], self.read()
 
         num, sign = var(0), 1
@@ -50,10 +49,6 @@ class FastO:
         stream = BytesIO()
         self.flush = lambda: os.write(1, stream.getvalue()) and not stream.truncate(0) and stream.seek(0)
         self.write = lambda s: stream.write(s.encode())
-
-
-sys.stdin, sys.stdout = FastI(), FastO()
-input, flush = sys.stdin.readline, sys.stdout.flush
 
 
 def main():

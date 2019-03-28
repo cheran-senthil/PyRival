@@ -11,7 +11,7 @@ class FastI:
     def read(self, b=b'\n'):
         while b:
             b, ptr = os.read(0, (1 << 13) + os.fstat(0).st_size), self.stream.tell()
-            self.stream.seek(0, 2), self.steram.write(b), self.stream.seek(ptr)
+            self.stream.seek(0, 2), self.stream.write(b), self.stream.seek(ptr)
 
         return self.stream.read() if self.stream.tell() else self.stream.getvalue()
 
@@ -25,7 +25,6 @@ class FastI:
         return self.stream.readline()
 
     def readnumbers(self, var=int):
-        """ Read numbers till EOF. Use var to change type. """
         numbers, b = [], self.read()
 
         num, sign = var(0), 1
