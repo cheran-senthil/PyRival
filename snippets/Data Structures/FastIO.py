@@ -1,15 +1,15 @@
+import io
 import os
 import sys
-from io import BytesIO, IOBase
 
-sys.stdout, stream = IOBase(), BytesIO()
+sys.stdout, stream = io.IOBase(), io.BytesIO()
 sys.stdout.flush = lambda: os.write(1, stream.getvalue()) and not stream.truncate(0) and stream.seek(0)
 sys.stdout.write = stream.write if sys.version_info[0] < 3 else lambda s: stream.write(s.encode())
 
 
 class FastI():
     """ FastIO for PyPy3 by Pajenegod """
-    stream = BytesIO()
+    stream = io.BytesIO()
     newlines = 0
 
     def read1(self):
