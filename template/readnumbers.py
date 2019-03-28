@@ -20,3 +20,12 @@ def readnumbers(var=int):
         numbers.append(sign * num)
 
     return numbers
+
+
+numbers, _ind = readnumbers(), 0
+
+
+def getnum():
+    global _ind
+    _ind += 1
+    return numbers[_ind - 1]
