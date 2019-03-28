@@ -3,7 +3,7 @@ def is_prime(n):
     if n in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837]:
         return True
 
-    if (n in [0, 1]) or (any(n % p == 0 for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837])):
+    if (n == 0) or (n == 1) or (any(n % p == 0 for p in [2, 3, 5, 13, 19, 73, 193, 407521, 299210837])):
         return False
 
     d, s = n - 1, 0
@@ -14,7 +14,7 @@ def is_prime(n):
         if pow(a, d, n) == 1:
             return False
         for i in range(s):
-            if pow(a, 2**i * d, n) == n - 1:
+            if pow(a, (1 << i) * d, n) == n - 1:
                 return False
         return True
 
