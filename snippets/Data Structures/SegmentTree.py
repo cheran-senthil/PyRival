@@ -1,7 +1,6 @@
 class SegmentTree:
-    """ Maximum Segment Tree """
-
     def __init__(self, data):
+        """ Maximum Segment Tree """
         m = 1 << len(data).bit_length()
         self.m = m
         self.data = [0] * (2 * m)
