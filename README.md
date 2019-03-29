@@ -22,11 +22,15 @@
 ### Snippets
 - Data Structures
   - Bit Array
+  - FastIO
   - Binary Indexed (Fenwick) Tree
+  - Fraction
   - Linked List
   - Memoize Decorators
   - Generic Nodes
+  - Random
   - Range Query Data Structure
+  - Fast Number Input
   - (Lazy) Segment Tree
   - Sorted List
   - Trie Tree
@@ -56,8 +60,9 @@
   - Chinese Remainder Theorem
   - General Purpose Numbers
   - Brent's Algorithm for Cycle Detection
+  - Discrete Logarithm
   - Least Common Multiple
-  - Pollard's Rho Algorithm
+  - Integer Factorization
   - Integer Roots
   - Deterministic Miller-Rabin Primality Test
   - Longest Increasing Subsequence
@@ -66,8 +71,10 @@
   - K-th Order Statistic
   - Partition Function
   - Euler's Phi Function
+  - Pollard's Rho Algorithm
+  - Primitive Root
+  - Binary and Ternary Search
   - Sieve of Eratosthenes
-  - Ternary Search
 - Numerical
   - Fast Fourier Transform
   - Fast Subset Transform
