@@ -24,21 +24,21 @@ class FastI:
 
         return self.stream.readline()
 
-    def readnumbers(self, var=int):
+    def readnumbers(self, zero=0):
         numbers, b = [], self.read()
 
-        num, sign = var(0), 1
+        num, sign = zero, True
         for char in b:
             if char >= 48:
-                num = 10 * num + char - 48
+                num = num * 10 + char - 48
             elif char == 45:
-                sign = -1
+                sign = False
             elif char != 13:
-                numbers.append(sign * num)
-                num, sign = var(0), 1
+                numbers.append(num if sign else -num)
+                num, sign = zero, True
 
         if b and b[-1] >= 48:
-            numbers.append(sign * num)
+            numbers.append(num if sign else -num)
 
         return numbers
 
