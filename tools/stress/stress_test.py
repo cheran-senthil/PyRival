@@ -23,4 +23,5 @@ def checker(inp, out):
 
     return int(out) == i[1]
 
+
 stress(testcase_generator, solution, checker)
