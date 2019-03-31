@@ -1,5 +1,7 @@
-from stress import stress
 import subprocess
+import tempfile
+
+from stress import stress
 
 
 def testcase_generator():
@@ -13,7 +15,9 @@ def solution(inp):
 
 
 def checker(inp, out):
-    #proc = subprocess.run(['python', 'checker.py'], input=inp, text=True, capture_output=True)
+    #fp = tempfile.TemporaryFile('w')
+    #fp.write(inp), fp.seek(0)
+    #proc = subprocess.run(['python', 'checker.py'], stdin=fp, text=True, capture_output=True)
     #return proc.stdout == out
 
     i = [0, 1]
