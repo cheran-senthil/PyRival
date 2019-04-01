@@ -1,22 +1,24 @@
-from collections import deque
+def is_bipartite(graph):
+    n = len(graph)
 
-
-def is_bipartite(n, graph):
     bipartite = True
-    side = [-1] * n
-    q = deque()
 
-    for st in range(n):
-        if side[st] == -1:
-            q.append(st)
-            side[st] = 0
-            while len(q):
-                v = q.popleft()
-                for u in graph[v]:
-                    if side[u] == -1:
-                        side[u] = side[v] ^ 1
-                        q.append(u)
-                    else:
-                        bipartite &= side[u] != side[v]
+    color = [-1] * n
+    color[0] = 0
 
-    return bipartite
+    visited = [False] * n
+
+    for start in range(n):
+        stack = [start]
+        while stack:
+            start = stack.pop()
+
+            if not visited[start]:
+                visited[start] = True
+                for child in graph[start]:
+                    bipartite &= color[child] != color[start]
+                    color[child] = color[start] ^ 1
+                    if not visited[child]:
+                        stack.append(child)
+
+    return bipartite, color
