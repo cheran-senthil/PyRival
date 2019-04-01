@@ -1,21 +1,21 @@
-from queue import Queue
+from collections import deque
 
 
 def is_bipartite(n, graph):
     bipartite = True
     side = [-1] * n
-    q = Queue()
+    q = deque()
 
     for st in range(n):
         if side[st] == -1:
-            q.put(st)
+            q.append(st)
             side[st] = 0
-            while not q.empty():
-                v = q.get()
+            while len(q):
+                v = q.popleft()
                 for u in graph[v]:
                     if side[u] == -1:
                         side[u] = side[v] ^ 1
-                        q.put(u)
+                        q.append(u)
                     else:
                         bipartite &= side[u] != side[v]
 
