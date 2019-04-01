@@ -1,24 +1,20 @@
 def is_bipartite(graph):
     n = len(graph)
-
-    bipartite = True
-
     color = [-1] * n
-    color[0] = 0
-
-    visited = [False] * n
 
     for start in range(n):
-        stack = [start]
-        while stack:
-            start = stack.pop()
+        if color[start] == -1:
+            color[start] = 0
+            stack = [start]
 
-            if not visited[start]:
-                visited[start] = True
-                for child in graph[start]:
-                    bipartite &= color[child] != color[start]
-                    color[child] = color[start] ^ 1
-                    if not visited[child]:
+            while stack:
+                parent = stack.pop()
+
+                for child in graph[parent]:
+                    if color[child] == -1:
+                        color[child] = 1 - color[parent]
                         stack.append(child)
+                    elif color[parent] == color[child]:
+                        return False, color
 
-    return bipartite, color
+    return True, color
