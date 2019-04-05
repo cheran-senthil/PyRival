@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 from __future__ import division, print_function
 
-import io
 import os
 import sys
+from io import IOBase
 
 if sys.version_info[0] < 3:
     from __builtin__ import xrange as range
@@ -12,7 +12,7 @@ if sys.version_info[0] < 3:
 else:
     from io import BytesIO as StringIO
 
-sys.stdout, stream = io.IOBase(), StringIO()
+sys.stdout, stream = IOBase(), StringIO()
 sys.stdout.flush = lambda: os.write(1, stream.getvalue()) and not stream.truncate(0) and stream.seek(0)
 sys.stdout.write = stream.write if sys.version_info[0] < 3 else lambda s: stream.write(s.encode())
 
