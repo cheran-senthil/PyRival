@@ -10,8 +10,7 @@ class Random(_random.Random):
             j = int(self.random() * (i + 1))
             x[i], x[j] = x[j], x[i]
 
-    randrange = lambda self, a, b, step=1: a + step * int(self.random() * ((
-        b - a + step + [1, -1][step < 0]) // step))
+    randrange = lambda self, a, b, step=1: a + step * int(self.random() * ((b - a + step + [1, -1][step < 0]) // step))
     randint = lambda self, a, b: a + int(self.random() * (b - a + 1))
     choice = lambda self, seq: seq[int(self.random() * len(seq))]
 
@@ -35,25 +34,21 @@ def pollard_rho(n):
     if n == 1:
         return Counter()
 
-    d, s = n - 1, 0
+    d = n - 1
     while not d & 1:
-        d, s = d >> 1, s + 1
+        d >>= 1
 
-    def try_composite(a):
-        if pow(a, d, n) == 1:
-            return False
-
-        p = pow(a, d, n)
-        for _ in range(s):
-            if p == n - 1:
-                return False
+    flag = True
+    for a in [2, 325, 9375, 28178, 450775, 9780504, 1795265022]:
+        p, i = pow(a, d, n), d
+        while (p != 1) and (p != n - 1) and (i != n - 1):
+            i <<= 1
             p = (p * p) % n
+        if (p != n - 1) and (i != d):
+            flag = False
+            break
 
-        return True
-
-    if not any(
-            try_composite(w)
-            for w in [2, 325, 9375, 28178, 450775, 9780504, 1795265022]):
+    if flag:
         return Counter({n: 1})
 
     y, c, m = randint(1, n - 1), randint(1, n - 1), randint(1, n - 1)
