@@ -8,14 +8,22 @@
 ### About
 - A Master Template optimized for performance in all flavors of Python
 - A Lite version for specific use in PyPy2 / PyPy 3
+- Tools to optimize performance further
 - Optimized code snippets written in Python 3
 
 ##
 
 ### Template
 - [Master Template](template/template.py)
-- [Infinite Recursion](template/infinite_recursion.py)
-- [Python 3 Compatibility](template/py3k.py)
+- [Python 2](template/lite2.py), [Python 3](template/lite3.py)
+
+##
+
+### Tools
+- [Stress Tester](tools/stress/stress.py)
+- [Fast Integer Input](tools/getnum.py)
+- [Infinite Recursion](tools/infinite_recursion.py)
+- [Python 3 Compatibility](tools/py3k.py)
 
 ##
 
@@ -98,8 +106,8 @@
 
 ### Acknowledgements
 
+- Faster IO techniques by [pajenegod](https://codeforces.com/profile/pajenegod) / [Görre Mörre](https://www.codechef.com/users/gorre_morre).
 - Testing and debugging by [Mukundan314](https://github.com/Mukundan314).
-- Faster I/O techniques by [Görre Mörre](https://www.codechef.com/users/gorre_morre).
 
 ##
 
