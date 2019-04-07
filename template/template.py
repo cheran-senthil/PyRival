@@ -3,34 +3,34 @@ from __future__ import division, print_function
 
 import os
 import sys
-from io import IOBase
+from io import BytesIO, IOBase
 
 if sys.version_info[0] < 3:
     from __builtin__ import xrange as range
-    from cStringIO import StringIO
     from future_builtins import ascii, filter, hex, map, oct, zip
-else:
-    from io import BytesIO as StringIO
 
 
-class FastI:
-    stream = StringIO()
+class FastI(BytesIO):
     newlines = 0
+
+    def __init__(self, fd=0, bufsize=8192):
+        self.fd = fd
+        self.bufsize = bufsize
 
     def readline(self):
         while self.newlines == 0:
-            b, ptr = os.read(0, (1 << 13) + os.fstat(0).st_size), self.stream.tell()
-            self.stream.seek(0, 2), self.stream.write(b), self.stream.seek(ptr)
+            b, ptr = os.read(self.fd, max(os.fstat(self.fd).st_size, self.bufsize)), self.tell()
+            self.seek(0, 2), self.write(b), self.seek(ptr)
             self.newlines += b.count(b'\n') + (not b)
 
         self.newlines -= 1
-        return self.stream.readline()
+        return super(FastI, self).readline()
 
 
 class FastO(IOBase):
-    def __init__(self):
-        stream = StringIO()
-        self.flush = lambda: os.write(1, stream.getvalue()) and not stream.truncate(0) and stream.seek(0)
+    def __init__(self, fd=1):
+        stream = BytesIO()
+        self.flush = lambda: os.write(fd, stream.getvalue()) and not stream.truncate(0) and stream.seek(0)
         self.write = stream.write if sys.version_info[0] < 3 else lambda b: stream.write(b.encode())
 
 
