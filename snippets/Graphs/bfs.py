@@ -1,5 +1,17 @@
-def bfs(n, graph, start=0):
-    used = [False] * n
+def bfs(graph, start=0):
+    used = [False] * len(graph)
+    used[start] = True
+
+    q = [start]
+    for v in q:
+        for w in graph[v]:
+            if not used[w]:
+                used[w] = True
+                q.append(w)
+
+
+def layers(graph, start=0):
+    used = [False] * len(graph)
     used[start] = True
 
     q, ret = [start], []
