@@ -4,47 +4,34 @@ from __future__ import division, print_function
 import os
 import sys
 from __builtin__ import xrange as range
+from cStringIO import StringIO
 from future_builtins import ascii, filter, hex, map, oct, zip
-from io import BytesIO, IOBase
+from io import IOBase
+
+BUFSIZE = 8192
 
 
-class FastI(BytesIO):
+class FastIO(IOBase):
+    stream = StringIO()
     newlines = 0
 
-    def __init__(self, fd=0, bufsize=8192):
+    def __init__(self, fd):
         self.fd = fd
-        self.bufsize = bufsize
+        self.flush = lambda: os.write(fd, self.stream.getvalue()) and not self.stream.truncate(0) and self.stream.seek(0)
+        self.write = self.stream.write
 
     def readline(self):
         while self.newlines == 0:
-            b, ptr = os.read(self.fd, max(os.fstat(self.fd).st_size, self.bufsize)), self.tell()
-            self.seek(0, 2), self.write(b), self.seek(ptr)
+            b, ptr = os.read(self.fd, max(os.fstat(self.fd).st_size, BUFSIZE)), self.stream.tell()
+            self.stream.seek(0, 2), self.stream.write(b), self.stream.seek(ptr)
             self.newlines += b.count('\n') + (not b)
 
         self.newlines -= 1
-        return super(FastI, self).readline()
+        return self.stream.readline()
 
 
-class FastO(IOBase):
-    def __init__(self, fd=1):
-        stream = BytesIO()
-        self.flush = lambda: os.write(fd, stream.getvalue()) and not stream.truncate(0) and stream.seek(0)
-        self.write = stream.write
-
-
-class ostream:
-    def __lshift__(self, a):
-        if a == endl:
-            sys.stdout.write('\n')
-            sys.stdout.flush()
-        else:
-            sys.stdout.write(str(a))
-        return self
-
-
-sys.stdin, sys.stdout = FastI(), FastO()
+sys.stdin, sys.stdout = FastIO(0), FastIO(1)
 input, flush = sys.stdin.readline, sys.stdout.flush
-cout, endl = ostream(), object()
 
 
 def main():

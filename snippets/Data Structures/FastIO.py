@@ -2,29 +2,26 @@ import os
 import sys
 from io import BytesIO, IOBase
 
+BUFSIZE = 8192
 
-class FastI(BytesIO):
+
+class FastIO(IOBase):
+    stream = BytesIO()
     newlines = 0
 
-    def __init__(self, fd=0, bufsize=8192):
+    def __init__(self, fd):
         self.fd = fd
-        self.bufsize = bufsize
+        self.flush = lambda: os.write(fd, self.stream.getvalue()) and not self.stream.truncate(0) and self.stream.seek(0)
+        self.write = self.stream.write if sys.version_info[0] < 3 else lambda b: self.stream.write(b.encode())
 
     def readline(self):
         while self.newlines == 0:
-            b, ptr = os.read(self.fd, max(os.fstat(self.fd).st_size, self.bufsize)), self.tell()
-            self.seek(0, 2), self.write(b), self.seek(ptr)
+            b, ptr = os.read(self.fd, max(os.fstat(self.fd).st_size, BUFSIZE)), self.stream.tell()
+            self.stream.seek(0, 2), self.stream.write(b), self.stream.seek(ptr)
             self.newlines += b.count(b'\n') + (not b)
 
         self.newlines -= 1
-        return super(FastI, self).readline()
-
-
-class FastO(IOBase):
-    def __init__(self, fd=1):
-        stream = BytesIO()
-        self.flush = lambda: os.write(fd, stream.getvalue()) and not stream.truncate(0) and stream.seek(0)
-        self.write = stream.write if sys.version_info[0] < 3 else lambda b: stream.write(b.encode())
+        return self.stream.readline()
 
 
 class ostream:
@@ -37,6 +34,6 @@ class ostream:
         return self
 
 
-sys.stdin, sys.stdout = FastI(), FastO()
+sys.stdin, sys.stdout = FastIO(0), FastIO(1)
 input, flush = sys.stdin.readline, sys.stdout.flush
 cout, endl = ostream(), object()
