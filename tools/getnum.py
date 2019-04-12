@@ -16,4 +16,5 @@ for char in os.read(0, os.fstat(0).st_size):
 if char >= 48:
     numbers.append(num if sign else -num)
 
-getnum = iter(numbers).__next__
+numbers.reverse()
+getnum = numbers.pop
