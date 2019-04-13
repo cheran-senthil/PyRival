@@ -16,32 +16,38 @@ class FastIO(IOBase):
 
     def __init__(self, file):
         self._buffer = BytesIO()
-        self._fd = file
-        self.flush = lambda: os.write(self._fd, self._buffer.getvalue()) and not self._buffer.truncate(0) and self._buffer.seek(0)
+        self._fd = file.fileno()
+        self._writable = 'x' in file.mode or 'r' not in file.mode
+        self.read = lambda: os.read(self._fd, os.fstat(self._fd).st_size)
         self.write = self._buffer.write
+
+    def flush(self):
+        if self._writable:
+            os.write(self._fd, self._buffer.getvalue())
+            self._buffer.truncate(0), self._buffer.seek(0)
 
     def readline(self):
         while self.newlines == 0:
             b, ptr = os.read(self._fd, max(os.fstat(self._fd).st_size, BUFSIZE)), self._buffer.tell()
             self._buffer.seek(0, 2), self._buffer.write(b), self._buffer.seek(ptr)
-            self.newlines += b.count(b'\n') + (not b)
+            self.newlines += b.count('\n') + (not b)
         self.newlines -= 1
         return self._buffer.readline()
 
 
-sys.stdin, sys.stdout = FastIO(0), FastIO(1)
-input = lambda: sys.stdin.readline().rstrip(b'\r\n')
+sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
+input = lambda: sys.stdin.readline().rstrip('\r\n')
 
 
 def print(*args, **kwargs):
-    sep, file = kwargs.pop('sep', b' '), kwargs.pop('file', sys.stdout)
+    sep, file = kwargs.pop('sep', ' '), kwargs.pop('file', sys.stdout)
     at_start = True
     for x in args:
         if not at_start:
             file.write(sep)
         file.write(str(x))
         at_start = False
-    file.write(kwargs.pop('end', b'\n'))
+    file.write(kwargs.pop('end', '\n'))
     if kwargs.pop('flush', False):
         file.flush()
 
