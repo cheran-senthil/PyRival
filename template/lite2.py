@@ -16,7 +16,7 @@ class FastIO(IOBase):
 
     def __init__(self, file):
         self._buffer = BytesIO()
-        self._fd = file.fileno()
+        self._fd = file
         self.flush = lambda: os.write(self._fd, self._buffer.getvalue()) and not self._buffer.truncate(0) and self._buffer.seek(0)
         self.write = self._buffer.write
 
@@ -29,7 +29,7 @@ class FastIO(IOBase):
         return self._buffer.readline()
 
 
-sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
+sys.stdin, sys.stdout = FastIO(0), FastIO(1)
 input = lambda: sys.stdin.readline().rstrip(b'\r\n')
 
 
