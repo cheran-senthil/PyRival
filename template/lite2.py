@@ -18,13 +18,10 @@ class FastIO(IOBase):
         self._buffer = BytesIO()
         self._fd = file.fileno()
         self._writable = 'x' in file.mode or 'r' not in file.mode
-        self.read = lambda: os.read(self._fd, os.fstat(self._fd).st_size)
-        self.write = self._buffer.write
+        self.write = self._buffer.write if self._writable else None
 
-    def flush(self):
-        if self._writable:
-            os.write(self._fd, self._buffer.getvalue())
-            self._buffer.truncate(0), self._buffer.seek(0)
+    def read(self):
+        return self._buffer.read() if self._buffer.tell() else os.read(self._fd, os.fstat(self._fd).st_size)
 
     def readline(self):
         while self.newlines == 0:
@@ -33,6 +30,11 @@ class FastIO(IOBase):
             self.newlines += b.count('\n') + (not b)
         self.newlines -= 1
         return self._buffer.readline()
+
+    def flush(self):
+        if self._writable:
+            os.write(self._fd, self._buffer.getvalue())
+            self._buffer.truncate(0), self._buffer.seek(0)
 
 
 sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
