@@ -41,15 +41,15 @@ def pollard_rho(n):
     flag = True
     for a in [2, 325, 9375, 28178, 450775, 9780504, 1795265022]:
         p, i = pow(a, d, n), d
-        while (p != 1) and (p != n - 1) and (i != n - 1):
+        while p != 1 and p != n - 1 and i != n - 1:
             i <<= 1
             p = (p * p) % n
-        if (p != n - 1) and (i != d):
+        if p != n - 1 and i != d:
             flag = False
             break
 
     if flag:
-        return Counter({n: 1})
+        return Counter([n])
 
     y, c, m = randint(1, n - 1), randint(1, n - 1), randint(1, n - 1)
     g, r, q = 1, 1, 1
@@ -60,7 +60,7 @@ def pollard_rho(n):
         for _ in range(r):
             y = (y * y + c) % n
 
-        while (k < r) and (g == 1):
+        while k < r and g == 1:
             ys = y
 
             for _ in range(min(m, r - k)):
