@@ -33,7 +33,7 @@ class FastIO(IOBase):
     def readline(self):
         while self.newlines == 0:
             b = os.read(self._fd, max(os.fstat(self._fd).st_size, BUFSIZE))
-            self.newlines += b.count(b"\n") + (not b)
+            self.newlines = b.count(b"\n") + (not b)
             ptr = self._buffer.tell()
             self._buffer.seek(0, 2), self._buffer.write(b), self._buffer.seek(ptr)
         self.newlines -= 1
