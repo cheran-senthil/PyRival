@@ -22,7 +22,6 @@ class FenwickTree:
             return -1
 
         pos = 0
-
         pw = 1 << len(self.s).bit_length()
         while pw != 0:
             if pw + pos <= len(self.s):
