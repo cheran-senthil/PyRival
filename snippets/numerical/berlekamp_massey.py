@@ -18,15 +18,15 @@ def berlekamp_massey(s):
             continue
 
         T = C[:]
-        coef = d * pow(b, MOD - 2, MOD)
+        coef = (d * pow(b, MOD - 2, MOD)) % MOD
         for j in range(m, n):
             C[j] = (C[j] - coef * B[j - m]) % MOD
         if 2 * L > i:
             continue
         L = i + 1 - L
-        B, b, m = T, d, 0
+        B, b, m = T[:], d, 0
 
-    return [-C[i] % MOD for i in range(1, L + 2)]
+    return [-C[i] % MOD for i in range(1, L + 1)]
 
 
 def linear_rec(S, tr, k):
