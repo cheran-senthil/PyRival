@@ -9,9 +9,28 @@ if sys.version_info[0] < 3:
     from __builtin__ import xrange as range
     from future_builtins import ascii, filter, hex, map, oct, zip
 else:
-    from builtins import str as __str__
+    _str = str
+    str = lambda x=b"": x if type(x) is bytes else _str(x).encode()
 
-    str = lambda x=b"": x if type(x) is bytes else __str__(x).encode()
+
+class ostream:
+    def __lshift__(self, a):
+        if a == endl:
+            sys.stdout.write("\n")
+            sys.stdout.flush()
+        else:
+            sys.stdout.write(str(a))
+        return self
+
+
+cout, endl = ostream(), object()
+readnum = lambda var=int: var(sys.stdin.readline())
+readarr = lambda var=int: [var(x) for x in input().split()]
+
+
+def main():
+    pass
+
 
 BUFSIZE = 8192
 
@@ -60,10 +79,6 @@ def print(*args, **kwargs):
     file.write(kwargs.pop("end", b"\n"))
     if kwargs.pop("flush", False):
         file.flush()
-
-
-def main():
-    pass
 
 
 if __name__ == "__main__":
