@@ -104,7 +104,7 @@ def det(mat, mod=0):
 
         for j in range(i + 1, n):
             if mat[j][i]:
-                tmp = tmp * mat[i][i] if mod == 0 else fmul(tmp, mat[i][i])
+                tmp = fmul(tmp, mat[i][i]) if mod else tmp * mat[i][i]
                 t = mat[j][i]
 
                 for k in range(i, n):
