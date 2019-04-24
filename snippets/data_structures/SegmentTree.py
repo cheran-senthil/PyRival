@@ -1,15 +1,11 @@
 class SegmentTree:
     def __init__(self, data):
         """ Maximum Segment Tree """
-        m = 1 << len(data).bit_length()
-        self.m = m
+        self.m = m = 1 << (len(data) - 1).bit_length()
         self.data = [0] * (2 * m)
-
-        for i in range(len(data)):
-            self.data[i + m] = data[i]
+        self.data[m:m + len(data)] = data
         for i in reversed(range(m)):
             self.data[i] = max(self.data[2 * i], self.data[2 * i + 1])
-
         self.query = [0] * (2 * m)
 
     def push(self, seg_ind):
