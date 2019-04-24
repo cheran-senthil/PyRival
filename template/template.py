@@ -5,27 +5,14 @@ import os
 import sys
 from io import BytesIO, IOBase
 
+import _random
+
 if sys.version_info[0] < 3:
     from __builtin__ import xrange as range
     from future_builtins import ascii, filter, hex, map, oct, zip
 else:
     _str = str
     str = lambda x=b"": x if type(x) is bytes else _str(x).encode()
-
-
-class ostream:
-    def __lshift__(self, a):
-        if a == endl:
-            sys.stdout.write("\n")
-            sys.stdout.flush()
-        else:
-            sys.stdout.write(str(a))
-        return self
-
-
-cout, endl = ostream(), object()
-readnum = lambda var=int: var(sys.stdin.readline())
-readarr = lambda var=int: [var(x) for x in input().split()]
 
 
 def main():
@@ -64,8 +51,27 @@ class FastIO(IOBase):
             self._buffer.truncate(0), self._buffer.seek(0)
 
 
-sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
-input = lambda: sys.stdin.readline().rstrip(b"\r\n")
+class Random(_random.Random):
+    def shuffle(self, x):
+        for i in range(len(x) - 1, 0, -1):
+            j = int(self.random() * (i + 1))
+            x[i], x[j] = x[j], x[i]
+
+    randrange = lambda self, a, b, step=1: a + step * int(
+        self.random() * ((b - a + step + [1, -1][step < 0]) // step)
+    )
+    randint = lambda self, a, b: a + int(self.random() * (b - a + 1))
+    choice = lambda self, seq: seq[int(self.random() * len(seq))]
+
+
+class ostream:
+    def __lshift__(self, a):
+        if a is endl:
+            sys.stdout.write("\n")
+            sys.stdout.flush()
+        else:
+            sys.stdout.write(str(a))
+        return self
 
 
 def print(*args, **kwargs):
@@ -79,6 +85,15 @@ def print(*args, **kwargs):
     file.write(kwargs.pop("end", b"\n"))
     if kwargs.pop("flush", False):
         file.flush()
+
+
+input = lambda: sys.stdin.readline().rstrip(b"\r\n")
+readlist = lambda var=int: [var(n) for n in sys.stdin.readline().split()]
+
+
+random, cout, endl = Random(), ostream(), object()
+sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
+readline = sys.stdin.readline
 
 
 if __name__ == "__main__":
