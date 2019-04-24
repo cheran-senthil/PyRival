@@ -5,8 +5,6 @@ import os
 import sys
 from io import BytesIO, IOBase
 
-import _random
-
 if sys.version_info[0] < 3:
     from __builtin__ import xrange as range
     from future_builtins import ascii, filter, hex, map, oct, zip
@@ -51,19 +49,6 @@ class FastIO(IOBase):
             self._buffer.truncate(0), self._buffer.seek(0)
 
 
-class Random(_random.Random):
-    def shuffle(self, x):
-        for i in range(len(x) - 1, 0, -1):
-            j = int(self.random() * (i + 1))
-            x[i], x[j] = x[j], x[i]
-
-    randrange = lambda self, a, b, step=1: a + step * int(
-        self.random() * ((b - a + step + [1, -1][step < 0]) // step)
-    )
-    randint = lambda self, a, b: a + int(self.random() * (b - a + 1))
-    choice = lambda self, seq: seq[int(self.random() * len(seq))]
-
-
 class ostream:
     def __lshift__(self, a):
         if a is endl:
@@ -87,8 +72,8 @@ def print(*args, **kwargs):
         file.flush()
 
 
-random, cout, endl = Random(), ostream(), object()
 sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
+cout, endl = ostream(), object()
 
 readline = sys.stdin.readline
 readlist = lambda var=int: [var(n) for n in readline().split()]
