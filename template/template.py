@@ -17,6 +17,8 @@ def main():
     pass
 
 
+# region template
+
 BUFSIZE = 8192
 
 
@@ -79,6 +81,7 @@ readline = sys.stdin.readline
 readlist = lambda var=int: [var(n) for n in readline().split()]
 input = lambda: readline().rstrip(b"\r\n")
 
+# endregion
 
 if __name__ == "__main__":
     main()
