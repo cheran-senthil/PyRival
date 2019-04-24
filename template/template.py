@@ -54,7 +54,7 @@ class FastIO(IOBase):
 class ostream:
     def __lshift__(self, a):
         if a is endl:
-            sys.stdout.write("\n")
+            sys.stdout.write(b"\n")
             sys.stdout.flush()
         else:
             sys.stdout.write(str(a))
