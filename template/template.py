@@ -87,13 +87,12 @@ def print(*args, **kwargs):
         file.flush()
 
 
-input = lambda: sys.stdin.readline().rstrip(b"\r\n")
-readlist = lambda var=int: [var(n) for n in sys.stdin.readline().split()]
-
-
 random, cout, endl = Random(), ostream(), object()
 sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
+
 readline = sys.stdin.readline
+readlist = lambda var=int: [var(n) for n in readline().split()]
+input = lambda: readline().rstrip(b"\r\n")
 
 
 if __name__ == "__main__":
