@@ -7,11 +7,9 @@ def remove_middle(a, b, c):
 def convex_hull(points):
     spoints = sorted(points)
     hull = []
-
     for p in spoints + spoints[::-1]:
         while len(hull) >= 2 and remove_middle(hull[-2], hull[-1], p):
             hull.pop()
         hull.append(p)
-
     hull.pop()
     return hull

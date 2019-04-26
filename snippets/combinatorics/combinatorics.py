@@ -4,7 +4,7 @@ from functools import reduce
 
 
 def memoize(f):
-    """ Memoization decorator for a function taking one or more arguments. """
+    """memoization decorator for a function taking one or more arguments"""
 
     class memodict(dict):
         def __getitem__(self, *key):

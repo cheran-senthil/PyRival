@@ -1,5 +1,5 @@
 def memoize(f):
-    """ Memoization decorator for a function taking one or more arguments. """
+    """memoization decorator for a function taking one or more arguments"""
 
     class memodict(dict):
         def __getitem__(self, *key):
@@ -22,5 +22,4 @@ def partition(n, k):
         return 0
     if n == 1:
         return 1
-
     return partition(n, k - 1) + partition(n - k, k)

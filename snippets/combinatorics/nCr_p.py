@@ -7,10 +7,8 @@ def factorial_p(n, p):
         for i in range(1, p - n):
             ans = (ans * i) % p
         ans = pow(ans, p - 2, p)
-
         if n % 2 == 0:
             ans = p - ans
-
     return ans
 
 
@@ -23,5 +21,4 @@ def nCr_p(n, r, p):
         ans = (ans * factorial_p(a, p) * pow(factorial_p(b, p), p - 2, p) * pow(factorial_p(a - b, p), p - 2, p)) % p
         n //= p
         r //= p
-
     return ans
