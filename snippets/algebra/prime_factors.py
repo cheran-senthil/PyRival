@@ -3,7 +3,7 @@ from math import gcd
 
 
 def memodict(f):
-    """Memoization decorator for a function taking a single argument"""
+    """memoization decorator for a function taking a single argument"""
 
     class memodict(dict):
         def __missing__(self, key):
@@ -14,6 +14,7 @@ def memodict(f):
 
 
 def pollard_rho(n):
+    """returns a random factor of n"""
     if not n & 1:
         return 2
 
@@ -42,7 +43,7 @@ def pollard_rho(n):
 
 @memodict
 def prime_factors(n):
-    """Prime factorization using Pollard's rho algorithm"""
+    """returns a Counter of the prime factorization of n"""
     if n <= 1:
         return Counter()
     f = pollard_rho(n)

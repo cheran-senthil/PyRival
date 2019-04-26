@@ -1,5 +1,5 @@
 def is_prime(n):
-    """ Deterministic variant of the Miller-Rabin primality test. """
+    """returns True if n is prime else False"""
     if n < 2 or n % 6 % 4 != 1:
         return n - 2 < 2
     s = ((n - 1) & (1 - n)).bit_length() - 1

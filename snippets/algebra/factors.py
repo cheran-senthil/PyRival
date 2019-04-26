@@ -1,4 +1,5 @@
 def factors(n):
+    """returns a sorted list of the distinct factors of n"""
     small, large = [], []
     for i in range(1, int(n ** 0.5) + 1, 2 if n & 1 else 1):
         if not n % i:
