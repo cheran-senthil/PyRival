@@ -5,18 +5,21 @@ mat_sub = lambda A, B: [[i - j for i, j in zip(*row)] for row in zip(A, B)]
 mat_mul = lambda A, B: [[sum(i * j for i, j in zip(row, col)) for col in zip(*B)] for row in A]
 
 
-def egcd(a, m):
-    """extended gcd"""
-    if not a:
-        return m, 0, 1
-    g, y, x = egcd(m % a, a)
-    return g, x - (m // a) * y, y
+def extended_gcd(a, b):
+    """returns gcd(a, b), s, r s.t. a * s + b * r == gcd(a, b)"""
+    s, old_s = 0, 1
+    r, old_r = b, a
+    while r:
+        q = old_r // r
+        old_r, r = r, old_r - q * r
+        old_s, s = s, old_s - q * s
+    return old_r, old_s, (old_r - old_s * a) // b
 
 
 def modinv(a, m):
     """returns the modular inverse of a w.r.t. to m"""
     amodm = a % m
-    g, x, _ = egcd(amodm, m)
+    g, x, _ = extended_gcd(amodm, m)
     return x % m if g == 1 else None
 
 

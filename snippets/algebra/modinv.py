@@ -1,15 +1,15 @@
-def egcd(a, m):
-    if a == 0:
-        return (m, 0, 1)
-
-    g, y, x = egcd(m % a, a)
-    return (g, x - (m // a) * y, y)
+def extended_gcd(a, b):
+    """returns gcd(a, b), s, r s.t. a * s + b * r == gcd(a, b)"""
+    s, old_s = 0, 1
+    r, old_r = b, a
+    while r:
+        q = old_r // r
+        old_r, r = r, old_r - q * r
+        old_s, s = s, old_s - q * s
+    return old_r, old_s, (old_r - old_s * a) // b
 
 
 def modinv(a, m):
-    g, x, _ = egcd(a % m, m)
-    """Sanity Check
-    if g != 1:
-        return None
-    """
-    return x % m
+    """returns the modular inverse of a w.r.t. to m"""
+    g, x, _ = extended_gcd(a % m, m)
+    return x % m if g == 1 else None
