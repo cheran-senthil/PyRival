@@ -1,41 +1,27 @@
-def mod_sqrt(n, p):
-    """ Uses the Tonelli-Shanks algorithm to solve for r in a congruence of the form r**2 = n (mod p). """
-    if p == 2:
-        return n % 2
+def mod_sqrt(a, p):
+    """returns x s.t. x**2 == a (mod p)"""
+    a %= p
+    if a == 0:
+        return 0
+    assert pow(a, (p - 1) // 2, p) == 1
+    if p & 3 == 3:
+        return pow(a, (p + 1) // 4, p)
 
-    if pow(n, (p - 1) // 2, p) != 1:
-        return None
+    r = ((p - 1) & (1 - p)).bit_length() - 1
+    s, n = p >> r, 2
+    while pow(n, (p - 1) // 2, p) != p - 1:
+        n += 1
 
-    q = (p - 1) // ((p - 1) & (1 - p))
-    s = ((p - 1) & (1 - p)).bit_length() - 1
-
-    if s == 1:
-        r = pow(n, (p + 1) // 4, p)
-        return r, p - r
-
-    z = next(i for i in range(2, p) if pow(i, (p - 1) // 2, p) == p - 1)
-
-    c = pow(z, q, p)
-    r = pow(n, (q + 1) // 2, p)
-    t = pow(n, q, p)
-
-    m, t2 = s, 0
-
-    while (t - 1) % p != 0:
-        t2 = (t * t) % p
-
-        for i in range(1, m):
-            if (t2 - 1) % p == 0:
+    x, b, g = pow(a, (s + 1) // 2, p), pow(a, s, p), pow(n, s, p)
+    while True:
+        t = b
+        for m in range(r):
+            if t == 1:
                 break
+            t = (t * t) % p
+        if m == 0:
+            return x
 
-            t2 = (t2 * t2) % p
-
-        b = pow(c, 1 << (m - i - 1), p)
-
-        r = (r * b) % p
-        c = (b * b) % p
-        t = (t * c) % p
-
-        m = i
-
-    return r, p - r
+        gs = pow(g, 1 << (r - m - 1), p)
+        g, x = (gs * gs) % p, (x * gs) % p
+        b, r = (b * g) % p, m
