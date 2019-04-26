@@ -1,4 +1,5 @@
 def discrete_log(a, b, m):
+    """returns some x s.t. pow(a, x, m) == b or None if no such x exists"""
     a %= m
     b %= m
     if b == 1:
@@ -16,4 +17,4 @@ def discrete_log(a, b, m):
         if it is not None:
             return it * n - i  # % phi(m)
         cur = (cur * a) % m
-    return -1
+    return None
