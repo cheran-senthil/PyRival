@@ -16,7 +16,7 @@ def extended_gcd(a, b):
         q = old_r // r
         old_r, r = r, old_r - q * r
         old_s, s = s, old_s - q * s
-    return old_r, old_s, (old_r - old_s * a) // b
+    return old_r, old_s, (old_r - old_s * a) // b if b else 0
 
 
 gcdm = lambda *args: reduce(gcd, args, 0)
