@@ -20,7 +20,6 @@ def create(n):
         mid = n // 2
         L[ind] = create(mid)
         R[ind] = create(n - mid)
-
     return ind
 
 
@@ -43,7 +42,6 @@ def setter(ind, i, val, n):
     else:
         L[ind2] = L[ind]
         R[ind2] = setter(R[ind], i - mid, val, n - mid)
-
     vals[ind2] = min(vals[L[ind2]], vals[R[ind2]])
     return ind2
 
@@ -52,7 +50,6 @@ def setter(ind, i, val, n):
 def minimum(ind, l, r, n):
     if l == 0 and r == n:
         return vals[ind]
-
     mid = n // 2
     if r <= mid:
         return minimum(L[ind], l, r, mid)
