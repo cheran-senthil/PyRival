@@ -19,13 +19,6 @@ class SortedList():
         if iterable is not None:
             self.update(iterable)
 
-    def _reset(self, load):
-        """Reset sorted list load factor."""
-        values = reduce(op.iadd, self._lists, [])
-        self.clear()
-        self._load = load
-        self.update(values)
-
     def clear(self):
         """Remove all values from sorted list."""
         self._len = 0
@@ -101,9 +94,6 @@ class SortedList():
     def __contains__(self, value):
         """Return true if `value` is an element of the sorted list."""
         _maxes = self._maxes
-        if not _maxes:
-            return False
-
         pos = bisect_left(_maxes, value)
         if pos == len(_maxes):
             return False
@@ -115,9 +105,6 @@ class SortedList():
     def remove(self, value):
         """Remove `value` from sorted list if it is a member."""
         _maxes = self._maxes
-        if not _maxes:
-            return
-
         pos = bisect_left(_maxes, value)
         if pos == len(_maxes):
             return
@@ -241,14 +228,13 @@ class SortedList():
             tail = iter(head)
             row = list(starmap(op.add, zip(head, tail)))
             tree.append(row)
-        reduce(op.iadd, reversed(tree), self._index)
+        reduce(list.__iadd__, reversed(tree), self._index)
         self._offset = size * 2 - 1
 
     def __delitem__(self, index):
         """Remove value at `index` from sorted list."""
         if isinstance(index, slice):
             start, stop, step = index.indices(self._len)
-
             if step == 1 and start < stop:
                 if start == 0 and stop == self._len:
                     return self.clear()
@@ -279,7 +265,7 @@ class SortedList():
 
             if step == 1 and start < stop:
                 if start == 0 and stop == self._len:
-                    return reduce(op.iadd, self._lists, [])
+                    return reduce(list.__iadd__, self._lists, [])
 
                 start_pos, start_idx = self._pos(start)
                 if stop == self._len:
@@ -292,7 +278,7 @@ class SortedList():
 
                 prefix = _lists[start_pos][start_idx:]
                 middle = _lists[(start_pos + 1):stop_pos]
-                result = reduce(op.iadd, middle, prefix)
+                result = reduce(list.__iadd__, middle, prefix)
                 result += _lists[stop_pos][:stop_idx]
                 return result
 
@@ -336,29 +322,13 @@ class SortedList():
 
     def bisect_left(self, value):
         """Return an index to insert `value` in the sorted list."""
-        _maxes = self._maxes
-        if not _maxes:
-            return 0
-
-        pos = bisect_left(_maxes, value)
-        if pos == len(_maxes):
-            return self._len
-
-        idx = bisect_left(self._lists[pos], value)
-        return self._loc(pos, idx)
+        pos = bisect_left(self._maxes, value)
+        return self._len if pos == len(self._maxes) else self._loc(pos, bisect_left(self._lists[pos], value))
 
     def bisect_right(self, value):
         """Return an index to insert `value` in the sorted list."""
-        _maxes = self._maxes
-        if not _maxes:
-            return 0
-
-        pos = bisect_right(_maxes, value)
-        if pos == len(_maxes):
-            return self._len
-
-        idx = bisect_right(self._lists[pos], value)
-        return self._loc(pos, idx)
+        pos = bisect_right(self._maxes, value)
+        return self._len if pos == len(self._maxes) else self._loc(pos, bisect_right(self._lists[pos], value))
 
     bisect = bisect_right
 
@@ -419,14 +389,10 @@ class SortedList():
     def index(self, value, start=0, stop=None):
         """Return first index of value in sorted list."""
         _len = self._len
-        if not _len:
-            raise ValueError('{0!r} is not in list'.format(value))
-
         if start < 0:
             start += _len
         if start < 0:
             start = 0
-
         if stop is None:
             stop = _len
         if stop < 0:
@@ -453,15 +419,13 @@ class SortedList():
             if left <= stop:
                 return left
         else:
-            right = self.bisect_right(value) - 1
-            if start <= right:
+            if start <= self.bisect_right(value) - 1:
                 return start
-
         raise ValueError('{0!r} is not in list'.format(value))
 
     def __add__(self, other):
         """Return new sorted list containing all values in both sequences."""
-        values = reduce(op.iadd, self._lists, [])
+        values = reduce(list.__iadd__, self._lists, [])
         values.extend(other)
         return self.__class__(values)
 
@@ -474,19 +438,19 @@ class SortedList():
 
     def __mul__(self, num):
         """Return new sorted list with `num` shallow copies of values."""
-        values = reduce(op.iadd, self._lists, []) * num
+        values = reduce(list.__iadd__, self._lists, []) * num
         return self.__class__(values)
 
     __rmul__ = __mul__
 
     def __imul__(self, num):
         """Update the sorted list with `num` shallow copies of values."""
-        values = reduce(op.iadd, self._lists, []) * num
+        values = reduce(list.__iadd__, self._lists, []) * num
         self.clear()
         self.update(values)
         return self
 
-    def __make_cmp(seq_op, symbol):
+    def __make_cmp(seq_op):
         "Make comparator method."
 
         def comparer(self, other):
@@ -507,14 +471,14 @@ class SortedList():
         comparer.__name__ = '__{0}__'.format(seq_op.__name__)
         return comparer
 
-    __eq__ = __make_cmp(op.eq, '==')
-    __ne__ = __make_cmp(op.ne, '!=')
-    __lt__ = __make_cmp(op.lt, '<')
-    __gt__ = __make_cmp(op.gt, '>')
-    __le__ = __make_cmp(op.le, '<=')
-    __ge__ = __make_cmp(op.ge, '>=')
+    __eq__ = __make_cmp(op.eq)
+    __ne__ = __make_cmp(op.ne)
+    __lt__ = __make_cmp(op.lt)
+    __gt__ = __make_cmp(op.gt)
+    __le__ = __make_cmp(op.le)
+    __ge__ = __make_cmp(op.ge)
     __make_cmp = staticmethod(__make_cmp)
 
     def __repr__(self):
         """Return string representation of sorted list."""
-        return str(list(chain.from_iterable(self._lists)))
+        return 'SortedList({0})'.format(reduce(list.__iadd__, self._lists, []))
