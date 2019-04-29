@@ -5,8 +5,9 @@ L = []
 R = []
 
 
-# Create a persistant segmenttree of size n
 def create(n):
+    """create a persistant segment tree of size n"""
+
     ind = len(vals)
     vals.append(BIG)
 
@@ -23,8 +24,9 @@ def create(n):
     return ind
 
 
-# Set seg[i]=val for segment tree ind, of size n,
 def setter(ind, i, val, n):
+    """set set[i] = val for segment tree ind, of size n"""
+
     ind2 = len(vals)
     vals.append(BIG)
 
@@ -46,8 +48,9 @@ def setter(ind, i, val, n):
     return ind2
 
 
-# Find minimum of seg[l:r] for segment tree ind, of size n
 def minimum(ind, l, r, n):
+    """find mimimum of set[l:r] for segment tree ind, of size n"""
+
     if l == 0 and r == n:
         return vals[ind]
     mid = n // 2
