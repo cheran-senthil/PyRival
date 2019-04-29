@@ -1,29 +1,27 @@
-def fst(a, op='AND', inv=False):
+import operator as op
+
+
+def fst(a, oplus=op.and_, inv=False):
     step = 1
     while step < len(a):
         for i in range(0, len(a), 2 * step):
             for j in range(i, i + step):
-                if op == 'AND':
+                if oplus == op.and_:
                     a[j], a[j + step] = a[j + step] - a[j], a[j] if inv else a[j + step], a[j] + a[j + step]
-                elif op == 'OR':
+                elif oplus == op.or_:
                     a[j], a[j + step] = a[j + step], a[j] - a[j + step] if inv else a[j] + a[j + step], a[j]
-                elif op == 'XOR':
+                elif oplus == op.xor:
                     a[j], a[j + step] = a[j] + a[j + step], a[j] - a[j + step]
-
         step *= 2
 
-    if inv and (op == 'XOR'):
+    if inv and oplus == op.xor:
         for i in range(len(a)):
             a[i] /= len(a)
 
 
 def conv(a, b):
-    fst(a)
-    fst(b)
-
+    fst(a), fst(b)
     for i in range(len(a)):
         a[i] *= b[i]
-
     fst(1, inv=True)
-
     return a
