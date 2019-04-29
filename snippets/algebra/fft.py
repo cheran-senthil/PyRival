@@ -1,10 +1,11 @@
 import cmath
 
+MOD = 10**9 + 7
+
 
 def fft(a, inv=False):
     n = len(a)
     w = [cmath.rect(1, (-2 if inv else 2) * cmath.pi * i / n) for i in range(n >> 1)]
-
     rev = [0] * n
     for i in range(n):
         rev[i] = rev[i >> 1] >> 1
@@ -23,7 +24,6 @@ def fft(a, inv=False):
                 a[j + half] = a[j] - v
                 a[j] += v
                 pw += diff
-
         step <<= 1
 
     if inv:
@@ -34,15 +34,13 @@ def fft(a, inv=False):
 def conv(a, b):
     s = len(a) + len(b) - 1
     n = 1 << s.bit_length()
-
     a.extend([0.0] * (n - len(a)))
     b.extend([0.0] * (n - len(b)))
 
-    fft(a)
-    fft(b)
-
+    fft(a), fft(b)
     for i in range(n):
         a[i] *= b[i]
-
     fft(a, True)
+
     a = [a[i].real for i in range(s)]
+    return a
