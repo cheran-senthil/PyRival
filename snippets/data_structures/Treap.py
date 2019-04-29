@@ -2,53 +2,75 @@ import random
 
 values = sorted()
 
-
-class Node:
-    def __init__(self, key=0):
-        self.left, self.right = None, None
-        self.key = key
-        self.priority = random.random()
+MX = 2 * 10**5 + 10
+lt = [0] * MX
+rt = [0] * MX
+k = [0] * MX
+pr = [0.0] * MX
+cur = 1
 
 
 def build(i, j):
+    global cur
     if i == j:
-        return None
+        return 0
     mid = (i + j) // 2
-    root = Node(values[mid])
-    root.left = build(i, mid)
-    root.right = build(mid + 1, j)
+    root = cur
+    cur += 1
+    pr[root] = random.random()
+    k[root] = values[mid]
+    lt[root] = build(i, mid)
+    rt[root] = build(mid + 1, j)
     return root
 
 
 def merge(left, right):
-    if not left or not right:
-        return left if left else right
-    if left.priority > right.priority:
-        left.right = merge(left.right, right)
-        return left
-    right.left = merge(left, right.left)
-    return right
+    tmp = [0]
+    where, pos = tmp, 0
+    while left and right:
+        if pr[left] > pr[right]:
+            where[pos] = left
+            where, pos = rt, left
+            left = rt[left]
+        else:
+            where[pos] = right
+            where, pos = lt, right
+            right = lt[right]
+    where[pos] = left or right
+    return tmp[0]
 
 
-def erase(node, key):
-    if node is None:
-        return None
-    if key == node.key:
-        return merge(node.left, node.right)
-    elif key < node.key:
-        node.left = erase(node.left, key)
+def erase(n, key):
+    if k[n] == key:
+        return merge(lt[n], rt[n])
+    m = n
+    while k[n] != key:
+        if key < k[n]:
+            parent = n
+            n = lt[n]
+        else:
+            parent = n
+            n = rt[n]
+    if n == lt[parent]:
+        lt[parent] = merge(lt[n], rt[n])
     else:
-        node.right = erase(node.right, key)
-    return node
+        rt[parent] = merge(lt[n], rt[n])
+    return m
 
 
 def lower_bound(n, key):
-    if n is None:
-        return None
-    if key > n.key:
-        return lower_bound(n.right, key)
-    if key < n.key:
-        ret = lower_bound(n.left, key)
-        if ret and ret.key >= key:
-            return ret
-    return n
+    while n and k[n] < key:
+        n = rt[n]
+    if not n:
+        return 0
+    best_node = n
+    best = k[n]
+    while n:
+        if k[n] < key:
+            n = rt[n]
+        else:
+            if k[n] < best:
+                best = k[n]
+                best_node = n
+            n = lt[n]
+    return best_node
