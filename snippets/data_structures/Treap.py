@@ -2,25 +2,25 @@ import random
 
 values = sorted()
 
-MX = 2 * 10**5 + 10
-lt = [0] * MX
-rt = [0] * MX
-k = [0] * MX
-pr = [0.0] * MX
+MAXN = 2 * 10**5 + 1
+left_child = [0] * MAXN
+right_child = [0] * MAXN
+keys = [0] * MAXN
+priority = [0.0] * MAXN
 cur = 1
 
 
-def build(i, j):
+def build(begin, end):
     global cur
-    if i == j:
+    if begin == end:
         return 0
-    mid = (i + j) // 2
+    mid = (begin + end) // 2
     root = cur
     cur += 1
-    pr[root] = random.random()
-    k[root] = values[mid]
-    lt[root] = build(i, mid)
-    rt[root] = build(mid + 1, j)
+    priority[root] = random.random()
+    keys[root] = values[mid]
+    left_child[root] = build(begin, mid)
+    right_child[root] = build(mid + 1, end)
     return root
 
 
@@ -28,49 +28,45 @@ def merge(left, right):
     tmp = [0]
     where, pos = tmp, 0
     while left and right:
-        if pr[left] > pr[right]:
+        if priority[left] > priority[right]:
             where[pos] = left
-            where, pos = rt, left
-            left = rt[left]
+            where, pos = right_child, left
+            left = right_child[left]
         else:
             where[pos] = right
-            where, pos = lt, right
-            right = lt[right]
+            where, pos = left_child, right
+            right = left_child[right]
     where[pos] = left or right
     return tmp[0]
 
 
 def erase(n, key):
-    if k[n] == key:
-        return merge(lt[n], rt[n])
+    if keys[n] == key:
+        return merge(left_child[n], right_child[n])
     m = n
-    while k[n] != key:
-        if key < k[n]:
-            parent = n
-            n = lt[n]
-        else:
-            parent = n
-            n = rt[n]
-    if n == lt[parent]:
-        lt[parent] = merge(lt[n], rt[n])
+    while keys[n] != key:
+        parent = n
+        n = left_child[n] if key < keys[n] else right_child[n]
+    if n == left_child[parent]:
+        left_child[parent] = merge(left_child[n], right_child[n])
     else:
-        rt[parent] = merge(lt[n], rt[n])
+        right_child[parent] = merge(left_child[n], right_child[n])
     return m
 
 
 def lower_bound(n, key):
-    while n and k[n] < key:
-        n = rt[n]
+    while n and keys[n] < key:
+        n = right_child[n]
     if not n:
         return 0
     best_node = n
-    best = k[n]
+    best = keys[n]
     while n:
-        if k[n] < key:
-            n = rt[n]
+        if keys[n] < key:
+            n = right_child[n]
         else:
-            if k[n] < best:
-                best = k[n]
+            if keys[n] < best:
+                best = keys[n]
                 best_node = n
-            n = lt[n]
+            n = left_child[n]
     return best_node
