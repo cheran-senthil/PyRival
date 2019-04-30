@@ -1,27 +1,38 @@
 import random
 
-values = sorted()
-
-MAXN = 2 * 10**5 + 1
-left_child = [0] * MAXN
-right_child = [0] * MAXN
-keys = [0] * MAXN
-priority = [0.0] * MAXN
-cur = 1
+left_child = [0]
+right_child = [0]
+keys = [0]
+priority = [0]
 
 
-def build(begin, end):
-    global cur
-    if begin == end:
-        return 0
-    mid = (begin + end) // 2
-    root = cur
-    cur += 1
-    priority[root] = random.random()
-    keys[root] = values[mid]
-    left_child[root] = build(begin, mid)
-    right_child[root] = build(mid + 1, end)
-    return root
+def create_node(key):
+    keys.append(key)
+    priority.append(random.random())
+    left_child.append(0)
+    right_child.append(0)
+    return len(keys) - 1
+
+
+def split(root, key):
+    tmp = [0, 0]
+    wherel, wherer, posl, posr = tmp, tmp, 0, 1
+    while root:
+        if key < keys[root]:
+            wherer[posr] = root
+            wherer, posr = left_child, root
+            root = left_child[root]
+        else:
+            wherel[posl] = root
+            wherel, posl = right_child, root
+            root = right_child[root]
+    wherel[posl] = wherer[posr] = 0
+    return tmp
+
+
+def insert(root, key):
+    left, right = split(root, key)
+    return merge(merge(left, create_node(key)), right)
 
 
 def merge(left, right):
@@ -40,33 +51,50 @@ def merge(left, right):
     return tmp[0]
 
 
-def erase(n, key):
-    if keys[n] == key:
-        return merge(left_child[n], right_child[n])
-    m = n
-    while keys[n] != key:
-        parent = n
-        n = left_child[n] if key < keys[n] else right_child[n]
-    if n == left_child[parent]:
-        left_child[parent] = merge(left_child[n], right_child[n])
+def erase(root, key):
+    if keys[root] == key:
+        return merge(left_child[root], right_child[root])
+    node = root
+    while keys[root] != key:
+        parent = root
+        root = left_child[root] if key < keys[root] else right_child[root]
+    if root == left_child[parent]:
+        left_child[parent] = merge(left_child[root], right_child[root])
     else:
-        right_child[parent] = merge(left_child[n], right_child[n])
-    return m
+        right_child[parent] = merge(left_child[root], right_child[root])
+    return node
 
 
-def lower_bound(n, key):
-    while n and keys[n] < key:
-        n = right_child[n]
-    if not n:
+def lower_bound(root, key):
+    while root and keys[root] < key:
+        root = right_child[root]
+    if not root:
         return 0
-    best_node = n
-    best = keys[n]
-    while n:
-        if keys[n] < key:
-            n = right_child[n]
+    max_node = root
+    max_key = keys[root]
+    while root:
+        if keys[root] < key:
+            root = right_child[root]
         else:
-            if keys[n] < best:
-                best = keys[n]
-                best_node = n
-            n = left_child[n]
-    return best_node
+            if keys[root] < max_key:
+                max_key = keys[root]
+                max_node = root
+            root = left_child[root]
+    return max_node
+
+
+values = sorted()
+
+
+def build(begin, end):
+    global node_cnt
+    if begin == end:
+        return 0
+    mid = (begin + end) // 2
+    root = node_cnt
+    node_cnt += 1
+    priority[root] = random.random()
+    keys[root] = values[mid]
+    left_child[root] = build(begin, mid)
+    right_child[root] = build(mid + 1, end)
+    return root
