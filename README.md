@@ -15,43 +15,59 @@
 
 ---
 
-### About
-- A Master Template optimized for performance in all flavors of Python
-- A Lite version for specific use in PyPy2 / PyPy 3
-- Tools to optimize performance further
-- Optimized code snippets written in Python 3
+### Features
+- Templates
+- Programming Tools
+- Algorithm Snippets
 
 ##
 
-### Template
-- [Master Template](template/template.py)
-- [Python 2](template/lite2.py), [Python 3](template/lite3.py)
+### Templates
+- The [Master Template](template/template.py) works with all versions of Python and enables Python 3 code internally.
+- Version Specific Templates: [Python 2](template/lite2.py), [Python 3](template/lite3.py)
 
 ##
 
 ### Tools
+- [Faster Builtins](tools/builtins) (FastIO, str.split, heapq, sorted, and random)
 - [Stress Tester](tools/stress/stress.py)
-- [Fast Integer Input](tools/getnum.py)
-- [Infinite Recursion](tools/infinite_recursion.py)
-- [Python 3 Compatibility](tools/py3k.py)
+- [Fast 32-bit Modular Arithmetic Template](tools/fmod.py)
+- [Infinite Recursion Template](tools/infinite_recursion.py)
+- [Interactive Tester Template](tools/interactive_runner.py)
+- [Memoize Decorators](tools/memoize.py)
+- [C++ style cout](tools/ostream.py)
 
 ##
 
 ### Snippets
+- Algebra
+  - (Multivariable) Chinese Remainder Theorem
+  - Discrete Logarithm
+  - Least Common Multiple
+  - Integer Factorization
+  - Fast Fourier Transform
+  - Fast Subset Transform
+  - Number Theoretic Transform
+  - Deterministic Miller-Rabin Primality Test
+  - Tonelli–Shanks Algorithm
+  - Generalized Modular Inverse
+  - Euler's Phi Function
+  - Primitive Root
+  - Sieve of Eratosthenes
 - Data Structures
   - Bit Array
-  - FastIO
   - Binary Indexed (Fenwick) Tree
-  - Fraction
-  - Linked List
-  - Memoize Decorators
+  - Fractions
+  - Continued Fractions
   - Generic Nodes
-  - Random
+  - Linked List
   - Range Query Data Structure
-  - Fast Number Input
   - (Lazy) Segment Tree
+  - Persistent Segment Tree
   - Sorted List
+  - Treap
   - Trie Tree
+  - 2-satisfiability Template
   - Disjoint-Set (Union Find) Data Structure
 - Geometry
   - Convex Hull
@@ -62,6 +78,7 @@
   - Bellman-Ford Algorithm
   - Breadth First Search
   - Connected Components Search
+  - Brent's Algorithm for Cycle Detection
   - Depth First Search
   - Dijkstra's Algorithm
   - Eulerian Path
@@ -70,47 +87,33 @@
   - Bipartite Graph Check
   - Kruskal's Algorithm with Disjoin Set Union
   - Prim's Algorithm
+  - Tarjan's Algorithm
   - Topological Sorting
-- Mathematics
-  - Alpha–Beta Pruning
-  - Binary Search
-  - Continued Fractions
-  - Chinese Remainder Theorem
+- Combinatorics
   - General Purpose Numbers
-  - Brent's Algorithm for Cycle Detection
-  - Discrete Logarithm
-  - Least Common Multiple
-  - Integer Factorization
-  - Integer Roots
-  - Deterministic Miller-Rabin Primality Test
-  - Longest Increasing Subsequence
-  - Tonelli–Shanks Algorithm
   - Lucas's Theorem
-  - K-th Order Statistic
   - Partition Function
-  - Euler's Phi Function
-  - Pollard's Rho Algorithm
-  - Primitive Root
-  - Binary and Ternary Search
-  - Sieve of Eratosthenes
-- Numerical
-  - Fast Fourier Transform
-  - Fast Subset Transform
+- Linear Algebra
+  - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
   - Gaussian Elimination
-  - Golden Section Search
+  - Multivariable Chinese Remainder Theorem
+- Numerical
+  - Linear Recurrence Template
   - Hill Climbing Algorithm
   - Approximate Integration
   - Polynomial Interpolation
-  - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
-  - Linear Recurrence Matrix
-  - Multivariable Chinese Remainder Theorem
-  - Number Theoretic Transform
-- String Processing
+  - Integer Roots
+  - Binary Search
+- Strings
   - Knuth–Morris–Pratt Algorithm
   - Longest Common/Palindromic Subsequences
   - Longest Common Substring
   - Manacher's Algorithm
   - Lydon Factorization
+- Misc
+  - Alpha–Beta Pruning
+  - Longest Increasing Subsequence
+  - K-th Order Statistic
 
 ##
 
