@@ -1,6 +1,16 @@
 <h1 align="center">PyRival</h1>
 <div align="center">
-  <strong>A Python Library for Competitive Programming</strong>
+  <strong>A Python Library for Competitive Programming</strong>  
+</div>
+
+<h3 align="center">Developers</h3>
+<div align="center">
+  <strong>
+    <a href="https://codeforces.com/profile/pajenegod">pajenegod</a> &emsp;
+    <a href="https://github.com/meooow25">meooow25</a> &emsp;
+    <a href="https://github.com/Mukundan314">Mukundan314</a> &emsp;
+    <a href="https://github.com/algmyr">algmyr</a>
+  </strong>
 </div>
 
 ---
@@ -101,13 +111,6 @@
   - Longest Common Substring
   - Manacher's Algorithm
   - Lydon Factorization
-
-##
-
-### Acknowledgements
-
-- Faster IO techniques by [pajenegod](https://codeforces.com/profile/pajenegod) / [Görre Mörre](https://www.codechef.com/users/gorre_morre).
-- Testing and debugging by [Mukundan314](https://github.com/Mukundan314).
 
 ##
 
