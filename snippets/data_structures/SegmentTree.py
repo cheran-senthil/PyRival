@@ -1,6 +1,6 @@
 class SegmentTree:
     def __init__(self, data):
-        """ Maximum Segment Tree """
+        """maximum segment tree"""
         self.m = m = 1 << (len(data) - 1).bit_length()
         self.data = [0] * (2 * m)
         self.data[m:m + len(data)] = data
@@ -9,7 +9,7 @@ class SegmentTree:
         self.query = [0] * (2 * m)
 
     def push(self, seg_ind):
-        """ Push the query on seg_ind to its children """
+        """push the query on seg_ind to its children"""
         # Let the children know of the queries
         q = self.query[seg_ind]
 
@@ -24,7 +24,7 @@ class SegmentTree:
         self.query[seg_ind] = 0
 
     def update(self, seg_ind):
-        """ Updates the node seg_ind to know of all queries applied to it via its ancestors """
+        """udates the node seg_ind to know of all queries applied to it via its ancestors"""
         # Find all indecies to be updated
         seg_ind >>= 1
         inds = []
@@ -37,14 +37,14 @@ class SegmentTree:
             self.push(ind)
 
     def build(self, seg_ind):
-        """ Make the changes to seg_ind be known to its ancestors """
+        """make the changes to seg_ind be known to its ancestors"""
         seg_ind >>= 1
         while seg_ind > 0:
             self.data[seg_ind] = max(self.data[2 * seg_ind], self.data[2 * seg_ind + 1]) + self.query[seg_ind]
             seg_ind >>= 1
 
     def add(self, start, end, value):
-        """ Lazily add value to [start, end) """
+        """lazily add value to [start, end)"""
         start += self.m
         end += self.m
         _start, _end = start, end
@@ -68,7 +68,7 @@ class SegmentTree:
         self.build(end - 1)
 
     def maxi(self, start, end):
-        """ Max of data[start, end) """
+        """max of data[start, end)"""
         start += self.m
         end += self.m
 
