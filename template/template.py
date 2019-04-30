@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""<https://github.com/cheran-senthil/PyRival>"""
 from __future__ import division, print_function
 
 import os
@@ -62,6 +63,7 @@ class ostream:
 
 
 def print(*args, **kwargs):
+    """Prints the values to a stream, or to sys.stdout by default."""
     sep, file = kwargs.pop("sep", b" "), kwargs.pop("file", sys.stdout)
     at_start = True
     for x in args:
