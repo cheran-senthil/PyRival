@@ -118,4 +118,4 @@
 ##
 
 ### License
-[AGPL-3.0](LICENSE) © Cheran Senthilkumar
+[MIT](LICENSE) © Cheran Senthilkumar
