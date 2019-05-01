@@ -1,4 +1,4 @@
-class Node(object):
+class Node:
     def __init__(self, value):
         self.value = value
         self.next = None
@@ -10,7 +10,7 @@ class Node(object):
         return '%s(%r)' % (self.__class__.__name__, self.value)
 
 
-class LinkedList():
+class LinkedList:
     def __init__(self, iterable=None):
         self.sentinel = Node(None)
         self.sentinel.next = self.sentinel
