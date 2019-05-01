@@ -82,6 +82,24 @@ def lower_bound(root, key):
     return min_node
 
 
+def upper_bound(root, key):
+    while root and _keys[root] <= key:
+        root = right_child[root]
+    if not root:
+        return 0
+    min_node = root
+    min_key = _keys[root]
+    while root:
+        if _keys[root] <= key:
+            root = right_child[root]
+        else:
+            if _keys[root] <= min_key:
+                min_key = _keys[root]
+                min_node = root
+            root = left_child[root]
+    return min_node
+
+
 values = sorted()
 node_cnt = 1
 
