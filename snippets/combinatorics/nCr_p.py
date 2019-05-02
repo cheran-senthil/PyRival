@@ -1,24 +1,24 @@
-def factorial_p(n, p):
-    ans = 1
-    if n <= p // 2:
-        for i in range(1, n + 1):
-            ans = (ans * i) % p
-    else:
-        for i in range(1, p - n):
-            ans = (ans * i) % p
-        ans = pow(ans, p - 2, p)
-        if n % 2 == 0:
-            ans = p - ans
-    return ans
+MOD = 10**9 + 7
+
+MAXN = 2 * 10**5
+
+fact, inv_fact = [0] * (MAXN + 1), [0] * (MAXN + 1)
+fact[0] = 1
+for i in range(MAXN):
+    fact[i + 1] = fact[i] * (i + 1) % MOD
+
+inv_fact[-1] = pow(fact[-1], MOD - 2, MOD)
+for i in reversed(range(MAXN)):
+    inv_fact[i] = inv_fact[i + 1] * (i + 1) % MOD
 
 
-def nCr_p(n, r, p):
-    ans = 1
-    while (n != 0) or (r != 0):
-        a, b = n % p, r % p
+def nCr_mod(n, r):
+    res = 1
+    while n or r:
+        a, b = n % MOD, r % MOD
         if a < b:
             return 0
-        ans = (ans * factorial_p(a, p) * pow(factorial_p(b, p), p - 2, p) * pow(factorial_p(a - b, p), p - 2, p)) % p
-        n //= p
-        r //= p
-    return ans
+        res = res * fact[a] % MOD * inv_fact[b] % MOD * inv_fact[a - b] % MOD
+        n //= MOD
+        r //= MOD
+    return res
