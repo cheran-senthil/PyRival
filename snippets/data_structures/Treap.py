@@ -100,7 +100,7 @@ def upper_bound(root, key):
     return min_node
 
 
-values = sorted()
+values = sorted([])
 node_cnt = 1
 
 
