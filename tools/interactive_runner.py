@@ -13,10 +13,6 @@
 # This will run the first test set of a python judge called "judge.py" that
 # receives the test set number (starting from 0) via command line parameter
 # with a solution compiled into a binary called "my_binary".
-#
-# This is only intended as a convenient tool to help contestants test solutions
-# locally. In particular, it is not identical to the implementation on our
-# server, which is more complex.
 
 from __future__ import print_function
 

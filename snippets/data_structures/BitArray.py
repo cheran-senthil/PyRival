@@ -1,6 +1,7 @@
-class BitArray:
+class bitarray:
+    """implements bitarray using bytearray"""
+
     def __init__(self, size):
-        """initialize a bit array using a bytearray"""
         self.bytes = bytearray((size >> 3) + 1)
 
     def __getitem__(self, index):

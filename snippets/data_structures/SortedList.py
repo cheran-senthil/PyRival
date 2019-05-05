@@ -19,14 +19,6 @@ class SortedList():
         if iterable is not None:
             self.update(iterable)
 
-    def clear(self):
-        """Remove all values from sorted list."""
-        self._len = 0
-        del self._lists[:]
-        del self._maxes[:]
-        del self._index[:]
-        self._offset = 0
-
     def add(self, value):
         """Add `value` to sorted list."""
         _lists = self._lists
@@ -330,8 +322,6 @@ class SortedList():
         pos = bisect_right(self._maxes, value)
         return self._len if pos == len(self._maxes) else self._loc(pos, bisect_right(self._lists[pos], value))
 
-    bisect = bisect_right
-
     def count(self, value):
         """Return number of occurrences of `value` in the sorted list."""
         _maxes = self._maxes
@@ -356,11 +346,9 @@ class SortedList():
         left = self._loc(pos_left, idx_left)
         return right - left
 
-    def copy(self):
+    def __copy__(self):
         """Return a shallow copy of the sorted list."""
         return self.__class__(self)
-
-    __copy__ = copy
 
     def pop(self, index=-1):
         """Remove and return value at `index` in sorted list."""

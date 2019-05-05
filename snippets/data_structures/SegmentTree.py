@@ -39,8 +39,6 @@ class SegmentTree:
             i = 2 * i + 1 if value >= self._data[2 * i] else 2 * i
         return i - self._size
 
-    bisect = bisect_right
-
     def query(self, begin, end):
         begin += self._size
         end += self._size
