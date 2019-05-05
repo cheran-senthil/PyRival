@@ -20,8 +20,8 @@ def memoize(f):
 @memoize
 def catalan_recursive(n):
     if n == 0:
-        return 0
-    return (2 * (2 * n + 1) * catalan_recursive(n - 1)) // (n + 2)
+        return 1
+    return (2 * (2 * n - 1) * catalan_recursive(n - 1)) // (n + 1)
 
 
 @memoize
