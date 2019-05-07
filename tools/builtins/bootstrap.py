@@ -1,21 +1,21 @@
 from types import GeneratorType
 
 
-def bootstrap(func, stack=[]):
-    def wrapped_function(*args, **kwargs):
+def bootstrap(f, stack=[]):
+    def wrappedfunc(*args, **kwargs):
         if stack:
-            return func(*args, **kwargs)
+            return f(*args, **kwargs)
         else:
-            call = func(*args, **kwargs)
+            to = f(*args, **kwargs)
             while True:
-                if type(call) is GeneratorType:
-                    stack.append(call)
-                    call = next(call)
+                if type(to) is GeneratorType:
+                    stack.append(to)
+                    to = next(to)
                 else:
                     stack.pop()
                     if not stack:
                         break
-                    call = stack[-1].send(call)
-            return call
+                    to = stack[-1].send(to)
+            return to
 
-    return wrapped_function
+    return wrappedfunc
