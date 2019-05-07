@@ -1,4 +1,4 @@
-def stress(tests, solution, checker):
+def stress_tester(tests, solution, checker):
     for inp in tests():
         out, err = solution(inp)
         verdict = checker(inp, out)
