@@ -29,13 +29,21 @@
 ##
 
 ### Tools
-- [Faster Builtins](tools/builtins) (FastIO, str.split, heapq, sorted, and random)
-- [Stress Tester](tools/stress/stress.py)
-- [Fast 32-bit Modular Arithmetic Template](tools/fmod.py)
-- [Infinite Recursion Template](tools/infinite_recursion.py)
-- [Interactive Tester Template](tools/interactive_runner.py)
-- [Memoize Decorators](tools/memoize.py)
-- [C++ style cout](tools/ostream.py)
+- Builtins
+  - bootstrap for recursion
+  - FastIO
+  - heapq
+  - sorted
+  - py3k compatibility tools
+  - random
+  - str.split for whitespace
+- Perfomance tools
+  - 32-bit Modular Arithmetic
+  - Memoize Decorators
+  - C++ syle cout
+- Testing tools
+  - Interactive Runner
+  - Stress Tester
 
 ##
 
@@ -118,4 +126,4 @@
 ##
 
 ### License
-[MIT](LICENSE) © Cheran Senthilkumar
+[Apache-2.0](LICENSE) © Cheran Senthilkumar
