@@ -18,7 +18,7 @@ def main():
     pass
 
 
-# region template
+# region fastio
 
 BUFSIZE = 8192
 
@@ -52,16 +52,6 @@ class FastIO(IOBase):
             self._buffer.truncate(0), self._buffer.seek(0)
 
 
-class ostream:
-    def __lshift__(self, a):
-        if a is endl:
-            sys.stdout.write(b"\n")
-            sys.stdout.flush()
-        else:
-            sys.stdout.write(str(a))
-        return self
-
-
 def print(*args, **kwargs):
     """Prints the values to a stream, or to sys.stdout by default."""
     sep, file = kwargs.pop("sep", b" "), kwargs.pop("file", sys.stdout)
@@ -77,11 +67,7 @@ def print(*args, **kwargs):
 
 
 sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
-cout, endl = ostream(), object()
-
-readline = sys.stdin.readline
-readlist = lambda var=int: [var(n) for n in readline().split()]
-input = lambda: readline().rstrip(b"\r\n")
+input = lambda: sys.stdid.readline().rstrip(b"\r\n")
 
 # endregion
 
