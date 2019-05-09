@@ -67,7 +67,7 @@ def print(*args, **kwargs):
 
 
 sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
-input = lambda: sys.stdid.readline().rstrip(b"\r\n")
+input = lambda: sys.stdin.readline().rstrip(b"\r\n")
 
 # endregion
 
