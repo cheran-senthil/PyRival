@@ -36,44 +36,42 @@ def mat_pow(mat, power):
     return mat_mul(result, mat)
 
 
-def det(mat, mod=0):
-    """returns the det of mat (optionally % mod)"""
-    n = len(mat)
+def det(A, mod=0):
+    """returns the det of A (optionally % mod)"""
+    n = len(A)
 
     if n == 1:
-        return mat[0][0]
+        return A[0][0]
     if n == 2:
-        return mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0]
+        return A[0][0] * A[1][1] - A[0][1] * A[1][0]
     if n == 3:
-        return (mat[0][0] * (mat[1][1] * mat[2][2] - mat[1][2] * mat[2][1]) -
-                mat[0][1] * (mat[1][0] * mat[2][2] - mat[1][2] * mat[2][0]) +
-                mat[0][2] * (mat[1][0] * mat[2][1] - mat[1][1] * mat[2][0]))
+        return (A[0][0] * (A[1][1] * A[2][2] - A[1][2] * A[2][1]) -
+                A[0][1] * (A[1][0] * A[2][2] - A[1][2] * A[2][0]) +
+                A[0][2] * (A[1][0] * A[2][1] - A[1][1] * A[2][0]))
 
     flag, tmp = False, 1
-    for i in range(n):
-        if not mat[i][i]:
+    for i, Ai in enumerate(A):
+        if not Ai[i]:
             for j in range(i + 1, n):
-                if mat[j][i]:
+                Aj = A[j]
+                if Aj[i]:
                     for k in range(i, n):
-                        mat[j][k], mat[i][k] = mat[i][k], mat[j][k]
+                        Aj[k], Ai[k] = Ai[k], Aj[k]
                     flag = not flag
                     break
-        if not mat[i][i]:
+        if not Ai[i]:
             return 0
 
         for j in range(i + 1, n):
-            if mat[j][i]:
-                tmp = (tmp * mat[i][i]) % mod if mod else tmp * mat[i][i]
-                t = mat[j][i]
+            Aj = A[j]
+            if Aj[i]:
+                tmp = (tmp * Ai[i]) % mod if mod else tmp * Ai[i]
                 for k in range(i, n):
-                    if mod == 0:
-                        mat[j][k] = mat[j][k] * mat[i][i] - mat[i][k] * t
-                    else:
-                        mat[j][k] = (mat[j][k] * mat[i][i] - mat[i][k]) % mod
+                    Aj[k] = (Aj[k] * Ai[i] - Ai[k]) % mod if mod else Aj[k] * Ai[i] - Ai[k] * Aj[i]
 
     res = pow(tmp, mod - 2, mod) if mod else 1
-    for i in range(n):
-        res = (res * mat[i][i]) % mod if mod else res * mat[i][i]
+    for Ai, i in enumerate(A):
+        res = (res * Ai[i]) % mod if mod else res * Ai[i]
     if flag:
         return mod - res
     return res if mod else res // tmp
