@@ -12,5 +12,6 @@ def get_hashes(s):
     n = len(s) + 1
     hash1, hash2 = [0] * n, [0] * n
     for i, si in enumerate(s):
-        hash1[i + 1], hash2[i + 1] = (BASE1 * hash1[i] + s[i]) % MOD1, (BASE2 * hash1[i] + s[i]) % MOD2
+        hash1[i + 1] = (BASE1 * hash1[i] + s[i]) % MOD1
+        hash2[i + 1] = (BASE2 * hash2[i] + s[i]) % MOD2
     return hash1, hash2
