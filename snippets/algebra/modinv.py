@@ -10,6 +10,6 @@ def extended_gcd(a, b):
 
 
 def modinv(a, m):
-    """returns the modular inverse of a w.r.t. to m"""
+    """returns the modular inverse of a w.r.t. to m, works when a and m are coprime"""
     g, x, _ = extended_gcd(a % m, m)
     return x % m if g == 1 else None
