@@ -23,11 +23,3 @@ class Hashing:
         f_hash = [(self.f_hash[i + length] - pow_base1 * self.f_hash[i]) % MOD for i in range(self._len - length + 1)]
         s_hash = [(self.s_hash[i + length] - pow_base2 * self.s_hash[i]) % MOD for i in range(self._len - length + 1)]
         return f_hash, s_hash
-
-
-def hashed(s):
-    f_hash, s_hash = 0, 0
-    for si in s:
-        f_hash = (BASE1 * f_hash + si) % MOD
-        s_hash = (BASE2 * s_hash + si) % MOD
-    return (f_hash, s_hash)
