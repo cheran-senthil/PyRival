@@ -127,4 +127,4 @@
 ##
 
 ### License
-[Apache-2.0](LICENSE) © Cheran Senthilkumar
+[Apache-2.0](LICENSE)
