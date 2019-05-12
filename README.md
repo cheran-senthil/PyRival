@@ -7,7 +7,7 @@
 <div align="center">
   <strong>
     <a href="https://codeforces.com/profile/pajenegod">pajenegod</a> &emsp;
-    <a href="https://github.com/meooow25">meooow25</a> &emsp;
+    <a href="https://github.com/meooow25">meooow</a> &emsp;
     <a href="https://github.com/Mukundan314">Mukundan314</a> &emsp;
     <a href="https://github.com/algmyr">algmyr</a> &emsp;
     <a href="https://github.com/eduard-netsajev">drd93</a>
