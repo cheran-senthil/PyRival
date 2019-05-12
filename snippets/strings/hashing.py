@@ -24,8 +24,8 @@ MOD2 = 2147483647
 # BASE = random.choice(numbers not in s)
 BASE1 = random.randint(MAXVAL, MOD1 - 1)
 BASE2 = random.randint(MAXVAL, MOD2 - 1)
-INV1 = modinv(MAXVAL, MOD1)
-INV2 = modinv(MAXVAL, MOD2)
+INV1 = modinv(BASE1, MOD1)
+INV2 = modinv(BASE2, MOD2)
 
 
 class Hashing:
