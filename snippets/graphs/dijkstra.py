@@ -10,7 +10,7 @@ def dijkstra(n, graph, start):
     while queue:
         path_len, v = heappop(queue)
         if path_len == dist[v]:
-            for (w, edge_len) in graph[v]:
+            for w, edge_len in graph[v]:
                 if edge_len + path_len < dist[w]:
                     dist[w], parents[w] = edge_len + path_len, v
                     heappush(queue, (edge_len + path_len, w))
