@@ -45,16 +45,6 @@ class FastIO(IOBase):
             self._buffer.truncate(0), self._buffer.seek(0)
 
 
-class ostream:
-    def __lshift__(self, a):
-        if a is endl:
-            sys.stdout.write(b"\n")
-            sys.stdout.flush()
-        else:
-            sys.stdout.write(str(a))
-        return self
-
-
 def print(*args, sep=b" ", end=b"\n", file=sys.stdout, flush=False):
     at_start = True
     for x in args:
@@ -68,11 +58,7 @@ def print(*args, sep=b" ", end=b"\n", file=sys.stdout, flush=False):
 
 
 sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
-cout, endl = ostream(), object()
-
-readline = sys.stdin.readline
-readlist = lambda var=int: [var(n) for n in readline().split()]
-input = lambda: readline().rstrip(b"\r\n")
+input = lambda: sys.stdin.readline().rstrip(b"\r\n")
 
 # endregion
 

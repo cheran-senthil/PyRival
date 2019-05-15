@@ -47,16 +47,6 @@ class FastIO(IOBase):
             self._buffer.truncate(0), self._buffer.seek(0)
 
 
-class ostream:
-    def __lshift__(self, a):
-        if a is endl:
-            sys.stdout.write("\n")
-            sys.stdout.flush()
-        else:
-            sys.stdout.write(str(a))
-        return self
-
-
 def print(*args, **kwargs):
     sep, file = kwargs.pop("sep", " "), kwargs.pop("file", sys.stdout)
     at_start = True
@@ -71,11 +61,7 @@ def print(*args, **kwargs):
 
 
 sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
-cout, endl = ostream(), object()
-
-readline = sys.stdin.readline
-readlist = lambda var=int: [var(n) for n in readline().split()]
-input = lambda: readline().rstrip("\r\n")
+input = lambda: sys.stdin.readline().rstrip("\r\n")
 
 # endregion
 
