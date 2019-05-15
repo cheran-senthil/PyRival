@@ -4,7 +4,8 @@ import subprocess
 def stress_tester(tests, solution, checker):
     for inp in tests():
         out, err = solution(inp)
-        verdict = checker(inp, out)
+        verdict, _ = checker(inp)
+        # verdict = checker(inp, out)
 
         if not verdict:
             print('input')
@@ -26,3 +27,13 @@ def prog2func(args):
         return proc.stdout, proc.stderr
 
     return func
+
+
+def tests():
+    for i in range(100):
+        yield str(i)
+
+
+solution = prog2func("python A.py")
+checker = prog2func("python checker.py")
+stress_tester(tests, solution, checker)
