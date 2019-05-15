@@ -1,3 +1,6 @@
+import subprocess
+
+
 def stress_tester(tests, solution, checker):
     for inp in tests():
         out, err = solution(inp)
@@ -15,3 +18,11 @@ def stress_tester(tests, solution, checker):
                 print(err)
 
             print('-' * 80)
+
+
+def prog2func(args):
+    def func(inp):
+        proc = subprocess.run(args, input=inp, text=True, capture_output=True)
+        return proc.stdout, proc.stderr
+
+    return func
