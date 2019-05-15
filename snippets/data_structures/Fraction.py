@@ -2,38 +2,15 @@ from math import gcd
 
 
 class Fraction:
-    """ A class to represent rational numbers. """
-
     def __init__(self, num=0, den=1):
         g = gcd(num, den)
         self.num, self.den = num // g, den // g
 
-    def __add__(self, other):
-        num = self.num * other.den + other.num * self.den
-        den = self.den * other.den
-        g = gcd(num, den)
-        return Fraction(num // g, den // g)
-
-    def __sub__(self, other):
-        num = self.num * other.den - other.num * self.den
-        den = self.den * other.den
-        g = gcd(num, den)
-        return Fraction(num // g, den // g)
-
-    def __mul__(self, other):
-        num = self.num * other.num
-        den = self.den * other.den
-        g = gcd(num, den)
-        return Fraction(num // g, den // g)
-
-    def __truediv__(self, other):
-        num = self.num * other.den
-        den = self.den * other.num
-        g = gcd(num, den)
-        return Fraction(num // g, den // g)
-
-    def __floordiv__(self, other):
-        return (self.num * other.den) // (self.den * other.num)
+    __add__ = lambda self, other: Fraction(self.num * other.den + other.num * self.den, self.den * other.den)
+    __sub__ = lambda self, other: Fraction(self.num * other.den - other.num * self.den, self.den * other.den)
+    __mul__ = lambda self, other: Fraction(self.num * other.num, self.den * other.den)
+    __truediv__ = lambda self, other: Fraction(self.num * other.den, self.den * other.num)
+    __floordiv__ = lambda self, other: (self.num * other.den) // (self.den * other.num)
 
     __pow__ = lambda self, other: Fraction(self.num**other, self.den**other)
     __abs__ = lambda self: self if self.num >= 0 else Fraction(-self.num, self.den)
@@ -57,21 +34,22 @@ class Fraction:
 
     __repr__ = lambda self: 'Fraction(%s, %s)' % (self.num, self.den)
 
-    def limit_denominator(self, max_den=1000000):
-        if self.den <= max_den:
-            return self
 
-        p0, q0, p1, q1 = 0, 1, 1, 0
-        n, d = self.num, self.den
-        while True:
-            a = n // d
-            q2 = q0 + a * q1
-            if q2 > max_den:
-                break
-            p0, q0, p1, q1 = p1, q1, p0 + a * p1, q2
-            n, d = d, n - a * d
+def limit_denominator(frac, max_den=1000000):
+    if frac.den <= max_den:
+        return frac
 
-        k = (max_den - q0) // q1
-        bound1 = Fraction(p0 + k * p1, q0 + k * q1)
-        bound2 = Fraction(p1, q1)
-        return bound2 if abs(bound2 - self) <= abs(bound1 - self) else bound1
+    p0, q0, p1, q1 = 0, 1, 1, 0
+    n, d = frac.num, frac.den
+    while True:
+        a = n // d
+        q2 = q0 + a * q1
+        if q2 > max_den:
+            break
+        p0, q0, p1, q1 = p1, q1, p0 + a * p1, q2
+        n, d = d, n - a * d
+
+    k = (max_den - q0) // q1
+    bound1 = Fraction(p0 + k * p1, q0 + k * q1)
+    bound2 = Fraction(p1, q1)
+    return bound2 if abs(bound2 - frac) <= abs(bound1 - frac) else bound1
