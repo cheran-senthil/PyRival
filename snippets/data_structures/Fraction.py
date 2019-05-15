@@ -36,12 +36,15 @@ class Fraction:
         return (self.num * other.den) // (self.den * other.num)
 
     __pow__ = lambda self, other: Fraction(self.num**other, self.den**other)
-    __bool__ = lambda self: bool(self.num)
-    __int__ = lambda self: self.num // self.den
-    __float__ = lambda self: self.num / self.den
     __abs__ = lambda self: self if self.num >= 0 else Fraction(-self.num, self.den)
     __neg__ = lambda self: Fraction(-self.num, self.den)
     __round__ = lambda self, ndigits: round(self.num / self.den, ndigits)
+
+    __bool__ = lambda self: bool(self.num)
+    __int__ = lambda self: self.num // self.den
+    __float__ = lambda self: self.num / self.den
+    __str__ = lambda self: '(%s, %s)' % (self.num, self.den)
+
     __copy__ = lambda self: Fraction(self.num, self.den)
     __hash__ = lambda self: hash((self.num, self.den))
 
@@ -51,6 +54,8 @@ class Fraction:
     __gt__ = lambda self, other: self.num * other.den > other.num * self.den
     __le__ = lambda self, other: self.num * other.den <= other.num * self.den
     __ge__ = lambda self, other: self.num * other.den >= other.num * self.den
+
+    __repr__ = lambda self: 'Fraction(%s, %s)' % (self.num, self.den)
 
     def limit_denominator(self, max_den=1000000):
         if self.den <= max_den:
