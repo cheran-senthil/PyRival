@@ -6,8 +6,7 @@ class Fraction:
 
     def __init__(self, num=0, den=1):
         g = gcd(num, den)
-        self.num = num // g
-        self.den = den // g
+        self.num, self.den = num // g, den // g
 
     def __add__(self, other):
         num = self.num * other.den + other.num * self.den
@@ -36,50 +35,38 @@ class Fraction:
     def __floordiv__(self, other):
         return (self.num * other.den) // (self.den * other.num)
 
-    def __pow__(self, other):
-        return Fraction(self.num**other, self.den**other)
+    __pow__ = lambda self, other: Fraction(self.num**other, self.den**other)
+    __bool__ = lambda self: bool(self.num)
+    __int__ = lambda self: self.num // self.den
+    __float__ = lambda self: self.num / self.den
+    __abs__ = lambda self: self if self.num >= 0 else Fraction(-self.num, self.den)
+    __neg__ = lambda self: Fraction(-self.num, self.den)
+    __round__ = lambda self, ndigits: round(self.num / self.den, ndigits)
+    __copy__ = lambda self: Fraction(self.num, self.den)
+    __hash__ = lambda self: hash((self.num, self.den))
 
-    def __bool__(self):
-        return bool(self.num)
+    __eq__ = lambda self, other: self.num * other.den == other.num * self.den
+    __ne__ = lambda self, other: self.num * other.den != other.num * self.den
+    __lt__ = lambda self, other: self.num * other.den < other.num * self.den
+    __gt__ = lambda self, other: self.num * other.den > other.num * self.den
+    __le__ = lambda self, other: self.num * other.den <= other.num * self.den
+    __ge__ = lambda self, other: self.num * other.den >= other.num * self.den
 
-    def __float__(self):
-        return self.num / self.den
+    def limit_denominator(self, max_den=1000000):
+        if self.den <= max_den:
+            return self
 
-    def __abs__(self):
-        return self if self.num >= 0 else Fraction(-self.num, self.den)
+        p0, q0, p1, q1 = 0, 1, 1, 0
+        n, d = self.num, self.den
+        while True:
+            a = n // d
+            q2 = q0 + a * q1
+            if q2 > max_den:
+                break
+            p0, q0, p1, q1 = p1, q1, p0 + a * p1, q2
+            n, d = d, n - a * d
 
-    def __neg__(self):
-        return Fraction(-self.num, self.den)
-
-    def __round__(self, ndigits=None):
-        return round(self.num / self.den, ndigits)
-
-    def __copy__(self):
-        return Fraction(self.num, self.den)
-
-    def __hash__(self):
-        return hash((self.num, self.den))
-
-    def __eq__(self, other):
-        return (self.num, self.den) == (other.num, other.den)
-
-    def __ne__(self, other):
-        return not (self == other)
-
-    def __ge__(self, other):
-        pass
-
-    def __gt__(self, other):
-        pass
-
-    def __le__(self, other):
-        pass
-
-    def __lt__(self, other):
-        pass
-
-    def from_float(self, num):
-        pass
-
-    def limit_denominator(self, limit):
-        pass
+        k = (max_den - q0) // q1
+        bound1 = Fraction(p0 + k * p1, q0 + k * q1)
+        bound2 = Fraction(p1, q1)
+        return bound2 if abs(bound2 - self) <= abs(bound1 - self) else bound1
