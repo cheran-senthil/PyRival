@@ -4,7 +4,7 @@ from __future__ import division, print_function
 import os
 import sys
 from __builtin__ import xrange as range
-from cStringIO import StringIO as BytesIO
+from cStringIO import StringIO
 from future_builtins import ascii, filter, hex, map, oct, zip
 from io import IOBase
 
@@ -13,7 +13,7 @@ def main():
     pass
 
 
-# region template
+# region fastio
 
 BUFSIZE = 8192
 
@@ -22,7 +22,7 @@ class FastIO(IOBase):
     newlines = 0
 
     def __init__(self, file):
-        self._buffer = BytesIO()
+        self._buffer = StringIO()
         self._fd = file.fileno()
         self._writable = "x" in file.mode or "r" not in file.mode
         self.write = self._buffer.write if self._writable else None
