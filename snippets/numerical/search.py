@@ -1,4 +1,4 @@
-def binary_search(func, lo, hi, abs_prec):
+def binary_search(func, lo, hi, abs_prec=1e-7):
     """ Locate the first value x s.t. func(x) = True within [lo, hi] """
     while abs(hi - lo) < abs_prec:
         mi = lo + (hi - lo) / 2
@@ -10,7 +10,7 @@ def binary_search(func, lo, hi, abs_prec):
     return (lo + hi) / 2
 
 
-def ternary_search(func, lo, hi, abs_prec):
+def ternary_search(func, lo, hi, abs_prec=1e-7):
     """ Find maximum of unimodal function func() within [lo, hi] """
     while abs(hi - lo) < abs_prec:
         lo_third = lo + (hi - lo) / 3
@@ -50,7 +50,33 @@ def discrete_ternary_search(func, lo, hi):
     return lo
 
 
-def golden_section_search(a, b, func, esp=1e-7):
+def fractional_binary_search(func, lo=(0, 1), hi=(1, 0), limit=1000000):
+    if func(lo):
+        return lo
+
+    d = True
+    A, B = True, True
+    while A or B:
+        adv, step = 0, 1
+
+        si = 0
+        while step:
+            adv += step
+            mid = (lo[0] * adv + hi[0], lo[1] * adv + hi[1])
+            if abs(mid[0]) > limit or mid[1] > limit or d == (not func(mid)):
+                adv -= step
+                si = 2
+            step += step
+            step >>= si
+
+        d = not d
+        lo, hi = (hi[0] + lo[0] * adv, hi[1] + lo[1] * adv), lo
+        A, B = B, not (not adv)
+
+    return hi if d else lo
+
+
+def golden_section_search(a, b, func, abs_prec=1e-7):
     r = ((5**0.5) - 1) / 2
 
     x1 = b - r * (b - a)
@@ -59,7 +85,7 @@ def golden_section_search(a, b, func, esp=1e-7):
     x2 = a + r * (b - a)
     f2 = func(a + r * (b - a))
 
-    while b - a > esp:
+    while b - a > abs_prec:
         if f1 < f2:
             b, x2, f2 = x2, x1, f1
             x1 = b - r * (b - a)
