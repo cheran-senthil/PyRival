@@ -54,7 +54,7 @@ def fractional_binary_search(func, lo=(0, 1), hi=(1, 0), limit=1000000):
     if func(lo):
         return lo
 
-    d = True
+    flag = True
     A, B = 1, 1
     while A or B:
         adv, step = 0, 1
@@ -63,17 +63,17 @@ def fractional_binary_search(func, lo=(0, 1), hi=(1, 0), limit=1000000):
         while step:
             adv += step
             mid = (lo[0] * adv + hi[0], lo[1] * adv + hi[1])
-            if abs(mid[0]) > limit or mid[1] > limit or d != func(mid):
+            if abs(mid[0]) > limit or mid[1] > limit or flag != func(mid):
                 adv -= step
                 si = 2
             step += step
             step >>= si
 
-        d = not d
+        flag = not flag
         lo, hi = (hi[0] + lo[0] * adv, hi[1] + lo[1] * adv), lo
         A, B = B, adv
 
-    return hi if d else lo
+    return hi if flag else lo
 
 
 def golden_section_search(a, b, func, abs_prec=1e-7):
