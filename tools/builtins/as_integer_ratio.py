@@ -10,6 +10,3 @@ def as_integer_ratio(x, prec=53):
     a >>= g
     b += g - prec
     return (a << b, 1) if b > 0 else (a, 1 << -b)
-
-
-print(as_integer_ratio(-1.0 / 3))
