@@ -55,7 +55,7 @@ def fractional_binary_search(func, lo=(0, 1), hi=(1, 0), limit=1000000):
         return lo
 
     d = True
-    A, B = True, True
+    A, B = 1, 1
     while A or B:
         adv, step = 0, 1
 
@@ -63,7 +63,7 @@ def fractional_binary_search(func, lo=(0, 1), hi=(1, 0), limit=1000000):
         while step:
             adv += step
             mid = (lo[0] * adv + hi[0], lo[1] * adv + hi[1])
-            if abs(mid[0]) > limit or mid[1] > limit or d == (not func(mid)):
+            if abs(mid[0]) > limit or mid[1] > limit or d != func(mid):
                 adv -= step
                 si = 2
             step += step
@@ -71,7 +71,7 @@ def fractional_binary_search(func, lo=(0, 1), hi=(1, 0), limit=1000000):
 
         d = not d
         lo, hi = (hi[0] + lo[0] * adv, hi[1] + lo[1] * adv), lo
-        A, B = B, not (not adv)
+        A, B = B, adv
 
     return hi if d else lo
 
