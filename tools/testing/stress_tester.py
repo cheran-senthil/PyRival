@@ -2,11 +2,6 @@ import pathlib
 import subprocess
 
 
-def dir2tests(directory, recursive=False):
-    glob = pathlib.Path(directory).glob('**/*' if recursive else '*')
-    return [path.open().read() for path in glob if path.is_file()]
-
-
 def cmd2func(args):
     def func(inp):
         proc = subprocess.run(args, input=inp, text=True, capture_output=True)
@@ -60,8 +55,8 @@ def tests():
         yield str(i)
 
 
+tests = tests()
 solution = cmd2func(["python", "A.py"])
 judge = sol2judge(cmd2func(["python", "judge.py"]))
 
-stress_tester(tests(), solution, judge)
-#stress_tester(dir2tests('test'), solution, judge)
+stress_tester(tests, solution, judge)
