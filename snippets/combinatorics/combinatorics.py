@@ -57,6 +57,6 @@ bell = lambda n: sum(stirling_2_recursive(k, n) for k in range(n + 1))
 
 catalan = lambda n: nCr(2 * n, n) // (n + 1)
 
-euler = lambda n, k: sum(((-1)**j) * nCr(n + 1, j) * ((k + 1 - j)**n) for j in range(k + 1))
+euler = lambda n, k: sum((1 - 2 * (j & 1)) * nCr(n + 1, j) * ((k + 1 - j)**n) for j in range(k + 1))
 
 stirling_2 = lambda n, k: sum(((-1)**(k - j)) * nCr(k, j) * (j**n) for j in range(k + 1)) // math.factorial(k)
