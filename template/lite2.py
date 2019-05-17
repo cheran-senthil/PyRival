@@ -22,8 +22,8 @@ class FastIO(IOBase):
     newlines = 0
 
     def __init__(self, file):
-        self._buffer = StringIO()
         self._fd = file.fileno()
+        self._buffer = StringIO()
         self._writable = "x" in file.mode or "r" not in file.mode
         self.write = self._buffer.write if self._writable else None
 

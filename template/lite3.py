@@ -17,10 +17,10 @@ class FastIO(IOBase):
     newlines = 0
 
     def __init__(self, file):
-        self.buffer = BytesIO()
         self._fd = file.fileno()
-        self._writable = "x" in file.mode or "r" not in file.mode
-        self.write = lambda s: self.buffer.write(s.encode()) if self._writable else None
+        self.buffer = BytesIO()
+        self.writable = "x" in file.mode or "r" not in file.mode
+        self.write = lambda s: self.buffer.write(s.encode()) if self.writable else None
 
     def read(self):
         if self.buffer.tell():
@@ -37,7 +37,7 @@ class FastIO(IOBase):
         return self.buffer.readline().decode("ascii")
 
     def flush(self):
-        if self._writable:
+        if self.writable:
             os.write(self._fd, self.buffer.getvalue())
             self.buffer.truncate(0), self.buffer.seek(0)
 
