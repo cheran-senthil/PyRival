@@ -50,19 +50,17 @@ def stress_tester(tests, solution, judge=None, catch_all=False):
                 break
 
 
-def tests():
+def test_gen():
     for i in range(10):
         yield str(i) + '\n'
-
-
-tests = tests()
-solution = cmd2func(['python', 'A.py'])
 
 
 def judge(inp, out):
     return out, ''
 
 
+tests = test_gen()
+solution = cmd2func(['python', 'A.py'])
 # judge = func2judge(cmd2func(["python", "judge.py"]))
 
 stress_tester(tests, solution)
