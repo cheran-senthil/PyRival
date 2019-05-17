@@ -10,7 +10,7 @@ def cmd2func(args):
     return func
 
 
-def sol2judge(sol):
+def func2judge(sol):
     def func(inp, out):
         ans, _ = sol(inp)
         return ans == out, ans
@@ -51,12 +51,18 @@ def stress_tester(tests, solution, judge=None, catch_all=False):
 
 
 def tests():
-    for i in range(100):
-        yield str(i)
+    for i in range(10):
+        yield str(i) + '\n'
 
 
 tests = tests()
-solution = cmd2func(["python", "A.py"])
-judge = sol2judge(cmd2func(["python", "judge.py"]))
+solution = cmd2func(['python', 'A.py'])
 
-stress_tester(tests, solution, judge)
+
+def judge(inp, out):
+    return out, ''
+
+
+# judge = func2judge(cmd2func(["python", "judge.py"]))
+
+stress_tester(tests, solution)
