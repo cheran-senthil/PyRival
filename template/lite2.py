@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env pypy
 from __future__ import division, print_function
 
 import os
