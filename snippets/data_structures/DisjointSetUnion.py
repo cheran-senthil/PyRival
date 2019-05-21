@@ -1,4 +1,4 @@
-class UnionFind:
+class DisjointSetUnion:
     def __init__(self, n):
         self.parent = list(range(n))
         self.size = [1] * n
@@ -32,3 +32,19 @@ class UnionFind:
 
     def set_size(self, a):
         return self.size[self.find(a)]
+
+
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+
+    def find(self, a, to_update=[]):
+        while a != self.parent[a]:
+            to_update.append(a)
+            a = self.parent[a]
+        while to_update:
+            self.parent[to_update.pop()] = a
+        return self.parent[a]
+
+    def merge(self, a, b):
+        self.parent[self.find(b)] = self.find(a)
