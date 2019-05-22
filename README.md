@@ -39,6 +39,7 @@
   - random
   - str.split for whitespace
 - Perfomance tools
+  - Bit Hacks
   - 32-bit Modular Arithmetic
   - Memoize Decorators
   - C++ syle cout
@@ -68,6 +69,7 @@
   - Binary Indexed (Fenwick) Tree
   - Fractions
   - Continued Fractions
+  - Disjoint-Set (Union Find) Data Structure
   - Generic Nodes
   - Linked List
   - Range Query Data Structure
@@ -77,7 +79,6 @@
   - Treap
   - Trie Tree
   - 2-satisfiability Template
-  - Disjoint-Set (Union Find) Data Structure
 - Geometry
   - Convex Hull
   - Line Functions
