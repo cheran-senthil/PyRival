@@ -8,6 +8,8 @@ from cStringIO import StringIO
 from future_builtins import ascii, filter, hex, map, oct, zip
 from io import IOBase
 
+import __pypy__
+
 
 def main():
     pass
@@ -18,14 +20,11 @@ def main():
 BUFSIZE = 8192
 
 
-class FastIO(IOBase):
-    newlines = 0
-
+class FastI(IOBase):
     def __init__(self, file):
         self._fd = file.fileno()
         self._buffer = StringIO()
-        self._writable = "x" in file.mode or "r" not in file.mode
-        self.write = self._buffer.write if self._writable else None
+        self.newlines = 0
 
     def read(self):
         if self._buffer.tell():
@@ -41,10 +40,16 @@ class FastIO(IOBase):
         self.newlines -= 1
         return self._buffer.readline()
 
+
+class FastO(IOBase):
+    def __init__(self, file):
+        self._fd = file.fileno()
+        self._buffer = __pypy__.builders.StringBuilder()
+        self.write = lambda s: self._buffer.append(s)
+
     def flush(self):
-        if self._writable:
-            os.write(self._fd, self._buffer.getvalue())
-            self._buffer.truncate(0), self._buffer.seek(0)
+        os.write(self._fd, self._buffer.build())
+        self._buffer = __pypy__.builders.StringBuilder()
 
 
 def print(*args, **kwargs):
@@ -60,7 +65,7 @@ def print(*args, **kwargs):
         file.flush()
 
 
-sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
+sys.stdin, sys.stdout = FastI(sys.stdin), FastO(sys.stdout)
 input = lambda: sys.stdin.readline().rstrip("\r\n")
 
 # endregion
