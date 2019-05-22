@@ -1,7 +1,7 @@
 def scc(graph):
     """
     Finds what strongly connected components each node
-    is a part of in a directed graph, 
+    is a part of in a directed graph,
     it also finds a weak topological ordering of the nodes
     """
     n = len(graph)
