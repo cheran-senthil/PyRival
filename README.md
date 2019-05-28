@@ -24,8 +24,8 @@
 ##
 
 ### Templates
-- The [Master Template](template/template.py) works with all versions of Python and enables Python 3 code internally.
-- Version Specific Templates: [Python 2](template/lite2.py), [Python 3](template/lite3.py)
+- The [Master Template](template/base.py) works with all versions of Python and enables Python 3 code internally.
+- Version Specific Templates: [PyPy 2](template/base_pypy2.py), [Python 3](template/base_py3.py)
 
 ##
 
