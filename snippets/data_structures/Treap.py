@@ -1,7 +1,7 @@
 import random
 
 
-class TreeMultiSet(object):
+class TreapMultiSet(object):
     root = 0
     size = 0
 
@@ -44,12 +44,12 @@ class TreeMultiSet(object):
 
     def max(self):
         if not self.root:
-            raise ValueError('.max() on empty TreeSet/TreeMultiSet')
+            raise ValueError('.max() on empty TreapSet/TreapMultiSet')
         return treap_keys[treap_max(self.root)]
 
     def min(self):
         if not self.root:
-            raise ValueError('.min() on empty TreeSet/TreeMultiSet')
+            raise ValueError('.min() on empty TreapSet/TreapMultiSet')
         return treap_keys[treap_min(self.root)]
 
     def __len__(self):
@@ -64,7 +64,7 @@ class TreeMultiSet(object):
         return treap_keys[treap_floor(self.root, key)] == key if self.root else False
 
     def __str__(self):
-        return 'TreeMultiSet([%s])' % ', '.join(str(key) for key in self)
+        return 'TreapMultiSet([%s])' % ', '.join(str(key) for key in self)
 
     __repr__ = __str__
 
@@ -86,33 +86,33 @@ class TreeMultiSet(object):
         return iter(out)
 
 
-class TreeSet(TreeMultiSet):
+class TreapSet(TreapMultiSet):
     def __init__(self, data=None):
         if data:
             self.keys = set(data)
-            super(TreeSet, self).__init__(self.keys)
+            super(TreapSet, self).__init__(self.keys)
         else:
             self.keys = set()
 
     def add(self, key):
         if key not in self.keys:
             self.keys.add(key)
-            return super(TreeSet, self).add(key)
+            return super(TreapSet, self).add(key)
 
     def remove(self, key):
         self.keys.remove(key)
-        super(TreeSet, self).remove(key)
+        super(TreapSet, self).remove(key)
 
     def discard(self, key):
         if key in self.keys:
             self.keys.remove(key)
-            super(TreeSet, self).remove(key)
+            super(TreapSet, self).remove(key)
 
     def __contains__(self, key):
         return key in self.keys
 
     def __str__(self):
-        return 'TreeSet([%s])' % ', '.join(str(key) for key in self)
+        return 'TreapSet([%s])' % ', '.join(str(key) for key in self)
 
     __repr__ = __str__
 
