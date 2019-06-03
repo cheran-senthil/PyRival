@@ -12,13 +12,10 @@ class TreeMultiSet(object):
             self.size = len(data)
 
     def add(self, key):
-        return self._add(key, False)
-
-    def _add(self, key, check_unique):
         if not self.root:
             self.size += 1
             self.root = treap_create_node(key)
-        elif not (check_unique and key in self):
+        else:
             self.size += 1
             self.root = treap_insert(self.root, key)
 
@@ -96,10 +93,27 @@ class TreeMultiSet(object):
 class TreeSet(TreeMultiSet):
     def __init__(self, data=None):
         if data:
-            super(TreeSet, self).__init__(set(data))
+            self.keys = set(data)
+            super(TreeSet, self).__init__(self.keys)
+        else:
+            self.keys = set()
 
     def add(self, key):
-        return self._add(key, True)
+        if key not in self.keys:
+            self.keys.add(key)
+            return super(TreeSet, self).add(key)
+
+    def remove(self, key):
+        self.keys.remove(key)
+        super(TreeSet, self).remove(key)
+
+    def discard(self, key):
+        if key in self.keys:
+            super(TreeSet, self).remove(key)
+            self.keys.discard(key)
+
+    def __contains__(self, key):
+        return key in self.keys
 
     def __str__(self):
         return 'TreeSet([%s])' % ', '.join(str(key) for key in self)
