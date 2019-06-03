@@ -87,32 +87,44 @@ class TreapMultiSet(object):
 
 
 class TreapSet(TreapMultiSet):
+
+    def add(self, key):
+        if key not in self:
+            return super(TreapSet, self).add(key)
+
+    def __str__(self):
+        return 'TreapSet([%s])' % ', '.join(str(key) for key in self)
+
+    __repr__ = __str__
+
+
+class TreapHashSet(TreapMultiSet):
     def __init__(self, data=None):
         if data:
             self.keys = set(data)
-            super(TreapSet, self).__init__(self.keys)
+            super(TreapHashSet, self).__init__(self.keys)
         else:
             self.keys = set()
 
     def add(self, key):
         if key not in self.keys:
             self.keys.add(key)
-            return super(TreapSet, self).add(key)
+            return super(TreapHashSet, self).add(key)
 
     def remove(self, key):
         self.keys.remove(key)
-        super(TreapSet, self).remove(key)
+        super(TreapHashSet, self).remove(key)
 
     def discard(self, key):
         if key in self.keys:
             self.keys.remove(key)
-            super(TreapSet, self).remove(key)
+            super(TreapHashSet, self).remove(key)
 
     def __contains__(self, key):
         return key in self.keys
 
     def __str__(self):
-        return 'TreapSet([%s])' % ', '.join(str(key) for key in self)
+        return 'TreapHashSet([%s])' % ', '.join(str(key) for key in self)
 
     __repr__ = __str__
 
