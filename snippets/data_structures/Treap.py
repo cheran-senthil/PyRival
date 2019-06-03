@@ -79,7 +79,7 @@ class TreeSet(object):
 
     def __iter__(self):
         if not self.root:
-            return iter()
+            return iter([])
         out = []
         stack = [self.root]
         while stack:
