@@ -53,12 +53,12 @@ class TreeSet(object):
 
     def max(self):
         if not self.root:
-            raise ValueError('.max() on empty TreeSet')
+            raise ValueError('.max() on empty TreeSet/TreeMultiSet')
         return treap_keys[treap_max(self.root)]
 
     def min(self):
         if not self.root:
-            raise ValueError('.min() on empty TreeSet')
+            raise ValueError('.min() on empty TreeSet/TreeMultiSet')
         return treap_keys[treap_min(self.root)]
 
     def __len__(self):
@@ -129,14 +129,14 @@ def treap_builder(sorted_data):
 
             if lc and treap_prior[lc] > treap_prior[ind]:
                 if rc and treap_prior[rc] > treap_prior[rc]:
-                    treap_prior[ind], treap_prior[rc], ind = \
-                    treap_prior[rc], treap_prior[ind], rc
+                    treap_prior[ind], treap_prior[rc] = treap_prior[rc], treap_prior[ind]
+                    ind = rc
                 else:
-                    treap_prior[ind], treap_prior[lc], ind = \
-                    treap_prior[lc], treap_prior[ind], lc
+                    treap_prior[ind], treap_prior[lc] = treap_prior[lc], treap_prior[ind]
+                    ind = lc
             elif rc and treap_prior[rc] > treap_prior[ind]:
-                treap_prior[ind], treap_prior[rc], ind = \
-                treap_prior[rc], treap_prior[ind], rc
+                treap_prior[ind], treap_prior[rc] = treap_prior[rc], treap_prior[ind]
+                ind = rc
             else:
                 break
         return root
