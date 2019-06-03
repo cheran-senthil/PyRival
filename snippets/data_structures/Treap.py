@@ -89,7 +89,7 @@ class TreapMultiSet(object):
 class TreapSet(TreapMultiSet):
     def add(self, key):
         if key not in self:
-            return super(TreapSet, self).add(key)
+            super(TreapSet, self).add(key)
 
     def __str__(self):
         return 'TreapSet([%s])' % ', '.join(str(key) for key in self)
@@ -108,7 +108,7 @@ class TreapHashSet(TreapMultiSet):
     def add(self, key):
         if key not in self.keys:
             self.keys.add(key)
-            return super(TreapHashSet, self).add(key)
+            super(TreapHashSet, self).add(key)
 
     def remove(self, key):
         self.keys.remove(key)
