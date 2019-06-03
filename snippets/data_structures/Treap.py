@@ -105,8 +105,8 @@ class TreeSet(TreeMultiSet):
 
     def discard(self, key):
         if key in self.keys:
+            self.keys.remove(key)
             super(TreeSet, self).remove(key)
-            self.keys.discard(key)
 
     def __contains__(self, key):
         return key in self.keys
