@@ -12,12 +12,8 @@ class TreeMultiSet(object):
             self.size = len(data)
 
     def add(self, key):
-        if not self.root:
-            self.size += 1
-            self.root = treap_create_node(key)
-        else:
-            self.size += 1
-            self.root = treap_insert(self.root, key)
+        self.size += 1
+        self.root = treap_insert(self.root, key) if self.root else treap_create_node(key)
 
     def remove(self, key):
         self.root = treap_erase(self.root, key)
