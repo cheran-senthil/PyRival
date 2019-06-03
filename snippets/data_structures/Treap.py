@@ -87,7 +87,6 @@ class TreapMultiSet(object):
 
 
 class TreapSet(TreapMultiSet):
-
     def add(self, key):
         if key not in self:
             return super(TreapSet, self).add(key)
