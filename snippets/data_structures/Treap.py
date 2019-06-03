@@ -22,12 +22,10 @@ class TreapMultiSet(object):
         self.size -= 1
 
     def discard(self, key):
-        if self.root:
-            try:
-                self.root = treap_erase(self.root, key)
-                self.size -= 1
-            except KeyError:
-                pass
+        try:
+            self.remove(key)
+        except KeyError:
+            pass
 
     def ceiling(self, key):
         x = treap_ceiling(self.root, key) if self.root else 0
@@ -117,11 +115,6 @@ class TreapHashSet(TreapMultiSet):
     def remove(self, key):
         self.keys.remove(key)
         super(TreapHashSet, self).remove(key)
-
-    def discard(self, key):
-        if key in self.keys:
-            self.keys.remove(key)
-            super(TreapHashSet, self).remove(key)
 
     def __contains__(self, key):
         return key in self.keys
