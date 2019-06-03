@@ -1,22 +1,20 @@
 import random
 
 
-class TreeSet(object):
+class TreeMultiSet(object):
     root = 0
     size = 0
 
     def __init__(self, data=None):
         if data:
-            data = iter(sorted(data))
-            tmp = [next(data)]
-            for d in data:
-                if tmp[-1] != d:
-                    tmp.append(d)
-            data = tmp
+            data = sorted(data)
             self.root = treap_builder(data)
             self.size = len(data)
 
-    def add(self, key, check_unique=True):
+    def add(self, key):
+        return self._add(key, False)
+
+    def _add(self, key, check_unique):
         if not self.root:
             self.size += 1
             self.root = treap_create_node(key)
@@ -73,7 +71,7 @@ class TreeSet(object):
         return treap_keys[treap_floor(self.root, key)] == key if self.root else False
 
     def __str__(self):
-        return 'TreeSet([%s])' % ', '.join(str(key) for key in self)
+        return 'TreeMultiSet([%s])' % ', '.join(str(key) for key in self)
 
     __repr__ = __str__
 
@@ -95,18 +93,16 @@ class TreeSet(object):
         return iter(out)
 
 
-class TreeMultiSet(TreeSet):
+class TreeSet(TreeMultiSet):
     def __init__(self, data=None):
         if data:
-            data = sorted(data)
-            self.root = treap_builder(data)
-            self.size = len(data)
+            super(TreeSet, self).__init__(set(data))
 
     def add(self, key):
-        return super(TreeMultiSet, self).add(key, False)
+        return self._add(key, True)
 
     def __str__(self):
-        return 'TreeMultiSet([%s])' % ', '.join(str(key) for key in self)
+        return 'TreeSet([%s])' % ', '.join(str(key) for key in self)
 
     __repr__ = __str__
 
