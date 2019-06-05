@@ -56,9 +56,7 @@ class TreapMultiSet(object):
     __bool__ = __nonzero__
 
     def __contains__(self, key):
-        if not self.root:
-            return False
-        return treap_keys[treap_floor(self.root, key)] == key
+        return self.floor(key) == key
 
     def __repr__(self):
         return 'TreapMultiSet([%s])' % ', '.join(str(key) for key in self)
