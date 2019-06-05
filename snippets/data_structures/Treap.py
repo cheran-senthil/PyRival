@@ -106,6 +106,10 @@ class TreapHashSet(TreapMultiSet):
         self.keys.remove(key)
         super(TreapHashSet, self).remove(key)
 
+    def discard(self, key):
+        if key in self.keys:
+            self.remove(key)
+
     def __contains__(self, key):
         return key in self.keys
 
