@@ -60,10 +60,8 @@ class TreapMultiSet(object):
     def __contains__(self, key):
         return treap_keys[treap_floor(self.root, key)] == key if self.root else False
 
-    def __str__(self):
+    def __repr__(self):
         return 'TreapMultiSet([%s])' % ', '.join(str(key) for key in self)
-
-    __repr__ = __str__
 
     def __iter__(self):
         if not self.root:
@@ -93,10 +91,8 @@ class TreapSet(TreapMultiSet):
             self.root = treap_create_node(key)
             self.size += 1
 
-    def __str__(self):
+    def __repr__(self):
         return 'TreapSet([%s])' % ', '.join(str(key) for key in self)
-
-    __repr__ = __str__
 
 
 class TreapHashSet(TreapMultiSet):
