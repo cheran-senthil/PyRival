@@ -12,12 +12,10 @@ class TreapMultiSet(object):
             self.size = len(data)
 
     def add(self, key):
-        self.root = treap_insert(self.root, key) if self.root else treap_create_node(key)
+        self.root = treap_insert(self.root, key)
         self.size += 1
 
     def remove(self, key):
-        if not self.root:
-            raise KeyError(key)
         self.root = treap_erase(self.root, key)
         self.size -= 1
 
@@ -28,19 +26,19 @@ class TreapMultiSet(object):
             pass
 
     def ceiling(self, key):
-        x = treap_ceiling(self.root, key) if self.root else 0
+        x = treap_ceiling(self.root, key)
         return treap_keys[x] if x else None
 
     def higher(self, key):
-        x = treap_higher(self.root, key) if self.root else 0
+        x = treap_higher(self.root, key)
         return treap_keys[x] if x else None
 
     def floor(self, key):
-        x = treap_floor(self.root, key) if self.root else 0
+        x = treap_floor(self.root, key)
         return treap_keys[x] if x else None
 
     def lower(self, key):
-        x = treap_lower(self.root, key) if self.root else 0
+        x = treap_lower(self.root, key)
         return treap_keys[x] if x else None
 
     def max(self):
@@ -58,7 +56,9 @@ class TreapMultiSet(object):
     __bool__ = __nonzero__
 
     def __contains__(self, key):
-        return treap_keys[treap_floor(self.root, key)] == key if self.root else False
+        if not self.root:
+            return False
+        return treap_keys[treap_floor(self.root, key)] == key
 
     def __repr__(self):
         return 'TreapMultiSet([%s])' % ', '.join(str(key) for key in self)
@@ -83,12 +83,8 @@ class TreapMultiSet(object):
 
 class TreapSet(TreapMultiSet):
     def add(self, key):
-        if self.root:
-            self.root, duplicate = treap_insert_unique(self.root, key)
-            if not duplicate:
-                self.size += 1
-        else:
-            self.root = treap_create_node(key)
+        self.root, duplicate = treap_insert_unique(self.root, key)
+        if not duplicate:
             self.size += 1
 
     def __repr__(self):
@@ -200,11 +196,15 @@ def treap_merge(left, right):
 
 
 def treap_insert(root, key):
+    if not root:
+        return treap_create_node(key)
     left, right = treap_split(root, key)
     return treap_merge(treap_merge(left, treap_create_node(key)), right)
 
 
 def treap_insert_unique(root, key):
+    if not root:
+        return treap_create_node(key), False
     left, right = treap_split(root, key)
     if left and treap_keys[left] == key:
         return treap_merge(left, right), True
@@ -212,6 +212,8 @@ def treap_insert_unique(root, key):
 
 
 def treap_erase(root, key):
+    if not root:
+        raise KeyError(key)
     if treap_keys[root] == key:
         return treap_merge(left_child[root], right_child[root])
     node = root
