@@ -109,10 +109,8 @@ class TreapHashSet(TreapMultiSet):
     def __contains__(self, key):
         return key in self.keys
 
-    def __str__(self):
+    def __repr__(self):
         return 'TreapHashSet([%s])' % ', '.join(str(key) for key in self)
-
-    __repr__ = __str__
 
 
 # Build a treap in O(n) time using sorted data
