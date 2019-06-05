@@ -20,12 +20,12 @@ class FastIO(IOBase):
         self._fd = file.fileno()
         self.buffer = BytesIO()
         self.writable = "x" in file.mode or "r" not in file.mode
-        self.write = lambda s: self.buffer.write(s.encode()) if self.writable else None
+        self.write = self.buffer.write if self.writable else None
 
     def read(self):
         if self.buffer.tell():
-            return self.buffer.read().decode("ascii")
-        return os.read(self._fd, os.fstat(self._fd).st_size).decode("ascii")
+            return self.buffer.read()
+        return os.read(self._fd, os.fstat(self._fd).st_size)
 
     def readline(self):
         while self.newlines == 0:
@@ -34,7 +34,7 @@ class FastIO(IOBase):
             ptr = self.buffer.tell()
             self.buffer.seek(0, 2), self.buffer.write(b), self.buffer.seek(ptr)
         self.newlines -= 1
-        return self.buffer.readline().decode("ascii")
+        return self.buffer.readline()
 
     def flush(self):
         if self.writable:
@@ -42,19 +42,17 @@ class FastIO(IOBase):
             self.buffer.truncate(0), self.buffer.seek(0)
 
 
-def print(*args, sep=" ", end="\n", file=sys.stdout, flush=False):
-    at_start = True
-    for x in args:
-        if not at_start:
-            file.write(sep)
-        file.write(str(x))
-        at_start = False
-    file.write(end)
-    if flush:
-        file.flush()
+class IOWrapper(IOBase):
+    def __init__(self, file):
+        self.buffer = FastIO(file)
+        self.flush = self.buffer.flush
+        self.writable = self.buffer.writable
+        self.write = lambda s: self.buffer.write(s.encode("ascii"))
+        self.read = lambda: self.buffer.read().decode("ascii")
+        self.readline = lambda: self.buffer.readline().decode("ascii")
 
 
-sys.stdin, sys.stdout = FastIO(sys.stdin), FastIO(sys.stdout)
+sys.stdin, sys.stdout = IOWrapper(sys.stdin), IOWrapper(sys.stdout)
 input = lambda: sys.stdin.readline().rstrip("\r\n")
 
 # endregion
