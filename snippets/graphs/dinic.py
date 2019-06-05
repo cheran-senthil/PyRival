@@ -18,7 +18,6 @@ class Dinic:
 
         for i in range(self.ptr[v], len(self.adj[v])):
             e = self.adj[v][i]
-
             if self.lvl[e[0]] == self.lvl[v] + 1:
                 p = self.dfs(e[0], t, min(f, e[2] - e[3]))
                 if p:
@@ -29,21 +28,14 @@ class Dinic:
         return 0
 
     def calc(self, s, t):
-        flow = 0
-        self.q[0] = s
-
-        while True:
-            for l in range(0, 31):
-                self.lvl = [0] * len(self.q)
-                self.ptr = [0] * len(self.q)
-
-                qi = 0
-                qe = self.lvl[s] = 1
-
+        flow, self.q[0] = 0, s
+        for l in range(31):  # l = 30 maybe faster for random data
+            while True:
+                self.lvl, self.ptr = [0] * len(self.q), [0] * len(self.q)
+                qi, qe, self.lvl[s] = 0, 1, 1
                 while qi < qe and not self.lvl[t]:
                     v = self.q[qi]
                     qi += 1
-
                     for e in self.adj[v]:
                         if not self.lvl[e[0]] and (e[2] - e[3]) >> (30 - l):
                             self.q[qe] = e[0]
@@ -55,7 +47,7 @@ class Dinic:
                     flow += p
                     p = self.dfs(s, t, INF)
 
-            if not self.lvl[t]:
-                break
+                if not self.lvl[t]:
+                    break
 
         return flow
