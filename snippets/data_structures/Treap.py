@@ -1,37 +1,29 @@
 import random
 
 
-class TreeSet(object):
+class TreapMultiSet(object):
     root = 0
     size = 0
 
     def __init__(self, data=None):
         if data:
-            data = iter(sorted(data))
-            tmp = [next(data)]
-            for d in data:
-                if tmp[-1] != d:
-                    tmp.append(d)
-            data = tmp
+            data = sorted(data)
             self.root = treap_builder(data)
             self.size = len(data)
 
-    def add(self, key, check_unique=True):
-        if not self.root:
-            self.size += 1
-            self.root = treap_create_node(key)
-        elif not (check_unique and key in self):
-            self.size += 1
-            self.root = treap_insert(self.root, key)
+    def add(self, key):
+        self.root = treap_insert(self.root, key) if self.root else treap_create_node(key)
+        self.size += 1
 
     def remove(self, key):
+        if not self.root:
+            raise KeyError(key)
         self.root = treap_erase(self.root, key)
         self.size -= 1
 
     def discard(self, key):
         try:
-            self.root = treap_erase(self.root, key)
-            self.size -= 1
+            self.remove(key)
         except KeyError:
             pass
 
@@ -52,13 +44,9 @@ class TreeSet(object):
         return treap_keys[x] if x else None
 
     def max(self):
-        if not self.root:
-            raise ValueError('.max() on empty TreeSet/TreeMultiSet')
         return treap_keys[treap_max(self.root)]
 
     def min(self):
-        if not self.root:
-            raise ValueError('.min() on empty TreeSet/TreeMultiSet')
         return treap_keys[treap_min(self.root)]
 
     def __len__(self):
@@ -72,14 +60,12 @@ class TreeSet(object):
     def __contains__(self, key):
         return treap_keys[treap_floor(self.root, key)] == key if self.root else False
 
-    def __str__(self):
-        return 'TreeSet([%s])' % ', '.join(str(key) for key in self)
-
-    __repr__ = __str__
+    def __repr__(self):
+        return 'TreapMultiSet([%s])' % ', '.join(str(key) for key in self)
 
     def __iter__(self):
         if not self.root:
-            return iter()
+            return iter([])
         out = []
         stack = [self.root]
         while stack:
@@ -95,18 +81,42 @@ class TreeSet(object):
         return iter(out)
 
 
-class TreeMultiSet(TreeSet):
+class TreapSet(TreapMultiSet):
+    def add(self, key):
+        if self.root:
+            self.root, duplicate = treap_insert_unique(self.root, key)
+            if not duplicate:
+                self.size += 1
+        else:
+            self.root = treap_create_node(key)
+            self.size += 1
+
+    def __repr__(self):
+        return 'TreapSet([%s])' % ', '.join(str(key) for key in self)
+
+
+class TreapHashSet(TreapMultiSet):
     def __init__(self, data=None):
         if data:
-            data = sorted(data)
-            self.root = treap_builder(data)
-            self.size = len(data)
+            self.keys = set(data)
+            super(TreapHashSet, self).__init__(self.keys)
+        else:
+            self.keys = set()
 
     def add(self, key):
-        return super(TreeMultiSet, self).add(key, False)
+        if key not in self.keys:
+            self.keys.add(key)
+            super(TreapHashSet, self).add(key)
+
+    def remove(self, key):
+        self.keys.remove(key)
+        super(TreapHashSet, self).remove(key)
+
+    def __contains__(self, key):
+        return key in self.keys
 
     def __str__(self):
-        return 'TreeMultiSet([%s])' % ', '.join(str(key) for key in self)
+        return 'TreapHashSet([%s])' % ', '.join(str(key) for key in self)
 
     __repr__ = __str__
 
@@ -194,6 +204,13 @@ def treap_insert(root, key):
     return treap_merge(treap_merge(left, treap_create_node(key)), right)
 
 
+def treap_insert_unique(root, key):
+    left, right = treap_split(root, key)
+    if left and treap_keys[left] == key:
+        return treap_merge(left, right), True
+    return treap_merge(treap_merge(left, treap_create_node(key)), right), False
+
+
 def treap_erase(root, key):
     if treap_keys[root] == key:
         return treap_merge(left_child[root], right_child[root])
@@ -202,7 +219,7 @@ def treap_erase(root, key):
         parent = root
         root = left_child[root] if key < treap_keys[root] else right_child[root]
     if not root:
-        raise KeyError(str(key))
+        raise KeyError(key)
     if root == left_child[parent]:
         left_child[parent] = treap_merge(left_child[root], right_child[root])
     else:
@@ -285,7 +302,7 @@ def treap_lower(root, key):
 
 def treap_min(root):
     if not root:
-        return 0
+        raise ValueError('min on empty treap')
     while left_child[root]:
         root = left_child[root]
     return root
@@ -293,7 +310,7 @@ def treap_min(root):
 
 def treap_max(root):
     if not root:
-        return 0
+        raise ValueError('max on empty treap')
     while right_child[root]:
         root = right_child[root]
     return root
