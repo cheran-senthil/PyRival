@@ -5,16 +5,12 @@ class DisjointSetUnion:
         self.num_sets = n
 
     def find(self, a):
-        to_update = []
-
+        acopy = a
         while a != self.parent[a]:
-            to_update.append(a)
             a = self.parent[a]
-
-        for b in to_update:
-            self.parent[b] = a
-
-        return self.parent[a]
+        while acopy != a:
+            self.parent[acopy], acopy = a, self.parent[acopy]
+        return a
 
     def merge(self, a, b):
         a = self.find(a)
@@ -37,14 +33,14 @@ class DisjointSetUnion:
 class UnionFind:
     def __init__(self, n):
         self.parent = list(range(n))
-
-    def find(self, a, to_update=[]):
+    
+    def find(self, a):
+        acopy = a
         while a != self.parent[a]:
-            to_update.append(a)
             a = self.parent[a]
-        while to_update:
-            self.parent[to_update.pop()] = a
-        return self.parent[a]
+        while acopy != a:
+            self.parent[acopy], acopy = a, self.parent[acopy]
+        return a
 
     def merge(self, a, b):
         self.parent[self.find(b)] = self.find(a)
