@@ -23,9 +23,14 @@ class FastIO(IOBase):
         self.write = self.buffer.write if self.writable else None
 
     def read(self):
-        if self.buffer.tell():
-            return self.buffer.read()
-        return os.read(self._fd, os.fstat(self._fd).st_size)
+        while True:
+            b = os.read(self._fd, max(os.fstat(self._fd).st_size, BUFSIZE))
+            if not b:
+                break
+            ptr = self.buffer.tell()
+            self.buffer.seek(0, 2), self.buffer.write(b), self.buffer.seek(ptr)
+        self.newlines = 0
+        return self.buffer.read()
 
     def readline(self):
         while self.newlines == 0:

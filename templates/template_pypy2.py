@@ -27,9 +27,14 @@ class FastI(IOBase):
         self.newlines = 0
 
     def read(self):
-        if self._buffer.tell():
-            return self._buffer.read()
-        return os.read(self._fd, os.fstat(self._fd).st_size)
+        while True:
+            b = os.read(self._fd, max(os.fstat(self._fd).st_size, BUFSIZE))
+            if not b:
+                break
+            ptr = self.buffer.tell()
+            self.buffer.seek(0, 2), self.buffer.write(b), self.buffer.seek(ptr)
+        self.newlines = 0
+        return self.buffer.read()
 
     def readline(self):
         while self.newlines == 0:
