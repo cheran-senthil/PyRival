@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 transpose = lambda mat: [list(col) for col in zip(*mat)]
 
 minor = lambda mat, i, j: [row[:j] + row[j + 1:] for row in (mat[:i] + mat[i + 1:])]
@@ -22,7 +24,7 @@ def eye(m):
 def mat_pow(mat, power):
     """returns mat**power"""
     if power < 0:
-        return mat_pow(inverse(mat), -power)
+        return mat_pow(mat_inv(mat), -power)
 
     result = eye(len(mat))
     if power == 0:
@@ -36,54 +38,53 @@ def mat_pow(mat, power):
     return mat_mul(result, mat)
 
 
-def det(A, mod=0):
-    """returns the det of A (optionally % mod)"""
+def mat_inv(A):
+    B = deepcopy(A)
     n = len(A)
+    col = list(range(n))
 
-    if n == 1:
-        return A[0][0]
-    if n == 2:
-        return A[0][0] * A[1][1] - A[0][1] * A[1][0]
-    if n == 3:
-        return (A[0][0] * (A[1][1] * A[2][2] - A[1][2] * A[2][1]) -
-                A[0][1] * (A[1][0] * A[2][2] - A[1][2] * A[2][0]) +
-                A[0][2] * (A[1][0] * A[2][1] - A[1][1] * A[2][0]))
+    tmp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        tmp[i][i] = 1
 
-    flag, tmp = False, 1
-    for i, Ai in enumerate(A):
-        if not Ai[i]:
-            for j in range(i + 1, n):
-                Aj = A[j]
-                if Aj[i]:
-                    for k in range(i, n):
-                        Aj[k], Ai[k] = Ai[k], Aj[k]
-                    flag = not flag
-                    break
-        if not Ai[i]:
-            return 0
+    for i in range(n):
+        r = c = i
+        for j in range(i, n):
+            for k in range(i, n):
+                if abs(B[j][k]) > abs(B[r][c]):
+                    r, c = j, k
+        if B[r][c] == 0:
+            return B
+
+        B[i], B[r] = B[r], B[i]
+        tmp[i], tmp[r] = tmp[r], tmp[i]
+        for j in range(n):
+            B[j][i], B[j][c] = B[j][c], B[j][i]
+            tmp[j][i], tmp[j][c] = tmp[j][c], tmp[j][i]
+        col[i], col[c] = col[c], col[i]
+        v = B[i][i]
+        for j in range(i + 1, n):
+            f = B[j][i] / v
+            B[j][i] = 0
+            for k in range(i + 1, n):
+                B[j][k] -= f * B[i][k]
+            for k in range(n):
+                tmp[j][k] -= f * tmp[i][k]
 
         for j in range(i + 1, n):
-            Aj = A[j]
-            if Aj[i]:
-                tmp = (tmp * Ai[i]) % mod if mod else tmp * Ai[i]
-                for k in range(i, n):
-                    Aj[k] = (Aj[k] * Ai[i] - Ai[k]) % mod if mod else Aj[k] * Ai[i] - Ai[k] * Aj[i]
+            B[i][j] /= v
 
-    res = pow(tmp, mod - 2, mod) if mod else 1
-    for Ai, i in enumerate(A):
-        res = (res * Ai[i]) % mod if mod else res * Ai[i]
-    if flag:
-        return mod - res
-    return res if mod else res // tmp
+        for j in range(n):
+            tmp[i][j] /= v
+        B[i][i] = 1
 
+    for i in reversed(range(n)):
+        for j in range(i):
+            v = B[j][i]
+            for k in range(n):
+                tmp[j][k] -= v * tmp[i][k]
 
-def inverse(mat):
-    """returns A s.t. A * mat = eye(ord(mat))"""
-    n = len(mat)
-    determinant = det(mat)
-    if n == 2:
-        return [
-            [mat[1][1] / determinant, -1 * mat[0][1] / determinant],
-            [-1 * mat[1][0] / determinant, mat[0][0] / determinant],
-        ]
-    return transpose([[(pow(-1, i + j) * det(minor(mat, i, j))) / determinant for j in range(n)] for i in range(n)])
+    for i in range(n):
+        for j in range(n):
+            B[col[i]][col[j]] = tmp[i][j]
+    return B
