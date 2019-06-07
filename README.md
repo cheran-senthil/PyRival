@@ -6,11 +6,11 @@
 <h3 align="center">Developers</h3>
 <div align="center">
   <strong>
-    <a href="https://codeforces.com/profile/pajenegod">pajenegod</a> &emsp;
-    <a href="https://github.com/meooow25">meooow</a> &emsp;
     <a href="https://github.com/Mukundan314">Mukundan314</a> &emsp;
+    <a href="https://codeforces.com/profile/pajenegod">pajenegod</a> &emsp;
+    <a href="https://github.com/eduard-netsajev">drd93</a> &emsp;
     <a href="https://github.com/algmyr">algmyr</a> &emsp;
-    <a href="https://github.com/eduard-netsajev">drd93</a>
+    <a href="https://github.com/meooow25">meooow</a> &emsp;
   </strong>
 </div>
 
@@ -24,8 +24,8 @@
 ##
 
 ### Templates
-- The [Master Template](template/base.py) works with all versions of Python and enables Python 3 code internally.
-- Version Specific Templates: [PyPy 2](template/base_pypy2.py), [Python 3](template/base_py3.py)
+- The [Master Template](template/template.py) works with all versions of Python and enables Python 3 code internally.
+- Version Specific Templates: [PyPy 2](template/template_pypy2.py), [Python 3](template/template_py3.py)
 
 ##
 
@@ -128,4 +128,4 @@
 ##
 
 ### License
-[Apache-2.0](LICENSE)
+[Apache-2.0](LICENSE) (c) 2019
