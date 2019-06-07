@@ -117,6 +117,43 @@ class TreapHashSet(TreapMultiSet):
         return 'TreapHashSet([%s])' % ', '.join(str(key) for key in self)
 
 
+class TreapHashMap(TreapMultiSet):
+    def __init__(self, data=None):
+        if data:
+            self.map = dict(data)
+            super(TreapHashMap, self).__init__(self.map.keys())
+        else:
+            self.map = dict()
+
+    def __setitem__(self, key, value):
+        if key not in self.map:
+            super(TreapHashMap, self).add(key)
+        self.map[key] = value
+
+    def __getitem__(self, key):
+        return self.map[key]
+
+    def add(self, key):
+        raise TypeError("add on TreapHashMap")
+
+    def get(self, key, default=None):
+        return self.map.get(key, default=default)
+
+    def remove(self, key):
+        self.map.pop(key)
+        super(TreapHashMap, self).remove(key)
+
+    def discard(self, key):
+        if key in self.map:
+            self.remove(key)
+
+    def __contains__(self, key):
+        return key in self.map
+
+    def __repr__(self):
+        return 'TreapHashMap([%s])' % ', '.join('(%s, %s)' % (str(key), str(self.map[key])) for key in self)
+
+
 # Build a treap in O(n) time using sorted data
 def treap_builder(sorted_data):
     def build(begin, end):
