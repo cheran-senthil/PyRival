@@ -1,5 +1,6 @@
 import pathlib
 import subprocess
+import traceback
 
 
 def cmd2func(args):
@@ -63,4 +64,14 @@ tests = test_gen()
 solution = cmd2func(['python', 'A.py'])
 # judge = func2judge(cmd2func(["python", "judge.py"]))
 
-stress_tester(tests, solution)
+try:
+    stress_tester(tests, solution)
+    sleep(1)
+except (KeyboardInterrupt, SystemExit):
+    exit(0)
+except:
+    print("Unexpected error:", sys.exc_info()[:2])
+    traceback.print_exc()
+args = sys.argv[:]
+args.insert(0, sys.executable)
+os.execv(sys.executable, args)
