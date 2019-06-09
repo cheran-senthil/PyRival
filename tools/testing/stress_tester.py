@@ -66,12 +66,12 @@ solution = cmd2func(['python', 'A.py'])
 
 try:
     stress_tester(tests, solution)
-    sleep(1)
 except (KeyboardInterrupt, SystemExit):
     exit(0)
 except:
     print("Unexpected error:", sys.exc_info()[:2])
     traceback.print_exc()
+sleep(1)
 args = sys.argv[:]
 args.insert(0, sys.executable)
 os.execv(sys.executable, args)
