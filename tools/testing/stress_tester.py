@@ -1,9 +1,9 @@
+import os
 import pathlib
 import subprocess
-import traceback
-import time
 import sys
-import os
+import time
+import traceback
 
 
 def cmd2func(args):
@@ -72,8 +72,9 @@ try:
 except (KeyboardInterrupt, SystemExit):
     exit(0)
 except:
-    print("Unexpected error:", sys.exc_info()[:2])
+    print("Unexpected error: ", sys.exc_info()[:2])
     traceback.print_exc()
+
 time.sleep(1)
 args = sys.argv[:]
 args.insert(0, sys.executable)
