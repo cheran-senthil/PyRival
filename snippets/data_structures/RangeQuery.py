@@ -1,12 +1,12 @@
 class RangeQuery:
     def __init__(self, data, func=min):
-        n = len(data)
-        depth = n.bit_length() + 1
         self.func = func
-        self._data = _data = [data[:]]
-        for i in range(depth - 1):
-            _data_prev = _data[-1]
-            _data.append([func(_data_prev[j], _data_prev[min(n - 1, j + (1 << i))]) for j in range(n)])
+        self._data = _data = [list(data)]
+        i, n = 1, len(data)
+        while 2 * i <= n:
+            prev = _data[-1]
+            _data.append([func(prev[j], prev[j + i]) for j in range(n - 2 * i + 1)])
+            i <<= 1
 
     def query(self, begin, end):
         depth = (end - begin).bit_length() - 1
