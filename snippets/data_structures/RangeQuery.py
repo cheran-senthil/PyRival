@@ -1,15 +1,14 @@
-import itertools
-
-
-class RangeQuery(object):
-    def __init__(self, items, func=min):
-        self.rq = rq = {(i, 0): item for i, item in enumerate(items)}
+class RangeQuery:
+    def __init__(self, data, func=min):
+        n = len(data)
+        depth = n.bit_length() + 1
         self.func = func
-        n = len(items)
-        for step, i in itertools.product(range(1, n.bit_length()), range(n)):
-            j = i + (1 << (step - 1))
-            rq[i, step] = func(rq[i, step - 1], rq[j, step - 1]) if j < n else rq[i, step - 1]
+        self._data = _data = [data[:] for _ in range(depth)]
+        for i in range(depth - 1):
+            _data_prev, _data_next = _data[i], _data[i + 1]
+            for j in range(n - (1 << i)):
+                _data_next[j] = func(_data_prev[j], _data_prev[j + (1 << i)])
 
-    def query(self, start, stop):
-        j = (stop - start).bit_length() - 1
-        return self.func(self.rq[start, j], self.rq[stop - (1 << j), j])
+    def query(self, begin, end):
+        depth = (end - begin).bit_length() - 1
+        return self.func(self._data[depth][begin], self._data[depth][end - (1 << depth)])
