@@ -17,23 +17,22 @@ class LCA:
     def __init__(self, graph):
         self.time = time = [0] * len(graph)
         self.dist = dist = [0] * len(graph)
-        ret = []
-        T, V, P, D, Di = 0, [0], [0], [0], [0]
-        while D:
-            v, p, d, di = V.pop(), P.pop(), D.pop(), Di.pop()
+        t, data = 0, []
+        V, P, D, S = [0], [0], [0], [0]
+        while V:
+            v, p, d, s = V.pop(), P.pop(), D.pop(), S.pop()
+            time[v], dist[v] = t, s
             if d:
-                ret.append((d, p))
-            time[v] = T
-            T += 1
-            dist[v] = di
-            for e in graph[v]:
-                if e[0] != p:
-                    V.append(e[0])
+                data.append((d, p))
+            for u, w in graph[v]:
+                if u != p:
+                    V.append(u)
                     P.append(v)
                     D.append(d + 1)
-                    Di.append(di + e[1])
+                    S.append(s + w)
+            t += 1
 
-        self.rmq = RangeQuery(ret)
+        self.rmq = RangeQuery(data)
 
     def query(self, a, b):
         if a == b:
