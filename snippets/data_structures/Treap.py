@@ -59,7 +59,7 @@ class TreapMultiSet(object):
         return self.floor(key) == key
 
     def __repr__(self):
-        return 'TreapMultiSet([%s])' % ', '.join(str(key) for key in self)
+        return 'TreapMultiSet({})'.format(list(self))
 
     def __iter__(self):
         if not self.root:
@@ -86,7 +86,7 @@ class TreapSet(TreapMultiSet):
             self.size += 1
 
     def __repr__(self):
-        return 'TreapSet([%s])' % ', '.join(str(key) for key in self)
+        return 'TreapSet({})'.format(list(self))
 
 
 class TreapHashSet(TreapMultiSet):
@@ -114,7 +114,7 @@ class TreapHashSet(TreapMultiSet):
         return key in self.keys
 
     def __repr__(self):
-        return 'TreapHashSet([%s])' % ', '.join(str(key) for key in self)
+        return 'TreapHashSet({})'.format(list(self))
 
 
 class TreapHashMap(TreapMultiSet):
@@ -151,11 +151,18 @@ class TreapHashMap(TreapMultiSet):
         return key in self.map
 
     def __repr__(self):
-        return 'TreapHashMap([%s])' % ', '.join('(%s, %s)' % (str(key), str(self.map[key])) for key in self)
+        return 'TreapHashMap({})'.format(list(self))
 
 
-# Build a treap in O(n) time using sorted data
+left_child = [0]
+right_child = [0]
+treap_keys = [0]
+treap_prior = [0.0]
+
+
 def treap_builder(sorted_data):
+    """Build a treap in O(n) time using sorted data"""
+
     def build(begin, end):
         if begin == end:
             return 0
@@ -185,12 +192,6 @@ def treap_builder(sorted_data):
         return root
 
     return build(0, len(sorted_data))
-
-
-left_child = [0]
-right_child = [0]
-treap_keys = [0]
-treap_prior = [0.0]
 
 
 def treap_create_node(key):
