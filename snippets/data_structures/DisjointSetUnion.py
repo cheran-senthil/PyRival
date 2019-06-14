@@ -33,7 +33,7 @@ class DisjointSetUnion:
 class UnionFind:
     def __init__(self, n):
         self.parent = list(range(n))
-    
+
     def find(self, a):
         acopy = a
         while a != self.parent[a]:

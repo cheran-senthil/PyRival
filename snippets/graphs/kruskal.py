@@ -1,30 +1,31 @@
-def kruskal(n, edges):
-    parent, rank = list(range(n)), [0] * n
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
 
-    def find_set(v):
-        tmp = []
-        while v != parent[v]:
-            tmp.append(v)
-            v = parent[v]
-        for i in tmp:
-            parent[i] = v
+    def find(self, a):
+        acopy = a
+        while a != self.parent[a]:
+            a = self.parent[a]
+        while acopy != a:
+            self.parent[acopy], acopy = a, self.parent[acopy]
+        return a
 
-        return v
+    def merge(self, a, b):
+        self.parent[self.find(b)] = self.find(a)
 
-    cost, result = 0, []
 
-    for edge in sorted(edges, key=lambda edge: edge[2]):
-        find_u, find_v = find_set(edge[0]), find_set(edge[1])
-
+def kruskal(n, U, V, W):
+    union = UnionFind(n)
+    cost, merge_cnt = 0, 0
+    mst_u, mst_v = [], []
+    order = sorted(range(len(W)), key=lambda x: W[x])
+    for i in range(len(W)):
+        u, v = U[order[i]], V[order[i]]
+        find_u, find_v = union.find(u), union.find(v)
         if find_u != find_v:
-            cost += edge[2]
-            result.append(edge)
+            cost += W[order[i]]
+            merge_cnt += 1
+            union.parent[find_v] = find_u
+            mst_u.append(u), mst_v.append(v)
 
-            if rank[find_u] < rank[find_v]:
-                find_v, find_u = find_u, find_v
-            elif rank[find_u] == rank[find_v]:
-                rank[find_u] += 1
-
-            parent[find_v] = find_u
-
-    return result, cost
+    return cost, mst_u, mst_v, n == 1 + merge_cnt
