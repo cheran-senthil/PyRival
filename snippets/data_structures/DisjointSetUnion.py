@@ -12,22 +12,21 @@ class DisjointSetUnion:
             self.parent[acopy], acopy = a, self.parent[acopy]
         return a
 
-    def merge(self, a, b):
-        a = self.find(a)
-        b = self.find(b)
+    def union(self, a, b):
+        a, b = self.find(a), self.find(b)
+        if a != b:
+            if self.size[a] < self.size[b]:
+                a, b = b, a
 
-        if a == b:
-            return
-
-        if self.size[a] < self.size[b]:
-            a, b = b, a
-
-        self.num_sets -= 1
-        self.parent[b] = a
-        self.size[a] += self.size[b]
+            self.num_sets -= 1
+            self.parent[b] = a
+            self.size[a] += self.size[b]
 
     def set_size(self, a):
         return self.size[self.find(a)]
+
+    def __len__(self):
+        return self.num_sets
 
 
 class UnionFind:
@@ -42,5 +41,5 @@ class UnionFind:
             self.parent[acopy], acopy = a, self.parent[acopy]
         return a
 
-    def merge(self, a, b):
+    def union(self, a, b):
         self.parent[self.find(b)] = self.find(a)
