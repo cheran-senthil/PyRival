@@ -2,7 +2,7 @@ class RangeQuery:
     def __init__(self, data, func=min):
         self.func = func
         self._data = _data = [list(data)]
-        i, n = 1, len(data)
+        i, n = 1, len(_data[0])
         while 2 * i <= n:
             prev = _data[-1]
             _data.append([func(prev[j], prev[j + i]) for j in range(n - 2 * i + 1)])
@@ -14,31 +14,24 @@ class RangeQuery:
 
 
 class LCA:
-    def __init__(self, graph):
-        self.time = time = [0] * len(graph)
-        self.dist = dist = [0] * len(graph)
-        t, data = 0, []
-        V, P, D, S = [0], [0], [0], [0]
-        while V:
-            v, p, d, s = V.pop(), P.pop(), D.pop(), S.pop()
-            time[v], dist[v] = t, s
-            if d:
-                data.append((d, p))
-            for u, w in graph[v]:
-                if u != p:
-                    V.append(u)
-                    P.append(v)
-                    D.append(d + 1)
-                    S.append(s + w)
-            t += 1
+    def __init__(self, root, graph):
+        self.time = [-1] * len(graph)
+        self.path = []
+        dfs = [root]
+        while dfs:
+            node = dfs.pop()
+            self.path.append(node)
+            if self.time[node] == -1:
+                self.time[node] = len(self.path) - 1
+                for nei in graph[node]:
+                    if self.time[nei] == -1:
+                        dfs.append(node)
+                        dfs.append(nei)
+        self.rmq = RangeQuery(self.time[node] for node in self.path)
 
-        self.rmq = RangeQuery(data)
-
-    def query(self, a, b):
-        if a == b:
-            return a
-        a, b = self.time[a], self.time[b]
-        return self.rmq.query(min(a, b), max(a, b))[1]
-
-    def distance(self, a, b):
-        return self.dist[a] + self.dist[b] - 2 * self.dist[self.query(a, b)]
+    def lca(self, a, b):
+        a = self.time[a]
+        b = self.time[b]
+        if a > b:
+            a, b = b, a
+        return self.path[self.rmq.query(a, b + 1)]
