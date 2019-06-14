@@ -25,6 +25,9 @@ class DisjointSetUnion:
     def set_size(self, a):
         return self.size[self.find(a)]
 
+    def __len__(self):
+        return self.num_sets
+
 
 class UnionFind:
     def __init__(self, n):
