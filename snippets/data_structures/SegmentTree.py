@@ -6,9 +6,10 @@ class SegmentTree:
         self._data = _data = [default] * (2 * _size)
         self._default = default
         self._func = func
+
         _data[_size:_size + _len] = data
         for i in reversed(range(_size)):
-            _data[i] = func(_data[2 * i], _data[2 * i + 1])
+            _data[i] = func(_data[i + i], _data[i + i + 1])
 
     def __delitem__(self, key):
         self[key] = self._default
@@ -27,34 +28,31 @@ class SegmentTree:
     def __len__(self):
         return self._len
 
-    def bisect(self, val, cmp):
-        if not cmp(self._data[1], val):
+    def bisect(self, value, cmp):
+        if not cmp(value, self._data[1]):
             return -1
 
         idx = 1
         while idx < self._size:
-            self.push(idx)
             idx <<= 1
-            if cmp(self._data[idx + 1], val):
+            if cmp(value, self._data[idx + 1]):
                 idx += 1
-
         return idx - self._size
 
-    def query(self, begin, end):
-        begin += self._size
-        end += self._size
+    def query(self, start, stop):
+        start += self._size
+        stop += self._size
+
         res = self._default
-
-        while begin < end:
-            if begin & 1:
-                res = self._func(res, self._data[begin])
-                begin += 1
-            if end & 1:
-                end -= 1
-                res = self._func(res, self._data[end])
-            begin >>= 1
-            end >>= 1
-
+        while start < stop:
+            if start & 1:
+                res = self._func(res, self._data[start])
+                start += 1
+            if stop & 1:
+                stop -= 1
+                res = self._func(res, self._data[stop])
+            start >>= 1
+            stop >>= 1
         return res
 
     def __repr__(self):
@@ -75,9 +73,9 @@ class SegmentTree:
             stem = [' '] * (left_width + 1) + ['_'] * stem_width + [' '] * (right_width + 1)
             stem[width // 2] = '^'
 
-            lines.append(branches)
-            lines.append(''.join(stem))
-            lines.append(str(self._data[i]).center(width))
+            lines.appstop(branches)
+            lines.appstop(''.join(stem))
+            lines.appstop(str(self._data[i]).center(width))
             return lines
 
         return '\n'.join(reversed(recursive_repr(1)))
