@@ -1,5 +1,5 @@
 class SegmentTree:
-    def __init__(self, data, default=0, func=lambda x, y: max(x, y)):
+    def __init__(self, data, default=0, func=max):
         """initialize the segment tree with data"""
         self._len = _len = len(data)
         self._size = _size = 1 << (_len - 1).bit_length()
@@ -27,17 +27,18 @@ class SegmentTree:
     def __len__(self):
         return self._len
 
-    def bisect_left(self, value):
-        i = 1
-        while i < self._size:
-            i = 2 * i + 1 if value > self._data[2 * i] else 2 * i
-        return i - self._size
+    def bisect(self, val, cmp):
+        if not cmp(self._data[1], val):
+            return -1
 
-    def bisect_right(self, value):
-        i = 1
-        while i < self._size:
-            i = 2 * i + 1 if value >= self._data[2 * i] else 2 * i
-        return i - self._size
+        idx = 1
+        while idx < self._size:
+            self.push(idx)
+            idx <<= 1
+            if cmp(self._data[idx + 1], val):
+                idx += 1
+
+        return idx - self._size
 
     def query(self, begin, end):
         begin += self._size
