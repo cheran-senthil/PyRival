@@ -11,19 +11,19 @@ class SegmentTree:
         for i in reversed(range(_size)):
             _data[i] = func(_data[i + i], _data[i + i + 1])
 
-    def __delitem__(self, key):
-        self[key] = self._default
+    def __delitem__(self, idx):
+        self[idx] = self._default
 
-    def __getitem__(self, key):
-        return self._data[key + self._size]
+    def __getitem__(self, idx):
+        return self._data[idx + self._size]
 
-    def __setitem__(self, key, value):
-        key += self._size
-        self._data[key] = value
-        key >>= 1
-        while key:
-            self._data[key] = self._func(self._data[2 * key], self._data[2 * key + 1])
-            key >>= 1
+    def __setitem__(self, idx, value):
+        idx += self._size
+        self._data[idx] = value
+        idx >>= 1
+        while idx:
+            self._data[idx] = self._func(self._data[2 * idx], self._data[2 * idx + 1])
+            idx >>= 1
 
     def __len__(self):
         return self._len
