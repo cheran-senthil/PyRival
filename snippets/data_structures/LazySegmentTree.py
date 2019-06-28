@@ -80,4 +80,4 @@ class LazySegmentTree:
         return res
 
     def __repr__(self):
-        return 'SortedList({0})'.format(self.data)
+        return 'LazySegmentTree({0})'.format(self.data)
