@@ -28,7 +28,7 @@ class Heap(list):
 
 
 class OrderHeap(Heap):
-    def __init__(self, iterable=None, key=None):
+    def __init__(self, iterable=None, key=lambda x: x):
         if iterable is None:
             iterable = []
         self.key = key
@@ -117,7 +117,7 @@ class RemovalHeap(Heap):
     def sweep(self):
         if 2*len(self._item_set) < super(RemovalHeap, self).__len__():
             self[:] = list(self)
-            self.heapify()
+            heapify(self)
 
     def __iter__(self):
         return iter(self._item_set)
@@ -134,7 +134,7 @@ class RemovalHeap(Heap):
 
 # order + removal
 class XHeap(Heap):
-    def __init__(self, iterable=[], key=None):
+    def __init__(self, iterable=[], key=lambda x: x):
         self.key = key
         _list = list(iterable)
         self._item_set = set(_list)
@@ -170,7 +170,7 @@ class XHeap(Heap):
     def sweep(self):
         if 2*len(self._item_set) < super(XHeap, self).__len__():
             self[:] = (item_tuple for item_tuple in super(XHeap, self).__iter__() if item_tuple[1] in self._item_set)
-            self.heapify()
+            heapify(self)
 
     def poppush(self, item):
         if item in self._item_set:
