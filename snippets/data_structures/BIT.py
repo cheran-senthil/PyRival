@@ -1,7 +1,7 @@
-class FenwickTree(object):
+class FenwickTree:
     def __init__(self, x):
-        self.bit = x
         """transform list into BIT"""
+        self.bit = x
         for i in range(len(x)):
             j = i | (i + 1)
             if j < len(x):
