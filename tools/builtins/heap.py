@@ -1,4 +1,5 @@
-from heapq import heapify, heappushpop, heapreplace, heappop, heappush
+from heapq import heapify, heappop, heappush, heappushpop, heapreplace
+
 
 class Heap(list):
     def __init__(self, iterable=None):
@@ -18,6 +19,7 @@ class Heap(list):
 
     def poppush(self, item):
         return heapreplace(self, item)
+
     replace = poppush
 
     def pushpop(self, item):
@@ -45,6 +47,7 @@ class OrderHeap(Heap):
 
     def poppush(self, item):
         return heapreplace(self, (self.key(item), item))[1]
+
     replace = poppush
 
     def pushpop(self, item):
@@ -102,6 +105,7 @@ class RemovalHeap(Heap):
         return_item = heapreplace(self, item)
         self._item_set.remove(return_item)
         return return_item
+
     replace = poppush
 
     def pushpop(self, item):
@@ -115,7 +119,7 @@ class RemovalHeap(Heap):
         return return_item
 
     def sweep(self):
-        if 2*len(self._item_set) < super(RemovalHeap, self).__len__():
+        if 2 * len(self._item_set) < super(RemovalHeap, self).__len__():
             self[:] = list(self)
             heapify(self)
 
@@ -168,7 +172,7 @@ class XHeap(Heap):
         self.sweep()
 
     def sweep(self):
-        if 2*len(self._item_set) < super(XHeap, self).__len__():
+        if 2 * len(self._item_set) < super(XHeap, self).__len__():
             self[:] = (item_tuple for item_tuple in super(XHeap, self).__iter__() if item_tuple[1] in self._item_set)
             heapify(self)
 
@@ -181,6 +185,7 @@ class XHeap(Heap):
         return_item = heapreplace(self, (self.key(item), item))[1]
         self._item_set.remove(return_item)
         return return_item
+
     replace = poppush
 
     def pushpop(self, item):
