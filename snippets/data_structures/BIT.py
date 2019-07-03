@@ -1,28 +1,29 @@
 def bitify(x):
+    """transform list into BIT"""
     for i in range(len(x)):
         j = i | (i + 1)
         if j < len(x):
             x[j] += x[i]
 
 
-def bitupdate(bit, key, val):
-    """updates bit[i] += val"""
-    while key < len(bit):
-        bit[key] += val
-        key |= key + 1
+def bitupdate(bit, idx, x):
+    """updates bit[idx] += x"""
+    while idx < len(bit):
+        bit[idx] += x
+        idx |= idx + 1
 
 
 def bitquery(bit, end):
-    """calc sum(bit[:r])"""
-    val = 0
+    """calc sum(bit[:end])"""
+    x = 0
     while end:
-        val += bit[end - 1]
+        x += bit[end - 1]
         end &= end - 1
-    return val
+    return x
 
 
 def bitkth(bit, k):
-    """Find largest r such that sum(bit[:r]) <= k"""
+    """Find largest idx such that sum(bit[:idx]) <= k"""
     idx = -1
     for d in reversed(range(len(bit).bit_length())):
         right_idx = idx + (1 << d)
