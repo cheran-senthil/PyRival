@@ -47,12 +47,10 @@ for module in ['heapq', '_heapq']:
 class Heap(object):
     def __init__(self, iterable=None, reversed=False):
         if reversed:
-            self.heapify, self._siftup, self._siftdown = _heapify_max, _siftup_max, _siftdown_max
-            self.heappush, self.heappop = _heappush_max, _heappop_max
+            self.heapify, self.heappush, self.heappop = _heapify_max, _heappush_max, _heappop_max
             self.heappushpop, self.heapreplace = _heappushpop_max, _heapreplace_max
         else:
-            self.heapify, self._siftup, self._siftdown = heapify, _siftup, _siftdown,
-            self.heappush, self.heappop = heappush, heappop
+            self.heapify, self.heappush, self.heappop = heapify, heappush, heappop
             self.heappushpop, self.heapreplace = heappushpop, heapreplace
 
         if iterable is None:
