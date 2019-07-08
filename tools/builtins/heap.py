@@ -45,8 +45,8 @@ for module in ['heapq', '_heapq']:
 
 
 class Heap(object):
-    def __init__(self, iterable=None, reversed=False):
-        if reversed:
+    def __init__(self, iterable=None, reverse=False):
+        if reverse:
             self.heapify, self.heappush, self.heappop = _heapify_max, _heappush_max, _heappop_max
             self.heappushpop, self.heapreplace = _heappushpop_max, _heapreplace_max
         else:
@@ -89,11 +89,11 @@ class Heap(object):
 
 
 class OrderHeap(Heap):
-    def __init__(self, iterable=None, key=lambda x: x, reversed=False):
+    def __init__(self, iterable=None, key=lambda x: x, reverse=False):
         if iterable is None:
             iterable = []
         self.key = key
-        super(OrderHeap, self).__init__(((key(item), item) for item in iterable), reversed=reversed)
+        super(OrderHeap, self).__init__(((key(item), item) for item in iterable), reverse=reverse)
 
     def peek(self):
         return self.heap[0][1]
@@ -120,12 +120,12 @@ class OrderHeap(Heap):
 
 
 class RemovalHeap(Heap):
-    def __init__(self, iterable=[], reversed=False):
+    def __init__(self, iterable=[], reverse=False):
         _list = list(iterable)
         self._item_set = set(_list)
         if len(_list) != len(self._item_set):
             raise RuntimeError('duplicate items not allowed: {_list}'.format(_list=_list))
-        super(RemovalHeap, self).__init__(_list, reversed=reversed)
+        super(RemovalHeap, self).__init__(_list, reverse=reverse)
 
     def peek(self):
         return_item = self.heap[0]
@@ -194,13 +194,13 @@ class RemovalHeap(Heap):
 
 # order + removal
 class XHeap(Heap):
-    def __init__(self, iterable=[], key=lambda x: x, reversed=False):
+    def __init__(self, iterable=[], key=lambda x: x, reverse=False):
         self.key = key
         _list = list(iterable)
         self._item_set = set(_list)
         if len(_list) != len(self._item_set):
             raise RuntimeError('duplicate items not allowed: {_list}'.format(_list=_list))
-        super(XHeap, self).__init__(((key(item), item) for item in _list), reversed=reversed)
+        super(XHeap, self).__init__(((key(item), item) for item in _list), reverse=reverse)
 
     def peek(self):
         return_item = self.heap[0][1]
