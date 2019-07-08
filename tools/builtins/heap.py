@@ -120,7 +120,9 @@ class OrderHeap(Heap):
 
 
 class RemovalHeap(Heap):
-    def __init__(self, iterable=[], reverse=False):
+    def __init__(self, iterable=None, reverse=False):
+        if iterable is None:
+            iterable = []
         _list = list(iterable)
         self._item_set = set(_list)
         if len(_list) != len(self._item_set):
@@ -194,7 +196,9 @@ class RemovalHeap(Heap):
 
 # order + removal
 class XHeap(Heap):
-    def __init__(self, iterable=[], key=lambda x: x, reverse=False):
+    def __init__(self, iterable=None, key=lambda x: x, reverse=False):
+        if iterable is None:
+            iterable = []
         self.key = key
         _list = list(iterable)
         self._item_set = set(_list)
