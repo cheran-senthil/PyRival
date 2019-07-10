@@ -19,7 +19,7 @@ def fst(a, oplus=op.and_, inv=False):
             a[i] /= len(a)
 
 
-def conv(a, b):
+def fst_conv(a, b):
     fst(a), fst(b)
     for i in range(len(a)):
         a[i] *= b[i]

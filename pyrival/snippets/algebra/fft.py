@@ -31,7 +31,7 @@ def fft(a, inv=False):
             a[i] /= n
 
 
-def conv(a, b):
+def fft_conv(a, b):
     s = len(a) + len(b) - 1
     n = 1 << s.bit_length()
     a.extend([0.0] * (n - len(a)))
