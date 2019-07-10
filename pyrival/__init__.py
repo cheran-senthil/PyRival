@@ -1,6 +1,6 @@
 from .builtins.as_integer_ratio import as_integer_ratio
 from .builtins.bootstrap import bootstrap
-# from .builtins.FastIO import FastIO, print, input, str
+from .builtins.FastIO import FastIO, IOWrapper, input
 from .builtins.heap import Heap, OrderHeap, RemovalHeap, XHeap
 from .builtins.mergesort import mergesort
 from .builtins.split import split
@@ -9,16 +9,16 @@ from .performance.bit_hacks import least_bit, next_mask, subset_masks, sum_of_su
 from .performance.memoize import memodict, memoize
 from .performance.ostream import cout, endl, ostream
 from .performance.readnumbers import readnumbers
+from .snippets.algebra import ntt
 from .snippets.algebra.chinese_remainder import chinese_remainder, composite_crt
 from .snippets.algebra.discrete_log import discrete_log
 from .snippets.algebra.factors import all_factors, distinct_factors, pollard_rho, prime_factors
-# from .snippets.algebra.fft import fft, fft_conv
+from .snippets.algebra.fft import fft, fft_conv
 from .snippets.algebra.fst import fst, fst_conv
 from .snippets.algebra.gcd import extended_gcd, gcd, gcdm, lcm, lcmm
 from .snippets.algebra.is_prime import is_prime
 from .snippets.algebra.mod_sqrt import mod_sqrt
 from .snippets.algebra.modinv import modinv
-# from .snippets.algebra.ntt import ntt, ntt_conv
 from .snippets.algebra.phi import phi
 from .snippets.algebra.primitive_root import ilog, primitive_root
 from .snippets.algebra.sieve import prime_list, prime_sieve
@@ -34,7 +34,7 @@ from .snippets.data_structures.Fraction import Fraction, limit_denominator
 from .snippets.data_structures.LazySegmentTree import LazySegmentTree
 from .snippets.data_structures.LinkedList import LinkedList
 from .snippets.data_structures.Node import Node
-# from .snippets.data_structures.PersistentSegTree import
+from .snippets.data_structures.PersistentSegTree import create, minimum, setter
 from .snippets.data_structures.RangeQuery import RangeQuery
 from .snippets.data_structures.SegmentTree import SegmentTree
 from .snippets.data_structures.SortedList import SortedList
