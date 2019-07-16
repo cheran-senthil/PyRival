@@ -38,7 +38,10 @@ from .snippets.data_structures.PersistentSegTree import create, minimum, setter
 from .snippets.data_structures.RangeQuery import RangeQuery
 from .snippets.data_structures.SegmentTree import SegmentTree
 from .snippets.data_structures.SortedList import SortedList
-# from .snippets.data_structures.Treap import Treap, TreapHashMap, TreapHashSet, TreapMultiSet, TreapSet
+from .snippets.data_structures.Treap import (TreapHashMap, TreapHashSet, TreapMultiSet, TreapSet, treap_builder,
+                                             treap_ceiling, treap_create_node, treap_erase, treap_floor, treap_higher,
+                                             treap_insert, treap_insert_unique, treap_keys, treap_lower, treap_max,
+                                             treap_merge, treap_min, treap_prior, treap_split)
 from .snippets.data_structures.Trie import Trie
 from .snippets.data_structures.TwoSat import TwoSat
 from .snippets.geometry.convex_hull import convex_hull
@@ -66,7 +69,7 @@ from .snippets.misc.alphabeta import AlphaBetaNode, alphabeta
 # from .snippets.misc.cumsum2d import cumsum2d
 from .snippets.misc.lis import lis
 from .snippets.misc.order_statistic import order_statistic
-# from .snippets.numerical.berlekamp_massey import berlekamp_massey, linear_rec
+from .snippets.numerical import berlekamp_massey
 from .snippets.numerical.hill_climbing import hill_climbing
 from .snippets.numerical.integrate import fast_quad, quad, rec, simpson
 from .snippets.numerical.interpolate import interpolate
@@ -90,9 +93,11 @@ __all__ = [
     "CFraction",
     "Dinic",
     "DisjointSetUnion",
+    "FastIO",
     "FenwickTree",
     "Fraction",
     "Heap",
+    "IOWrapper",
     "LCA",
     "LCSubstr",
     "LPSubstr",
@@ -104,16 +109,20 @@ __all__ = [
     "RemovalHeap",
     "SegmentTree",
     "SortedList",
+    "TreapHashMap",
+    "TreapHashSet",
+    "TreapMultiSet",
+    "TreapSet",
     "Trie",
     "TwoSat",
     "UnionFind",
     "XHeap",
-    "__version__",
     "all_factors",
     "alphabeta",
     "angle",
     "as_integer_ratio",
     "bellman_ford",
+    "berlekamp_massey",
     "bfs",
     "binary_search",
     "bitarray",
@@ -127,6 +136,7 @@ __all__ = [
     "connected_components",
     "convex_hull",
     "cout",
+    "create",
     "cross2d",
     "cross3d",
     "cycle_finding",
@@ -146,6 +156,8 @@ __all__ = [
     "extended_gcd",
     "eye",
     "fast_quad",
+    "fft",
+    "fft_conv",
     "find_path",
     "floyd_warshall",
     "fractional_binary_search",
@@ -157,6 +169,7 @@ __all__ = [
     "golden_section_search",
     "hill_climbing",
     "ilog",
+    "input",
     "interpolate",
     "intersect",
     "iroot",
@@ -185,11 +198,13 @@ __all__ = [
     "memodict",
     "memoize",
     "mergesort",
+    "minimum",
     "minor",
     "mod_sqrt",
     "modinv",
     "next_mask",
     "norm_sq",
+    "ntt",
     "order_statistic",
     "ostream",
     "partition",
@@ -210,6 +225,7 @@ __all__ = [
     "rotate",
     "scale",
     "scc",
+    "setter",
     "simpson",
     "snippets",
     "split",
@@ -222,6 +238,21 @@ __all__ = [
     "toposort",
     "translate",
     "transpose",
+    "treap_builder",
+    "treap_ceiling",
+    "treap_create_node",
+    "treap_erase",
+    "treap_floor",
+    "treap_higher",
+    "treap_insert",
+    "treap_insert_unique",
+    "treap_keys",
+    "treap_lower",
+    "treap_max",
+    "treap_merge",
+    "treap_min",
+    "treap_prior",
+    "treap_split",
     "tree_repr",
     "vec_mul",
 ]
