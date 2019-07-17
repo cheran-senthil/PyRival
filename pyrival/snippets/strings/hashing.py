@@ -1,12 +1,13 @@
 import random
 
+HMOD = 2147483647
+HBASE1 = random.randrange(MOD)
+HBASE2 = random.randrange(MOD)
+
 
 class Hashing:
-    def __init__(self, s, mod=2147483647):
-        self.mod = mod
-        self.base1 = base1 = random.randrange(mod)
-        self.base2 = base2 = random.randrange(mod)
-
+    def __init__(self, s, mod=HMOD, base1=HBASE1, base2=HBASE2):
+        self.mod, self.base1, self.base2 = mod, base1, base2
         self._len = _len = len(s)
         f_hash, s_hash = [0] * (_len + 1), [0] * (_len + 1)
         for i in range(_len):
