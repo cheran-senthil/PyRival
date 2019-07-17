@@ -1,24 +1,22 @@
-MOD = 10**9 + 7
+def make_nCr(mod=10**9 + 7, maxn=2 * 10**5):
+    fact, inv_fact = [0] * (maxn + 1), [0] * (maxn + 1)
+    fact[0] = 1
+    for i in range(maxn):
+        fact[i + 1] = fact[i] * (i + 1) % mod
 
-MAXN = 2 * 10**5
+    inv_fact[-1] = pow(fact[-1], mod - 2, mod)
+    for i in reversed(range(maxn)):
+        inv_fact[i] = inv_fact[i + 1] * (i + 1) % mod
 
-fact, inv_fact = [0] * (MAXN + 1), [0] * (MAXN + 1)
-fact[0] = 1
-for i in range(MAXN):
-    fact[i + 1] = fact[i] * (i + 1) % MOD
+    def nCr_mod(n, r):
+        res = 1
+        while n or r:
+            a, b = n % mod, r % mod
+            if a < b:
+                return 0
+            res = res * fact[a] % mod * inv_fact[b] % mod * inv_fact[a - b] % mod
+            n //= mod
+            r //= mod
+        return res
 
-inv_fact[-1] = pow(fact[-1], MOD - 2, MOD)
-for i in reversed(range(MAXN)):
-    inv_fact[i] = inv_fact[i + 1] * (i + 1) % MOD
-
-
-def nCr_mod(n, r):
-    res = 1
-    while n or r:
-        a, b = n % MOD, r % MOD
-        if a < b:
-            return 0
-        res = res * fact[a] % MOD * inv_fact[b] % MOD * inv_fact[a - b] % MOD
-        n //= MOD
-        r //= MOD
-    return res
+    return nCr_mod
