@@ -11,7 +11,7 @@ setup(
     },
     url="https://github.com/cheran-senthil/PyRival",
     author="Cheran Senthil",
-    author_email="hello@cheran.io",
+    author_email="cheran.v.senthil@gmail.com",
     classifiers=[
         "Development Status :: 4 - Beta",
         "License :: OSI Approved :: Apache Software License",
@@ -27,7 +27,7 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
-    license="MIT",
+    license="Apache License 2.0",
     description="Competitive Programming Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
