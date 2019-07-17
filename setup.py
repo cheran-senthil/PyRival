@@ -27,7 +27,6 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
-    license="Apache License 2.0",
     description="Competitive Programming Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
