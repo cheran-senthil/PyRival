@@ -1,4 +1,4 @@
-class Node:
+class AlphaBetaNode:
     def __init__(self, value=None, children=None):
         self.value = value
         self.children = children

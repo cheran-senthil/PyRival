@@ -65,7 +65,7 @@ def ntt(a, inv=False):
             a[i] = fmul(a[i], inv_n)
 
 
-def conv(a, b):
+def ntt_conv(a, b):
     s = len(a) + len(b) - 1
     n = 1 << s.bit_length()
 

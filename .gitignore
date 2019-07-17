@@ -105,3 +105,6 @@ venv.bak/
 
 # vscode
 .vscode/
+
+# setuptools_scm
+pyrival/version.py
