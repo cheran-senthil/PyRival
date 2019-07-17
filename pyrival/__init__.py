@@ -24,7 +24,7 @@ from .snippets.algebra.primitive_root import ilog, primitive_root
 from .snippets.algebra.sieve import prime_list, prime_sieve
 from .snippets.combinatorics.combinatorics import (catalan_recursive, euler_recursive, stirling_1_recursive,
                                                    stirling_2_recursive)
-# from .snippets.combinatorics.nCr_p import nCr_mod
+from .snippets.combinatorics.nCr_mod import make_nCr_mod
 from .snippets.combinatorics.partitions import partition
 from .snippets.data_structures.BitArray import bitarray
 from .snippets.data_structures.CFraction import CFrac2Frac, CFraction
@@ -66,7 +66,7 @@ from .snippets.graphs.toposort import kahn, toposort
 from .snippets.linear_algebra.matrix import eye, mat_add, mat_inv, mat_mul, mat_pow, mat_sub, minor, transpose, vec_mul
 from .snippets.linear_algebra.multivariable_crt import is_sol, mcrt, pivot
 from .snippets.misc.alphabeta import AlphaBetaNode, alphabeta
-# from .snippets.misc.cumsum2d import cumsum2d
+from .snippets.misc.cumsum2d import cumsum2d
 from .snippets.misc.lis import lis
 from .snippets.misc.order_statistic import order_statistic
 from .snippets.numerical import berlekamp_massey
@@ -77,7 +77,7 @@ from .snippets.numerical.iroot import iroot
 from .snippets.numerical.polynomial import diff, divroot, poly
 from .snippets.numerical.search import (binary_search, discrete_binary_search, discrete_ternary_search,
                                         fractional_binary_search, golden_section_search, ternary_search)
-# from .snippets.strings.hashing import Hashing
+from .snippets.strings.hashing import Hashing
 from .snippets.strings.kmp import match, pi
 from .snippets.strings.lcs import lcs
 from .snippets.strings.LCSubstr import LCSubstr
@@ -96,6 +96,7 @@ __all__ = [
     "FastIO",
     "FenwickTree",
     "Fraction",
+    "Hashing",
     "Heap",
     "IOWrapper",
     "LCA",
@@ -139,6 +140,7 @@ __all__ = [
     "create",
     "cross2d",
     "cross3d",
+    "cumsum2d",
     "cycle_finding",
     "dfs",
     "diff",
@@ -188,6 +190,7 @@ __all__ = [
     "least_rotation",
     "limit_denominator",
     "lis",
+    "make_nCr_mod",
     "mat_add",
     "mat_inv",
     "mat_mul",
