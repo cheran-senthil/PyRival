@@ -225,80 +225,30 @@ class SortedList():
 
     def __delitem__(self, index):
         """Remove value at `index` from sorted list."""
-        if isinstance(index, slice):
-            start, stop, step = index.indices(self._len)
-            if step == 1 and start < stop:
-                if start == 0 and stop == self._len:
-                    return self.clear()
-                elif self._len <= 8 * (stop - start):
-                    values = self.__getitem__(slice(None, start))
-                    if stop < self._len:
-                        values += self.__getitem__(slice(stop, None))
-                    self.clear()
-                    return self.update(values)
-
-            indices = range(start, stop, step)
-            if step > 0:
-                indices = reversed(indices)
-            _pos, _delete = self._pos, self._delete
-            for index in indices:
-                pos, idx = _pos(index)
-                _delete(pos, idx)
-        else:
-            pos, idx = self._pos(index)
-            self._delete(pos, idx)
+        pos, idx = self._pos(index)
+        self._delete(pos, idx)
 
     def __getitem__(self, index):
         """Lookup value at `index` in sorted list."""
         _lists = self._lists
 
-        if isinstance(index, slice):
-            start, stop, step = index.indices(self._len)
-
-            if step == 1 and start < stop:
-                if start == 0 and stop == self._len:
-                    return reduce(list.__iadd__, self._lists, [])
-
-                start_pos, start_idx = self._pos(start)
-                if stop == self._len:
-                    stop_pos = len(_lists) - 1
-                    stop_idx = len(_lists[stop_pos])
-                else:
-                    stop_pos, stop_idx = self._pos(stop)
-                if start_pos == stop_pos:
-                    return _lists[start_pos][start_idx:stop_idx]
-
-                prefix = _lists[start_pos][start_idx:]
-                middle = _lists[(start_pos + 1):stop_pos]
-                result = reduce(list.__iadd__, middle, prefix)
-                result += _lists[stop_pos][:stop_idx]
-                return result
-
-            if step == -1 and start > stop:
-                result = self.__getitem__(slice(stop + 1, start + 1))
-                result.reverse()
-                return result
-
-            indices = range(start, stop, step)
-            return list(self.__getitem__(index) for index in indices)
+        if self._len:
+            if index == 0:
+                return _lists[0][0]
+            elif index == -1:
+                return _lists[-1][-1]
         else:
-            if self._len:
-                if index == 0:
-                    return _lists[0][0]
-                elif index == -1:
-                    return _lists[-1][-1]
-            else:
-                raise IndexError('list index out of range')
+            raise IndexError('list index out of range')
 
-            if 0 <= index < len(_lists[0]):
-                return _lists[0][index]
+        if 0 <= index < len(_lists[0]):
+            return _lists[0][index]
 
-            len_last = len(_lists[-1])
-            if -len_last < index < 0:
-                return _lists[-1][len_last + index]
+        len_last = len(_lists[-1])
+        if -len_last < index < 0:
+            return _lists[-1][len_last + index]
 
-            pos, idx = self._pos(index)
-            return _lists[pos][idx]
+        pos, idx = self._pos(index)
+        return _lists[pos][idx]
 
     def __iter__(self):
         """Return an iterator over the sorted list."""
