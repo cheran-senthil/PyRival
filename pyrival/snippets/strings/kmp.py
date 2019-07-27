@@ -10,10 +10,4 @@ def pi(s):
 
 
 def match(s, pat, uniq='\0'):
-    res = []
-    p = pi(pat + uniq + s)
-    for i in range(len(p) - len(s), len(p)):
-        if p[i] == len(pat):
-            res.append(i - 2 * len(pat))
-
-    return res
+    return [i + 1 - c for i, c in enumerate(pi(pat + uniq + s)[len(pat) + 1:]) if c == len(pat)]
