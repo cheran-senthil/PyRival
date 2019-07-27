@@ -6,12 +6,11 @@ from itertools import chain, repeat, starmap
 
 class SortedList():
     """Sorted list is a sorted mutable sequence."""
-    DEFAULT_LOAD_FACTOR = 500
 
-    def __init__(self, iterable=None):
+    def __init__(self, iterable=None, load=500):
         """Initialize sorted list instance."""
         self._len = 0
-        self._load = self.DEFAULT_LOAD_FACTOR
+        self._load = load
         self._lists = []
         self._maxes = []
         self._index = []
@@ -90,9 +89,8 @@ class SortedList():
         if pos == len(_maxes):
             return False
 
-        _lists = self._lists
-        idx = bisect_left(_lists[pos], value)
-        return _lists[pos][idx] == value
+        idx = bisect_left(self._lists[pos], value)
+        return self._lists[pos][idx] == value
 
     def remove(self, value):
         """Remove `value` from sorted list if it is a member."""
