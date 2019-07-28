@@ -1,8 +1,8 @@
 import random
 
 HMOD = 2147483647
-HBASE1 = random.randrange(MOD)
-HBASE2 = random.randrange(MOD)
+HBASE1 = random.randrange(HMOD)
+HBASE2 = random.randrange(HMOD)
 
 
 class Hashing:
