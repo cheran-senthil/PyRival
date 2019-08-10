@@ -6,7 +6,8 @@ def partial(s):
         pi[i] = g = g + (s[g] == s[i])
 
     return pi
- 
+
+
 def match(s, pat):
     pi = partial(pat)
 
@@ -15,11 +16,12 @@ def match(s, pat):
         while g and pat[g] != s[i]:
             g = pi[g - 1]
         g += pat[g] == s[i]
-        if g == len(pi): 
+        if g == len(pi):
             idx.append(i + 1 - g)
             g = pi[g - 1]
-    
+
     return idx
+
 
 def string_find(s, pat):
     pi = partial(pat)
@@ -29,7 +31,7 @@ def string_find(s, pat):
         while g and pat[g] != s[i]:
             g = pi[g - 1]
         g += pat[g] == s[i]
-        if g == len(pi): 
+        if g == len(pi):
             return True
-    
+
     return False
