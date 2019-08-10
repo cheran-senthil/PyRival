@@ -59,29 +59,6 @@ class SortedList():
                     child = (child - 1) >> 1
                 _index[0] += 1
 
-    def update(self, iterable):
-        """Update sorted list by adding all values from `iterable`."""
-        _lists = self._lists
-        _maxes = self._maxes
-        values = sorted(iterable)
-
-        if _maxes:
-            if len(values) * 4 >= self._len:
-                values.extend(chain.from_iterable(_lists))
-                values.sort()
-                self.clear()
-            else:
-                _add = self.add
-                for val in values:
-                    _add(val)
-                return
-
-        _load = self._load
-        _lists.extend(values[pos:(pos + _load)] for pos in range(0, len(values), _load))
-        _maxes.extend(sublist[-1] for sublist in _lists)
-        self._len = len(values)
-        del self._index[:]
-
     def __contains__(self, value):
         """Return true if `value` is an element of the sorted list."""
         _maxes = self._maxes
