@@ -1,7 +1,7 @@
 def partial(s):
     g, pi = 0, [0] * len(s)
     for i in range(1, len(s)):
-        while g and (s[g] != s[i]):
+        while g and s[g] != s[i]:
             g = pi[g - 1]
         pi[i] = g = g + (s[g] == s[i])
 
