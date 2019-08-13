@@ -29,8 +29,7 @@
 
 ##
 
-### Tools
-- Builtins
+### Misc Code
   - bootstrap for recursion
   - FastIO
   - heapq
@@ -38,14 +37,15 @@
   - py3k compatibility tools
   - random
   - str.split for whitespace
-- Perfomance tools
   - Bit Hacks
   - 32-bit Modular Arithmetic
   - Memoize Decorators
   - C++ syle cout
-- Testing tools
   - Interactive Runner
   - Stress Tester
+  - Alpha–Beta Pruning
+  - Longest Increasing Subsequence
+  - K-th Order Statistic
 
 ##
 
@@ -120,10 +120,6 @@
   - Longest Common Substring
   - Manacher's Algorithm
   - Lydon Factorization
-- Misc
-  - Alpha–Beta Pruning
-  - Longest Increasing Subsequence
-  - K-th Order Statistic
 
 ##
 
