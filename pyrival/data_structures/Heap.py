@@ -29,10 +29,25 @@ def _heapreplace_max(heap, item):
     _siftup_max(heap, 0)
     return returnitem
 
-_heapops = ['heapify', 'heappush', 'heappop', 'heappushpop', 'heapreplace', '_siftup', '_siftdown'] + \
-           ['_heapify_max', '_heappush_max', '_heappop_max', '_heappushpop_max', '_heapreplace_max', '_siftup_max', '_siftdown_max']
+
+_heapops = [
+    "heapify",
+    "heappush",
+    "heappop",
+    "heappushpop",
+    "heapreplace",
+    "_siftup",
+    "_siftdown"
+    "_heapify_max",
+    "_heappush_max",
+    "_heappop_max",
+    "_heappushpop_max",
+    "_heapreplace_max",
+    "_siftup_max",
+    "_siftdown_max",
+]
 # If available, use C implementation
-for module in ['heapq', '_heapq']:
+for module in ["heapq", "_heapq"]:
     try:
         m = import_module(module)
         for f in _heapops:
@@ -85,7 +100,7 @@ class Heap(object):
         return item in iter(self)
 
     def __repr__(self):
-        return 'Heap({content})'.format(content=heap)
+        return "Heap({content})".format(content=heap)
 
 
 class OrderHeap(Heap):
@@ -116,7 +131,7 @@ class OrderHeap(Heap):
         return (item_tuple[1] for item_tuple in super(OrderHeap, self).__iter__())
 
     def __repr__(self):
-        return 'OrderHeap({content}, key={key})'.format(content=self.heap, key=self.key)
+        return "OrderHeap({content}, key={key})".format(content=self.heap, key=self.key)
 
 
 class RemovalHeap(Heap):
@@ -126,7 +141,7 @@ class RemovalHeap(Heap):
         _list = list(iterable)
         self._item_set = set(_list)
         if len(_list) != len(self._item_set):
-            raise RuntimeError('duplicate items not allowed: {_list}'.format(_list=_list))
+            raise RuntimeError("duplicate items not allowed: {_list}".format(_list=_list))
         super(RemovalHeap, self).__init__(_list, reverse=reverse)
 
     def peek(self):
@@ -138,7 +153,7 @@ class RemovalHeap(Heap):
 
     def push(self, item):
         if item in self._item_set:
-            raise RuntimeError('duplicate item not allowed: {item}'.format(item=item))
+            raise RuntimeError("duplicate item not allowed: {item}".format(item=item))
         self.heappush(self.heap, item)
         self._item_set.add(item)
 
@@ -156,7 +171,7 @@ class RemovalHeap(Heap):
 
     def poppush(self, item):
         if item in self._item_set:
-            raise RuntimeError('duplicate item not allowed: {item}'.format(item=item))
+            raise RuntimeError("duplicate item not allowed: {item}".format(item=item))
         self._item_set.add(item)
         while self.heap[0] not in self._item_set:
             self.heappop(self.heap)
@@ -168,7 +183,7 @@ class RemovalHeap(Heap):
 
     def pushpop(self, item):
         if item in self._item_set:
-            raise RuntimeError('duplicate item not allowed: {item}'.format(item=item))
+            raise RuntimeError("duplicate item not allowed: {item}".format(item=item))
         self._item_set.add(item)
         return_item = self.heappushpop(self.heap, item)
         while return_item not in self._item_set:
@@ -191,7 +206,7 @@ class RemovalHeap(Heap):
         return len(self._item_set)
 
     def __repr__(self):
-        return 'RemovalHeap({content})'.format(content=list(self))
+        return "RemovalHeap({content})".format(content=list(self))
 
 
 # order + removal
@@ -203,7 +218,7 @@ class XHeap(Heap):
         _list = list(iterable)
         self._item_set = set(_list)
         if len(_list) != len(self._item_set):
-            raise RuntimeError('duplicate items not allowed: {_list}'.format(_list=_list))
+            raise RuntimeError("duplicate items not allowed: {_list}".format(_list=_list))
         super(XHeap, self).__init__(((key(item), item) for item in _list), reverse=reverse)
 
     def peek(self):
@@ -215,7 +230,7 @@ class XHeap(Heap):
 
     def push(self, item):
         if item in self._item_set:
-            raise RuntimeError('duplicate item not allowed: {item}'.format(item=item))
+            raise RuntimeError("duplicate item not allowed: {item}".format(item=item))
         self.heappush(self.heap, (self.key(item), item))
         self._item_set.add(item)
 
@@ -239,7 +254,7 @@ class XHeap(Heap):
 
     def poppush(self, item):
         if item in self._item_set:
-            raise RuntimeError('duplicate item not allowed: {item}'.format(item=item))
+            raise RuntimeError("duplicate item not allowed: {item}".format(item=item))
         self._item_set.add(item)
         while self.heap[0][1] not in self._item_set:
             self.heappop(self.heap)
@@ -251,7 +266,7 @@ class XHeap(Heap):
 
     def pushpop(self, item):
         if item in self._item_set:
-            raise RuntimeError('duplicate item not allowed: {item}'.format(item=item))
+            raise RuntimeError("duplicate item not allowed: {item}".format(item=item))
         self._item_set.add(item)
         return_item = self.heappushpop(self.heap, (self.key(item), item))[1]
         while return_item not in self._item_set:
@@ -269,4 +284,4 @@ class XHeap(Heap):
         return len(self._item_set)
 
     def __repr__(self):
-        return 'XHeap({content}, key={key})'.format(content=list(self), key=self.key)
+        return "XHeap({content}, key={key})".format(content=list(self), key=self.key)

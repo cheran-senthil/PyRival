@@ -1,5 +1,5 @@
 def bellman_ford(n, edges, start):
-    dist = [float('inf')] * n
+    dist = [float("inf")] * n
     pred = [None] * n
 
     dist[start] = 0

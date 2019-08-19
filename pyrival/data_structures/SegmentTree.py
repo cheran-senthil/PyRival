@@ -45,4 +45,4 @@ class SegmentTree:
         return res
 
     def __repr__(self):
-        return 'SegmentTree({0})'.format(self.data)
+        return "SegmentTree({0})".format(self.data)
