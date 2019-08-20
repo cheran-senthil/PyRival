@@ -42,7 +42,7 @@ def ntt(a, inv=False):
     for i in range(n):
         rev[i] = rev[i >> 1] >> 1
         if i & 1 == 1:
-            rev[i] |= (n >> 1)
+            rev[i] |= n >> 1
         if i < rev[i]:
             a[i], a[rev[i]] = a[rev[i]], a[i]
 

@@ -4,9 +4,8 @@ from functools import reduce
 from itertools import chain, repeat, starmap
 
 
-class SortedList():
+class SortedList:
     """Sorted list is a sorted mutable sequence."""
-
     def __init__(self, iterable=None, load=500):
         """Initialize sorted list instance."""
         self._len = 0
@@ -145,9 +144,9 @@ class SortedList():
                 return len(self._lists) - 1, last_len + idx
             idx += self._len
             if idx < 0:
-                raise IndexError('list index out of range')
+                raise IndexError("list index out of range")
         elif idx >= self._len:
-            raise IndexError('list index out of range')
+            raise IndexError("list index out of range")
 
         if idx < len(self._lists[0]):
             return 0, idx
@@ -213,7 +212,7 @@ class SortedList():
             elif index == -1:
                 return _lists[-1][-1]
         else:
-            raise IndexError('list index out of range')
+            raise IndexError("list index out of range")
 
         if 0 <= index < len(_lists[0]):
             return _lists[0][index]
@@ -278,7 +277,7 @@ class SortedList():
     def pop(self, index=-1):
         """Remove and return value at `index` in sorted list."""
         if not self._len:
-            raise IndexError('pop index out of range')
+            raise IndexError("pop index out of range")
 
         _lists = self._lists
         if 0 <= index < len(_lists[0]):
@@ -314,17 +313,17 @@ class SortedList():
             stop = _len
 
         if stop <= start:
-            raise ValueError('{0!r} is not in list'.format(value))
+            raise ValueError("{0!r} is not in list".format(value))
 
         _maxes = self._maxes
         pos_left = bisect_left(_maxes, value)
         if pos_left == len(_maxes):
-            raise ValueError('{0!r} is not in list'.format(value))
+            raise ValueError("{0!r} is not in list".format(value))
 
         _lists = self._lists
         idx_left = bisect_left(_lists[pos_left], value)
         if _lists[pos_left][idx_left] != value:
-            raise ValueError('{0!r} is not in list'.format(value))
+            raise ValueError("{0!r} is not in list".format(value))
 
         stop -= 1
         left = self._loc(pos_left, idx_left)
@@ -334,7 +333,7 @@ class SortedList():
         else:
             if start <= self.bisect_right(value) - 1:
                 return start
-        raise ValueError('{0!r} is not in list'.format(value))
+        raise ValueError("{0!r} is not in list".format(value))
 
     def __add__(self, other):
         """Return new sorted list containing all values in both sequences."""
@@ -381,7 +380,7 @@ class SortedList():
                     return seq_op(alpha, beta)
             return seq_op(self_len, len_other)
 
-        comparer.__name__ = '__{0}__'.format(seq_op.__name__)
+        comparer.__name__ = "__{0}__".format(seq_op.__name__)
         return comparer
 
     __eq__ = __make_cmp(op.eq)
@@ -394,4 +393,4 @@ class SortedList():
 
     def __repr__(self):
         """Return string representation of sorted list."""
-        return 'SortedList({0})'.format(reduce(list.__iadd__, self._lists, []))
+        return "SortedList({0})".format(reduce(list.__iadd__, self._lists, []))

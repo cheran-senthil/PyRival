@@ -37,7 +37,7 @@ class SubprocessThread(threading.Thread):
             self.stderr = "The process crashed or produced too much output."
 
 
-assert (sys.argv.count("--") == 1), "There should be exactly one instance of '--' in the command line."
+assert sys.argv.count("--") == 1, "There should be exactly one instance of '--' in the command line."
 sep_index = sys.argv.index("--")
 judge_args = sys.argv[1:sep_index]
 sol_args = sys.argv[sep_index + 1:]

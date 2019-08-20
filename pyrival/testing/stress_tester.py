@@ -24,7 +24,7 @@ def func2judge(sol):
 
 def stress_tester(tests, solution, judge=None, catch_all=False):
     if judge is None:
-        verdict, answer = False, ''
+        verdict, answer = False, ""
         catch_all = True
 
     for inp in tests:
@@ -34,21 +34,21 @@ def stress_tester(tests, solution, judge=None, catch_all=False):
             verdict, answer = judge(inp, out)
 
         if not verdict:
-            print('Input')
+            print("Input")
             print(inp)
 
-            print('Output')
+            print("Output")
             print(out)
 
             if err:
-                print('Error')
+                print("Error")
                 print(err)
 
             if answer:
-                print('Answer')
+                print("Answer")
                 print(answer)
 
-            print('-' * 80)
+            print("-" * 80)
 
             if not catch_all:
                 break
@@ -56,15 +56,15 @@ def stress_tester(tests, solution, judge=None, catch_all=False):
 
 def test_gen():
     for i in range(10):
-        yield str(i) + '\n'
+        yield str(i) + "\n"
 
 
 def judge(inp, out):
-    return out, ''
+    return out, ""
 
 
 tests = test_gen()
-solution = cmd2func(['python', 'A.py'])
+solution = cmd2func(["python", "A.py"])
 # judge = func2judge(cmd2func(["python", "judge.py"]))
 
 try:

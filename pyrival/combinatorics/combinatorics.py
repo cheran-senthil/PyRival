@@ -5,7 +5,6 @@ from functools import reduce
 
 def memoize(f):
     """memoization decorator for a function taking one or more arguments"""
-
     class memodict(dict):
         def __getitem__(self, *key):
             return dict.__getitem__(self, key)
@@ -33,7 +32,7 @@ def euler_recursive(n, k):
 
 @memoize
 def stirling_1_recursive(n, k):
-    if (n == k == 0):
+    if n == k == 0:
         return 1
     if (n == 0) or (k == 0):
         return 0

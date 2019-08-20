@@ -1,6 +1,5 @@
 class bitarray:
     """implements bitarray using bytearray"""
-
     def __init__(self, size):
         self.bytes = bytearray((size >> 3) + 1)
 
