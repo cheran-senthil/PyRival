@@ -74,17 +74,15 @@ class SortedList:
 
         _lists = self._lists
         _mins = self._mins
-        pos, hi = 0, len(_lists)
-        while pos + 1 < hi:
+        pos, hi = 1, len(_lists)
+        while pos < hi:
             mi = (pos + hi) >> 1
-            if value <= _mins[mi]:
-                hi = mi
+            if _mins[mi] <= value:
+                pos = mi + 1
             else:
-                pos = mi
+                hi = mi
 
-        if pos and value <= _lists[pos - 1][-1]:
-            pos -= 1
-
+        pos -= 1
         _list = _lists[pos]
         lo, idx = -1, len(_list)
         while lo + 1 < idx:
@@ -103,14 +101,15 @@ class SortedList:
 
         _lists = self._lists
         _mins = self._mins
-        pos, hi = 0, len(_lists)
-        while pos + 1 < hi:
+        pos, hi = 1, len(_lists)
+        while pos < hi:
             mi = (pos + hi) >> 1
-            if value < _mins[mi]:
-                hi = mi
+            if _mins[mi] <= value:
+                pos = mi + 1
             else:
-                pos = mi
+                hi = mi
 
+        pos -= 1
         _list = _lists[pos]
         lo, idx = -1, len(_list)
         while lo + 1 < idx:
@@ -139,7 +138,7 @@ class SortedList:
             self._fen_update(pos, 1)
             if _load + _load < len(_lists[pos]):
                 _lists.insert(pos + 1, _lists[pos][_load:])
-                _mins.insert(pos + 1, _lists[pos + 1][0])
+                _mins.insert(pos + 1, _lists[pos][_load])
                 _list_lens.insert(pos + 1, len(_lists[pos]) - _load)
                 _list_lens[pos] = _load
                 del _lists[pos][_load:]
