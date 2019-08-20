@@ -195,11 +195,9 @@ class SortedList:
         self._delete(pos, idx)
         return value
 
-    def __contains__(self, value):
-        """Return true if `value` is an element of the sorted list."""
-        _lists = self._lists
-        pos, idx = self._loc_left(value)
-        return _lists and idx < len(_lists[pos]) and _lists[pos][idx] == value
+    def __len__(self):
+        """Return the size of the sorted list."""
+        return self._len
 
     def __getitem__(self, index):
         """Lookup value at `index` in sorted list."""
@@ -211,9 +209,11 @@ class SortedList:
         pos, idx = self._fen_findkth(index if 0 <= index else self._len - index)
         self._delete(pos, idx)
 
-    def __len__(self):
-        """Return the size of the sorted list."""
-        return self._len
+    def __contains__(self, value):
+        """Return true if `value` is an element of the sorted list."""
+        _lists = self._lists
+        pos, idx = self._loc_left(value)
+        return _lists and idx < len(_lists[pos]) and _lists[pos][idx] == value
 
     def __iter__(self):
         """Return an iterator over the sorted list."""
