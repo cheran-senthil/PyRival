@@ -7,7 +7,8 @@ class SortedList:
         self._lists = _lists = [values[i:i + _load] for i in range(0, _len, _load)]
         self._mins = [_list[0] for _list in _lists]
         self._list_lens = [len(_list) for _list in _lists]
-        self._fen_init()
+        self._fen_tree = []
+        self._rebuild = True
 
     def _fen_init(self):
         """Initialize a fenwick tree instance."""
@@ -21,7 +22,7 @@ class SortedList:
         """Update `fen_tree[index] += value`."""
         if not self._rebuild:
             while index < len(self._fen_tree):
-                self._fen_tree += value
+                self._fen_tree[index] += value
                 index |= index + 1
 
     def _fen_query(self, end):
@@ -136,9 +137,9 @@ class SortedList:
             _mins[pos] = _lists[pos][0]
 
             self._fen_update(pos, 1)
-            if 2 * _load < len(_lists[pos]):
+            if _load + _load < len(_lists[pos]):
                 _lists.insert(pos + 1, _lists[pos][_load:])
-                _mins.insert(pos + 1, _lists[pos][_load])
+                _mins.insert(pos + 1, _lists[pos + 1][0])
                 _list_lens.insert(pos + 1, len(_lists[pos]) - _load)
                 _list_lens[pos] = _load
                 del _lists[pos][_load:]
