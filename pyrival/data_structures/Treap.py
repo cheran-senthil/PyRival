@@ -59,7 +59,7 @@ class TreapMultiSet(object):
         return self.floor(key) == key
 
     def __repr__(self):
-        return 'TreapMultiSet({})'.format(list(self))
+        return "TreapMultiSet({})".format(list(self))
 
     def __iter__(self):
         if not self.root:
@@ -86,7 +86,7 @@ class TreapSet(TreapMultiSet):
             self.size += 1
 
     def __repr__(self):
-        return 'TreapSet({})'.format(list(self))
+        return "TreapSet({})".format(list(self))
 
 
 class TreapHashSet(TreapMultiSet):
@@ -114,7 +114,7 @@ class TreapHashSet(TreapMultiSet):
         return key in self.keys
 
     def __repr__(self):
-        return 'TreapHashSet({})'.format(list(self))
+        return "TreapHashSet({})".format(list(self))
 
 
 class TreapHashMap(TreapMultiSet):
@@ -151,7 +151,7 @@ class TreapHashMap(TreapMultiSet):
         return key in self.map
 
     def __repr__(self):
-        return 'TreapHashMap({})'.format(list(self))
+        return "TreapHashMap({})".format(list(self))
 
 
 left_child = [0]
@@ -162,7 +162,6 @@ treap_prior = [0.0]
 
 def treap_builder(sorted_data):
     """Build a treap in O(n) time using sorted data"""
-
     def build(begin, end):
         if begin == end:
             return 0
@@ -342,7 +341,7 @@ def treap_lower(root, key):
 
 def treap_min(root):
     if not root:
-        raise ValueError('min on empty treap')
+        raise ValueError("min on empty treap")
     while left_child[root]:
         root = left_child[root]
     return root
@@ -350,7 +349,7 @@ def treap_min(root):
 
 def treap_max(root):
     if not root:
-        raise ValueError('max on empty treap')
+        raise ValueError("max on empty treap")
     while right_child[root]:
         root = right_child[root]
     return root

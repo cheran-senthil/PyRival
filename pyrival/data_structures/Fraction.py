@@ -20,7 +20,7 @@ class Fraction:
     __bool__ = lambda self: bool(self.num)
     __int__ = lambda self: self.num // self.den
     __float__ = lambda self: self.num / self.den
-    __str__ = lambda self: '(%s, %s)' % (self.num, self.den)
+    __str__ = lambda self: "({}, {})".format(self.num, self.den)
 
     __copy__ = lambda self: Fraction(self.num, self.den)
     __hash__ = lambda self: hash((self.num, self.den))
@@ -32,7 +32,7 @@ class Fraction:
     __le__ = lambda self, other: self.num * other.den <= other.num * self.den
     __ge__ = lambda self, other: self.num * other.den >= other.num * self.den
 
-    __repr__ = lambda self: 'Fraction(%s, %s)' % (self.num, self.den)
+    __repr__ = lambda self: "Fraction({}, {})".format(self.num, self.den)
 
 
 def limit_denominator(frac, max_den=1000000):

@@ -1,6 +1,6 @@
 <h1 align="center">PyRival</h1>
 <div align="center">
-  <strong>A Python Library for Competitive Programming</strong>  
+  <strong>A Python Library for Competitive Programming</strong>
 </div>
 
 <h3 align="center">Developers</h3>

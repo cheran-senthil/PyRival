@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open('README.md', 'r') as fd:
     long_description = fd.read()
@@ -32,5 +32,5 @@ setup(
     long_description_content_type="text/markdown",
     keywords=["competitive-programming", "data-structures", "algorithms"],
     setup_requires=['setuptools_scm'],
-    packages=["pyrival"],
+    packages=find_packages(),
 )

@@ -16,8 +16,10 @@ class Hashing:
         self.f_hash, self.s_hash = f_hash, s_hash
 
     def hashed(self, start, stop):
-        return ((self.f_hash[stop] - pow(self.base1, stop - start, self.mod) * self.f_hash[start]) % self.mod,
-                (self.s_hash[stop] - pow(self.base2, stop - start, self.mod) * self.s_hash[start]) % self.mod)
+        return (
+            (self.f_hash[stop] - pow(self.base1, stop - start, self.mod) * self.f_hash[start]) % self.mod,
+            (self.s_hash[stop] - pow(self.base2, stop - start, self.mod) * self.s_hash[start]) % self.mod,
+        )
 
     def get_hashes(self, length):
         mod = self.mod
