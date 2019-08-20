@@ -61,7 +61,7 @@ class SortedList:
     def _delete(self, pos, idx):
         """Delete value at the given `(pos, idx)`."""
         _lists = self._lists
-        _mins = self.mins
+        _mins = self._mins
         _list_lens = self._list_lens
 
         self._len -= 1
@@ -165,7 +165,7 @@ class SortedList:
         if _lists:
             pos, idx = self._loc_right(value)
             if idx and _lists[pos][idx - 1] == value:
-                self._delete(pos, idx)
+                self._delete(pos, idx - 1)
 
     def remove(self, value):
         """Remove `value` from sorted list; `value` must be a member."""
