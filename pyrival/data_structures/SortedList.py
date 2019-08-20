@@ -8,64 +8,73 @@ class SortedList:
         self._mins = [_list[0] for _list in _lists]
         self._list_lens = [len(_list) for _list in _lists]
         self._fen_tree = []
-        self._rebuild = True
+        self._balanced = False
 
     def _fen_init(self):
         """Initialize a fenwick tree instance."""
-        self._rebuild = False
         self._fen_tree[:] = self._list_lens
-        for i in range(len(self._fen_tree)):
-            if i | i + 1 < len(self._fen_tree):
-                self._fen_tree[i | i + 1] += self._fen_tree[i]
+        _fen_tree = self._fen_tree
+        for i in range(len(_fen_tree)):
+            if i | i + 1 < len(_fen_tree):
+                _fen_tree[i | i + 1] += _fen_tree[i]
+        self._balanced = True
 
     def _fen_update(self, index, value):
         """Update `fen_tree[index] += value`."""
-        if not self._rebuild:
-            while index < len(self._fen_tree):
-                self._fen_tree[index] += value
+        if self._balanced:
+            _fen_tree = self._fen_tree
+            while index < len(_fen_tree):
+                _fen_tree[index] += value
                 index |= index + 1
 
     def _fen_query(self, end):
         """Return `sum(_fen_tree[:end])`."""
-        if self._rebuild:
+        if not self._balanced:
             self._fen_init()
 
+        _fen_tree = self._fen_tree
         x = 0
         while end:
-            x += self._fen_tree[end - 1]
+            x += _fen_tree[end - 1]
             end &= end - 1
         return x
 
     def _fen_findkth(self, k):
         """Return a pair of (the largest `idx` such that `sum(_fen_tree[:idx]) <= k`, `k - sum(_fen_tree[:idx])`)."""
-        if k < self._list_lens[0]:
+        _list_lens = self._list_lens
+        if k < _list_lens[0]:
             return 0, k
-        if k >= self._len - self._list_lens[-1]:
-            return len(self._list_lens) - 1, self._list_lens[-1] - 1
-        if self._rebuild:
+        if k >= self._len - _list_lens[-1]:
+            return len(_list_lens) - 1, _list_lens[-1] - 1
+        if not self._balanced:
             self._fen_init()
 
+        _fen_tree = self._fen_tree
         idx = -1
-        for d in reversed(range(len(self._fen_tree).bit_length())):
+        for d in reversed(range(len(_fen_tree).bit_length())):
             right_idx = idx + (1 << d)
-            if right_idx < len(self._fen_tree) and k >= self._fen_tree[right_idx]:
+            if right_idx < len(_fen_tree) and k >= _fen_tree[right_idx]:
                 idx = right_idx
-                k -= self._fen_tree[idx]
+                k -= _fen_tree[idx]
         return idx + 1, k
 
     def _delete(self, pos, idx):
         """Delete value at the given `(pos, idx)`."""
-        del self._lists[pos][idx]
+        _lists = self._lists
+        _mins = self.mins
+        _list_lens = self._list_lens
+
         self._len -= 1
-        self._list_lens[pos] -= 1
         self._fen_update(pos, -1)
-        if self._list_lens[pos]:
-            self._mins[pos] = self._lists[pos][0]
+        del _lists[pos][idx]
+        _list_lens[pos] -= 1
+        if _list_lens[pos]:
+            _mins[pos] = _lists[pos][0]
         else:
-            del self._lists[pos]
-            del self._mins[pos]
-            del self._list_lens[pos]
-            self._rebuild = True
+            del _lists[pos]
+            del _list_lens[pos]
+            del _mins[pos]
+            self._balanced = False
 
     def _loc_left(self, value):
         """Return an index pair that corresponds to the first position of `value` in the sorted list."""
@@ -131,23 +140,23 @@ class SortedList:
         self._len += 1
         if _lists:
             pos, idx = self._loc_right(value)
-            _lists[pos].insert(idx, value)
-            _list_lens[pos] += 1
-            _mins[pos] = _lists[pos][0]
-
             self._fen_update(pos, 1)
-            if _load + _load < len(_lists[pos]):
-                _lists.insert(pos + 1, _lists[pos][_load:])
-                _mins.insert(pos + 1, _lists[pos][_load])
-                _list_lens.insert(pos + 1, len(_lists[pos]) - _load)
+            _list = _lists[pos]
+            _list.insert(idx, value)
+            _list_lens[pos] += 1
+            _mins[pos] = _list[0]
+            if _load + _load < len(_list):
+                _lists.insert(pos + 1, _list[_load:])
+                _mins.insert(pos + 1, _list[_load])
+                _list_lens.insert(pos + 1, len(_list) - _load)
                 _list_lens[pos] = _load
-                del _lists[pos][_load:]
-                self._rebuild = True
+                del _list[_load:]
+                self._balanced = False
         else:
             _lists.append([value])
-            _list_lens.append(1)
             _mins.append(value)
-            self._rebuild = True
+            _list_lens.append(1)
+            self._balanced = False
 
     def discard(self, value):
         """Remove `value` from sorted list if it is a member."""
