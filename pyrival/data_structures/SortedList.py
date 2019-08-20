@@ -1,105 +1,161 @@
-from bisect import bisect_left, bisect_right
-from functools import reduce
-
-
 class SortedList:
     def __init__(self, iterable=[], _load=200):
         """Initialize sorted list instance."""
         values = sorted(iterable)
         self._len = _len = len(values)
-        self._lists = [values[i:i + _load] for i in range(0, _len, _load)]
         self._load = _load
-        self._bit_build()
+        self._lists = _lists = [values[i:i + _load] for i in range(0, _len, _load)]
+        self._mins = [_list[0] for _list in _lists]
+        self._list_lens = [len(_list) for _list in _lists]
+        self._fen_init()
 
-    def _bit_build(self):
-        """Build a bit instance."""
-        self.bit = bit = [len(chunk) for chunk in self._lists]
-        for i in range(len(bit)):
-            j = i | (i + 1)
-            if j < len(bit):
-                bit[j] += bit[i]
+    def _fen_init(self):
+        """Initialize a fenwick tree instance."""
+        self._rebuild = False
+        self._fen_tree[:] = self._list_lens
+        for i in range(len(self._fen_tree)):
+            if i | i + 1 < len(self._fen_tree):
+                self._fen_tree[i | i + 1] += self._fen_tree[i]
 
-    def _bit_update(self, idx, flag=False):
-        """Update the bit at `idx`."""
-        bit = self.bit
-        while idx < len(bit):
-            bit[idx] += flag
-            idx |= idx + 1
+    def _fen_update(self, index, value):
+        """Update `fen_tree[index] += value`."""
+        if not self._rebuild:
+            while index < len(self._fen_tree):
+                self._fen_tree += value
+                index |= index + 1
 
-    def _bit_query(self, end):
-        """Return `sum(bit[:end])`."""
-        bit = self.bit
+    def _fen_query(self, end):
+        """Return `sum(_fen_tree[:end])`."""
+        if self._rebuild:
+            self._fen_init()
+
         x = 0
         while end:
-            x += bit[end - 1]
+            x += self._fen_tree[end - 1]
             end &= end - 1
-
         return x
 
-    def _bit_find(self, k):
-        """Return largest index such that `sum(bit[:idx]) <= k`, and `k - sum(bit[:idx])`."""
-        bit = self.bit
-        idx = -1
-        for d in reversed(range(len(bit).bit_length())):
-            right_idx = idx + (1 << d)
-            if right_idx < len(bit) and k >= bit[right_idx]:
-                idx = right_idx
-                k -= bit[idx]
+    def _fen_findkth(self, k):
+        """Return a pair of (the largest `idx` such that `sum(_fen_tree[:idx]) <= k`, `k - sum(_fen_tree[:idx])`)."""
+        if k < self._list_lens[0]:
+            return 0, k
+        if k >= self._len - self._list_lens[-1]:
+            return len(self._list_lens) - 1, self._list_lens[-1] - 1
+        if self._rebuild:
+            self._fen_init()
 
+        idx = -1
+        for d in reversed(range(len(self._fen_tree).bit_length())):
+            right_idx = idx + (1 << d)
+            if right_idx < len(self._fen_tree) and k >= self._fen_tree[right_idx]:
+                idx = right_idx
+                k -= self._fen_tree[idx]
         return idx + 1, k
 
-    def _loc(self, value, left=False):
+    def _delete(self, pos, idx):
+        """Delete value at the given `(pos, idx)`."""
+        del self._lists[pos][idx]
+        self._len -= 1
+        self._list_lens[pos] -= 1
+        self._fen_update(pos, -1)
+        if self._list_lens[pos]:
+            self._mins[pos] = self._lists[pos][0]
+        else:
+            del self._lists[pos]
+            del self._mins[pos]
+            del self._list_lens[pos]
+            self._rebuild = True
+
+    def _loc_left(self, value):
         """Return an index pair that corresponds to the first position of `value` in the sorted list."""
-        _lists = self._lists
-        if not _lists:
+        if not self._len:
             return 0, 0
 
-        lo, hi = 1, len(_lists)
-        while lo < hi:
-            mi = (lo + hi) >> 1
-            if _lists[mi][0] <= value:
-                lo = mi + 1
-            else:
+        _lists = self._lists
+        _mins = self._mins
+        pos, hi = 0, len(_lists)
+        while pos + 1 < hi:
+            mi = (pos + hi) >> 1
+            if value <= _mins[mi]:
                 hi = mi
+            else:
+                pos = mi
 
-        return lo - 1, bisect_left(_lists[lo - 1], value) if left else bisect_right(_lists[lo - 1], value)
+        if pos and value <= _lists[pos - 1][-1]:
+            pos -= 1
 
-    def bisect_left(self, value):
-        """Return an index to insert `value` in the sorted list."""
-        i, j = self._loc(value, left=True)
-        return self._bit_query(i) + j
+        _list = _lists[pos]
+        lo, idx = -1, len(_list)
+        while lo + 1 < idx:
+            mi = (lo + idx) >> 1
+            if value <= _list[mi]:
+                idx = mi
+            else:
+                lo = mi
 
-    def bisect_right(self, value):
-        """Return an index to insert `value` in the sorted list."""
-        i, j = self._loc(value)
-        return self._bit_query(i) + j
+        return pos, idx
+
+    def _loc_right(self, value):
+        """Return an index pair that corresponds to the last position of `value` in the sorted list."""
+        if not self._len:
+            return 0, 0
+
+        _lists = self._lists
+        _mins = self._mins
+        pos, hi = 0, len(_lists)
+        while pos + 1 < hi:
+            mi = (pos + hi) >> 1
+            if value < _mins[mi]:
+                hi = mi
+            else:
+                pos = mi
+
+        _list = _lists[pos]
+        lo, idx = -1, len(_list)
+        while lo + 1 < idx:
+            mi = (lo + idx) >> 1
+            if value < _list[mi]:
+                idx = mi
+            else:
+                lo = mi
+
+        return pos, idx
 
     def add(self, value):
-        """Add `value` to sorted-key list."""
-        _lists = self._lists
+        """Add `value` to sorted list."""
         _load = self._load
+        _lists = self._lists
+        _mins = self._mins
+        _list_lens = self._list_lens
+
         self._len += 1
         if _lists:
-            i, j = self._loc(value, left=True)
-            _lists[i].insert(j, value)
-            self._bit_update(i, flag=True)
-            if _load + _load < len(_lists[i]):
-                _lists.insert(i + 1, _lists[i][_load:])
-                _lists[i][_load:] = []
-                self._bit_build()
+            pos, idx = self._loc_right(value)
+            _lists[pos].insert(idx, value)
+            _list_lens[pos] += 1
+            _mins[pos] = _lists[pos][0]
+
+            self._fen_update(pos, 1)
+            if 2 * _load < len(_lists[pos]):
+                _lists.insert(pos + 1, _lists[pos][_load:])
+                _mins.insert(pos + 1, _lists[pos][_load])
+                _list_lens.insert(pos + 1, len(_lists[pos]) - _load)
+                _list_lens[pos] = _load
+                del _lists[pos][_load:]
+                self._rebuild = True
         else:
             _lists.append([value])
-            self.bit = [1]
+            _list_lens.append(1)
+            _mins.append(value)
+            self._rebuild = True
 
     def discard(self, value):
         """Remove `value` from sorted list if it is a member."""
         _lists = self._lists
         if _lists:
-            i, j = self._loc(value, left=True)
-            if _lists[i][j] == value:
-                del _lists[i][j]
-                self._len -= 1
-                self._bit_update(i)
+            pos, idx = self._loc_right(value)
+            if idx and _lists[pos][idx - 1] == value:
+                self._delete(pos, idx)
 
     def remove(self, value):
         """Remove `value` from sorted list; `value` must be a member."""
@@ -108,21 +164,55 @@ class SortedList:
         if _len == self._len:
             raise ValueError('{0!r} not in list'.format(value))
 
+    def bisect_left(self, value):
+        """Return the first index to insert `value` in the sorted list."""
+        pos, idx = self._loc_left(value)
+        return self._fen_query(pos) + idx
+
+    def bisect_right(self, value):
+        """Return the last index to insert `value` in the sorted list."""
+        pos, idx = self._loc_right(value)
+        return self._fen_query(pos) + idx
+
+    def count(self, value):
+        """Return number of occurrences of `value` in the sorted list."""
+        return self.bisect_right(value) - self.bisect_left(value)
+
+    def pop(self, index=-1):
+        """Remove and return value at `index` in sorted list."""
+        pos, idx = self._fen_findkth(index if 0 <= index else self._len - index)
+        value = self._lists[pos][idx]
+        self._delete(pos, idx)
+        return value
+
     def __contains__(self, value):
         """Return true if `value` is an element of the sorted list."""
         _lists = self._lists
-        i, j = self._loc(value, left=True)
-        return _lists and j < len(_lists[i]) and _lists[i][j] == value
+        pos, idx = self._loc_left(value)
+        return _lists and idx < len(_lists[pos]) and _lists[pos][idx] == value
 
-    def __getitem__(self, i):
+    def __getitem__(self, index):
         """Lookup value at `index` in sorted list."""
-        i, j = self._bit_find(i)
-        return self._lists[i][j]
+        pos, idx = self._fen_findkth(index if 0 <= index else self._len - index)
+        return self._lists[pos][idx]
+
+    def __delitem__(self, index):
+        """Remove value at `index` from sorted list."""
+        pos, idx = self._fen_findkth(index if 0 <= index else self._len - index)
+        self._delete(pos, idx)
 
     def __len__(self):
         """Return the size of the sorted list."""
         return self._len
 
+    def __iter__(self):
+        """Return an iterator over the sorted list."""
+        return (value for _list in self._lists for value in _list)
+
+    def __reversed__(self):
+        """Return a reverse iterator over the sorted list."""
+        return (value for _list in self._lists[::-1] for value in _list[::-1])
+
     def __repr__(self):
         """Return string representation of sorted list."""
-        return 'SortedList({0})'.format(reduce(list.__iadd__, self._lists, []))
+        return 'SortedList({0})'.format([value for _list in self._lists for value in _list])
