@@ -45,7 +45,7 @@ class SortedList:
         if k < _list_lens[0]:
             return 0, k
         if k >= self._len - _list_lens[-1]:
-            return len(_list_lens) - 1, _list_lens[-1] - 1
+            return len(_list_lens) - 1, k + _list_lens[-1] - self._len
         if not self._balanced:
             self._fen_init()
 
@@ -201,12 +201,12 @@ class SortedList:
 
     def __getitem__(self, index):
         """Lookup value at `index` in sorted list."""
-        pos, idx = self._fen_findkth(index if 0 <= index else self._len - index)
+        pos, idx = self._fen_findkth(index if 0 <= index else self._len + index)
         return self._lists[pos][idx]
 
     def __delitem__(self, index):
         """Remove value at `index` from sorted list."""
-        pos, idx = self._fen_findkth(index if 0 <= index else self._len - index)
+        pos, idx = self._fen_findkth(index if 0 <= index else self._len + index)
         self._delete(pos, idx)
 
     def __contains__(self, value):
