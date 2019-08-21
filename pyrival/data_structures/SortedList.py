@@ -5,8 +5,8 @@ class SortedList:
         self._len = _len = len(values)
         self._load = _load
         self._lists = _lists = [values[i:i + _load] for i in range(0, _len, _load)]
-        self._mins = [_list[0] for _list in _lists]
         self._list_lens = [len(_list) for _list in _lists]
+        self._mins = [_list[0] for _list in _lists]
         self._fen_tree = []
         self._rebuild = True
 
@@ -68,6 +68,7 @@ class SortedList:
         self._fen_update(pos, -1)
         del _lists[pos][idx]
         _list_lens[pos] -= 1
+
         if _list_lens[pos]:
             _mins[pos] = _lists[pos][0]
         else:
@@ -83,6 +84,7 @@ class SortedList:
 
         _lists = self._lists
         _mins = self._mins
+
         lo, pos = -1, len(_lists) - 1
         while lo + 1 < pos:
             mi = (lo + pos) >> 1
@@ -112,6 +114,7 @@ class SortedList:
 
         _lists = self._lists
         _mins = self._mins
+
         pos, hi = 0, len(_lists)
         while pos + 1 < hi:
             mi = (pos + hi) >> 1
@@ -148,8 +151,8 @@ class SortedList:
             _mins[pos] = _list[0]
             if _load + _load < len(_list):
                 _lists.insert(pos + 1, _list[_load:])
-                _mins.insert(pos + 1, _list[_load])
                 _list_lens.insert(pos + 1, len(_list) - _load)
+                _mins.insert(pos + 1, _list[_load])
                 _list_lens[pos] = _load
                 del _list[_load:]
                 self._rebuild = True
@@ -176,7 +179,7 @@ class SortedList:
 
     def pop(self, index=-1):
         """Remove and return value at `index` in sorted list."""
-        pos, idx = self._fen_findkth(index if 0 <= index else index + self._len)
+        pos, idx = self._fen_findkth(self._len + index if index < 0 else index)
         value = self._lists[pos][idx]
         self._delete(pos, idx)
         return value
@@ -201,12 +204,12 @@ class SortedList:
 
     def __getitem__(self, index):
         """Lookup value at `index` in sorted list."""
-        pos, idx = self._fen_findkth(index if 0 <= index else index + self._len)
+        pos, idx = self._fen_findkth(self._len + index if index < 0 else index)
         return self._lists[pos][idx]
 
     def __delitem__(self, index):
         """Remove value at `index` from sorted list."""
-        pos, idx = self._fen_findkth(index if 0 <= index else index + self._len)
+        pos, idx = self._fen_findkth(self._len + index if index < 0 else index)
         self._delete(pos, idx)
 
     def __contains__(self, value):
@@ -223,8 +226,8 @@ class SortedList:
 
     def __reversed__(self):
         """Return a reverse iterator over the sorted list."""
-        return (value for _list in self._lists[::-1] for value in _list[::-1])
+        return (value for _list in reversed(self._lists) for value in reversed(_list))
 
     def __repr__(self):
         """Return string representation of sorted list."""
-        return 'SortedList({0})'.format([value for _list in self._lists for value in _list])
+        return 'SortedList({0})'.format(list(self))
