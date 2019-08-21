@@ -8,20 +8,20 @@ class SortedList:
         self._mins = [_list[0] for _list in _lists]
         self._list_lens = [len(_list) for _list in _lists]
         self._fen_tree = []
-        self._balanced = False
+        self._rebuild = True
 
-    def _fen_init(self):
-        """Initialize a fenwick tree instance."""
+    def _fen_build(self):
+        """Build a fenwick tree instance."""
         self._fen_tree[:] = self._list_lens
         _fen_tree = self._fen_tree
         for i in range(len(_fen_tree)):
             if i | i + 1 < len(_fen_tree):
                 _fen_tree[i | i + 1] += _fen_tree[i]
-        self._balanced = True
+        self._rebuild = False
 
     def _fen_update(self, index, value):
         """Update `fen_tree[index] += value`."""
-        if self._balanced:
+        if not self._rebuild:
             _fen_tree = self._fen_tree
             while index < len(_fen_tree):
                 _fen_tree[index] += value
@@ -29,8 +29,8 @@ class SortedList:
 
     def _fen_query(self, end):
         """Return `sum(_fen_tree[:end])`."""
-        if not self._balanced:
-            self._fen_init()
+        if self._rebuild:
+            self._fen_build()
 
         _fen_tree = self._fen_tree
         x = 0
@@ -46,8 +46,8 @@ class SortedList:
             return 0, k
         if k >= self._len - _list_lens[-1]:
             return len(_list_lens) - 1, k + _list_lens[-1] - self._len
-        if not self._balanced:
-            self._fen_init()
+        if self._rebuild:
+            self._fen_build()
 
         _fen_tree = self._fen_tree
         idx = -1
@@ -74,7 +74,7 @@ class SortedList:
             del _lists[pos]
             del _list_lens[pos]
             del _mins[pos]
-            self._balanced = False
+            self._rebuild = True
 
     def _loc_left(self, value):
         """Return an index pair that corresponds to the first position of `value` in the sorted list."""
@@ -152,12 +152,12 @@ class SortedList:
                 _list_lens.insert(pos + 1, len(_list) - _load)
                 _list_lens[pos] = _load
                 del _list[_load:]
-                self._balanced = False
+                self._rebuild = True
         else:
             _lists.append([value])
             _mins.append(value)
             _list_lens.append(1)
-            self._balanced = False
+            self._rebuild = True
 
     def discard(self, value):
         """Remove `value` from sorted list if it is a member."""
@@ -174,6 +174,13 @@ class SortedList:
         if _len == self._len:
             raise ValueError('{0!r} not in list'.format(value))
 
+    def pop(self, index=-1):
+        """Remove and return value at `index` in sorted list."""
+        pos, idx = self._fen_findkth(index if 0 <= index else index + self._len)
+        value = self._lists[pos][idx]
+        self._delete(pos, idx)
+        return value
+
     def bisect_left(self, value):
         """Return the first index to insert `value` in the sorted list."""
         pos, idx = self._loc_left(value)
@@ -188,32 +195,27 @@ class SortedList:
         """Return number of occurrences of `value` in the sorted list."""
         return self.bisect_right(value) - self.bisect_left(value)
 
-    def pop(self, index=-1):
-        """Remove and return value at `index` in sorted list."""
-        pos, idx = self._fen_findkth(index if 0 <= index else self._len - index)
-        value = self._lists[pos][idx]
-        self._delete(pos, idx)
-        return value
-
     def __len__(self):
         """Return the size of the sorted list."""
         return self._len
 
     def __getitem__(self, index):
         """Lookup value at `index` in sorted list."""
-        pos, idx = self._fen_findkth(index if 0 <= index else self._len + index)
+        pos, idx = self._fen_findkth(index if 0 <= index else index + self._len)
         return self._lists[pos][idx]
 
     def __delitem__(self, index):
         """Remove value at `index` from sorted list."""
-        pos, idx = self._fen_findkth(index if 0 <= index else self._len + index)
+        pos, idx = self._fen_findkth(index if 0 <= index else index + self._len)
         self._delete(pos, idx)
 
     def __contains__(self, value):
         """Return true if `value` is an element of the sorted list."""
         _lists = self._lists
-        pos, idx = self._loc_left(value)
-        return _lists and idx < len(_lists[pos]) and _lists[pos][idx] == value
+        if _lists:
+            pos, idx = self._loc_left(value)
+            return idx < len(_lists[pos]) and _lists[pos][idx] == value
+        return False
 
     def __iter__(self):
         """Return an iterator over the sorted list."""
