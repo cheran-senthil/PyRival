@@ -11,6 +11,7 @@
     <a href="https://github.com/eduard-netsajev">drd93</a> &emsp;
     <a href="https://github.com/algmyr">algmyr</a> &emsp;
     <a href="https://github.com/meooow25">meooow</a> &emsp;
+    <a href="https://github.com/tfg50">tfg</a> &emsp;
   </strong>
 </div>
 
