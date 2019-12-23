@@ -4,7 +4,7 @@ def least_rotation(s):
 
     for b in range(n):
         for i in range(n):
-            if (a + i == b) or (s[a + 1] < s[b + i]):
+            if (a + i == b) or (s[a + i] < s[b + i]):
                 b += max(0, i - 1)
                 break
             if s[a + i] > s[b + i]:
