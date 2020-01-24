@@ -1,6 +1,4 @@
 import sys
 
-hashlib = sys
-hashlib.__dict__["sha512"] = None
-sys.modules["hashlib"] = hashlib
+sys.modules["hashlib"] = sys.sha512 = sys
 import random
