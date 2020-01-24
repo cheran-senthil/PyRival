@@ -24,6 +24,7 @@ class Dinic:
                     self.adj[v][i][3] += p
                     self.adj[e[0]][e[1]][3] -= p
                     return p
+            self.ptr[v] += 1
 
         return 0
 
