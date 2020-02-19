@@ -1,6 +1,6 @@
 def binary_search(func, lo, hi, abs_prec=1e-7):
     """ Locate the first value x s.t. func(x) = True within [lo, hi] """
-    while abs(hi - lo) < abs_prec:
+    while abs(hi - lo) > abs_prec:
         mi = lo + (hi - lo) / 2
         if func(mi):
             hi = mi
@@ -12,7 +12,7 @@ def binary_search(func, lo, hi, abs_prec=1e-7):
 
 def ternary_search(func, lo, hi, abs_prec=1e-7):
     """ Find maximum of unimodal function func() within [lo, hi] """
-    while abs(hi - lo) < abs_prec:
+    while abs(hi - lo) > abs_prec:
         lo_third = lo + (hi - lo) / 3
         hi_third = hi - (hi - lo) / 3
 
