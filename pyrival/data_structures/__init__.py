@@ -1,4 +1,4 @@
-from .BitArray import bitarray
+from .BitArray import BitArray
 from .CFraction import CFrac2Frac, CFraction
 from .DisjointSetUnion import DisjointSetUnion, UnionFind
 from .FenwickTree import FenwickTree
@@ -19,7 +19,7 @@ from .Trie import Trie
 from .TwoSat import TwoSat
 
 __all__ = [
-    "bitarray",
+    "BitArray",
     "CFrac2Frac",
     "CFraction",
     "DisjointSetUnion",
