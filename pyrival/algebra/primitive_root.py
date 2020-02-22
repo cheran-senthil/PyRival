@@ -12,25 +12,6 @@ def memodict(f):
     return memodict().__getitem__
 
 
-def is_prime(n):
-    """returns True if n is prime else False"""
-    if n < 5 or n & 1 == 0 or n % 3 == 0:
-        return 2 <= n <= 3
-    s = ((n - 1) & (1 - n)).bit_length() - 1
-    d = n >> s
-    for a in [2, 325, 9375, 28178, 450775, 9780504, 1795265022]:
-        p = pow(a, d, n)
-        if p == 1 or p == n - 1 or a % n == 0:
-            continue
-        for _ in range(s):
-            p = (p * p) % n
-            if p == n - 1:
-                break
-        else:
-            return False
-    return True
-
-
 def pollard_rho(n):
     """returns a random factor of n"""
     if n & 1 == 0:
@@ -91,12 +72,13 @@ def ilog(n):
 
 def primitive_root(p):
     """returns a primitive root of p"""
-    if p <= 4:
-        return p - 1
-    assert -p & p == p
-    factor, _ = ilog(p if p & 1 else p >> 1)
-    assert not is_prime(factor)
-    phi = (factor - 1) * ((p if p & 1 else p >> 1) // factor)
-    for res in range(2 + (1 ^ (p & 1)), factor, 1 + (1 ^ (p & 1))):
-        if all(pow(res, phi // i, p) != 1 for i in prime_factors(phi)):
-            return res
+    factors = prime_factors(p - 1)
+
+    for i in range(2, p + 1):
+        ok = True
+        for j in factors:
+            ok &= pow(i, (p - 1) // j, p) != 1
+        if ok:
+            return i
+
+    return None
