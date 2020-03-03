@@ -32,14 +32,14 @@ jobs:
     - name: Setup Tox
       run: pip install tox
 
-    - name: Run Tox (environment: py35)
+    - name: "Run Tox (environment: py35)"
       run: tox -e py35
       
-    - name: Run Tox (environment: py36)
+    - name: "Run Tox (environment: py36)"
       run: tox -e py36
       
-    - name: Run Tox (environment: py37)
+    - name: "Run Tox (environment: py37)"
       run: tox -e py37
       
-    - name: Run Tox (environment: py38)
+    - name: "Run Tox (environment: py38)"
       run: tox -e py38
