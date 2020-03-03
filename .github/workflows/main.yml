@@ -10,36 +10,48 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Setup Python 3.5
+      if: always()
       uses: actions/setup-python@v1.1.1
       with:
         python-version: 3.5
         
     - name: Build for Python 3.5
-      run: python3.5 setup.py bdist_wheel
+      run: |
+        python3.5 -m pip install wheel
+        python3.5 setup.py bdist_wheel
 
     - name: Setup Python 3.6
+      if: always()
       uses: actions/setup-python@v1.1.1
       with:
         python-version: 3.6
         
     - name: Build for Python 3.6
-      run: python3.6 setup.py bdist_wheel
+      run: |
+        python3.6 -m pip install wheel
+        python3.6 setup.py bdist_wheel
 
     - name: Setup Python 3.7
+      if: always()
       uses: actions/setup-python@v1.1.1
       with:
         python-version: 3.7
 
     - name: Build for Python 3.7
-      run: python3.7 setup.py bdist_wheel
+      run: |
+        python3.7 -m pip install wheel
+        python3.7 setup.py bdist_wheel
 
     - name: Setup Python 3.8
+      if: always()
       uses: actions/setup-python@v1.1.1
       with:
         python-version: 3.8
         
     - name: Build for Python 3.8
-      run: python3.8 setup.py bdist_wheel
+      run: |
+        python3.8 -m pip install wheel
+        python3.8 setup.py bdist_wheel
 
     - name: Upload wheels
       uses: actions/upload-artifact@v1.0.0
