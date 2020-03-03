@@ -3,8 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,8 +28,18 @@ jobs:
       uses: actions/setup-python@v1.1.1
       with:
         python-version: 3.8
+        
+    - name: Setup Tox
+      run: pip install tox
 
-    - name: Run tox
-      run: |
-        pip install tox
-        tox
+    - name: Run Tox (environment: py35)
+      run: tox -e py35
+      
+    - name: Run Tox (environment: py36)
+      run: tox -e py36
+      
+    - name: Run Tox (environment: py37)
+      run: tox -e py37
+      
+    - name: Run Tox (environment: py38)
+      run: tox -e py38
