@@ -18,7 +18,7 @@ jobs:
     - name: Build for Python 3.5
       run: |
         python3.5 -m pip install wheel
-        python3.5 setup.py bdist_wheel
+        python3.5 setup.py bdist_wheel --python-tag py35
 
     - name: Setup Python 3.6
       if: always()
@@ -29,7 +29,7 @@ jobs:
     - name: Build for Python 3.6
       run: |
         python3.6 -m pip install wheel
-        python3.6 setup.py bdist_wheel
+        python3.6 setup.py bdist_wheel --python-tag py36
 
     - name: Setup Python 3.7
       if: always()
@@ -40,7 +40,7 @@ jobs:
     - name: Build for Python 3.7
       run: |
         python3.7 -m pip install wheel
-        python3.7 setup.py bdist_wheel
+        python3.7 setup.py bdist_wheel --python-tag py37
 
     - name: Setup Python 3.8
       if: always()
@@ -51,7 +51,7 @@ jobs:
     - name: Build for Python 3.8
       run: |
         python3.8 -m pip install wheel
-        python3.8 setup.py bdist_wheel
+        python3.8 setup.py bdist_wheel --python-tag py38
 
     - name: Upload wheels
       uses: actions/upload-artifact@v1.0.0
