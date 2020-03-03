@@ -9,10 +9,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup Python environment
+
+    - name: Setup Python 3.5
       uses: actions/setup-python@v1.1.1
       with:
-        python-version: 3.5 || 3.6 || 3.7 || 3.8
+        python-version: 3.5
+
+    - name: Setup Python 3.6
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 3.6
+
+    - name: Setup Python 3.7
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 3.7
+
+    - name: Setup Python 3.8
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 3.8
+
     - name: Run tox
       run: |
         pip install tox
