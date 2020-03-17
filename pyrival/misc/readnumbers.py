@@ -17,7 +17,7 @@ def readnumbers(zero=0):
                 nums.append(-num if neg else num)
                 num, neg = zero, False
             i += 1
-    except KeyError:
+    except IndexError:
         pass
 
     if s and s[-1] >= b"0" [0]:
