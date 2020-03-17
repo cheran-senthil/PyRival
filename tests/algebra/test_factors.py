@@ -10,10 +10,11 @@ def test_pollard_rho():
         assert n % pyrival.algebra.pollard_rho(n) == 0
 
 
-def test_prime_factors():
+def test_prime_factors(primes):
     for _ in range(1000):
         n = random.randint(1, 1000)
         for f, e in pyrival.algebra.prime_factors(n).items():
+            assert f in primes
             assert n % (f**e) == 0
             n //= f**e
         assert n == 1
