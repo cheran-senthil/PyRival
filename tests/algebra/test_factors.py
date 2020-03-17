@@ -6,7 +6,6 @@ import pyrival.algebra
 def test_pollard_rho():
     for _ in range(1000):
         n = random.randint(2, 1000)
-        print(n)
         assert n % pyrival.algebra.pollard_rho(n) == 0
 
 
