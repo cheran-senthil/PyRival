@@ -10,6 +10,6 @@ def test_iroot():
         root = pyrival.numerical.iroot(n, k)
 
         if root < 0:
-            assert (root - 1) ** k < n <= root ** k
+            assert (root - 1)**k < n <= root**k
         else:
-            assert root ** k <= n < (root + 1) ** k
+            assert root**k <= n < (root + 1)**k

@@ -3,7 +3,7 @@ import random
 import pyrival.strings
 
 
-def brute_force_find(s, pat):
+def brute_force_match(s, pat):
     idx = []
 
     for i in range(len(s) - len(pat) + 1):
@@ -24,7 +24,7 @@ def test_match():
         s = [random.randint(0, 10) for _ in range(s_len)]
         pat = [random.randint(0, 10) for _ in range(pat_len)]
 
-        assert pyrival.strings.match(s, pat) == brute_force_find(s, pat)
+        assert pyrival.strings.match(s, pat) == brute_force_match(s, pat)
 
 
 def test_string_find():
@@ -35,4 +35,4 @@ def test_string_find():
         s = [random.randint(0, 10) for _ in range(s_len)]
         pat = [random.randint(0, 10) for _ in range(pat_len)]
 
-        assert pyrival.strings.string_find(s, pat) == (brute_force_find(s, pat) != [])
+        assert pyrival.strings.string_find(s, pat) == (brute_force_match(s, pat) != [])

@@ -6,9 +6,9 @@ def test_is_prime(primes):
     for i in range(primes[-1] + 1):
         assert pyrival.algebra.is_prime(i) == (i in prime_set)
 
-    assert pyrival.algebra.is_prime(10 ** 8 + 7) == True
-    assert pyrival.algebra.is_prime(10 ** 9 + 7) == True
-    assert pyrival.algebra.is_prime(10 ** 9 + 9) == True
+    assert pyrival.algebra.is_prime(10**8 + 7) == True
+    assert pyrival.algebra.is_prime(10**9 + 7) == True
+    assert pyrival.algebra.is_prime(10**9 + 9) == True
 
     assert pyrival.algebra.is_prime(326549970232583195150330872691) == True
     assert pyrival.algebra.is_prime(551957180201435611622967802607) == True
