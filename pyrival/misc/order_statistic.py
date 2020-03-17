@@ -1,4 +1,5 @@
 def order_statistic(a, k):
+    """returns the k-th (0 <= k < len(a)) largest element of a"""
     left, right = 0, len(a) - 1
 
     while True:
@@ -6,7 +7,7 @@ def order_statistic(a, k):
             if (right == left + 1) and (a[right] < a[left]):
                 a[left], a[right] = a[right], a[left]
 
-            return a[k - 1]
+            return a[k]
 
         mid = (left + right) // 2
         a[mid], a[left + 1] = a[left + 1], a[mid]
@@ -40,8 +41,8 @@ def order_statistic(a, k):
         a[left + 1] = a[j]
         a[j] = cur
 
-        if j >= k - 1:
+        if j >= k:
             right = j - 1
 
-        if j <= k - 1:
+        if j <= k:
             left = i
