@@ -1,5 +1,5 @@
 def discrete_log(a, b, m):
-    """returns some x s.t. pow(a, x, m) == b or None if no such x exists"""
+    """returns some x s.t. pow(a, x, m) == b or None if no such x exists, works when a amd m are coprime"""
     a %= m
     b %= m
     if b == 1:
