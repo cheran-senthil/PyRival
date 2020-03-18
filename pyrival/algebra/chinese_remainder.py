@@ -1,6 +1,6 @@
-import math
 import operator as op
 from functools import reduce
+from math import gcd
 
 
 def chinese_remainder(a, p):
@@ -21,12 +21,6 @@ def extended_gcd(a, b):
     return old_r, old_s, (old_r - old_s * a) // b if b else 0
 
 
-def modinv(a, m):
-    """returns the modular inverse of a w.r.t. to m"""
-    g, x, _ = extended_gcd(a % m, m)
-    return x % m if g == 1 else None
-
-
 def composite_crt(b, m):
     """returns x s.t. x = a[i] (mod m[i]) for all i"""
     x, m_prod = 0, 1
@@ -35,5 +29,5 @@ def composite_crt(b, m):
         if ((bi - x) % mi) % g:
             return None
         x += m_prod * (s * ((bi - x) % mi) // g)
-        m_prod = (m_prod * mi) // math.gcd(m_prod, mi)
+        m_prod = (m_prod * mi) // gcd(m_prod, mi)
     return x % m_prod
