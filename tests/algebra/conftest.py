@@ -15,3 +15,8 @@ def phi():
 def primes():
     with open(os.path.join(DATA_DIR, "primes.txt")) as f:
         return [int(i) for i in f.read().split(" ")]
+
+
+@pytest.fixture
+def prime_set(primes):
+    return set(primes)
