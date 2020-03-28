@@ -1,0 +1,53 @@
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python 3.5
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 3.5
+
+    - name: Setup Python 3.6
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 3.6
+
+    - name: Setup Python 3.7
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 3.7
+
+    - name: Setup Python 3.8
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 3.8
+
+    - name: Setup PyPy 3
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 'pypy3'
+
+    - name: Setup Tox
+      run: pip install tox
+
+    - name: "Run Tox (environment: py35)"
+      run: tox -e py35
+
+    - name: "Run Tox (environment: py36)"
+      run: tox -e py36
+
+    - name: "Run Tox (environment: py37)"
+      run: tox -e py37
+
+    - name: "Run Tox (environment: py38)"
+      run: tox -e py38
+
+    - name: "Run Tox (environment: pypy3)"
+      run: tox -e pypy3
