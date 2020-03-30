@@ -51,7 +51,9 @@
 ##
 
 ### Snippets
-- Algebra
+<details>
+  <summary>Algebra</summary>
+
   - (Multivariable) Chinese Remainder Theorem
   - Discrete Logarithm
   - Least Common Multiple
@@ -65,7 +67,11 @@
   - Euler's Phi Function
   - Primitive Root
   - Sieve of Eratosthenes
-- Data Structures
+</details>
+
+<details>
+  <summary>Data Structures</summary>
+
   - Bit Array
   - Binary Indexed (Fenwick) Tree
   - Fractions
@@ -80,12 +86,20 @@
   - Treap
   - Trie Tree
   - 2-satisfiability Template
-- Geometry
+</details>
+
+<details>
+  <summary>Geometry</summary>
+
   - Convex Hull
   - Line Functions
   - Polygon Functions
   - Vector Functions
-- Graphs
+</details>
+
+<details>
+  <summary>Graphs</summary>
+
   - Bellman-Ford Algorithm
   - Breadth First Search
   - Connected Components Search
@@ -100,27 +114,44 @@
   - Prim's Algorithm
   - Tarjan's Algorithm
   - Topological Sorting
-- Combinatorics
+</details>
+
+<details>
+  <summary>Combinatorics</summary>
+
   - General Purpose Numbers
   - Lucas's Theorem
   - Partition Function
-- Linear Algebra
+</details>
+
+<details>
+  <summary>Linear Algebra</summary>
+
   - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
   - Gaussian Elimination
   - Multivariable Chinese Remainder Theorem
-- Numerical
+</details>
+
+<details>
+  <summary>Numerical</summary>
+
   - Linear Recurrence Template
   - Hill Climbing Algorithm
   - Approximate Integration
   - Polynomial Interpolation
   - Integer Roots
   - Binary Search
-- Strings
+</details>
+
+<details>
+  <summary>Strings</summary>
+
   - Knuth–Morris–Pratt Algorithm
   - Longest Common/Palindromic Subsequences
   - Longest Common Substring
   - Manacher's Algorithm
   - Lydon Factorization
+</details>
 
 ##
 
