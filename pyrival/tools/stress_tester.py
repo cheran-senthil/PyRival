@@ -54,28 +54,26 @@ def stress_tester(tests, solution, judge=None, catch_all=False):
                 break
 
 
-def test_gen():
-    for i in range(10):
-        yield str(i) + "\n"
-
-
-def judge(inp, out):
-    return out, ""
-
-
-tests = test_gen()
-solution = cmd2func(["python", "A.py"])
-# judge = func2judge(cmd2func(["python", "judge.py"]))
-
-try:
-    stress_tester(tests, solution)
-except (KeyboardInterrupt, SystemExit):
-    exit(0)
-except:
-    print("Unexpected error: ", sys.exc_info()[:2])
-    traceback.print_exc()
-
-time.sleep(1)
-args = sys.argv[:]
-args.insert(0, sys.executable)
-os.execv(sys.executable, args)
+# def test_gen():
+#     for i in range(10):
+#         yield str(i) + "\n"
+#
+# def judge(inp, out):
+#     return out, ""
+#
+# tests = test_gen()
+# solution = cmd2func(["python", "A.py"])
+# # judge = func2judge(cmd2func(["python", "judge.py"]))
+#
+# try:
+#     stress_tester(tests, solution)
+# except (KeyboardInterrupt, SystemExit):
+#     exit(0)
+# except:
+#     print("Unexpected error: ", sys.exc_info()[:2])
+#     traceback.print_exc()
+#
+# time.sleep(1)
+# args = sys.argv[:]
+# args.insert(0, sys.executable)
+# os.execv(sys.executable, args)
