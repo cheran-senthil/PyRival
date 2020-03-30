@@ -17,16 +17,15 @@
 
 ---
 
-### Features
-- Templates
-- Programming Tools
-- Algorithm Snippets
+### Templates
+- The [Master Template](templates/template.py) works with all versions of Python and has Python 3 behaviour.
+- Version Specific Templates: [PyPy 2](templates/template_pypy2.py), [Python 3](templates/template_py3.py)
 
 ##
 
-### Templates
-- The [Master Template](templates/template.py) works with all versions of Python and enables Python 3 code internally.
-- Version Specific Templates: [PyPy 2](templates/template_pypy2.py), [Python 3](templates/template_py3.py)
+### Tools
+- [Interactive Runner](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/tools/interactive_runner.py)
+- [Stress Tester](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/tools/stress_tester.py)
 
 ##
 
