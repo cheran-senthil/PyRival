@@ -135,7 +135,7 @@
 
 
 <details>
-  <summary>Misc Code</summary>
+  <summary>Misc</summary>
 
   - bootstrap for recursion
   - FastIO
@@ -157,5 +157,5 @@
 
 ##
 
-### License
-[Apache-2.0](LICENSE) (c) 2019
+### Apache License 2.0
+  Copyright (c) 2020 Cheran Senthilkumar
