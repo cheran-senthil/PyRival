@@ -30,26 +30,6 @@
 
 ##
 
-### Misc Code
-  - bootstrap for recursion
-  - FastIO
-  - heapq
-  - sorted
-  - py3k compatibility tools
-  - random
-  - str.split for whitespace
-  - Bit Hacks
-  - 32-bit Modular Arithmetic
-  - Memoize Decorators
-  - C++ syle cout
-  - Interactive Runner
-  - Stress Tester
-  - Alpha–Beta Pruning
-  - Longest Increasing Subsequence
-  - K-th Order Statistic
-
-##
-
 ### Snippets
 <details>
   <summary>Algebra</summary>
@@ -151,6 +131,28 @@
   - Longest Common Substring
   - Manacher's Algorithm
   - Lydon Factorization
+</details>
+
+
+<details>
+  <summary>Misc Code</summary>
+
+  - bootstrap for recursion
+  - FastIO
+  - heapq
+  - sorted
+  - py3k compatibility tools
+  - random
+  - str.split for whitespace
+  - Bit Hacks
+  - 32-bit Modular Arithmetic
+  - Memoize Decorators
+  - C++ syle cout
+  - Interactive Runner
+  - Stress Tester
+  - Alpha–Beta Pruning
+  - Longest Increasing Subsequence
+  - K-th Order Statistic
 </details>
 
 ##
