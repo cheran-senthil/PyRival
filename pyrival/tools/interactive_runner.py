@@ -37,19 +37,20 @@ class SubprocessThread(threading.Thread):
             self.stderr = "The process crashed or produced too much output."
 
 
-assert sys.argv.count("--") == 1, "There should be exactly one instance of '--' in the command line."
-sep_index = sys.argv.index("--")
-judge_args = sys.argv[1:sep_index]
-sol_args = sys.argv[sep_index + 1:]
+if __name__ == "__main__":
+    assert sys.argv.count("--") == 1, "There should be exactly one instance of '--' in the command line."
+    sep_index = sys.argv.index("--")
+    judge_args = sys.argv[1:sep_index]
+    sol_args = sys.argv[sep_index + 1:]
 
-t_sol = SubprocessThread(sol_args, stderr_pipe=sys.stderr)
-t_judge = SubprocessThread(judge_args, stdin_pipe=t_sol.p.stdout, stdout_pipe=t_sol.p.stdin)
-t_sol.start()
-t_judge.start()
-t_sol.join()
-t_judge.join()
+    t_sol = SubprocessThread(sol_args, stderr_pipe=sys.stderr)
+    t_judge = SubprocessThread(judge_args, stdin_pipe=t_sol.p.stdout, stdout_pipe=t_sol.p.stdin)
+    t_sol.start()
+    t_judge.start()
+    t_sol.join()
+    t_judge.join()
 
-print("Judge return code:", t_judge.return_code)
-print("Judge standard error:", t_judge.stderr.decode())
-print("Solution return code:", t_sol.return_code)
-# print("Solution standard error:", t_sol.stderr.decode())
+    print("Judge return code:", t_judge.return_code)
+    print("Judge standard error:", t_judge.stderr.decode())
+    print("Solution return code:", t_sol.return_code)
+    # print("Solution standard error:", t_sol.stderr.decode())
