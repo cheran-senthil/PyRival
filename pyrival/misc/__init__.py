@@ -6,7 +6,7 @@ from .cumsum2d import cumsum2d
 from .FastIO import FastIO, IOWrapper, input
 from .lis import lis
 from .memoize import memodict, memoize
-from .mergesort import mergesort
+from .ordersort import ordersort
 from .order_statistic import order_statistic
 from .ostream import cout, endl, ostream
 from .readnumbers import readnumbers
@@ -28,8 +28,8 @@ __all__ = [
     "lis",
     "memodict",
     "memoize",
-    "mergesort",
     "order_statistic",
+    "ordersort",
     "cout",
     "endl",
     "ostream",
