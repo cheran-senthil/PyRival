@@ -1,34 +1,34 @@
-def mergesort(A, key=lambda x: x, reverse=False):
-    B, C = A[:], [key(a) for a in A]
+def ordersort(order, key=lambda x: x, reverse=False):
+    new_order, keymap = order[:], [key(idx) for idx in order]
 
-    n = len(A)
+    n = len(order)
     for i in range(0, n - 1, 2):
-        if C[A[i]] > C[A[i ^ 1]]:
-            A[i], A[i ^ 1] = A[i ^ 1], A[i]
+        if keymap[order[i]] > keymap[order[i ^ 1]]:
+            order[i], order[i ^ 1] = order[i ^ 1], order[i]
 
     width = 2
     while width < n:
         for i in range(0, n, 2 * width):
-            R1, R2 = min(i + width, n), min(i + 2 * width, n)
-            j, k = R1, i
-            while i < R1 and j < R2:
-                if C[A[i]] > C[A[j]]:
-                    B[k] = A[j]
+            left, right = min(i + width, n), min(i + 2 * width, n)
+            j, k = left, i
+            while i < left and j < right:
+                if keymap[order[i]] > keymap[order[j]]:
+                    new_order[k] = order[j]
                     j += 1
                 else:
-                    B[k] = A[i]
+                    new_order[k] = order[i]
                     i += 1
                 k += 1
-            while i < R1:
-                B[k] = A[i]
+            while i < left:
+                new_order[k] = order[i]
                 k += 1
                 i += 1
-            while k < R2:
-                B[k] = A[k]
+            while k < right:
+                new_order[k] = order[k]
                 k += 1
-        A, B = B, A
+        order, new_order = new_order, order
         width *= 2
 
     if reverse:
-        A.reverse()
-    return A
+        order.reverse()
+    return order
