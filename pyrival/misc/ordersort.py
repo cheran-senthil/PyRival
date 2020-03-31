@@ -1,4 +1,4 @@
-def ordersort_int(order, key=lambda x: x):
+def ordersort_uint(order, key=lambda x: x):
     A, B = [[] for _ in range(65536)], [[] for _ in range(65536)]
     for i in order:
         A[key(i) & 65535].append(i)
@@ -11,11 +11,11 @@ def ordersort_int(order, key=lambda x: x):
 
 def ordersort_tuple(order, *keys):
     for key in reversed(keys):
-        order = ordersort_int(order, key)
+        order = ordersort_uint(order, key)
     return order
 
 
-ordersort_int64 = lambda order, key=lambda x: x: [
+ordersort_uint64 = lambda order, key=lambda x: x: [
     order[i] for i in ordersort_tuple(
         list(range(len(order))),
         [int(key(i) >> 31) for i in order].__getitem__,
