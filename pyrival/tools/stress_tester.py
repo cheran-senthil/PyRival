@@ -1,9 +1,4 @@
-import os
-import pathlib
 import subprocess
-import sys
-import time
-import traceback
 
 
 def cmd2func(args):
@@ -54,6 +49,11 @@ def stress_tester(tests, solution, judge=None, catch_all=False):
                 break
 
 
+# import os
+# import sys
+# import time
+# import traceback
+#
 # def test_gen():
 #     for i in range(10):
 #         yield str(i) + "\n"
