@@ -1,56 +1,67 @@
-# This is a small program that runs two processes two processes, connecting the
-# stdin of each one to the stdout of the other.
-# It doesn't perform a lot of checking, so many errors may
-# be caught internally by Python (e.g., if your command line has incorrect
-# syntax) or not caught at all (e.g., if the judge or solution hangs).
-#
-# Run this as:
-# python interactive_runner.py <cmd_line_judge> -- <cmd_line_solution>
-#
-# For example:
-# python interactive_runner.py python judge.py 0 -- ./my_binary
-#
-# This will run the first test set of a python judge called "judge.py" that
-# receives the test set number (starting from 0) via command line parameter
-# with a solution compiled into a binary called "my_binary".
-
-from __future__ import print_function
-
-import subprocess
+import argparse
+import asyncio
+import shlex
 import sys
-import threading
+from asyncio.subprocess import PIPE
 
 
-class SubprocessThread(threading.Thread):
-    def __init__(self, args, stdin_pipe=subprocess.PIPE, stdout_pipe=subprocess.PIPE, stderr_pipe=subprocess.PIPE):
-        threading.Thread.__init__(self)
-        self.p = subprocess.Popen(args, stdin=stdin_pipe, stdout=stdout_pipe, stderr=stderr_pipe)
+async def tee(stream, streams, prefix):
+    line = await stream.readline()
+    while line.endswith(b'\n'):
+        for s, p in zip(streams, prefix):
+            s.write(p + line)
+            if hasattr(s, 'flush'):
+                s.flush()
+        line = await stream.readline()
 
-    def run(self):
-        try:
-            self.return_code = self.p.wait()
-            self.stdout = "" if self.p.stdout is None else self.p.stdout.read()
-            self.stderr = "" if self.p.stderr is None else self.p.stderr.read()
-        except (SystemError, OSError):
-            self.return_code = -1
-            self.stdout = ""
-            self.stderr = "The process crashed or produced too much output."
+    if line:
+        for s, p in zip(streams, prefix):
+            s.write(p + line + b" % No new line\n")
+            if hasattr(s, 'flush'):
+                s.flush()
+
+
+async def main(argv):
+    parser = argparse.ArgumentParser(argv[0])
+    parser.add_argument("program1")
+    parser.add_argument("program2")
+    parser.add_argument('--disable-stdout', default=False, action="store_true")
+    parser.add_argument("--program1-stdout-prefix", default="Program 1 (stdout): ")
+    parser.add_argument("--program1-stderr-prefix", default="Program 1 (stderr): ")
+    parser.add_argument("--program2-stdout-prefix", default="Program 2 (stdout): ")
+    parser.add_argument("--program2-stderr-prefix", default="Program 2 (stderr): ")
+
+    args = parser.parse_args(argv[1:])
+
+    process_1 = await asyncio.create_subprocess_exec(*shlex.split(args.program1), stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    process_2 = await asyncio.create_subprocess_exec(*shlex.split(args.program2), stdin=PIPE, stdout=PIPE, stderr=PIPE)
+
+    program1_stdout_prefix = args.program1_stdout_prefix.encode("utf-8")
+    program1_stderr_prefix = args.program1_stderr_prefix.encode("utf-8")
+    program2_stdout_prefix = args.program2_stdout_prefix.encode("utf-8")
+    program2_stderr_prefix = args.program2_stderr_prefix.encode("utf-8")
+
+    process_1_stdout_tee = [process_2.stdin]
+    process_1_stdout_tee_prefixes = [b""]
+    process_2_stdout_tee = [process_1.stdin]
+    process_2_stdout_tee_prefixes = [b""]
+
+    if not args.disable_stdout:
+        process_1_stdout_tee.append(sys.stdout.buffer)
+        process_1_stdout_tee_prefixes.append(program1_stdout_prefix)
+        process_2_stdout_tee.append(sys.stdout.buffer)
+        process_2_stdout_tee_prefixes.append(program2_stdout_prefix)
+
+    await asyncio.gather(
+        tee(process_1.stdout, process_1_stdout_tee, process_1_stdout_tee_prefixes),
+        tee(process_2.stdout, process_2_stdout_tee, process_2_stdout_tee_prefixes),
+        tee(process_1.stderr, [sys.stdout.buffer], [program1_stderr_prefix]),
+        tee(process_2.stderr, [sys.stdout.buffer], [program2_stderr_prefix]),
+    )
+
+    print("Program 1 Exit Code:", await process_1.wait())
+    print("Program 2 Exit Code:", await process_2.wait())
 
 
 if __name__ == "__main__":
-    assert sys.argv.count("--") == 1, "There should be exactly one instance of '--' in the command line."
-    sep_index = sys.argv.index("--")
-    judge_args = sys.argv[1:sep_index]
-    sol_args = sys.argv[sep_index + 1:]
-
-    t_sol = SubprocessThread(sol_args, stderr_pipe=sys.stderr)
-    t_judge = SubprocessThread(judge_args, stdin_pipe=t_sol.p.stdout, stdout_pipe=t_sol.p.stdin)
-    t_sol.start()
-    t_judge.start()
-    t_sol.join()
-    t_judge.join()
-
-    print("Judge return code:", t_judge.return_code)
-    print("Judge standard error:", t_judge.stderr.decode())
-    print("Solution return code:", t_sol.return_code)
-    # print("Solution standard error:", t_sol.stderr.decode())
+    asyncio.run(main(sys.argv))
