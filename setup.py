@@ -33,4 +33,5 @@ setup(
     keywords=["competitive-programming", "data-structures", "algorithms"],
     setup_requires=['setuptools_scm'],
     packages=find_packages(),
+    entry_points={'console_scripts': ['interactive-runner=pyrival.tools.interactive_runner:main']},
 )

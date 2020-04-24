@@ -2,6 +2,7 @@ import argparse
 import asyncio
 import shlex
 import sys
+import pathlib
 from asyncio.subprocess import PIPE
 
 
@@ -25,15 +26,27 @@ async def show_exit_code(process, prefix):
     print(prefix, await process.wait(), sep='')
 
 
-async def main(argv):
-    parser = argparse.ArgumentParser(argv[0])
-    parser.add_argument("program1")
-    parser.add_argument("program2")
-    parser.add_argument('--disable-stdout', default=False, action="store_true")
-    parser.add_argument("--program1-stdout-prefix", default="Program 1 (stdout): ")
-    parser.add_argument("--program1-stderr-prefix", default="Program 1 (stderr): ")
-    parser.add_argument("--program2-stdout-prefix", default="Program 2 (stdout): ")
-    parser.add_argument("--program2-stderr-prefix", default="Program 2 (stderr): ")
+async def async_main(argv=sys.argv):
+    parser = argparse.ArgumentParser(pathlib.Path(argv[0]).name)
+    parser.add_argument("program1", help="Command to execute first program")
+    parser.add_argument("program2", help="Command to execute second program")
+    parser.add_argument('--disable-stdout', default=False, action="store_true", help="Do not show stdout")
+    parser.add_argument("--program1-stdout-prefix",
+                        metavar="PREFIX",
+                        default="Program 1 (stdout): ",
+                        help="Prefix to add before the first program's stdout")
+    parser.add_argument("--program1-stderr-prefix",
+                        metavar="PREFIX",
+                        default="Program 1 (stderr): ",
+                        help="Prefix to add before the first program's stderr")
+    parser.add_argument("--program2-stdout-prefix",
+                        metavar="PREFIX",
+                        default="Program 2 (stdout): ",
+                        help="Prefix to add before the second program's stdout")
+    parser.add_argument("--program2-stderr-prefix",
+                        metavar="PREFIX",
+                        default="Program 2 (stderr): ",
+                        help="Prefix to add before the second program's stderr")
 
     args = parser.parse_args(argv[1:])
 
@@ -66,5 +79,9 @@ async def main(argv):
     )
 
 
+def main(argv=sys.argv):
+    asyncio.run(async_main(argv))
+
+
 if __name__ == "__main__":
-    asyncio.run(main(sys.argv))
+    main()
