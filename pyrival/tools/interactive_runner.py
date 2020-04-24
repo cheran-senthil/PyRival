@@ -21,6 +21,10 @@ async def tee(stream, streams, prefix):
                 s.flush()
 
 
+async def show_exit_code(process, prefix):
+    print(prefix, await process.wait(), sep='')
+
+
 async def main(argv):
     parser = argparse.ArgumentParser(argv[0])
     parser.add_argument("program1")
@@ -57,10 +61,9 @@ async def main(argv):
         tee(process_2.stdout, process_2_stdout_tee, process_2_stdout_tee_prefixes),
         tee(process_1.stderr, [sys.stdout.buffer], [program1_stderr_prefix]),
         tee(process_2.stderr, [sys.stdout.buffer], [program2_stderr_prefix]),
+        show_exit_code(process_1, "Program 1 Exited with Code: "),
+        show_exit_code(process_2, "Program 2 Exited with Code: "),
     )
-
-    print("Program 1 Exit Code:", await process_1.wait())
-    print("Program 2 Exit Code:", await process_2.wait())
 
 
 if __name__ == "__main__":
