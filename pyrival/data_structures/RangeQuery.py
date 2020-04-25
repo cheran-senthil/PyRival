@@ -8,6 +8,6 @@ class RangeQuery:
             _data.append([func(prev[j], prev[j + i]) for j in range(n - 2 * i + 1)])
             i <<= 1
 
-    def query(self, begin, end):
-        depth = (end - begin).bit_length() - 1
-        return self.func(self._data[depth][begin], self._data[depth][end - (1 << depth)])
+    def query(self, start, stop):
+        depth = (stop - start).bit_length() - 1
+        return self.func(self._data[depth][start], self._data[depth][stop - (1 << depth)])

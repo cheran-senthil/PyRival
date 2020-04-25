@@ -20,11 +20,11 @@ def test_RangeQuery(default, func):
 
         q = random.randint(0, 100)
         for _ in range(q):
-            begin = random.randrange(0, l - 1)
-            end = random.randrange(begin + 1, l)
+            start = random.randrange(0, l)
+            stop = random.randrange(start + 1, l + 1)
 
             m = default
-            for i in range(begin, end):
+            for i in range(start, stop):
                 m = func(m, arr[i])
 
-            assert range_query.query(begin, end) == m
+            assert range_query.query(start, stop) == m
