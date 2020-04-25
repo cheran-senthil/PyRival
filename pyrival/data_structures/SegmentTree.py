@@ -29,6 +29,7 @@ class SegmentTree:
         return self._len
 
     def query(self, start, stop):
+        """func of data[start, stop)"""
         start += self._size
         stop += self._size
 

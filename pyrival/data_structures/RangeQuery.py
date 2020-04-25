@@ -9,5 +9,6 @@ class RangeQuery:
             i <<= 1
 
     def query(self, start, stop):
+        """func of data[start, stop)"""
         depth = (stop - start).bit_length() - 1
         return self.func(self._data[depth][start], self._data[depth][stop - (1 << depth)])
