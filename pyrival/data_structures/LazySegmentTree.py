@@ -1,17 +1,22 @@
 class LazySegmentTree:
-    def __init__(self, data, default=0, func=max):
+    def __init__(self, data, default=0, func=max, apply=lambda d, v, c: d + v):
         """initialize the lazy segment tree with data"""
         self._default = default
         self._func = func
+        self._apply = apply
 
         self._len = len(data)
         self._size = _size = 1 << (self._len - 1).bit_length()
         self._lazy = [0] * (2 * _size)
 
+        self._children = [0] * (2 * _size)
+        self._children[_size:_size + self._len] = [1] * self._len
+
         self.data = [default] * (2 * _size)
         self.data[_size:_size + self._len] = data
         for i in reversed(range(_size)):
             self.data[i] = func(self.data[i + i], self.data[i + i + 1])
+            self._children[i] = self._children[i + i] + self._children[i + i + 1]
 
     def __len__(self):
         return self._len
@@ -23,8 +28,8 @@ class LazySegmentTree:
 
         self._lazy[2 * idx] += q
         self._lazy[2 * idx + 1] += q
-        self.data[2 * idx] += q
-        self.data[2 * idx + 1] += q
+        self.data[2 * idx] = self._apply(self.data[2 * idx], q, self._children[2 * idx])
+        self.data[2 * idx + 1] = self._apply(self.data[2 * idx + 1], q, self._children[2 * idx + 1])
 
     def _update(self, idx):
         """updates the node idx to know of all queries applied to it via its ancestors"""
@@ -35,7 +40,7 @@ class LazySegmentTree:
         """make the changes to idx be known to its ancestors"""
         idx >>= 1
         while idx:
-            self.data[idx] = self._func(self.data[2 * idx], self.data[2 * idx + 1]) + self._lazy[idx]
+            self.data[idx] = self._apply(self._func(self.data[2 * idx], self.data[2 * idx + 1]), self._lazy[idx], self._children[idx])
             idx >>= 1
 
     def add(self, start, stop, value):
@@ -45,12 +50,12 @@ class LazySegmentTree:
         while start < stop:
             if start & 1:
                 self._lazy[start] += value
-                self.data[start] += value
+                self.data[start] = self._apply(value, value, self._children[start])
                 start += 1
             if stop & 1:
                 stop -= 1
                 self._lazy[stop] += value
-                self.data[stop] += value
+                self.data[stop] = self._apply(value, value, self._children[stop])
             start >>= 1
             stop >>= 1
 
