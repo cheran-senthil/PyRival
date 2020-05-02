@@ -9,14 +9,10 @@ class LazySegmentTree:
         self._size = _size = 1 << (self._len - 1).bit_length()
         self._lazy = [0] * (2 * _size)
 
-        self._children = [0] * (2 * _size)
-        self._children[_size:_size + self._len] = [1] * self._len
-
         self.data = [default] * (2 * _size)
         self.data[_size:_size + self._len] = data
         for i in reversed(range(_size)):
             self.data[i] = func(self.data[i + i], self.data[i + i + 1])
-            self._children[i] = self._children[i + i] + self._children[i + i + 1]
 
     def __len__(self):
         return self._len
@@ -28,8 +24,8 @@ class LazySegmentTree:
 
         self._lazy[2 * idx] += q
         self._lazy[2 * idx + 1] += q
-        self.data[2 * idx] = self._apply(self.data[2 * idx], q, self._children[2 * idx])
-        self.data[2 * idx + 1] = self._apply(self.data[2 * idx + 1], q, self._children[2 * idx + 1])
+        self.data[2 * idx] = self._apply(self.data[2 * idx], q, self._size >> (2 * idx).bit_length() - 1)
+        self.data[2 * idx + 1] = self._apply(self.data[2 * idx + 1], q, self._size >> (2 * idx + 1).bit_length() - 1)
 
     def _update(self, idx):
         """updates the node idx to know of all queries applied to it via its ancestors"""
@@ -40,22 +36,24 @@ class LazySegmentTree:
         """make the changes to idx be known to its ancestors"""
         idx >>= 1
         while idx:
-            self.data[idx] = self._apply(self._func(self.data[2 * idx], self.data[2 * idx + 1]), self._lazy[idx], self._children[idx])
+            self.data[idx] = self._apply(self._func(self.data[2 * idx], self.data[2 * idx + 1]),
+                                         self._lazy[idx],
+                                         self._size >> idx.bit_length() - 1)
             idx >>= 1
 
-    def add(self, start, stop, value):
+    def apply(self, start, stop, value):
         """lazily add value to [start, stop)"""
         start = start_copy = start + self._size
         stop = stop_copy = stop + self._size
         while start < stop:
             if start & 1:
                 self._lazy[start] += value
-                self.data[start] = self._apply(value, value, self._children[start])
+                self.data[start] = self._apply(self.data[start], value, self._size >> start.bit_length() - 1)
                 start += 1
             if stop & 1:
                 stop -= 1
                 self._lazy[stop] += value
-                self.data[stop] = self._apply(value, value, self._children[stop])
+                self.data[stop] = self._apply(self.data[stop], value, self._size >> start.bit_length() - 1)
             start >>= 1
             stop >>= 1
 
