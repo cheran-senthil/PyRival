@@ -3,23 +3,21 @@
 
 def toposort(graph):
     n = len(graph)
-    res, visited = [], [False] * n
-
-    def dfs(start):
-        stack = [start]
-        while stack:
-            start = stack[-1]
-            if not visited[start]:
-                visited[start] = True
-                for child in graph[start]:
-                    if not visited[child]:
-                        stack.append(child)
-            else:
-                res.append(stack.pop())
-
+    res, found = [], [0] * n
     for i in range(n):
-        if not visited[i]:
-            dfs(i)
+        if found[i]:
+            continue
+        stack = [i]
+        while stack:
+            node = stack.pop()
+            if node < 0:
+                res.append(~node)
+            elif not found[node]:
+                found[node] = 1
+                stack.append(~node)
+                for nei in graph[node]:
+                    if not found[nei]:
+                        stack.append(nei)
 
     return res
 
