@@ -3,6 +3,7 @@
 
 def toposort(graph):
     n = len(graph)
+
     res, found = [], [0] * n
     for i in range(n):
         if found[i]:
@@ -19,7 +20,13 @@ def toposort(graph):
                     if not found[nei]:
                         stack.append(nei)
 
-    return res
+    # cycle check
+    for node in res:
+        if any(found[nei] for nei in graph[node]):
+            return None
+        found[node] = 0
+
+    return res[::-1]
 
 
 def kahn(graph):
