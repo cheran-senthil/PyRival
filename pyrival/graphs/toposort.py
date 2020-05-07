@@ -6,8 +6,6 @@ def toposort(graph):
 
     res, found = [], [0] * n
     for i in range(n):
-        if found[i]:
-            continue
         stack = [i]
         while stack:
             node = stack.pop()
@@ -16,9 +14,7 @@ def toposort(graph):
             elif not found[node]:
                 found[node] = 1
                 stack.append(~node)
-                for nei in graph[node]:
-                    if not found[nei]:
-                        stack.append(nei)
+                stack += graph[node]
 
     # cycle check
     for node in res:
