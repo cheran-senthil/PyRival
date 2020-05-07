@@ -6,6 +6,8 @@ def toposort(graph):
 
     res, found = [], [0] * n
     for i in range(n):
+        if found[i]:
+            continue
         stack = [i]
         while stack:
             node = stack.pop()
