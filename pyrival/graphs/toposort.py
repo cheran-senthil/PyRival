@@ -2,21 +2,16 @@
 
 
 def toposort(graph):
-    n = len(graph)
-
-    res, found = [], [0] * n
-    for i in range(n):
-        if found[i]:
-            continue
-        stack = [i]
-        while stack:
-            node = stack.pop()
-            if node < 0:
-                res.append(~node)
-            elif not found[node]:
-                found[node] = 1
-                stack.append(~node)
-                stack += graph[node]
+    res, found = [], [0] * len(graph)
+    stack = list(range(len(graph)))
+    while stack:
+        node = stack.pop()
+        if node < 0:
+            res.append(~node)
+        elif not found[node]:
+            found[node] = 1
+            stack.append(~node)
+            stack += graph[node]
 
     # cycle check
     for node in res:
