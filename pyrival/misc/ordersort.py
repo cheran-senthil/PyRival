@@ -14,11 +14,13 @@ def bucketsort(order, seq):
     return new_order
 
 
-def ordersort(order, seq):
+def ordersort(order, seq, reverse=False):
     bit = max(seq).bit_length() >> 1
     mask = (1 << bit) - 1
     order = bucketsort(order, [x & mask for x in seq])
     order = bucketsort(order, [x >> bit for x in seq])
+    if reverse:
+        order.reverse()
     return order
 
 
