@@ -25,3 +25,15 @@ def test_ordersort_reverse():
         expected = sorted(range(l), key=arr.__getitem__, reverse=True)
 
         assert [arr[i] for i in got] == [arr[i] for i in expected]
+
+def test_tuple_sort():
+    for _ in range(10000):
+        l = random.randint(1, 100)
+        t = random.randint(1, 4)
+
+        arr = [[random.randint(0, 1000) for _ in range(t)] for _ in range(l)]
+
+        got = pyrival.misc.tuple_sort(*zip(*arr))
+        expected = sorted(range(l), key=arr.__getitem__)
+
+        assert [arr[i] for i in got] == [arr[i] for i in expected]
