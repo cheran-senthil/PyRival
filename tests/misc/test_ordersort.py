@@ -26,14 +26,25 @@ def test_ordersort_reverse():
 
         assert [arr[i] for i in got] == [arr[i] for i in expected]
 
-def test_tuple_sort():
+def test_multikey_ordersort():
     for _ in range(10000):
         l = random.randint(1, 100)
-        t = random.randint(1, 4)
+        t = random.randint(0, 4)
 
         arr = [[random.randint(0, 1000) for _ in range(t)] for _ in range(l)]
 
-        got = pyrival.misc.tuple_sort(*zip(*arr))
+        got = pyrival.misc.multikey_ordersort(range(l), *zip(*arr))
+        expected = sorted(range(l), key=arr.__getitem__)
+
+        assert [arr[i] for i in got] == [arr[i] for i in expected]
+
+def test_long_ordersort():
+    for _ in range(1000):
+        l = random.randint(1, 100)
+
+        arr = [random.randint(0, 10**18) for _ in range(l)]
+
+        got = pyrival.misc.long_ordersort(range(l), arr)
         expected = sorted(range(l), key=arr.__getitem__)
 
         assert [arr[i] for i in got] == [arr[i] for i in expected]

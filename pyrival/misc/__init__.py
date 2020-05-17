@@ -6,7 +6,7 @@ from .cumsum2d import cumsum2d
 from .FastIO import FastIO, IOWrapper, input
 from .lis import lis
 from .memoize import memodict, memoize
-from .ordersort import ordersort, tuple_sort
+from .ordersort import ordersort, long_ordersort, multikey_ordersort
 from .order_statistic import order_statistic
 from .ostream import cout, endl, ostream
 from .readnumbers import readnumbers
@@ -35,5 +35,6 @@ __all__ = [
     "ostream",
     "readnumbers",
     "split",
-    "tuple_sort",
+    "long_ordersort",
+    "multikey_ordersort",
 ]

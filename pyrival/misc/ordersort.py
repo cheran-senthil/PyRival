@@ -24,11 +24,12 @@ def ordersort(order, seq, reverse=False):
     return order
 
 
-def tuple_sort(*seqs):
-    if not seqs:
-        return []
+def long_ordersort(order, seq):
+    order = ordersort(order, [int(i & 0x7fffffff) for i in seq])
+    return ordersort(order, [int(i >> 31) for i in seq])
 
-    order = ordersort(range(len(seqs[-1])), seqs[-1])
-    for i in reversed(range(len(seqs) - 1)):
-        order = ordersort(order, seqs[i])
+
+def multikey_ordersort(order, *seqs, sort=ordersort):
+    for i in reversed(range(len(seqs))):
+        order = sort(order, seqs[i])
     return order
