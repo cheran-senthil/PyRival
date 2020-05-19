@@ -10,6 +10,7 @@ Welcome to PyRival's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   bootstrap
    pyrival/index
 
 
