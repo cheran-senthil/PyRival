@@ -10,6 +10,8 @@ Welcome to PyRival's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   pyrival/index
+
 
 
 Indices and tables

@@ -1,0 +1,7 @@
+pyrival
+*******
+
+.. toctree::
+   :glob:
+
+   *
