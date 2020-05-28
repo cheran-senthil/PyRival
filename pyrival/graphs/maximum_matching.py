@@ -3,6 +3,9 @@ from random import randint
 
 
 def maximum_matching(edges, mod=1073750017):
+    if not edges:
+        return 0
+
     n = max(itertools.chain(*edges)) + 1
     matrix = _get_tutte_matrix(n, edges, mod)
     return _get_matrix_rank(matrix, mod) // 2
@@ -12,6 +15,9 @@ def _get_tutte_matrix(n, edges, mod):
     matrix = [[0 for _ in range(n)] for _ in range(n)]
 
     for u, v in edges:
+        if u == v:
+            continue
+
         i, j = min(u, v), max(u, v)
         v = randint(1, mod - 1)
         matrix[i][j], matrix[j][i] = v, mod - v
