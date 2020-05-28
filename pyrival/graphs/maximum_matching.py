@@ -2,7 +2,21 @@ import itertools
 from random import randint
 
 
-def maximum_matching(edges, mod=1073750017):
+_DEFAULT_PRIME = 1073750017
+
+
+def maximum_matching(edges, mod=_DEFAULT_PRIME):
+    """
+    Returns the maximum cardinality matching of an undirected general graph
+    Uses a randomized algorithm to compute the rank of the Tutte matrix
+    The rank of the Tutte matrix is equal to twice the size of the maximum matching with high probability
+
+    Complexity: O(n ^ 3) worst case, O(n * m) with high constant factor on average
+
+    :param edges: a list of edges, assume nodes can be anything numbered from 0 to max number in edges
+    :param mod: a large random prime
+    :return: the maximum cardinality matching of the graph
+    """
     if not edges:
         return 0
 
