@@ -17,29 +17,28 @@ def maximum_matching(edges, mod=_DEFAULT_PRIME):
     :param mod: a large random prime
     :return: the maximum cardinality matching of the graph
     """
+
+    edges = [(u, v) for u, v in edges if u != v]
+
     if not edges:
         return 0
 
     n = max(itertools.chain(*edges)) + 1
     matrix = _get_tutte_matrix(n, edges, mod)
-    return _get_matrix_rank(matrix, mod) // 2
+    return _gauss(matrix, mod) // 2
 
 
 def _get_tutte_matrix(n, edges, mod):
-    matrix = [[0 for _ in range(n)] for _ in range(n)]
+    matrix = [[0] * n for _ in range(n)]
 
     for u, v in edges:
-        if u == v:
-            continue
-
-        i, j = min(u, v), max(u, v)
-        v = randint(1, mod - 1)
-        matrix[i][j], matrix[j][i] = v, mod - v
+        val = randint(1, mod - 1)
+        matrix[u][v], matrix[v][u] = val, mod - val
 
     return matrix
 
 
-def _get_matrix_rank(matrix, mod):
+def _gauss(matrix, mod):
     r, n = 0, len(matrix)
     for j in range(n):
         k = r
@@ -51,8 +50,7 @@ def _get_matrix_rank(matrix, mod):
 
         inv = pow(matrix[k][j], mod - 2, mod)
         for i in range(n):
-            x = matrix[k][i]
-            matrix[k][i], matrix[r][i] = matrix[r][i], inv * x % mod
+            matrix[k][i], matrix[r][i] = matrix[r][i], inv * matrix[k][i] % mod
 
         for u in range(r + 1, n):
             if not matrix[u][j]:
@@ -61,8 +59,6 @@ def _get_matrix_rank(matrix, mod):
             for v in range(j + 1, n):
                 if matrix[r][v]:
                     matrix[u][v] = (matrix[u][v] - matrix[r][v] * matrix[u][j]) % mod
-                    if matrix[u][v] < 0:
-                        matrix[u][v] += mod
 
         r += 1
 
