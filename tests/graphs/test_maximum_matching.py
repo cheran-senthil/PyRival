@@ -4,8 +4,6 @@ import pyrival.graphs
 def test_maximum_matching():
     def _test_corner_cases():
         edges = []
-        assert pyrival.graphs.maximum_matching(edges) == 0
-
         for e in [(0, 1), (1, 2), (2, 0)]:
             edges.append(e)
             assert pyrival.graphs.maximum_matching(edges) == 1
@@ -35,7 +33,8 @@ def test_maximum_matching():
         for i in range(n):
             for k in range(13):
                 j = (i * i + k * 79 + abs(i * i - k)) % n
-                edges.append((i, j))
+                if i != j:
+                    edges.append((i, j))
 
         assert pyrival.graphs.maximum_matching(edges) == 239
 

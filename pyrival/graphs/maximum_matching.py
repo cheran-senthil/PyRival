@@ -7,21 +7,17 @@ _DEFAULT_PRIME = 1073750017
 
 def maximum_matching(edges, mod=_DEFAULT_PRIME):
     """
-    Returns the maximum cardinality matching of an undirected general graph
+    Returns the maximum cardinality matching of any simple graph (undirected, unweighted, no self-loops)
     Uses a randomized algorithm to compute the rank of the Tutte matrix
     The rank of the Tutte matrix is equal to twice the size of the maximum matching with high probability
+    The probability for error is not more than n*(m+1)/mod although in practice it is much lower
 
-    Complexity: O(n ^ 3) worst case, O(n * m) with high constant factor on average
+    Complexity: O(n ^ 3) worst case, O(n * |matching_size|) on average
 
     :param edges: a list of edges, assume nodes can be anything numbered from 0 to max number in edges
-    :param mod: a large random prime
+    :param mod: optional, a large random prime
     :return: the maximum cardinality matching of the graph
     """
-
-    edges = [(u, v) for u, v in edges if u != v]
-
-    if not edges:
-        return 0
 
     n = max(itertools.chain(*edges)) + 1
     matrix = _get_tutte_matrix(n, edges, mod)
