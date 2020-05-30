@@ -21,7 +21,7 @@ def maximum_matching(edges, mod=_DEFAULT_PRIME):
 
     n = max(itertools.chain(*edges)) + 1
     matrix = _get_tutte_matrix(n, edges, mod)
-    return _gauss(matrix, mod) // 2
+    return _gauss(n, matrix, mod) // 2
 
 
 def _get_tutte_matrix(n, edges, mod):
@@ -34,8 +34,8 @@ def _get_tutte_matrix(n, edges, mod):
     return matrix
 
 
-def _gauss(matrix, mod):
-    r, n = 0, len(matrix)
+def _gauss(n, matrix, mod):
+    r = 0
     for j in range(n):
         k = r
         while k < n and not matrix[k][j]:
@@ -46,7 +46,8 @@ def _gauss(matrix, mod):
 
         inv = pow(matrix[k][j], mod - 2, mod)
         for i in range(n):
-            matrix[k][i], matrix[r][i] = matrix[r][i], inv * matrix[k][i] % mod
+            matrix[k][i] = inv * matrix[k][i] % mod
+        matrix[k], matrix[r] = matrix[r], matrix[k]
 
         for u in range(r + 1, n):
             if not matrix[u][j]:
