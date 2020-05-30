@@ -50,12 +50,12 @@ def _gauss(n, matrix, mod):
         matrix[k], matrix[r] = matrix[r], matrix[k]
 
         for u in range(r + 1, n):
-            if not matrix[u][j]:
-                continue
-
-            for v in range(j + 1, n):
-                if matrix[r][v]:
-                    matrix[u][v] = (matrix[u][v] - matrix[r][v] * matrix[u][j]) % mod
+            # reducing indexing costs to gain performance boost for the next loop
+            matrix_u, matrix_r = matrix[u], matrix[r]
+            if matrix_u[j]:
+                for v in range(j + 1, n):
+                    if matrix_r[v]:
+                        matrix_u[v] = (matrix_u[v] - matrix_r[v] * matrix_u[j]) % mod
 
         r += 1
 
