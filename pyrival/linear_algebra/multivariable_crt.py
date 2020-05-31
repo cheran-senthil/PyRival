@@ -1,8 +1,13 @@
-from math import gcd
-
 mat_sub = lambda A, B: [[i - j for i, j in zip(*row)] for row in zip(A, B)]
 
 mat_mul = lambda A, B: [[sum(i * j for i, j in zip(row, col)) for col in zip(*B)] for row in A]
+
+
+def gcd(x, y):
+    """greatest common divisor of x and y"""
+    while y:
+        x, y = y, x % y
+    return x
 
 
 def extended_gcd(a, b):

@@ -1,6 +1,12 @@
 import operator as op
 from functools import reduce
-from math import gcd
+
+
+def gcd(x, y):
+    """greatest common divisor of x and y"""
+    while y:
+        x, y = y, x % y
+    return x
 
 
 def chinese_remainder(a, p):

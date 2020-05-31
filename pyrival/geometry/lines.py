@@ -1,12 +1,19 @@
 import itertools
 import math
-from math import gcd
+
 
 # 2d line: ax + by + c = 0  is  (a, b, c)
 
 #          ax + by + c = 0     ((a, b, c),
 # 3d line: dx + ez + f = 0  is  (d, e, f),
 #          gy + hz + i = 0      (g, h, i))
+
+
+def gcd(x, y):
+    """greatest common divisor of x and y"""
+    while y:
+        x, y = y, x % y
+    return x
 
 
 def get_2dline(p1, p2):
