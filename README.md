@@ -7,11 +7,12 @@
 <div align="center">
   <strong>
     <a href="https://github.com/Mukundan314">Mukundan314</a> &emsp;
-    <a href="https://codeforces.com/profile/pajenegod">pajenegod</a> &emsp;
+    <a href="https://github.com/bjorn-martinsson">pajenegod</a> &emsp;
     <a href="https://github.com/eduard-netsajev">drd93</a> &emsp;
     <a href="https://github.com/algmyr">algmyr</a> &emsp;
     <a href="https://github.com/meooow25">meooow</a> &emsp;
     <a href="https://github.com/tfg50">tfg</a> &emsp;
+    <a href="https://github.com/sgtlaugh">sgtlaugh</a> &emsp;
   </strong>
 </div>
 
