@@ -10,7 +10,7 @@ def maximum_matching(edges, mod=_DEFAULT_PRIME):
     Returns the maximum cardinality matching of any simple graph (undirected, unweighted, no self-loops)
     Uses a randomized algorithm to compute the rank of the Tutte matrix
     The rank of the Tutte matrix is equal to twice the size of the maximum matching with high probability
-    The probability for error is not more than n*(m+1)/mod although in practice it is much lower
+    The probability for error is not more than n/mod
 
     Complexity: O(n ^ 3) worst case, O(n * |matching_size|) on average
 
