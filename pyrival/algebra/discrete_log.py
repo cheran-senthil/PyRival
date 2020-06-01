@@ -1,22 +1,21 @@
-def discrete_log(a, b, m):
-    """returns some x s.t. pow(a, x, m) == b or None if no such x exists, works when a amd m are coprime"""
-    a %= m
-    b %= m
-    if b == 1:
-        return 0
+def discrete_log(a, b, mod):
+    """returns the smallest x >= 0 s.t. pow(a, x, mod) == b or None if no such x exists"""
+    m = int(mod**0.5) + 1
 
-    n, vals = int(m**0.5) + 1, {}
-    mult, cur = pow(a, n, m), 1
-    for i in range(n):
-        cur *= mult
-        cur %= m
-        vals[cur] = i + 1
+    # small_step[x] = minimum j <= m s.t. b * a^j % mod = x
+    small_step, e = {}, 1
+    for j in range(m + 1):
+        if e == b:
+            return j
+        small_step[b * e % mod] = j
+        e = e * a % mod
 
-    cur = b
-    for i in range(n + 1):
-        it = vals.get(cur, None)
-        if it is not None:
-            return it * n - i  # % phi(m)
-        cur *= a
-        cur %= m
+    # find (i, j) s.t. a^(m * i) % mod = b * a^j % mod
+    e = factor = pow(a, m, mod)
+    for i in range(2, m + 1):
+        e = e * factor % mod
+        j = small_step.get(e, None)
+        if j is not None:
+            return m * i - j if pow(a, m * i - j, mod) == b else None
+
     return None
