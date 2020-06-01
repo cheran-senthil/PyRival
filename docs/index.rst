@@ -11,7 +11,7 @@ Welcome to PyRival's documentation!
    :caption: Contents:
 
    bootstrap
-   pyrival/index
+   API/index
 
 
 
