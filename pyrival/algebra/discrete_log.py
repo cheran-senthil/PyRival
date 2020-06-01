@@ -6,7 +6,7 @@ def discrete_log(a, b, mod):
     n = int(mod**0.5) + 1
 
     # tiny_step[x] = maximum j <= n s.t. b * a^j % mod = x
-    tiny_step, e = {}, 1
+    tiny_step, e = {}, 1 % mod
     for j in range(n + 1):
         if e == b:
             return j
