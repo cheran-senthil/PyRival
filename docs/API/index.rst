@@ -1,5 +1,5 @@
-pyrival
-*******
+API Reference
+*************
 
 .. toctree::
    :glob:
