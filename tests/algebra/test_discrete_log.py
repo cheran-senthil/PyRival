@@ -2,39 +2,33 @@ import random
 
 import pyrival.algebra
 
+# Good problem to test discrete log
+# https://codeforces.com/gym/101853/problem/G
 
-def test_discrete_log__corner_cases(limit=100):
+def test_discrete_log_corner_cases(limit=100):
+    def brute(a, b, mod):
+        e = 1
+        for i in range(1, mod + 1):
+            e = e * a % mod
+            if (e == b):
+                return i
+        return None
+    
     for a in range(limit):
         for b in range(limit):
             for m in range(1, limit):
                 x = pyrival.algebra.discrete_log(a, b, m)
-                if x is not None:
-                    assert pow(a, x, m) == b
+                y = brute(a, b, m)
+                assert x == y
 
-    for a in range(limit):
-        for m in range(1, limit):
-            uniques = set()
-            processed = set()
-            for x in range(limit):
-                b = pow(a, x, m)
-                ans = pyrival.algebra.discrete_log(a, b, m)
-                assert pow(a, ans, m) == b
-                assert x == ans or ans in processed
-                processed.add(ans)
-                uniques.add(b)
-
-            for b in set(range(limit)) - uniques:
-                x = pyrival.algebra.discrete_log(a, b, m)
-                assert x is None
-
-
-def test_discrete_log__random_cases(trials=200):
+def test_discrete_log_random_cases(trials=200):
     random.seed(666)
 
     for _ in range(trials):
         m = random.randint(0, 10**9)
-        a = random.randint(0, m)
+        a = random.randint(0, 10**9)
         x = random.randint(0, 10**9)
         b = pow(a, x, m)
 
-        assert pow(a, pyrival.algebra.discrete_log(a, b, m), m) == b
+        y = pow(a, pyrival.algebra.discrete_log(a, b, m), m)
+        assert y == b
