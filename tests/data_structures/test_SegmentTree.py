@@ -9,6 +9,7 @@ params = [
     (float('inf'), min),
     (float('-inf'), max),
     (0, op.add),
+    (0, lambda a, b: int(str(abs(a)) + (str(abs(b)) if b else ""))),
 ]
 
 
