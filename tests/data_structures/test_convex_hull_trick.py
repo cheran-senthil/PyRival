@@ -12,35 +12,39 @@ def brute(K, M, X):
     return out
 
 
-def test_convex_line_hull_integral(n = 1000):
+def test_convex_line_hull_integral(t = 50000):
     import random
     random.seed(1337)
 
-    K = [random.randint(-1000, 1000) for _ in range(n)]
-    M = [random.randint(-1000, 1000) for _ in range(n)]
-    
-    X = [random.randint(-10000, 10000) for _ in range(n)]
-    brute_ans = brute(K, M, X)
+    for _ in range(t):
+        n = random.randint(1, 20)
+        K = [random.randint(-10, 10) for _ in range(n)]
+        M = [random.randint(-10, 10) for _ in range(n)]
+        X = list(range(-10, 10 + 1))
 
-    hull_i, hull_x = convex_hull_trick(K, M)
-    assert(len(hull_i) - 1 == len(hull_x))
+        brute_ans = brute(K, M, X)
 
-    ans = [max_query(x, K, M, hull_i, hull_x) for x in X]
-    assert(ans == brute_ans)
+        hull_i, hull_x = convex_hull_trick(K, M)
+        assert(len(hull_i) - 1 == len(hull_x))
 
-def test_convex_line_hull_float(n = 1000):
+        ans = [max_query(x, K, M, hull_i, hull_x) for x in X]
+        assert(ans == brute_ans)
+
+def test_convex_line_hull_float(t = 50000):
     import random
     random.seed(1337)
 
-    K = [random.randint(-1000, 1000) for _ in range(n)]
-    M = [random.randint(-1000, 1000) for _ in range(n)]
-    
-    X = [random.uniform(-10000, 10000) for _ in range(n)]
-    brute_ans = brute(K, M, X)
+    for _ in range(t):
+        n = random.randint(1, 20)
+        K = [random.randint(-10, 10) for _ in range(n)]
+        M = [random.randint(-10, 10) for _ in range(n)]
+        X = [random.uniform(-10, 10) for _ in range(21)]
 
-    hull_i, hull_x = convex_hull_trick(K, M, integer = False)
-    assert(len(hull_i) - 1 == len(hull_x))
+        brute_ans = brute(K, M, X)
 
-    ans = [max_query(x, K, M, hull_i, hull_x) for x in X]
-    assert(len(ans) == len(brute_ans))
-    assert(all(abs(x - y) <= 1e-9 for x,y in zip(ans, brute_ans)))
+        hull_i, hull_x = convex_hull_trick(K, M, integer = False)
+        assert(len(hull_i) - 1 == len(hull_x))
+
+        ans = [max_query(x, K, M, hull_i, hull_x) for x in X]
+        assert(len(ans) == len(brute_ans))
+        assert(all(abs(x - y) <= 1e-9 for x,y in zip(ans, brute_ans)))
