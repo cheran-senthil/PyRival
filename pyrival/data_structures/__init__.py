@@ -1,5 +1,6 @@
 from .BitArray import BitArray
 from .CFraction import CFrac2Frac, CFraction
+from .convex_hull_trick import convex_hull_trick, max_query
 from .DisjointSetUnion import DisjointSetUnion, UnionFind
 from .FenwickTree import FenwickTree
 from .Fraction import Fraction, limit_denominator
@@ -22,6 +23,7 @@ __all__ = [
     "BitArray",
     "CFrac2Frac",
     "CFraction",
+    "convex_hull_trick",
     "DisjointSetUnion",
     "UnionFind",
     "FenwickTree",
@@ -35,6 +37,7 @@ __all__ = [
     "LinkedList",
     "Node",
     "create",
+    "max_query",
     "minimum",
     "setter",
     "RangeQuery",
