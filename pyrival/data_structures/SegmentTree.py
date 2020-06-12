@@ -33,17 +33,18 @@ class SegmentTree:
         start += self._size
         stop += self._size
 
-        res = self._default
+        res_left = res_right = self._default
         while start < stop:
             if start & 1:
-                res = self._func(res, self.data[start])
+                res_left = self._func(res_left, self.data[start])
                 start += 1
             if stop & 1:
                 stop -= 1
-                res = self._func(res, self.data[stop])
+                res_right = self._func(self.data[stop], res_right)
             start >>= 1
             stop >>= 1
-        return res
+
+        return self._func(res_left, res_right)
 
     def __repr__(self):
         return "SegmentTree({0})".format(self.data)
