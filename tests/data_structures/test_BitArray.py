@@ -1,8 +1,8 @@
-import pyrival.data_structures
+from pyrival.BitArray import *
 
 
 def test_BitArray():
-    array = pyrival.data_structures.BitArray(262144)
+    array = BitArray(262144)
 
     for i in range(262144):
         assert array[i] == 0

@@ -1,7 +1,7 @@
 import operator as op
 import random
 
-import pyrival.data_structures
+from pyrival.SegmentTree import *
 
 import pytest
 
@@ -19,7 +19,7 @@ def test_SegmentTree(default, func):
         l = random.randint(2, 100)
 
         arr = [random.randint(-1000, 1000) for _ in range(l)]
-        seg_tree = pyrival.data_structures.SegmentTree(arr, default, func)
+        seg_tree = SegmentTree(arr, default, func)
 
         q = random.randint(0, 100)
         for _ in range(q):

@@ -1,7 +1,6 @@
 import random
 
-import pyrival.strings
-
+from pyrival.kmp import *
 
 def brute_force_match(s, pat):
     idx = []
@@ -15,7 +14,6 @@ def brute_force_match(s, pat):
 
     return idx
 
-
 def test_match():
     for _ in range(10000):
         s_len = random.randint(1, 50)
@@ -24,8 +22,7 @@ def test_match():
         s = [random.randint(0, 10) for _ in range(s_len)]
         pat = [random.randint(0, 10) for _ in range(pat_len)]
 
-        assert pyrival.strings.match(s, pat) == brute_force_match(s, pat)
-
+        assert match(s, pat) == brute_force_match(s, pat)
 
 def test_string_find():
     for _ in range(10000):
@@ -35,4 +32,4 @@ def test_string_find():
         s = [random.randint(0, 10) for _ in range(s_len)]
         pat = [random.randint(0, 10) for _ in range(pat_len)]
 
-        assert pyrival.strings.string_find(s, pat) == (brute_force_match(s, pat) != [])
+        assert string_find(s, pat) == (brute_force_match(s, pat) != [])

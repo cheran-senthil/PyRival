@@ -1,5 +1,4 @@
-import pyrival.algebra
+from pyrival.phi import *
 
-
-def test_phi(phi):
-    assert pyrival.algebra.phi(len(phi) - 1) == phi
+def test_phi(f):
+    assert phi(len(f) - 1) == f

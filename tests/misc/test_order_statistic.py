@@ -1,7 +1,6 @@
 import random
 
-import pyrival.misc
-
+from pyrival.order_statistic import *
 
 def test_order_statistic():
     for _ in range(1000):
@@ -9,4 +8,4 @@ def test_order_statistic():
         sor = sorted(arr)
 
         for i in range(len(arr)):
-            assert pyrival.misc.order_statistic(arr, i) == sor[i]
+            assert order_statistic(arr, i) == sor[i]
