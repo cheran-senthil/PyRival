@@ -1,4 +1,4 @@
-from pyrival.phi import *
+from pyrival.phi import phi as f
 
-def test_phi(f):
-    assert phi(len(f) - 1) == f
+def test_phi(phi):
+    assert f(len(phi) - 1) == phi
