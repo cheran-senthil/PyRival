@@ -1,4 +1,4 @@
-from is_prime import *
+from pyrival.is_prime import *
 
 
 def test_is_prime(prime_set):

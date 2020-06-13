@@ -1,7 +1,7 @@
 import math
 import random
 
-import pyrival.gcd import *
+from pyrival.gcd import *
 
 def test_gcd():
     for _ in range(10000):

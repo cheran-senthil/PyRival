@@ -1,6 +1,6 @@
 import random
 
-import pyrival.misc
+from pyrival.ordersort import *
 
 
 def test_ordersort():
@@ -9,7 +9,7 @@ def test_ordersort():
 
         arr = [random.randint(0, 1000) for _ in range(l)]
 
-        got = pyrival.misc.ordersort(range(l), arr)
+        got = ordersort(range(l), arr)
         expected = sorted(range(l), key=arr.__getitem__)
 
         assert [arr[i] for i in got] == [arr[i] for i in expected]
@@ -21,7 +21,7 @@ def test_ordersort_reverse():
 
         arr = [random.randint(0, 1000) for _ in range(l)]
 
-        got = pyrival.misc.ordersort(range(l), arr, reverse=True)
+        got = ordersort(range(l), arr, reverse=True)
         expected = sorted(range(l), key=arr.__getitem__, reverse=True)
 
         assert [arr[i] for i in got] == [arr[i] for i in expected]
@@ -33,7 +33,7 @@ def test_multikey_ordersort():
 
         arr = [[random.randint(0, 1000) for _ in range(t)] for _ in range(l)]
 
-        got = pyrival.misc.multikey_ordersort(range(l), *zip(*arr))
+        got = multikey_ordersort(range(l), *zip(*arr))
         expected = sorted(range(l), key=arr.__getitem__)
 
         assert [arr[i] for i in got] == [arr[i] for i in expected]
@@ -44,7 +44,7 @@ def test_long_ordersort():
 
         arr = [random.randint(0, 10**18) for _ in range(l)]
 
-        got = pyrival.misc.long_ordersort(range(l), arr)
+        got = long_ordersort(range(l), arr)
         expected = sorted(range(l), key=arr.__getitem__)
 
         assert [arr[i] for i in got] == [arr[i] for i in expected]
