@@ -1,6 +1,6 @@
 import random
 
-import pyrival.data_structures
+from pyrival.RangeQuery import *
 
 import pytest
 
@@ -16,7 +16,7 @@ def test_RangeQuery(default, func):
         l = random.randint(2, 100)
 
         arr = [random.randint(-1000, 1000) for _ in range(l)]
-        range_query = pyrival.data_structures.RangeQuery(arr, func)
+        range_query = RangeQuery(arr, func)
 
         q = random.randint(0, 100)
         for _ in range(q):

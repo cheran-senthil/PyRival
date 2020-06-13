@@ -1,6 +1,6 @@
 import random
 
-import pyrival.algebra
+from pyrival.discrete_log import *
 
 # Good problem to test discrete log
 # https://codeforces.com/gym/101853/problem/G
@@ -17,7 +17,7 @@ def test_discrete_log_corner_cases(limit=100):
     for a in range(limit):
         for b in range(limit):
             for m in range(1, limit):
-                x = pyrival.algebra.discrete_log(a, b, m)
+                x = discrete_log(a, b, m)
                 y = brute(a, b, m)
                 assert x == y
 
@@ -30,5 +30,5 @@ def test_discrete_log_random_cases(trials=200):
         x = random.randint(0, 10**9)
         b = pow(a, x, m)
 
-        y = pow(a, pyrival.algebra.discrete_log(a, b, m), m)
+        y = pow(a, discrete_log(a, b, m), m)
         assert y == b

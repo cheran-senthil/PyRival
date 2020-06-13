@@ -1,14 +1,6 @@
-from .algebra import *
-from .combinatorics import *
-from .data_structures import *
-from .geometry import *
-from .graphs import *
-from .linear_algebra import *
-from .numerical import *
-from .strings import *
-from .version import version
+from .version import version as __version__
 
-__version__ = version
-
-__all__ = (algebra.__all__ + combinatorics.__all__ + data_structures.__all__ + geometry.__all__ + graphs.__all__ +
-           linear_algebra.__all__ + numerical.__all__ + strings.__all__)
+import os as _os
+for _s in ('algebra', 'combinatorics', 'data_structures', 'geometry', 
+          'graphs', 'linear_algebra', 'numerical', 'strings', 'misc', 'tools'):
+    __path__.append(_os.path.join(_os.path.dirname(__file__), _s))
