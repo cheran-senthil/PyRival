@@ -2,7 +2,7 @@
 This template is useful for problems involving a prime modulo. 
 The template contains a fast function for calculating a * b % MOD, 
 as well as precalculating factorial, inverse factorial, modular inverse
-for all numbers <= maxN in O(maxN) time.
+for all integers < maxN in O(maxN) time.
 
 With this template, one can for example quickly calculate n choose k mod MOD,
 or calculate matrix multiplication mod MOD.
@@ -38,7 +38,7 @@ maxN = 10 ** 6
 modmul = fast_modder(MOD)
 
 def mod_precalc():
-    """ Calculates fac, inv_fac and mod_inv for i <= maxN in O(maxN) time """
+    """ Calculates fac, inv_fac and mod_inv for i < maxN in O(maxN) time """
     assert maxN <= MOD
     
     fac = [1] * maxN
