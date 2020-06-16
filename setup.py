@@ -10,6 +10,11 @@ setup(
         "write_to": "pyrival/version.py"
     },
     url="https://github.com/cheran-senthil/PyRival",
+    project_urls={
+        "Bug Tracker": "https://github.com/cheran-senthil/PyRival/issues",
+        "Documentation": "https://pyrival.readthedocs.io/",
+        "Source Code": "https://github.com/cheran-senthil/PyRival",
+    },
     author="Cheran Senthil",
     author_email="cheran.v.senthil@gmail.com",
     classifiers=[
