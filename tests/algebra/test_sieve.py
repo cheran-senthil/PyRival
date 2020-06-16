@@ -1,5 +1,4 @@
-import pyrival.algebra
-
+from pyrival.sieve import *
 
 def test_prime_list(primes):
-    assert primes == pyrival.algebra.prime_list(primes[-1])
+    assert primes == prime_list(primes[-1])

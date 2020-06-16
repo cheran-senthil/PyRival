@@ -1,10 +1,10 @@
 import random
 
-import pyrival.misc
+from pyrival.bootstrap import *
 
 
 def test_bootstrap():
-    @pyrival.misc.bootstrap
+    @bootstrap
     def func(n):
         if n:
             yield (yield func(n - 1)) + n

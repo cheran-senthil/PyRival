@@ -2,8 +2,7 @@ import io
 import random
 import sys
 
-import pyrival.misc
-
+from pyrival.readnumbers import *
 
 def test_readnumbers(monkeypatch):
     nums = [random.randint(-10000, 10000) for _ in range(100000)]
@@ -12,6 +11,6 @@ def test_readnumbers(monkeypatch):
     stream = io.TextIOWrapper(io.BytesIO(string.encode("ascii")))
     monkeypatch.setattr(sys, "stdin", stream)
 
-    read_nums = pyrival.misc.readnumbers()
+    read_nums = readnumbers()
 
     assert nums == read_nums

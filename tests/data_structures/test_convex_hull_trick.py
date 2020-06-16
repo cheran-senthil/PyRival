@@ -1,4 +1,4 @@
-from pyrival.data_structures import convex_hull_trick, max_query
+from pyrival.convex_hull_trick import convex_hull_trick, max_query
 
 def brute(K, M, X):
     assert(len(K) == len(M))
