@@ -1,5 +1,6 @@
 from pyrival.maximum_matching import *
 
+
 def test_maximum_matching__corner_cases():
     edges = []
     for e in [(0, 1), (1, 2), (2, 0)]:

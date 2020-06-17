@@ -1,7 +1,8 @@
 from pyrival.convex_hull_trick import convex_hull_trick, max_query
 
+
 def brute(K, M, X):
-    assert(len(K) == len(M))
+    assert (len(K) == len(M))
 
     out = []
     for x in X:
@@ -12,7 +13,7 @@ def brute(K, M, X):
     return out
 
 
-def test_convex_line_hull_integral(t = 50000):
+def test_convex_line_hull_integral(t=50000):
     import random
     random.seed(1337)
 
@@ -25,12 +26,13 @@ def test_convex_line_hull_integral(t = 50000):
         brute_ans = brute(K, M, X)
 
         hull_i, hull_x = convex_hull_trick(K, M)
-        assert(len(hull_i) - 1 == len(hull_x))
+        assert (len(hull_i) - 1 == len(hull_x))
 
         ans = [max_query(x, K, M, hull_i, hull_x) for x in X]
-        assert(ans == brute_ans)
+        assert (ans == brute_ans)
 
-def test_convex_line_hull_float(t = 50000):
+
+def test_convex_line_hull_float(t=50000):
     import random
     random.seed(1337)
 
@@ -42,9 +44,9 @@ def test_convex_line_hull_float(t = 50000):
 
         brute_ans = brute(K, M, X)
 
-        hull_i, hull_x = convex_hull_trick(K, M, integer = False)
-        assert(len(hull_i) - 1 == len(hull_x))
+        hull_i, hull_x = convex_hull_trick(K, M, integer=False)
+        assert (len(hull_i) - 1 == len(hull_x))
 
         ans = [max_query(x, K, M, hull_i, hull_x) for x in X]
-        assert(len(ans) == len(brute_ans))
-        assert(all(abs(x - y) <= 1e-9 for x,y in zip(ans, brute_ans)))
+        assert (len(ans) == len(brute_ans))
+        assert (all(abs(x - y) <= 1e-9 for x, y in zip(ans, brute_ans)))

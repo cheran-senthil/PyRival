@@ -2,6 +2,7 @@ import random
 
 from pyrival.as_integer_ratio import *
 
+
 def test_as_integer_ratio_0():
     num, den = as_integer_ratio(0, 53)
     assert abs(num / den) <= 1e-53
