@@ -1,8 +1,8 @@
 import argparse
 import asyncio
+import pathlib
 import shlex
 import sys
-import pathlib
 from asyncio.subprocess import PIPE
 
 

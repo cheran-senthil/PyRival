@@ -1,6 +1,9 @@
 from __future__ import division
 
-def convex_hull_trick(K, M, integer = True):
+from bisect import bisect_left
+
+
+def convex_hull_trick(K, M, integer=True):
     """
     Given lines on the form y = K[i] * x + M[i] this function returns intervals,
     such that on each interval the convex hull is made up of a single line.
@@ -14,15 +17,15 @@ def convex_hull_trick(K, M, integer = True):
         hull_x: interval j and j + 1 is separated by x = hull_x[j], (hull_x[j] is the last x in interval j)
     """
     if integer:
-        intersect = lambda i,j: (M[j] - M[i]) // (K[i] - K[j])
+        intersect = lambda i, j: (M[j] - M[i]) // (K[i] - K[j])
     else:
-        intersect = lambda i,j: (M[j] - M[i]) / (K[i] - K[j])
-    
+        intersect = lambda i, j: (M[j] - M[i]) / (K[i] - K[j])
+
     # assert len(K) == len(M)
-    
+
     hull_i = []
     hull_x = []
-    order = sorted(range(len(K)), key = K.__getitem__)
+    order = sorted(range(len(K)), key=K.__getitem__)
     for i in order:
         while True:
             if not hull_i:
@@ -44,8 +47,8 @@ def convex_hull_trick(K, M, integer = True):
                     break
     return hull_i, hull_x
 
-from bisect import bisect_left
+
 def max_query(x, K, M, hull_i, hull_x):
-    """ Find maximum value at x in O(log n) time """ 
+    """ Find maximum value at x in O(log n) time """
     i = hull_i[bisect_left(hull_x, x)]
     return K[i] * x + M[i]
