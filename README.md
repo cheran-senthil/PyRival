@@ -154,8 +154,3 @@
   - Longest Increasing Subsequence
   - K-th Order Statistic
 </details>
-
-##
-
-### Apache License 2.0
-  Copyright (c) 2020 Cheran Senthilkumar
