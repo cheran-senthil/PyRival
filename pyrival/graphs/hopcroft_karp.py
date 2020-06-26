@@ -4,13 +4,13 @@ Produces a maximum cardinality matching of a bipartite graph
 Example:
 
  0---0
-  \   
+  \
    \
     \
  1---1
   \ /
    /
-  / \ 
+  / \
  2   2
     /
    /
@@ -28,9 +28,9 @@ Example:
 
 Meaning
  0---0
-    
+
  1---1
-  
+
  2   2
     /
    /

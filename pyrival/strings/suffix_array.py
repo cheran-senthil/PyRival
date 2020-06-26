@@ -1,4 +1,4 @@
-""" 
+"""
 Calculates the suffix array and LCP array in O(n) time
 
 Example:
@@ -77,7 +77,7 @@ def SAIS(A):
 
 def KASAI(A, SA):
     """
-    Calculates LCP array in O(n) time 
+    Calculates LCP array in O(n) time
     Input:
     String A and its suffix array SA
     """

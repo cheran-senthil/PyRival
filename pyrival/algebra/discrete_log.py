@@ -1,6 +1,6 @@
 def discrete_log(a, b, mod):
     """
-    Returns smallest x > 0 s.t. pow(a, x, mod) == b or None if no such x exists. 
+    Returns smallest x > 0 s.t. pow(a, x, mod) == b or None if no such x exists.
     Note: works even if a and mod are not coprime.
     """
     n = int(mod**0.5) + 1
