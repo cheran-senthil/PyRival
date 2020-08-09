@@ -1,5 +1,5 @@
 from itertools import product
-from random import choice, randint
+from random import choice, randrange
 from string import ascii_lowercase
 
 from pyrival.strings.z_algorithm import z_function
@@ -19,7 +19,7 @@ def test_z_algorithm__large_cases():
 
         z_array = z_function(text)
         for _ in range(100):
-            i = randint(0, n - 1)
+            i = randrange(n)
             assert z_array[i] == _get_lcp(text, i)
 
     n = 10**6
@@ -28,7 +28,7 @@ def test_z_algorithm__large_cases():
 
     z_array = z_function(text)
     for _ in range(100):
-        i = randint(0, n - 1)
+        i = randrange(n)
         assert z_array[i] == _get_lcp(text, i)
 
 
