@@ -6,10 +6,10 @@ from pyrival.strings.z_algorithm import z_function
 
 
 def test_z_algorithm__corner_cases():
-    for c in range(1, 4):
-        for n in range(1, 11):
-            for text in _generate_words(ascii_lowercase[:c], n):
-                assert z_function(text) == [_get_lcp(text, i) for i in range(n)]
+    for n in range(1, 11):
+        for word in product('abc', repeat=n):
+            word = ''.join(c for c in word)
+            assert z_function(word) == [_get_lcp(word, i) for i in range(n)]
 
 
 def test_z_algorithm__large_cases():
@@ -40,8 +40,3 @@ def _get_lcp(text, i):
         z += 1
 
     return z
-
-
-def _generate_words(char_set, length):
-    for word in product(char_set, repeat=length):
-        yield ''.join(c for c in word)
