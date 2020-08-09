@@ -1,25 +1,25 @@
 
-def z_function(text):
+def z_function(S):
     """
     Z Algorithm in O(n)
-    :param text: text string to process
-    :return: the z_array, where z_array[i] = length of the longest common prefix of text[i:] and text
+    :param S: text string to process
+    :return: the Z array, where Z[i] = length of the longest common prefix of text[i:] and text
     """
 
-    n = len(text)
-    z_array = [0] * n
+    n = len(S)
+    Z = [0] * n
     l = r = 0
 
     for i in range(1, n):
-        z = z_array[i - l]
+        z = Z[i - l]
         if i + z >= r:
             z = max(r - i, 0)
-            while i + z < n and text[z] == text[i + z]:
+            while i + z < n and S[z] == S[i + z]:
                 z += 1
 
             l, r = i, i + z
 
-        z_array[i] = z
+        Z[i] = z
 
-    z_array[0] = n
-    return z_array
+    Z[0] = n
+    return Z
