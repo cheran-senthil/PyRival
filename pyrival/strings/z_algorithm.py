@@ -7,7 +7,7 @@ def z_function(text):
     """
 
     n = len(text)
-    z_array = [0 for _ in range(n)]
+    z_array = [0] * n
     l = r = 0
 
     for i in range(1, n):
@@ -23,4 +23,3 @@ def z_function(text):
 
     z_array[0] = n
     return z_array
-
