@@ -3,7 +3,7 @@ def z_function(S):
     """
     Z Algorithm in O(n)
     :param S: text string to process
-    :return: the Z array, where Z[i] = length of the longest common prefix of text[i:] and text
+    :return: the Z array, where Z[i] = length of the longest common prefix of S[i:] and S
     """
 
     n = len(S)
