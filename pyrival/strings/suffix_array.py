@@ -1,4 +1,4 @@
-""" 
+"""
 Calculates the suffix array and LCP array in O(n) time
 
 Example:
@@ -12,6 +12,7 @@ Example:
 
 """
 
+
 def SAIS(A):
     """
     Calculates suffix array in O(len(A) + max(A))
@@ -19,16 +20,17 @@ def SAIS(A):
     Int list A with A[i] >= 0 for all i
     """
     n = len(A)
-    buckets = [0]*(max(A) + 2)
+    buckets = [0] * (max(A) + 2)
     for a in A:
         buckets[a + 1] += 1
     for b in range(1, len(buckets)):
         buckets[b] += buckets[b - 1]
-    isL = [1]*n
+    isL = [1] * n
     for i in reversed(range(n - 1)):
         isL[i] = +(A[i] > A[i + 1]) if A[i] != A[i + 1] else isL[i + 1]
+
     def induced_sort(LMS):
-        SA = [-1]*(n)
+        SA = [-1] * (n)
         SA.append(n)
         endpoint = buckets[1:]
         for j in reversed(LMS):
@@ -48,6 +50,7 @@ def SAIS(A):
                 endpoint[A[j]] -= 1
                 SA[endpoint[A[j]]] = j
         return SA
+
     isLMS = [+(i and isL[i - 1] and not isL[i]) for i in range(n)]
     isLMS.append(1)
     LMS = [i for i in range(n) if isLMS[i]]
@@ -71,17 +74,18 @@ def SAIS(A):
         LMS = [LMS[i] for i in SAIS([SA[i] for i in LMS])]
     return induced_sort(LMS)
 
+
 def KASAI(A, SA):
     """
-    Calculates LCP array in O(n) time 
+    Calculates LCP array in O(n) time
     Input:
     String A and its suffix array SA
     """
     n = len(A)
-    rank = [0]*n
+    rank = [0] * n
     for i in range(n):
         rank[SA[i]] = i
-    LCP = [0]*(n - 1)
+    LCP = [0] * (n - 1)
     k = 0
     for i in range(n):
         SAind = rank[i]

@@ -1,7 +1,6 @@
 import itertools
 from random import randint
 
-
 _DEFAULT_PRIME = 1073750017
 
 

@@ -2,6 +2,7 @@ import random
 
 from pyrival.modinv import *
 
+
 def test_modinv():
     for _ in range(10000):
         a = random.randint(1, 10000)

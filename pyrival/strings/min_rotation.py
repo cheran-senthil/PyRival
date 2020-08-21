@@ -1,6 +1,6 @@
 def least_rotation(s):
     a, n = 0, len(s)
-    s += s
+    s = s + s
 
     for b in range(n):
         for i in range(n):

@@ -2,6 +2,7 @@ import random
 
 from pyrival.iroot import *
 
+
 def test_iroot():
     for _ in range(10000):
         k = random.randint(1, 10)

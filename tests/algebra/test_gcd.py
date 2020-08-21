@@ -3,6 +3,7 @@ import random
 
 from pyrival.gcd import *
 
+
 def test_gcd():
     for _ in range(10000):
         x, y = random.randint(1, 1000), random.randint(1, 1000)

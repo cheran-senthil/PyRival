@@ -4,6 +4,7 @@ import sys
 
 from pyrival.readnumbers import *
 
+
 def test_readnumbers(monkeypatch):
     nums = [random.randint(-10000, 10000) for _ in range(100000)]
 

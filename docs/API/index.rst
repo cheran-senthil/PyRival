@@ -1,7 +1,0 @@
-API Reference
-*************
-
-.. toctree::
-   :glob:
-
-   *

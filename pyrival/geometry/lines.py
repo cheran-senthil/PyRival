@@ -1,7 +1,6 @@
 import itertools
 import math
 
-
 # 2d line: ax + by + c = 0  is  (a, b, c)
 
 #          ax + by + c = 0     ((a, b, c),

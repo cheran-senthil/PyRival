@@ -1,8 +1,7 @@
 import random
 
-from pyrival.RangeQuery import *
-
 import pytest
+from pyrival.RangeQuery import *
 
 params = [
     (float('inf'), min),

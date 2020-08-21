@@ -26,6 +26,7 @@ def test_ordersort_reverse():
 
         assert [arr[i] for i in got] == [arr[i] for i in expected]
 
+
 def test_multikey_ordersort():
     for _ in range(10000):
         l = random.randint(1, 100)
@@ -37,6 +38,7 @@ def test_multikey_ordersort():
         expected = sorted(range(l), key=arr.__getitem__)
 
         assert [arr[i] for i in got] == [arr[i] for i in expected]
+
 
 def test_long_ordersort():
     for _ in range(1000):

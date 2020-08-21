@@ -4,13 +4,13 @@ Produces a maximum cardinality matching of a bipartite graph
 Example:
 
  0---0
-  \   
+  \
    \
     \
  1---1
   \ /
    /
-  / \ 
+  / \
  2   2
     /
    /
@@ -28,9 +28,9 @@ Example:
 
 Meaning
  0---0
-    
+
  1---1
-  
+
  2   2
     /
    /
@@ -44,10 +44,10 @@ def hopcroft_karp(graph, n, m):
     """
     Maximum bipartite matching using Hopcroft-Karp algorithm, running in O(|E| sqrt(|V|))
     """
-    assert(n == len(graph))
-    match1 = [-1]*n
-    match2 = [-1]*m
-     
+    assert (n == len(graph))
+    match1 = [-1] * n
+    match2 = [-1] * m
+
     # Find a greedy match for possible speed up
     for node in range(n):
         for nei in graph[node]:
@@ -60,7 +60,7 @@ def hopcroft_karp(graph, n, m):
         depth = [-1] * n
         for node in bfs:
             depth[node] = 0
-     
+
         for node in bfs:
             for nei in graph[node]:
                 next_node = match2[nei]
@@ -74,7 +74,7 @@ def hopcroft_karp(graph, n, m):
             break
         else:
             break
-     
+
         pointer = [len(c) for c in graph]
         dfs = [node for node in range(n) if depth[node] == 0]
         while dfs:

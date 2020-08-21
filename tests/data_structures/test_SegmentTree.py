@@ -1,9 +1,8 @@
 import operator as op
 import random
 
-from pyrival.SegmentTree import *
-
 import pytest
+from pyrival.SegmentTree import *
 
 params = [
     (float('inf'), min),

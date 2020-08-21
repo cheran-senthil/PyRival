@@ -2,6 +2,7 @@ import random
 
 from pyrival.chinese_remainder import *
 
+
 def test_chinese_remainder(primes):
     for _ in range(1000):
         l = random.randint(2, 100)
@@ -9,6 +10,7 @@ def test_chinese_remainder(primes):
         a = [random.randint(0, p[i] - 1) for i in range(l)]
         x = chinese_remainder(a, p)
         assert [x % i for i in p] == a
+
 
 def test_composite_crt():
     for _ in range(1000):

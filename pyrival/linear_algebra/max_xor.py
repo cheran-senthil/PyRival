@@ -24,7 +24,7 @@ def max_xor(A):
     base = []
     how = {}
     reduced_base = {}
-     
+
     for i in range(len(A)):
         a = A[i]
         tmp = 0
@@ -40,7 +40,7 @@ def max_xor(A):
                 break
     x = 0
     tmp = 0
-    for j in sorted(reduced_base, reverse = True):
+    for j in sorted(reduced_base, reverse=True):
         if not x & (1 << j):
             x ^= reduced_base[j]
             tmp ^= how[j]
