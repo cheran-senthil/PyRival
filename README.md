@@ -34,123 +34,125 @@
 <details>
   <summary>Algebra</summary>
 
-  - (Multivariable) Chinese Remainder Theorem
-  - Discrete Logarithm
-  - Least Common Multiple
-  - Integer Factorization
-  - Fast Fourier Transform
-  - Fast Subset Transform
-  - Number Theoretic Transform
-  - Deterministic Miller-Rabin Primality Test
-  - Tonelli–Shanks Algorithm
-  - Generalized Modular Inverse
-  - Euler's Phi Function
-  - Primitive Root
-  - Sieve of Eratosthenes
+  - [(Multivariable) Chinese Remainder Theorem](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/chinese_remainder.py)
+  - [Discrete Logarithm](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/discrete_log.py)
+  - [LCM and GCD](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/gcd.py)
+  - [Integer Factorization](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/factors.py)
+  - [Fast Fourier Transform](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/fft.py)
+  - [Fast Subset Transform](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/fst.py)
+  - [Number Theoretic Transform](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/ntt.py)
+  - [Deterministic Miller-Rabin Primality Test](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/is_prime.py)
+  - [Tonelli–Shanks Algorithm](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/mod_sqrt.py)
+  - [Generalized Modular Inverse](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/modinv.py)
+  - [Euler's Phi Function](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/phi.py)
+  - [Primitive Root](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/primitive_root.py)
+  - [Sieve of Eratosthenes](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/algebra/sieve.py)
 </details>
 
 <details>
   <summary>Data Structures</summary>
 
-  - Bit Array
-  - Binary Indexed (Fenwick) Tree
-  - Fractions
-  - Continued Fractions
-  - Disjoint-Set (Union Find) Data Structure
-  - Generic Nodes
-  - Linked List
-  - Range Query Data Structure
-  - (Lazy) Segment Tree
-  - Persistent Segment Tree
-  - Sorted List
-  - Treap
-  - Trie Tree
-  - 2-satisfiability Template
+  - [Bit Array](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/BitArray.py)
+  - [Binary Indexed (Fenwick) Tree](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/FenwickTree.py)
+  - [Fractions](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/Fraction.py)
+  - [Continued Fractions](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/CFraction.py)
+  - [Disjoint-Set (Union Find) Data Structure](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/DisjointSetUnion.py)
+  - [Generic Nodes](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/Node.py)
+  - [Linked List](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/LinkedList.py)
+  - [Range Query Data Structure](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/RangeQuery.py)
+  - [(Lazy) Segment Tree](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/LazySegmentTree.py)
+  - [Persistent Segment Tree](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/PersistentSegTree.py)
+  - [Sorted List](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/SortedList.py)
+  - [Treap](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/Treap.py)
+  - [Trie Tree](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/Trie.py)
+  - [2-satisfiability Template](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/TwoSat.py)
 </details>
 
 <details>
   <summary>Geometry</summary>
 
-  - Convex Hull
-  - Line Functions
-  - Polygon Functions
-  - Vector Functions
+  - [Convex Hull](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/geometry/convex_hull.py)
+  - [Line Functions](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/geometry/lines.py)
+  - [Polygon Functions](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/geometry/polygons.py)
+  - [Vector Functions](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/geometry/vectors.py)
 </details>
 
 <details>
   <summary>Graphs</summary>
 
-  - Bellman-Ford Algorithm
-  - Breadth First Search
-  - Connected Components Search
-  - Brent's Algorithm for Cycle Detection
-  - Depth First Search
-  - Dijkstra's Algorithm
-  - Eulerian Path
-  - Path Constructor
-  - Floyd-Warshall Algorithm
-  - Bipartite Graph Check
-  - Kruskal's Algorithm with Disjoin Set Union
-  - Prim's Algorithm
-  - Tarjan's Algorithm
-  - Topological Sorting
+  - [Bellman-Ford Algorithm](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/bellman_ford.py)
+  - [Breadth First Search](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/bfs.py)
+  - [Connected Components Search](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/components.py)
+  - [Brent's Algorithm for Cycle Detection](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/cycle_finding.py)
+  - [Depth First Search](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/dfs.py)
+  - [Dijkstra's Algorithm](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/dijkstra.py)
+  - [Eulerian Path](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/euler_walk.py)
+  - [Path Constructor](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/find_path.py)
+  - [Floyd-Warshall Algorithm](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/floyd_warshall.py)
+  - [Bipartite Graph Check](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/is_bipartite.py)
+  - [Kruskal's Algorithm with Disjoin Set Union](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/kruskal.py)
+  - [Prim's Algorithm](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/prim.py)
+  - [Tarjan's Algorithm](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/scc.py)
+  - [Topological Sorting](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/graphs/toposort.py)
 </details>
 
 <details>
   <summary>Combinatorics</summary>
 
-  - General Purpose Numbers
-  - Lucas's Theorem
-  - Partition Function
+  - [General Purpose Numbers](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/combinatorics/combinatorics.py)
+  - [Lucas's Theorem](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/combinatorics/nCr_mod.py)
+  - [Partition Function](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/combinatorics/partitions.py)
 </details>
 
 <details>
   <summary>Linear Algebra</summary>
 
-  - Matrix Arithmetic, Exponentiation, Determinant, and Inverse
-  - Gaussian Elimination
-  - Multivariable Chinese Remainder Theorem
+  - [Matrix Arithmetic, Exponentiation, Determinant, and Inverse](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/linear_algebra/matrix.py)
+  - [Gaussian Elimination](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/linear_algebra/max_xor.py)
+  - [Multivariable Chinese Remainder Theorem](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/linear_algebra/multivariable_crt.py)
 </details>
 
 <details>
   <summary>Numerical</summary>
 
-  - Linear Recurrence Template
-  - Hill Climbing Algorithm
-  - Approximate Integration
-  - Polynomial Interpolation
-  - Integer Roots
-  - Binary Search
+  - [Linear Recurrence Template](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/numerical/berlekamp_massey.py)
+  - [Hill Climbing Algorithm](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/numerical/hill_climbing.py)
+  - [Approximate Integration](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/numerical/integrate.py)
+  - [Polynomial Interpolation](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/numerical/interpolate.py)
+  - [Integer Roots](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/numerical/iroot.py)
+  - [Binary Search](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/numerical/search.py)
 </details>
 
 <details>
   <summary>Strings</summary>
 
-  - Knuth–Morris–Pratt Algorithm
-  - Longest Common/Palindromic Subsequences
-  - Longest Common Substring
-  - Manacher's Algorithm
-  - Lydon Factorization
+  - [Knuth–Morris–Pratt Algorithm](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/strings/kmp.py)
+  - [Longest Common/Palindromic Subsequences](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/strings/lcs.py)
+  - [Longest Common Substring](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/strings/LCSubstr.py)
+  - [Longest Palindromic Substring](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/strings/LPSubstr.py)
+  - [Manacher's Algorithm](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/strings/suffix_array.py)
+  - [Lydon Factorization](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/strings/min_rotation.py)
+  - [Z Algorithm](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/strings/z_algorithm.py)
 </details>
 
 
 <details>
   <summary>Misc</summary>
 
-  - bootstrap for recursion
-  - FastIO
-  - heapq
-  - sorted
-  - py3k compatibility tools
-  - random
-  - str.split for whitespace
-  - Bit Hacks
-  - 32-bit Modular Arithmetic
-  - Memoize Decorators
-  - C++ syle cout
-  - Interactive Runner
-  - Stress Tester
-  - Alpha–Beta Pruning
-  - Longest Increasing Subsequence
-  - K-th Order Statistic
+  - [bootstrap for recursion](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/bootstrap.py)
+  - [FastIO](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/FastIO.py)
+  - [heapq](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/data_structures/Heap.py)
+  - [sorted](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/ordersort.py)
+  - [py3k compatibility tools](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/py3k.py)
+  - [random](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/Random.py)
+  - [str.split for whitespace](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/split.py)
+  - [Bit Hacks](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/bit_hacks.py)
+  - [32-bit Modular Arithmetic](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/mod.py)
+  - [Memoize Decorators](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/memoize.py)
+  - [C++ syle cout](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/ostream.py)
+  - [Interactive Runner](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/tools/interactive_runner.py)
+  - [Stress Tester](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/tools/stress_tester.py)
+  - [Alpha–Beta Pruning](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/alphabeta.py)
+  - [Longest Increasing Subsequence](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/lis.py)
+  - [K-th Order Statistic](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/order_statistic.py)
 </details>
