@@ -26,8 +26,7 @@ class Hashing:
         )
 
     def get_hashes(self, length):
-        mod = self.mod
         return (
-            [(self.f_hash[i + length] - self.f_pow[length] * self.f_hash[i]) % mod for i in range(self._len - length + 1)],
-            [(self.s_hash[i + length] - self.s_pow[length] * self.s_hash[i]) % mod for i in range(self._len - length + 1)],
+            [(self.f_hash[i + length] - self.f_pow[length] * self.f_hash[i]) % self.mod for i in range(self._len - length + 1)],
+            [(self.s_hash[i + length] - self.s_pow[length] * self.s_hash[i]) % self.mod for i in range(self._len - length + 1)],
         )
