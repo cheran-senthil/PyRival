@@ -9,13 +9,13 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu, windows, macOs]
-        python-version: [3.8, pypy3]
+        python-version: [3.9, pypy3]
 
     steps:
     - uses: actions/checkout@v2
 
     - name: Install Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1.1.1
+      uses: actions/setup-python@v2.1.4
       with:
         python-version: ${{ matrix.python-version }}
 
