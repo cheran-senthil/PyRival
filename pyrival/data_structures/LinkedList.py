@@ -32,7 +32,7 @@ class LinkedList:
         return node
 
     def __getitem__(self, index):
-        node = self.__get_node(index)
+        node = self.get_node(index)
         return node.value
 
     def __len__(self):
@@ -54,15 +54,25 @@ class LinkedList:
             self.__len -= 1
 
     def __repr__(self):
-        if not self:
-            return "{}()".format(self.__class__.__name__)
-        list_ = [self.__get_node(i).value for i in range(len(self))]
-        return "{}({})".format(self.__class__.__name__, list_)
+        return str(self.to_list())
+
+    def to_list(self):
+        elts = []
+        curr = self.sentinel.next
+        while curr != self.sentinel:
+            elts.append(curr.value)
+            curr = curr.next
+        return elts
 
     def append(self, value):
         sentinel = self.sentinel
         node = Node(value)
         self.insert_between(node, sentinel.prev, sentinel)
+
+    def appendleft(self, value):
+        sentinel = self.sentinel
+        node = Node(value)
+        self.insert_between(node, sentinel, sentinel.next)
 
     def insert(self, index, value):
         sentinel = self.sentinel
@@ -87,3 +97,17 @@ class LinkedList:
             right_node.prev = node
         else:
             raise IndexError
+
+    def merge_left(self, other):
+        sentinel = self.sentinel
+        sentinel.next.prev = other.sentinel.prev
+        other.sentinel.prev.next = sentinel.next
+        sentinel.next = other.sentinel.next
+        sentinel.next.prev = sentinel
+
+    def merge_right(self, other):
+        sentinel = self.sentinel
+        sentinel.prev.next = other.sentinel.next
+        other.sentinel.next.prev = sentinel.prev
+        sentinel.prev = other.sentinel.prev
+        sentinel.prev.next = sentinel
