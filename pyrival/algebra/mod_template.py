@@ -8,7 +8,7 @@ or calculate matrix multiplication mod MOD.
 """
 
 def fast_modder(MOD):
-    """ Returns function modmul(a,b) that quickly calculates a * b % MOD, assuming 0 <= a,b < MOD """
+    """ Returns function modmul(a,b,c=0) that quickly calculates (a * b + c) % MOD, assuming 0 <= a,b < MOD """
     import sys, platform
     impl = platform.python_implementation()
     maxs = sys.maxsize
