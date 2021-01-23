@@ -3,7 +3,6 @@ This template is useful for problems involving a prime modulo.
 The template contains a fast function for calculating a * b % MOD, 
 as well as precalculating factorial, inverse factorial, modular inverse
 for all integers < maxN in O(maxN) time.
-
 With this template, one can for example quickly calculate n choose k mod MOD,
 or calculate matrix multiplication mod MOD.
 """
@@ -18,17 +17,16 @@ def fast_modder(MOD):
         intsub = __pypy__.intop.int_sub
         intmul = __pypy__.intop.int_mul
         intmulmod = __pypy__.intop.int_mulmod
-        if MOD < 2**30:
+        if MOD < 2**30 - 1000:
             MODINV = 1.0 / MOD
-            def modmul(a, b):
-                x = intsub(intmul(a,b), intmul(MOD, int(MODINV * a * b)))
-                return x - MOD if x >= MOD else (x if x >= 0 else x + MOD)
+            def modmul(a, b, c=0):
+                return (intsub(intmul(a,b), intmul(MOD, int(MODINV * a * b))) + c) % MOD
         else:
-            def modmul(a, b):
-                return intmulmod(a, b, MOD)
+            def modmul(a, b, c=0):
+                return (intmulmod(a, b, MOD) + c) % MOD
     else:
-        def modmul(a, b):
-            return a * b % MOD
+        def modmul(a, b, c=0):
+            return (a * b + c) % MOD
     return modmul
 
 
@@ -49,7 +47,7 @@ def mod_precalc():
     for i in reversed(range(1, maxN)):
         inv_fac[i - 1] = modmul(inv_fac[i], i)
 
-    inv_mod = [modmul(fac[i], inv_fac[i - 1]) for i in range(maxN)]
+    inv_mod = [modmul(inv_fac[i], fac[i - 1]) for i in range(maxN)]
 
     return fac, inv_fac, inv_mod
 
@@ -63,9 +61,6 @@ def choose(n,k):
         return 0
     return modmul(modmul(fac[n], invfac[k]), invfac[n-k])
 
-def redu(x):
-    return x if x < MOD else x - MOD
-
 def matrix_modmul(A, B):
     """ Multiplies matrices A and B, assuming 0 <= A[i][j], B[i][j] < MOD """
     assert len(A[0]) == len(B)
@@ -76,6 +71,6 @@ def matrix_modmul(A, B):
             Aik = Ai[k]
             Bk = B[k]
             for j in range(len(Bk)):
-                tmp[j] = redu(tmp[j], modmul(Aik, Bk[j]))
+                tmp[j] = modmul(Aik, Bk[j], tmp[j])
         C.append(tmp)
     return C
