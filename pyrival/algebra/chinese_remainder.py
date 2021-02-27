@@ -28,7 +28,7 @@ def extended_gcd(a, b):
 
 
 def composite_crt(b, m):
-    """returns x s.t. x = a[i] (mod m[i]) for all i"""
+    """returns x s.t. x = b[i] (mod m[i]) for all i"""
     x, m_prod = 0, 1
     for bi, mi in zip(b, m):
         g, s, _ = extended_gcd(m_prod, mi)
