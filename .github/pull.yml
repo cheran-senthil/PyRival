@@ -1,5 +1,5 @@
 version: "1"
 rules:
   - base: master
-    upstream: cheran-senthil/PyRival.git:master    # change `wei` to the owner of upstream repo
+    upstream: cheran-senthil:master    # change `wei` to the owner of upstream repo
     mergeMethod: hardreset
