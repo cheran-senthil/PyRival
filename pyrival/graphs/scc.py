@@ -1,8 +1,16 @@
-def find_SCC(coupl):
+"""
+Given a directed graph, find_SCC returns a list of lists containing 
+the strongly connected components in topological order.
+
+Note that this implementation can be also be used to check if a directed graph is a
+DAG, and in that case it can be used to find the topological ordering of the nodes.
+"""
+
+def find_SCC(graph):
     SCC, S, P = [], [], []
-    depth = [0] * len(coupl)
+    depth = [0] * len(graph)
  
-    stack = list(range(len(coupl)))
+    stack = list(range(len(graph)))
     while stack:
         node = stack.pop()
         if node < 0:
@@ -20,5 +28,5 @@ def find_SCC(coupl):
             P.append(len(S))
             depth[node] = len(S)
             stack.append(~node)
-            stack += coupl[node]
+            stack += graph[node]
     return SCC[::-1]
