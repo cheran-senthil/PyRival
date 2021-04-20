@@ -1,8 +1,12 @@
 from heapq import heappop, heappush
 
 
-def dijkstra(n, graph, start):
-    """ Uses Dijkstra's algortihm to find the shortest path between in a graph. """
+def dijkstra(graph, start):
+    """ 
+        Uses Dijkstra's algortihm to find the shortest path from node start
+        to all other nodes in a directed weighted graph.
+    """
+    n = len(graph)
     dist, parents = [float("inf")] * n, [-1] * n
     dist[start] = 0
 
