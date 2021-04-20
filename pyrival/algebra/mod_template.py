@@ -1,14 +1,17 @@
 """
-This template is useful for problems involving a prime modulo. 
-The template contains a fast function for calculating a * b % MOD, 
-as well as precalculating factorial, inverse factorial, modular inverse
-for all integers < maxN in O(maxN) time.
-With this template, one can for example quickly calculate n choose k mod MOD,
-or calculate matrix multiplication mod MOD.
+A template for usefull stuff involving prime modulo. It contains:
+1. Fast calculation of (a * b + c) % MOD (Especially usefull for PyPy users on windows).
+2. Calculation of factorial, inverse factorial and modular inverse
+   for all integers < maxN in O(maxN) time.
+3. Calculate n choose k in O(1) time using precalculated fac. and inv. fac.
+4. Multiply matrices mod MOD.
 """
+MOD = 10 ** 9 + 7 # needs to be prime!
+maxN = 10 ** 6    # needs to be <= MOD
+
 
 def fast_modder(MOD):
-    """ Returns function modmul(a,b,c=0) that quickly calculates (a * b + c) % MOD, assuming 0 <= a,b < MOD """
+    """ Returns a function modmul(a,b,c=0) that quickly calculates (a * b + c) % MOD, assuming 0 <= a,b < MOD """
     import sys, platform
     impl = platform.python_implementation()
     maxs = sys.maxsize
@@ -29,37 +32,37 @@ def fast_modder(MOD):
             return (a * b + c) % MOD
     return modmul
 
-
-""" Precalculate factorial, modular inverse of factorial and modular inverse """
-MOD = 10 ** 9 + 7 # needs to be prime!
-maxN = 10 ** 6
 modmul = fast_modder(MOD)
 
-def mod_precalc():
-    """ Calculates fac, inv_fac and mod_inv for i < maxN in O(maxN) time """
-    assert maxN <= MOD
+
+""" Precalculate factorial, inverse factorial and modular inverse """
+
+def mod_precalc(n):
+    """ Calculates fac, inv_fac and (modular) inv for i < n in O(n) time """
+    assert n <= MOD
     
-    fac = [1] * maxN
-    for i in range(2, maxN):
+    fac = [1] * n
+    for i in range(2, n):
         fac[i] = modmul(fac[i - 1], i)
 
-    inv_fac = [pow(fac[-1], MOD - 2, MOD)] * maxN
-    for i in reversed(range(1, maxN)):
+    inv_fac = [pow(fac[-1], MOD - 2, MOD)] * n
+    for i in reversed(range(1, n)):
         inv_fac[i - 1] = modmul(inv_fac[i], i)
 
-    inv_mod = [modmul(inv_fac[i], fac[i - 1]) for i in range(maxN)]
+    inv = [modmul(inv_fac[i], fac[i - 1]) for i in range(n)]
 
-    return fac, inv_fac, inv_mod
+    return fac, inv_fac, inv
 
-fac, inv_fac, inv_mod = mod_precalc()
+fac, inv_fac, inv = mod_precalc(maxN)
+
 
 """ Useful functions involving modulo """
 
-def choose(n,k):
+def choose(n, k):
     """ Calculate n choose k in O(1) time """
     if k < 0 or k > n:
         return 0
-    return modmul(modmul(fac[n], invfac[k]), invfac[n-k])
+    return modmul(modmul(fac[n], fac_inv[k]), fac_inv[n - k])
 
 def matrix_modmul(A, B):
     """ Multiplies matrices A and B, assuming 0 <= A[i][j], B[i][j] < MOD """
