@@ -177,7 +177,7 @@ def treap_builder(sorted_data):
             rc = right_child[ind]
 
             if lc and treap_prior[lc] > treap_prior[ind]:
-                if rc and treap_prior[rc] > treap_prior[rc]:
+                if rc and treap_prior[rc] > treap_prior[ind]:
                     treap_prior[ind], treap_prior[rc] = treap_prior[rc], treap_prior[ind]
                     ind = rc
                 else:
