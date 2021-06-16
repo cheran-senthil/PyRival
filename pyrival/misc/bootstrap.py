@@ -1,6 +1,24 @@
 from types import GeneratorType
 
 
+def bootstrap_memodict(f):
+    memo = {}
+    def wrappedfunc(key):
+        if key in memo: yield memo[key]
+        ret = memo[key] = (yield f(key))
+        yield ret
+    return wrappedfunc
+
+
+def bootstrap_memoize(f):
+    memo = {}
+    def wrappedfunc(*key):
+        if key in memo: yield memo[key]
+        ret = memo[key] = (yield f(*key))
+        yield ret
+    return wrappedfunc
+
+
 def bootstrap(f, stack=[]):
     def wrappedfunc(*args, **kwargs):
         if stack:
