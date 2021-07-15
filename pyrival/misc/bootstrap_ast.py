@@ -56,6 +56,10 @@ class Bootstrap(ast.NodeTransformer):
 bootstrap = Bootstrap()
 
 
+def main():
+    pass
+
+
 if __name__ == "__main__":
     source = inspect.getsource(sys.modules[__name__])
     tree = bootstrap.visit(ast.parse(source))
