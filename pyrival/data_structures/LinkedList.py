@@ -13,7 +13,9 @@ class Node:
 class LinkedList:
     def __init__(self, iterable=None):
         self.sentinel = Node(None)
+        # at the top next left
         self.sentinel.next = self.sentinel
+        # at the top previous right
         self.sentinel.prev = self.sentinel
         self.__len = 0
         if iterable is not None:
@@ -44,6 +46,9 @@ class LinkedList:
 
     def __delitem__(self, index):
         node = self.get_node(index)
+        self.del_node(node)
+
+    def del_node(self, node):
         if node:
             node.prev.next = node.next
             if node.next:
@@ -71,6 +76,7 @@ class LinkedList:
     def appendleft(self, value):
         node = Node(value)
         self.insert_between(node, self.sentinel, self.sentinel.next)
+        return node
 
     def insert(self, index, value):
         new_node = Node(value)
@@ -106,3 +112,8 @@ class LinkedList:
         other.sentinel.next.prev = self.sentinel.prev
         self.sentinel.prev = other.sentinel.prev
         self.sentinel.prev.next = self.sentinel
+
+    def pop_node(self):
+        value = self.sentinel.prev.value
+        self.del_node(self.sentinel.prev)
+        return value
