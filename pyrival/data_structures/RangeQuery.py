@@ -1,3 +1,4 @@
+#this is a random comment
 class RangeQuery:
     def __init__(self, data, func=min):
         self.func = func
