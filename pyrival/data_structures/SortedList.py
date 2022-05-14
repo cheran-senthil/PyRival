@@ -82,11 +82,10 @@ class SortedList:
     
     def pop(self, k=0):
         i,j = self._find_kth(k)
-        x = self.micros[i].pop(j)
         self.size -= 1
         self.micro_size[i] -= 1
         self.fenwick.update(i, -1)
-        return x
+        return self.micros[i].pop(j)
     
     def __getitem__(self, k):
         i,j = self._find_kth(k)
