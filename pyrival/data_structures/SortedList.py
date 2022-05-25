@@ -95,7 +95,7 @@ class SortedList:
         i = lower_bound(self.macro, x)
         j = lower_bound(self.micros[i], x)
         i,j = (i, j) if j < self.micro_size[i] else (i + 1, 0)
-        return i < len(self.micros) and j < self.micros_size[i] and self.micros[i][j] == x
+        return i < len(self.micros) and j < self.micro_size[i] and self.micros[i][j] == x
     
     def lower_bound(self, x):
         i = lower_bound(self.macro, x)
