@@ -22,7 +22,7 @@ def test_TwoSat():
                 fixed.append(i)
 
         pairs = []
-        for _ in range(n * n // 10):
+        for _ in range(m):
             a = random.randrange(-n, n)
             b = random.randrange(-n, n)
             if A[a] or A[b]:
