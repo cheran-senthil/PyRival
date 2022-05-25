@@ -90,12 +90,12 @@ class SortedList:
     def __getitem__(self, k):
         i,j = self._find_kth(k)
         return self.micros[i][j]
+    
+    def count(self, x):
+        return self.upper_bound(x) - self.lower_bound(x)
  
     def __contains__(self, x):
-        i = lower_bound(self.macro, x)
-        j = lower_bound(self.micros[i], x)
-        i,j = (i, j) if j < self.micro_size[i] else (i + 1, 0)
-        return i < len(self.micros) and j < self.micro_size[i] and self.micros[i][j] == x
+        return self.count(x) > 0
     
     def lower_bound(self, x):
         i = lower_bound(self.macro, x)
@@ -116,6 +116,3 @@ class SortedList:
     
     def __repr__(self):
         return str(list(self))
-
-    def count(self, x):
-        return self.upper_bound(x) - self.lower_bound(x)
