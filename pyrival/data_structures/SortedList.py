@@ -60,16 +60,17 @@ class FenwickTree:
         return idx + 1, k
 
 
-block_size = 700
-
-
 class SortedList:
-    def __init__(self):
+    block_size = 700
+
+    def __init__(self, iterable=()):
         self.macro = []
         self.micros = [[]]
         self.micro_size = [0]
         self.fenwick = FenwickTree([0])
         self.size = 0
+        for item in iterable:
+            self.insert(item)
 
     def insert(self, x):
         i = lower_bound(self.macro, x)
@@ -78,13 +79,13 @@ class SortedList:
         self.size += 1
         self.micro_size[i] += 1
         self.fenwick.update(i, 1)
-        if len(self.micros[i]) >= block_size:
-            self.micros[i : i + 1] = self.micros[i][: block_size >> 1], self.micros[i][block_size >> 1 :]
-            self.micro_size[i : i + 1] = block_size >> 1, block_size >> 1
+        if len(self.micros[i]) >= self.block_size:
+            self.micros[i:i + 1] = self.micros[i][:self.block_size >> 1], self.micros[i][self.block_size >> 1:]
+            self.micro_size[i:i + 1] = self.block_size >> 1, self.block_size >> 1
             self.fenwick = FenwickTree(self.micro_size)
             self.macro.insert(i, self.micros[i + 1][0])
 
-    def pop(self, k=0):
+    def pop(self, k=-1):
         i, j = self._find_kth(k)
         self.size -= 1
         self.micro_size[i] -= 1
