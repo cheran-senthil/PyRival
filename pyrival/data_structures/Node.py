@@ -5,6 +5,4 @@ class Node:
         self.prev = None
 
     def __repr__(self):
-        if not self:
-            return "{}()".format(self.__class__.__name__)
-        return "{}({})".format(self.__class__.__name__, self.value)
+        return f"{self.__class__.__name__}({self.value})" if self else f"{self.__class__.__name__}()"

@@ -41,10 +41,7 @@ def pivot(A, m):
 def is_sol(A, x, b, m):
     """checks if Ax = b mod m"""
     ax_b = mat_sub(mat_mul(A, x), b)
-    for i, mod in enumerate(m):
-        if ax_b[i] % mod:
-            return False
-    return True
+    return not any(ax_b[i] % mod for i, mod in enumerate(m))
 
 
 def mcrt(A, b, m):

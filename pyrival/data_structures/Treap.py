@@ -59,7 +59,7 @@ class TreapMultiSet(object):
         return self.floor(key) == key
 
     def __repr__(self):
-        return "TreapMultiSet({})".format(list(self))
+        return f"TreapMultiSet({list(self)})"
 
     def __iter__(self):
         if not self.root:
@@ -86,7 +86,7 @@ class TreapSet(TreapMultiSet):
             self.size += 1
 
     def __repr__(self):
-        return "TreapSet({})".format(list(self))
+        return f"TreapSet({list(self)})"
 
 
 class TreapHashSet(TreapMultiSet):
@@ -114,7 +114,7 @@ class TreapHashSet(TreapMultiSet):
         return key in self.keys
 
     def __repr__(self):
-        return "TreapHashSet({})".format(list(self))
+        return f"TreapHashSet({list(self)})"
 
 
 class TreapHashMap(TreapMultiSet):
@@ -123,7 +123,7 @@ class TreapHashMap(TreapMultiSet):
             self.map = dict(data)
             super(TreapHashMap, self).__init__(self.map.keys())
         else:
-            self.map = dict()
+            self.map = {}
 
     def __setitem__(self, key, value):
         if key not in self.map:
@@ -151,7 +151,7 @@ class TreapHashMap(TreapMultiSet):
         return key in self.map
 
     def __repr__(self):
-        return "TreapHashMap({})".format(list(self))
+        return f"TreapHashMap({list(self)})"
 
 
 left_child = [0]
