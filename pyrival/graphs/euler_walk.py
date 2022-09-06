@@ -55,7 +55,4 @@ def euler_walk(n, adj):
             if adj[i][j]:
                 bad = True
 
-    if bad:
-        return None
-
-    return res
+    return None if bad else res

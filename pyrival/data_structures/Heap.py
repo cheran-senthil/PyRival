@@ -52,7 +52,7 @@ for module in ["heapq", "_heapq"]:
         m = import_module(module)
         for f in _heapops:
             try:
-                globals().update({f: getattr(m, f)})
+                globals()[f] = getattr(m, f)
             except:
                 pass
     except:

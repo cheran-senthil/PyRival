@@ -14,7 +14,6 @@ def alphabeta(node, depth, alpha=float("-inf"), beta=float("+inf"), maximizingPl
             alpha = max(alpha, value)
             if alpha >= beta:
                 break
-        return value
     else:
         value = float("+inf")
         for child in node.children:
@@ -22,4 +21,5 @@ def alphabeta(node, depth, alpha=float("-inf"), beta=float("+inf"), maximizingPl
             beta = min(beta, value)
             if alpha >= beta:
                 break
-        return value
+
+    return value

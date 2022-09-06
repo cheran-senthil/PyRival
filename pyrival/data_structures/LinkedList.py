@@ -5,9 +5,7 @@ class Node:
         self.prev = None
 
     def __repr__(self):
-        if not self:
-            return "{}()".format(self.__class__.__name__)
-        return "{}({})".format(self.__class__.__name__, self.value)
+        return self.__class__.__name__ + ("({})".format(self.value) if self else "()")
 
 
 class LinkedList:
@@ -118,7 +116,7 @@ class LinkedList:
         self.__len += other.__len
 
     def pop(self, node = None):
-        if node == None:
+        if node is None:
             node = self.sentinel.prev
         if self.__len < 1:
             raise IndexError
@@ -128,11 +126,7 @@ class LinkedList:
         return node.value
 
     def before(self, node):
-        if node.prev == self.sentinel:
-            return node.prev.prev
-        return node.prev
+        return node.prev.prev if node.prev == self.sentinel else node.prev
 
     def after(self, node):
-        if node.next == self.sentinel:
-            return node.next.next
-        return node.next
+        return node.next.next if node.next == self.sentinel else node.next

@@ -19,6 +19,4 @@ def partition(n, k):
         return 1
     if k < 1:
         return 0
-    if n == 1:
-        return 1
-    return partition(n, k - 1) + partition(n - k, k)
+    return 1 if n == 1 else partition(n, k - 1) + partition(n - k, k)

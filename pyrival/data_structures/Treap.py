@@ -123,7 +123,7 @@ class TreapHashMap(TreapMultiSet):
             self.map = dict(data)
             super(TreapHashMap, self).__init__(self.map.keys())
         else:
-            self.map = dict()
+            self.map = {}
 
     def __setitem__(self, key, value):
         if key not in self.map:

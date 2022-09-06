@@ -14,7 +14,6 @@ def dfs(graph, start=0):
             for child in graph[start]:
                 if not visited[child]:
                     stack.append(child)
-
         else:
             stack.pop()
 
