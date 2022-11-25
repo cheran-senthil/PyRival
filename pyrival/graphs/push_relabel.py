@@ -24,7 +24,7 @@ class PushRelabel:
     def PushRelabel(self, n):
         self.graph = [[] for _ in range(n)]
         self.ec = [0]*n
-        self.cur = [0]*n
+        self.cur = [0]*n # Pointer to the next used edge
         self.hs = [0]*(2*n)
         self.H = [[] for _ in range(n)]
 
@@ -56,13 +56,13 @@ class PushRelabel:
 		co = [0] * (2*n)
         co[0] = n-1
         for i in range(n):
-            self.cur[i] = 0 #.data()
+            self.cur[i] = 0
         for edge in self.graph[src]:
             self.add_flow(edge, edge[3])
 
         hi = 0
         while True:
-			while self.hs[hi].empty()
+            while not self.hs[hi]:
                 hi--
                 if not (hi + 1):
                     return -self.ec[src]
