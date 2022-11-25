@@ -13,24 +13,9 @@ Translated by: Whosyourjay
 Date: 2022-11-25
 """
 
-class Edge:
-    def __init__(self, dest, back, flow, cap):
-        self.dest = dest
-        self.back = back
-        self.flow = flow
-        self.cap = cap
-
 graph = []
-ec = []
-hs = []
-H = []
 class PushRelabel:
-    def PushRelabel(self, n):
-        graph = [[] for _ in range(n)]
-        ec = [0]*n
-        hs = [0]*(2*n)
-        H = [[] for _ in range(n)]
-
+    # class Edge(dest, back, flow, cap)
     def add_edge(self, src, dest, cap, rcap=0):
         if src == dest:
             return
@@ -39,27 +24,32 @@ class PushRelabel:
         graph[dest].append(
                 [src, len(graph[src]) - 1, rcap, 0])
 
-    def add_flow(self, edge, flow):
-        dest = edge[0]
-        back = graph[dest][edge[1]]
-        if (not ec[dest]) and flow:
-            hs[H[dest]].append(dest)
-        edge[2] += flow
-        edge[3] -= flow
-        ec[dest] += flow
-
-        back[2] -= flow
-        back[3] += flow
-        ec[back[0]] -= flow
-    
     def calc(src, dest):
         n = len(graph)
+
+        ec = [0]*n
+        cur = [0]*n # Pointer to the next used edge
+        hs = [0] * (2*n)
+        H = [0]*n
+        co = [0] * (2*n)
+
+        def add_flow(self, edge, flow):
+            dest = edge[0]
+            back = graph[dest][edge[1]]
+            if (not ec[dest]) and flow:
+                hs[H[dest]].append(dest)
+            edge[2] += flow
+            edge[3] -= flow
+            ec[dest] += flow
+
+            back[2] -= flow
+            back[3] += flow
+            ec[back[0]] -= flow
+
         H[src] = n
         ec[dest] = 1
-        co = [0] * (2*n)
         co[0] = n-1
 
-        cur = [0]*n # Pointer to the next used edge
         for edge in graph[src]:
             self.add_flow(edge, edge[3])
 
@@ -70,7 +60,7 @@ class PushRelabel:
                 if not (hi + 1):
                     return -ec[src]
             u = hs[hi].pop()
-            while ec[u] > 0: // discharge u
+            while ec[u] > 0: # discharge u
                 if cur[u] == len(graph[u]):
                     H[u] = 10**9
                     for pos, edge in enumerate(graph[u]):
