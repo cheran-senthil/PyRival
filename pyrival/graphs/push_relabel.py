@@ -41,19 +41,19 @@ class PushRelabel:
         back = self.graph[dest][edge[1]]
         if (not self.ec[dest]) and flow:
             self.hs[self.H[dest]].append(dest)
-		edge[2] += flow
+        edge[2] += flow
         edge[3] -= flow
         self.ec[dest] += flow
 
-		back[2] -= flow
+        back[2] -= flow
         back[3] += flow
         self.ec[back[0]] -= flow
-	
+    
     def calc(src, dest):
-		n = len(self.graph)
+        n = len(self.graph)
         self.H[src] = n
         self.ec[dest] = 1
-		co = [0] * (2*n)
+        co = [0] * (2*n)
         co[0] = n-1
         for i in range(n):
             self.cur[i] = 0
@@ -66,13 +66,13 @@ class PushRelabel:
                 hi--
                 if not (hi + 1):
                     return -self.ec[src]
-			u = self.hs[hi].pop()
+            u = self.hs[hi].pop()
             while self.ec[u] > 0: // discharge u
                 if self.cur[u] == len(graph[u]):
-					H[u] = 10**9
+                    H[u] = 10**9
                     for pos, edge in enumerate(graph[u]):
                         if edge[3] and self.H[u] > self.H[edge[0]] + 1:
-						    self.H[u] = self.H[edge[0]] + 1
+                            self.H[u] = self.H[edge[0]] + 1
                             self.cur[u] = pos;
                     co[self.H[u]] += 1           
                     co[hi] -= 1
@@ -81,12 +81,12 @@ class PushRelabel:
                             if hi < self.H[i] and self.H[i] < n:
                                 co[self.H[i]] -= 1
                                 self.H[i] = n + 1
-					hi = self.H[u]
+                    hi = self.H[u]
                 else:
                     edge = self.graph[self.cur[u]]
                     if edge[3] and self.H[u] == self.H[edge[0]] + 1:
                         self.addFlow(edge, min(self.ec[u], edge[3]))
                     else cur[u] += 1
-	
+    
     def leftOfMinCut(self, a):
         return self.H[a] >= len(self.graph)
