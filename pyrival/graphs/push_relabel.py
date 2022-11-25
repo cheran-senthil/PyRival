@@ -32,21 +32,22 @@ class PushRelabel:
         if src == dest:
             return
         self.graph[src].append(
-                Edge(dest, len(self.graph[dest]), cap, 0))
+                [dest, len(self.graph[dest]), cap, 0])
         self.graph[dest].append(
-                Edge(src, len(self.graph[src]) - 1, rcap, 0))
+                [src, len(self.graph[src]) - 1, rcap, 0])
 
     def add_flow(self, edge, flow):
-        back = self.graph[edge.dest][edge.back]
-        if (not self.ec[edge.dest]) and flow:
-            self.hs[self.H[edge.dest]].append(edge.dest)
-		edge.flow += flow
-        edge.cap -= flow
-        self.ec[edge.dest] += flow
+        dest = edge[0]
+        back = self.graph[dest][edge[1]]
+        if (not self.ec[dest]) and flow:
+            self.hs[self.H[dest]].append(dest)
+		edge[2] += flow
+        edge[3] -= flow
+        self.ec[dest] += flow
 
-		back.flow -= flow
-        back.cap += flow
-        self.ec[back.dest] -= flow
+		back[2] -= flow
+        back[3] += flow
+        self.ec[back[0]] -= flow
 	
     def calc(src, dest):
 		n = len(self.graph)
@@ -57,7 +58,7 @@ class PushRelabel:
         for i in range(n):
             self.cur[i] = 0 #.data()
         for edge in self.graph[src]:
-            self.add_flow(edge, edge.cap)
+            self.add_flow(edge, edge[3])
 
         hi = 0
         while True:
@@ -70,8 +71,8 @@ class PushRelabel:
                 if self.cur[u] == len(graph[u]):
 					H[u] = 10**9
                     for pos, edge in enumerate(graph[u]):
-                        if edge.cap and self.H[u] > self.H[edge.dest] + 1:
-						    self.H[u] = self.H[edge.dest] + 1
+                        if edge[3] and self.H[u] > self.H[edge[0]] + 1:
+						    self.H[u] = self.H[edge[0]] + 1
                             self.cur[u] = pos;
                     co[self.H[u]] += 1           
                     co[hi] -= 1
@@ -83,8 +84,8 @@ class PushRelabel:
 					hi = self.H[u]
                 else:
                     edge = self.graph[self.cur[u]]
-                    if edge.cap and self.H[u] == self.H[edge.dest] + 1:
-                        self.addFlow(edge, min(self.ec[u], edge.cap))
+                    if edge[3] and self.H[u] == self.H[edge[0]] + 1:
+                        self.addFlow(edge, min(self.ec[u], edge[3]))
                     else cur[u] += 1
 	
     def leftOfMinCut(self, a):
