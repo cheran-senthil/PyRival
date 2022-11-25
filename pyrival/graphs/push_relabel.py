@@ -14,76 +14,78 @@ Date: 2022-11-25
 """
 
 class Edge:
-    def __init__(self, dest, back, f, c):
+    def __init__(self, dest, back, flow, cap):
         self.dest = dest
         self.back = back
-        self.f = f
-        self.c = c
+        self.flow = flow
+        self.cap = cap
 
 class PushRelabel:
     def PushRelabel(self, n):
-        self.g = [[] for _ in range(n)]
+        self.graph = [[] for _ in range(n)]
         self.ec = [0]*n
         self.cur = [0]*n
         self.hs = [0]*(2*n)
         self.H = [[] for _ in range(n)]
 
-    def add_edge(self, s, t, cap, rcap=0):
-        if s == t:
+    def add_edge(self, src, dest, cap, rcap=0):
+        if src == dest:
             return
-        self.g[s].append(Edge(t, len(self.g[t]), cap, 0))
-        self.g[t].append(Edge(s, len(self.g[s]) - 1, rcap, 0))
+        self.graph[src].append(
+                Edge(dest, len(self.graph[dest]), cap, 0))
+        self.graph[dest].append(
+                Edge(src, len(self.graph[src]) - 1, rcap, 0))
 
-    def add_flow(self, e, f):
-        back = self.g[e.dest][e.back]
-        if (not self.ec[e.dest]) and f:
-            self.hs[self.H[e.dest]].append(e.dest)
-		e.f += f
-        e.c -= f
-        self.ec[e.dest] += f
+    def add_flow(self, edge, flow):
+        back = self.graph[edge.dest][edge.back]
+        if (not self.ec[edge.dest]) and flow:
+            self.hs[self.H[edge.dest]].append(edge.dest)
+		edge.flow += flow
+        edge.cap -= flow
+        self.ec[edge.dest] += flow
 
-		back.f -= f
-        back.c += f
-        self.ec[back.dest] -= f
+		back.flow -= flow
+        back.cap += flow
+        self.ec[back.dest] -= flow
 	
-    def calc(s, t):
-		v = len(self.g)
-        self.H[s] = v
-        self.ec[t] = 1
-		co = [0] * (2*v)
-        co[0] = v-1
-        for i in range(v):
+    def calc(src, dest):
+		n = len(self.graph)
+        self.H[src] = n
+        self.ec[dest] = 1
+		co = [0] * (2*n)
+        co[0] = n-1
+        for i in range(n):
             self.cur[i] = 0 #.data()
-        for e in self.g[s]:
-            self.add_flow(e, e.c)
+        for edge in self.graph[src]:
+            self.add_flow(edge, edge.cap)
 
         hi = 0
         while True:
 			while self.hs[hi].empty()
                 hi--
                 if not (hi + 1):
-                    return -self.ec[s]
+                    return -self.ec[src]
 			u = self.hs[hi].pop()
             while self.ec[u] > 0: // discharge u
-                if self.cur[u] == len(g[u]):
+                if self.cur[u] == len(graph[u]):
 					H[u] = 10**9
-                    for pos, e in enumerate(g[u]):
-                        if e.c and self.H[u] > self.H[e.dest] + 1:
-						    self.H[u] = self.H[e.dest] + 1
+                    for pos, edge in enumerate(graph[u]):
+                        if edge.cap and self.H[u] > self.H[edge.dest] + 1:
+						    self.H[u] = self.H[edge.dest] + 1
                             self.cur[u] = pos;
                     co[self.H[u]] += 1           
                     co[hi] -= 1
-                    if (not co[hi]) and hi < v:
-                        for i in range(v):
-                            if hi < self.H[i] and self.H[i] < v:
+                    if (not co[hi]) and hi < n:
+                        for i in range(n):
+                            if hi < self.H[i] and self.H[i] < n:
                                 co[self.H[i]] -= 1
-                                self.H[i] = v + 1
+                                self.H[i] = n + 1
 					hi = self.H[u]
                 else:
-                    edge = self.g[self.cur[u]]
-                    if edge.c and self.H[u] == self.H[edge.dest] + 1:
-                        self.addFlow(edge, min(self.ec[u], edge.c))
+                    edge = self.graph[self.cur[u]]
+                    if edge.cap and self.H[u] == self.H[edge.dest] + 1:
+                        self.addFlow(edge, min(self.ec[u], edge.cap))
                     else cur[u] += 1
 	
     def leftOfMinCut(self, a):
-        return self.H[a] >= len(self.g)
+        return self.H[a] >= len(self.graph)
