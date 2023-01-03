@@ -6,9 +6,9 @@ class LazySegmentTree:
 
         self._len = len(data)
         self._size = _size = 1 << (self._len - 1).bit_length()
-        self._lazy = [0] * (2 * _size)
+        self._lazy = [0] * (4 * _size)
 
-        self.data = [default] * (2 * _size)
+        self.data = [default] * (4 * _size)
         self.data[_size:_size + self._len] = data
         for i in reversed(range(_size)):
             self.data[i] = func(self.data[i + i], self.data[i + i + 1])
