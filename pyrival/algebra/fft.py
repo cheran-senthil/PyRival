@@ -13,9 +13,9 @@ def fft(P):
 
     k = n
     while k > 1:
-        for i in range(0, n, k):
-            r = rt[i//k]
-            for j1 in range(i, i + k//2):
+        for i in range(n//k):
+            r = rt[i]
+            for j1 in range(i*k, i*k + k//2):
                 j2 = j1 + k//2
                 z = r * P[j2]
                 P[j2] = P[j1] - z
