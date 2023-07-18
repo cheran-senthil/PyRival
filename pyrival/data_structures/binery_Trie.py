@@ -20,9 +20,11 @@ class Node():
         self.count=0
 
 class binTrie:
-    def __init__(self,max_len=31):
+    def __init__(self,data=[],max_len=31):
         self.root=Node()
         self.max_len=max_len
+        for i in data:
+            self.add(i)
   
     def add(self,val):
         """
@@ -146,16 +148,18 @@ class binTrie:
 # how to use 
 # ----------
 
-trie=binTrie()
+trie=binTrie([5,6,4])
 
 trie.add(7)
 trie.add(2)
 trie.add(3)
 
-trie.delete(7)
+
 
 
 print(trie.max_xor(8))
 print(trie.max_or(2))
 print(trie.max_and(4))
+
+trie.delete(7)
 '''
