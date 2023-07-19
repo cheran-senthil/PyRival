@@ -20,26 +20,26 @@ class binTrie:
   
     def add(self,val):
         """
-            Adds a value to the binary trie.
-            time complexity is O(log n)
+            Adds a value to the binary trie.   time complexity is O(log n)
         """
         node=self.root
         for i in reversed(range(self.max_len)):
             bit = val & (1 << i)
             if bit:
-                if not node.right:  node.right=Node()
-                   
+                if not node.right:  
+                    node.right=Node()
                 node=node.right
             else:
-                if not node.left: node.left=Node()
-
+                if not node.left:
+                    node.left=Node()
                 node=node.left
+
             node.count+=1
         node.data=val
+
     def delete(self,val):
         """
-        deletes a value from the binary trie 
-        it should be contained in the trie
+        deletes a value from the binary trie ,it should be contained in the trie
         time complexity is O(log n)
         """
         node=self.root
@@ -47,14 +47,11 @@ class binTrie:
             bit = val & (1 << i)
             if bit:
                 node=node.right
-                node.count-=1
             else:
                 node=node.left
-                node.count-=1
+            node.count-=1
                 
-    '''
-    check if i can move to node 
-    '''
+
     def max_xor(self, val):
         '''
         Find the maximum value obtained from performing bitwise XOR between the given value and any element of the trie.
