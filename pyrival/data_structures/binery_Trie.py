@@ -1,10 +1,8 @@
 '''
-The code provided defines a binary trie data structure .
-it can be used to represent a binary representation of numbers in a tree-like structure
-so that it can be searched for in O(log n) time
-
-It has methods to add and delete values from the tree, as well as 
-(max_and, max_or, max_xor) with a given value
+The provided code defines a binary trie data structure
+it can be used to represent a binary representation of numbers
+The binary trie supports standard trie operations, such as adding and deleting values
+enabling faster and more efficient computations compared to a traditional trie.
 
 when dealing with binary numbers 
 *** it better and faster than normal trie 
@@ -18,44 +16,46 @@ class Node():
         self.count=0
 
 class binTrie:
-    def __init__(self,data=[],max_len=31):
+    def __init__(self,data=[]):
         self.root=Node()
-        self.max_len=max_len
+        self.max_len=32 # Assuming 32-bit integers, can adjust based on requirements
         for i in data:
             self.add(i)
   
     def add(self,val):
         """
             Adds a value to the binary trie.
+            time complexity is O(log n)
         """
-        temp=self.root
+        node=self.root
         for i in reversed(range(self.max_len)):
             bit = val & (1 << i)
             if bit:
-                if not temp.right:
-                    temp.right=Node()
-                temp=temp.right
-                temp.count+=1
+                if not node.right:
+                    node.right=Node()
+                node=node.right
+                node.count+=1
             else:
-                if not temp.left:
-                    temp.left=Node()
-                temp=temp.left
-                temp.count+=1
-        temp.data=val
+                if not node.left:
+                    node.left=Node()
+                node=node.left
+                node.count+=1
+        node.data=val
     def delete(self,val):
         """
         deletes a value from the binary trie 
         it should be contained in the trie
+        time complexity is O(log n)
         """
-        temp=self.root
+        node=self.root
         for i in reversed(range(self.max_len)):
             bit = val & (1 << i)
             if bit:
-                temp=temp.right
-                temp.count-=1
+                node=node.right
+                node.count-=1
             else:
-                temp=temp.left
-                temp.count-=1
+                node=node.left
+                node.count-=1
                 
     '''
     check if i can move to node 
@@ -68,66 +68,69 @@ class binTrie:
     
     def max_xor(self, val):
         '''
-        find the maximum value obtained from performing bitwise xor  between given value and any element of the trie
+        Find the maximum value obtained from performing bitwise XOR between the given value and any element of the trie.
         time complexity is O(log n)
         '''
-        temp = self.root
+        node = self.root
         for i in reversed(range(self.max_len)):
             bit = val & (1 << i)
             if bit:
-                if  self.check_L(temp):
-                    temp = temp.left
-                elif   self.check_R(temp):
-                    temp = temp.right
+                if  self.check_L(node):
+                    node = node.left
+                elif   self.check_R(node):
+                    node = node.right
             else:
-                if self.check_R(temp):
-                    temp = temp.right
-                elif  self.check_L(temp):
-                    temp = temp.left
-        return max(val ^ temp.data, val)
+                if self.check_R(node):
+                    node = node.right
+                elif  self.check_L(node):
+                    node = node.left
+        max_result = max(val ^ node.data, val)
+        return max_result
+    
     def max_and(self, val):
         '''
         find the maximum value obtained from performing bitwise and  between given value and any element of the trie
+        worst case time complexity is  ( 2^self.max_len)
         '''
-        q=[self.root]
+        current_nodes=[self.root]
         for i in reversed(range(self.max_len)): 
-            temp_deque=[]
+            next_nodes=[]
             bit = val & (1 << i)
-            for temp in q:
-                if bit and self.check_R(temp):
-                        temp_deque.append(temp.right)
+            for node in current_nodes:
+                if bit and self.check_R(node):
+                        next_nodes.append(node.right)
                 else: 
-                    if self.check_R(temp):
-                        temp_deque.append(temp.right)
-                    if  self.check_L(temp):
-                        temp_deque.append(temp.left)
-            q=temp_deque.copy()
-        return max( val & item.data for item in q )
+                    if self.check_R(node):
+                        next_nodes.append(node.right)
+                    if  self.check_L(node):
+                        next_nodes.append(node.left)
+            current_nodes=next_nodes.copy()
+        max_result = max(val & node.data for node in current_nodes)
+        return max_result
         
     def max_or(self, val):
         '''
         find the maximum value obtained from performing bitwise or  between given value and any element of the trie
+        worst case time complexity is  ( 2^self.max_len)
         '''
-        q=[self.root]
+        current_nodes=[self.root]
         for i in reversed(range(self.max_len)): 
-            temp_deque=[]
+            next_nodes=[]
             bit = val & (1 << i)
-            for temp in q:
-                
+            for node in current_nodes:
                 if bit :
-                    if self.check_L(temp):
-                        temp_deque.append(temp.left)
-                    if  self.check_R(temp):
-                        temp_deque.append(temp.right)
+                    if self.check_L(node):
+                        next_nodes.append(node.left)
+                    if  self.check_R(node):
+                        next_nodes.append(node.right)
                 else:   
-                    if   self.check_R(temp):
-                        temp_deque.append(temp.right)
-                    elif  self.check_L(temp):
-                        temp_deque.append(temp.left)
-            q=temp_deque.copy()
-        return max( val |item.data for item in q )
-    
-
+                    if   self.check_R(node):
+                        next_nodes.append(node.right)
+                    elif  self.check_L(node):
+                        next_nodes.append(node.left)
+            current_nodes=next_nodes.copy()
+        max_result = max(val | node.data for node in current_nodes)
+        return max_result
     
 '''
 # ---------
