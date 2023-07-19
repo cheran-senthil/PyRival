@@ -27,15 +27,14 @@ class binTrie:
         for i in reversed(range(self.max_len)):
             bit = val & (1 << i)
             if bit:
-                if not node.right:
-                    node.right=Node()
+                if not node.right:  node.right=Node()
+                   
                 node=node.right
-                node.count+=1
             else:
-                if not node.left:
-                    node.left=Node()
+                if not node.left: node.left=Node()
+
                 node=node.left
-                node.count+=1
+            node.count+=1
         node.data=val
     def delete(self,val):
         """
@@ -128,7 +127,7 @@ class binTrie:
     def check_R(self,node):
         return  node.right and node.right.count>0
     
-    
+
     
 '''
 # ---------
