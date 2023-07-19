@@ -3,10 +3,6 @@ The provided code defines a binary trie data structure
 it can be used to represent a binary representation of numbers
 The binary trie supports standard trie operations, such as adding and deleting values
 enabling faster and more efficient computations compared to a traditional trie.
-
-when dealing with binary numbers 
-*** it better and faster than normal trie 
-
 '''
 class Node():
     def __init__(self):
