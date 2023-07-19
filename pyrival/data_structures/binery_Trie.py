@@ -10,8 +10,6 @@ when dealing with binary numbers
 *** it better and faster than normal trie 
 
 '''
-
-
 class Node():
     def __init__(self):
         self.data=0
@@ -49,7 +47,6 @@ class binTrie:
         deletes a value from the binary trie 
         it should be contained in the trie
         """
-
         temp=self.root
         for i in reversed(range(self.max_len)):
             bit = val & (1 << i)
@@ -69,60 +66,6 @@ class binTrie:
     def check_R(self,node):
         return  node.right and node.right.count>0
     
-    def max_and(self, val):
-        '''
-        find the maximum value obtained from performing bitwise and  between given value and any element of the trie
-        time complexity is O(log n)
-        '''
-
-        q=[self.root]
-        for i in reversed(range(self.max_len)): 
-            temp_deque=[]
-            bit = val & (1 << i)
-            for temp in q:
-                if bit and self.check_R(temp):
-                        temp_deque.append(temp.right)
-                else:
-       
-                    if self.check_R(temp):
-                        temp_deque.append(temp.right)
-                    if  self.check_L(temp):
-                        temp_deque.append(temp.left)
-
-            q=temp_deque.copy()
-
-        return max( val & item.data for item in q )
-        
-
-    def max_or(self, val):
-        '''
-        find the maximum value obtained from performing bitwise or  between given value and any element of the trie
-        time complexity is O(log n)
-        '''
-       
-        q=[self.root]
-        for i in reversed(range(self.max_len)): 
-            temp_deque=[]
-            bit = val & (1 << i)
-            for temp in q:
-                
-                if bit :
-                    if self.check_L(temp):
-                        temp_deque.append(temp.left)
-                    if  self.check_R(temp):
-                        temp_deque.append(temp.right)
-                else:
-       
-              
-                    if   self.check_R(temp):
-                        temp_deque.append(temp.right)
-                    elif  self.check_L(temp):
-                        temp_deque.append(temp.left)
-            q=temp_deque.copy()
-
-        return max( val |item.data for item in q )
-    
-
     def max_xor(self, val):
         '''
         find the maximum value obtained from performing bitwise xor  between given value and any element of the trie
@@ -142,6 +85,49 @@ class binTrie:
                 elif  self.check_L(temp):
                     temp = temp.left
         return max(val ^ temp.data, val)
+    def max_and(self, val):
+        '''
+        find the maximum value obtained from performing bitwise and  between given value and any element of the trie
+        '''
+        q=[self.root]
+        for i in reversed(range(self.max_len)): 
+            temp_deque=[]
+            bit = val & (1 << i)
+            for temp in q:
+                if bit and self.check_R(temp):
+                        temp_deque.append(temp.right)
+                else: 
+                    if self.check_R(temp):
+                        temp_deque.append(temp.right)
+                    if  self.check_L(temp):
+                        temp_deque.append(temp.left)
+            q=temp_deque.copy()
+        return max( val & item.data for item in q )
+        
+    def max_or(self, val):
+        '''
+        find the maximum value obtained from performing bitwise or  between given value and any element of the trie
+        '''
+        q=[self.root]
+        for i in reversed(range(self.max_len)): 
+            temp_deque=[]
+            bit = val & (1 << i)
+            for temp in q:
+                
+                if bit :
+                    if self.check_L(temp):
+                        temp_deque.append(temp.left)
+                    if  self.check_R(temp):
+                        temp_deque.append(temp.right)
+                else:   
+                    if   self.check_R(temp):
+                        temp_deque.append(temp.right)
+                    elif  self.check_L(temp):
+                        temp_deque.append(temp.left)
+            q=temp_deque.copy()
+        return max( val |item.data for item in q )
+    
+
     
 '''
 # ---------
@@ -153,9 +139,6 @@ trie=binTrie([5,6,4])
 trie.add(7)
 trie.add(2)
 trie.add(3)
-
-
-
 
 print(trie.max_xor(8))
 print(trie.max_or(2))
