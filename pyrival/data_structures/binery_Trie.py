@@ -56,12 +56,6 @@ class binTrie:
     '''
     check if i can move to node 
     '''
-    def check_L(self,node):
- 
-        return  node.left and node.left.count>0
-    def check_R(self,node):
-        return  node.right and node.right.count>0
-    
     def max_xor(self, val):
         '''
         Find the maximum value obtained from performing bitwise XOR between the given value and any element of the trie.
@@ -127,6 +121,14 @@ class binTrie:
             current_nodes=next_nodes.copy()
         max_result = max(val | node.data for node in current_nodes)
         return max_result
+    # Helper methods (implement check_R and check_L based on your trie implementation)
+    def check_L(self,node):
+ 
+        return  node.left and node.left.count>0
+    def check_R(self,node):
+        return  node.right and node.right.count>0
+    
+    
     
 '''
 # ---------
