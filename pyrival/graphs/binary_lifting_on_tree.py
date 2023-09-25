@@ -1,6 +1,6 @@
 """
 Binary lifting technique applied to a tree.
-There are three different uses of this implementation
+There are four different uses of this implementation
 
 1. Computing LCA in O(log n) time.
    
@@ -15,14 +15,22 @@ There are three different uses of this implementation
        BL = binary_lift(graph, root=0)
        print(BL.lca(2, 3)) # prints 1
 
-2. Compute the distance between two nodes in O(log n) time.
+2. Compute the k-th ancestor of a node in O(log k) time.
+
+   Example:
+       graph = [[1], [0, 2, 3], [1], [1]]
+       BL = binary_lift(graph, root=0)
+       print(BL.kth_ancestor(2, 2)) # prints 0
+       print(BL.kth_ancestor(2, 3)) # prints -1
+
+3. Compute the distance between two nodes in O(log n) time.
 
    Example:
        graph = [[1], [0, 2, 3], [1], [1]]
        BL = binary_lift(graph)
        print(BL.distance(2, 3)) # prints 2
 
-3. Compute the sum/min/max/... of the weight 
+4. Compute the sum/min/max/... of the weight 
    of a path between a pair of nodes in O(log n) time.
 
    res = Path[0]
@@ -87,7 +95,17 @@ class binary_lift:
             return a
     
     def distance(self, a, b):
-        return self.depth[a] + self.depth[b] - 2 * self.depth[self.lca(a,b)] 
+        return self.depth[a] + self.depth[b] - 2 * self.depth[self.lca(a,b)]
+
+    def kth_ancestor(self, a, k):
+        parent = self.parent
+        d = self.depth[a]
+        if d < k:
+            return -1
+        for i in range(d.bit_length()):
+            if (d >> i) & 1:
+                a = parent[i][a]
+        return a
 
     def __call__(self, a, b):
         depth = self.depth
