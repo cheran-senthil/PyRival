@@ -35,7 +35,7 @@ There are four different uses of this implementation
 
    res = Path[0]
    for node in Path[1:]:
-     res = f(res, node)
+     res = f(res, data[node])
    return res
    
    Example:
