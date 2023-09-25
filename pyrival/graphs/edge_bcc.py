@@ -35,6 +35,8 @@ def find_SCC(graph):
 Given an undirected simple graph, find_BCC returns a list of lists 
 containing the edge biconnected components of the graph (i.e. no bridges).
 Runs in O(n + m) time.
+
+This algorithm is based on https://cses.fi/problemset/task/2177
 """
 def find_BCC(graph):
     d = 0
