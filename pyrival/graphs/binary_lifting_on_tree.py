@@ -33,7 +33,7 @@ There are four different uses of this implementation
 4. Compute the sum/min/max/... of the weight 
    of a path between a pair of nodes in O(log n) time.
 
-   res = Path[0]
+   res = data[Path[0]]
    for node in Path[1:]:
      res = f(res, data[node])
    return res
