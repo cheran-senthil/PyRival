@@ -99,11 +99,10 @@ class binary_lift:
 
     def kth_ancestor(self, a, k):
         parent = self.parent
-        d = self.depth[a]
-        if d < k:
+        if self.depth[a] < k:
             return -1
-        for i in range(d.bit_length()):
-            if (d >> i) & 1:
+        for i in range(k.bit_length()):
+            if (k >> i) & 1:
                 a = parent[i][a]
         return a
 
