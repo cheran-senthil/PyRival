@@ -33,7 +33,8 @@ def find_SCC(graph):
 
 """
 Given an undirected simple graph, find_BCC returns a list of lists 
-containing the biconnected components of the graph. Runs in O(n + m) time.
+containing the edge biconnected components of the graph (i.e. no bridges).
+Runs in O(n + m) time.
 """
 def find_BCC(graph):
     d = 0
