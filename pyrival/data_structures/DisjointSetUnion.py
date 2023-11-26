@@ -4,9 +4,9 @@ class DisjointSetUnion:
         self.size = [1] * n
         self.num_sets = n
 
-    def find(self,a):
+    def find(self, a):
         while a != self.par[a]:
-            a,self.par[a] = self.par[a],self.par[self.par[a]]
+            a,self.par[a] = self.par[a], self.par[self.par[a]]
         return a
 
     def union(self, a, b):
@@ -30,9 +30,9 @@ class UnionFind:
     def __init__(self, n):
         self.par = list(range(n))
 
-    def find(self,a):
+    def find(self, a):
         while a != self.par[a]:
-            a,self.par[a] = self.par[a],self.par[self.par[a]]
+            a,self.par[a] = self.par[a], self.par[self.par[a]]
         return a
 
     def union(self, a, b):
