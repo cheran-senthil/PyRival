@@ -5,8 +5,11 @@ class DisjointSetUnion:
         self.num_sets = n
 
     def find(self, a):
-        while a != self.par[a]:
-            a,self.par[a] = self.par[a], self.par[self.par[a]]
+        acopy = a
+        while a != self.parent[a]:
+            a = self.parent[a]
+        while acopy != a:
+            self.parent[acopy], acopy = a, self.parent[acopy]
         return a
 
     def union(self, a, b):
@@ -31,8 +34,11 @@ class UnionFind:
         self.par = list(range(n))
 
     def find(self, a):
-        while a != self.par[a]:
-            a,self.par[a] = self.par[a], self.par[self.par[a]]
+        acopy = a
+        while a != self.parent[a]:
+            a = self.parent[a]
+        while acopy != a:
+            self.parent[acopy], acopy = a, self.parent[acopy]
         return a
 
     def union(self, a, b):
