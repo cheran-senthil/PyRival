@@ -1,14 +1,8 @@
 class XorBasis:
     " Linear basis for xor "
         
-    def __init__(self, bit_length=31):
+    def __init__(self):
         self.basis = []
-        self.bit_length = bit_length
-    
-    def is_redundant(self, x):
-        " Returns true if x can be represented as xor of some already inserted elements"
-        
-        return self._reduce(x)==0
     
     def insert(self, x):
         "Adds x to the basis if it is not redundant. Returns true if x is added to the basis"
@@ -26,11 +20,15 @@ class XorBasis:
         return len(self.basis)
     
     def __contains__(self, x):
-        return self.is_redundant(x)
+        " Returns true if x can be represented as xor of some already inserted elements"
+        return self._reduce(x)==0
     
     def __repr__(self):
         " Prints the basis in descending order "
-        print("Basis:")
+        bit_length = max(self.basis).bit_length()
+        repr_str = ""
+        repr_str += "Basis:"
         for b in self.basis:
-            print(bin(b)[2:].zfill(self.bit_length))
-        return ""
+            repr_str+='\n'
+            repr_str+= bin(b)[2:].zfill(bit_length)
+        return repr_str
