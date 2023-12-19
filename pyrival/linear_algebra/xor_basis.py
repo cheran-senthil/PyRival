@@ -25,6 +25,7 @@ class XorBasis:
     
     def __repr__(self):
         " Prints the basis in descending order "
+        self.basis.sort(reverse=True)
         bit_length = max(self.basis).bit_length()
         repr_str = ""
         repr_str += "Basis:"
