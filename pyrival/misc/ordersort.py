@@ -1,5 +1,5 @@
 def bucketsort(order, seq):
-    buckets = [0] * (max(seq) + 1)
+    buckets = [0] * (max(seq, default=0) + 1)
     for x in seq:
         buckets[x] += 1
     for i in range(len(buckets) - 1):
@@ -15,7 +15,7 @@ def bucketsort(order, seq):
 
 
 def ordersort(order, seq, reverse=False):
-    bit = max(seq).bit_length() >> 1
+    bit = max(seq, default=0).bit_length() >> 1
     mask = (1 << bit) - 1
     order = bucketsort(order, [x & mask for x in seq])
     order = bucketsort(order, [x >> bit for x in seq])
