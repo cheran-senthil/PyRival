@@ -64,13 +64,12 @@ class SortedList:
     block_size = 700
 
     def __init__(self, iterable=()):
-        self.macro = []
-        self.micros = [[]]
-        self.micro_size = [0]
-        self.fenwick = FenwickTree([0])
-        self.size = 0
-        for item in iterable:
-            self.insert(item)
+        iterable = sorted(iterable)
+        self.micros = [iterable[i:i + self.block_size - 1] for i in range(0, len(iterable), self.block_size - 1)] or [[]]
+        self.macro = [i[0] for i in self.micros[1:]]
+        self.micro_size = [len(i) for i in self.micros]
+        self.fenwick = FenwickTree(self.micro_size)
+        self.size = len(iterable)
 
     def insert(self, x):
         i = lower_bound(self.macro, x)
