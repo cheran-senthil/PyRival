@@ -2,13 +2,16 @@ def least_rotation(s):
     a, n = 0, len(s)
     s = s + s
 
-    for b in range(n):
-        for i in range(n):
-            if (a + i == b) or (s[a + i] < s[b + i]):
-                b += max(0, i - 1)
-                break
+    b = 1
+    while b < n:
+        for i in range(b - a):
             if s[a + i] > s[b + i]:
                 a = b
+                b += 1
                 break
-
+            if s[a + i] < s[b + i]:
+                b += i + 1
+                break
+        else:
+            b += b - a
     return s[a:a + n]

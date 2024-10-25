@@ -1,233 +1,122 @@
-class SortedList:
-    def __init__(self, iterable=[], _load=200):
-        """Initialize sorted list instance."""
-        values = sorted(iterable)
-        self._len = _len = len(values)
-        self._load = _load
-        self._lists = _lists = [values[i:i + _load] for i in range(0, _len, _load)]
-        self._list_lens = [len(_list) for _list in _lists]
-        self._mins = [_list[0] for _list in _lists]
-        self._fen_tree = []
-        self._rebuild = True
+"""
+The "sorted list" data-structure, with amortized O(n^(1/3)) cost per insert and pop.
 
-    def _fen_build(self):
-        """Build a fenwick tree instance."""
-        self._fen_tree[:] = self._list_lens
-        _fen_tree = self._fen_tree
-        for i in range(len(_fen_tree)):
-            if i | i + 1 < len(_fen_tree):
-                _fen_tree[i | i + 1] += _fen_tree[i]
-        self._rebuild = False
+Example:
 
-    def _fen_update(self, index, value):
-        """Update `fen_tree[index] += value`."""
-        if not self._rebuild:
-            _fen_tree = self._fen_tree
-            while index < len(_fen_tree):
-                _fen_tree[index] += value
-                index |= index + 1
+A = SortedList()
+A.insert(30)
+A.insert(50)
+A.insert(20)
+A.insert(30)
+A.insert(30)
 
-    def _fen_query(self, end):
-        """Return `sum(_fen_tree[:end])`."""
-        if self._rebuild:
-            self._fen_build()
+print(A) # prints [20, 30, 30, 30, 50]
 
-        _fen_tree = self._fen_tree
+print(A.lower_bound(30), A.upper_bound(30)) # prints 1 4
+
+print(A[-1]) # prints 50
+print(A.pop(1)) # prints 30
+
+print(A) # prints [20, 30, 30, 50]
+print(A.count(30)) # prints 2
+
+"""
+
+from bisect import bisect_left as lower_bound
+from bisect import bisect_right as upper_bound
+
+
+class FenwickTree:
+    def __init__(self, x):
+        bit = self.bit = list(x)
+        size = self.size = len(bit)
+        for i in range(size):
+            j = i | (i + 1)
+            if j < size:
+                bit[j] += bit[i]
+
+    def update(self, idx, x):
+        """updates bit[idx] += x"""
+        while idx < self.size:
+            self.bit[idx] += x
+            idx |= idx + 1
+
+    def __call__(self, end):
+        """calc sum(bit[:end])"""
         x = 0
         while end:
-            x += _fen_tree[end - 1]
+            x += self.bit[end - 1]
             end &= end - 1
         return x
 
-    def _fen_findkth(self, k):
-        """Return a pair of (the largest `idx` such that `sum(_fen_tree[:idx]) <= k`, `k - sum(_fen_tree[:idx])`)."""
-        _list_lens = self._list_lens
-        if k < _list_lens[0]:
-            return 0, k
-        if k >= self._len - _list_lens[-1]:
-            return len(_list_lens) - 1, k + _list_lens[-1] - self._len
-        if self._rebuild:
-            self._fen_build()
-
-        _fen_tree = self._fen_tree
+    def find_kth(self, k):
+        """Find largest idx such that sum(bit[:idx]) <= k"""
         idx = -1
-        for d in reversed(range(len(_fen_tree).bit_length())):
+        for d in reversed(range(self.size.bit_length())):
             right_idx = idx + (1 << d)
-            if right_idx < len(_fen_tree) and k >= _fen_tree[right_idx]:
+            if right_idx < self.size and self.bit[right_idx] <= k:
                 idx = right_idx
-                k -= _fen_tree[idx]
+                k -= self.bit[idx]
         return idx + 1, k
 
-    def _delete(self, pos, idx):
-        """Delete value at the given `(pos, idx)`."""
-        _lists = self._lists
-        _mins = self._mins
-        _list_lens = self._list_lens
 
-        self._len -= 1
-        self._fen_update(pos, -1)
-        del _lists[pos][idx]
-        _list_lens[pos] -= 1
+class SortedList:
+    block_size = 700
 
-        if _list_lens[pos]:
-            _mins[pos] = _lists[pos][0]
-        else:
-            del _lists[pos]
-            del _list_lens[pos]
-            del _mins[pos]
-            self._rebuild = True
+    def __init__(self, iterable=()):
+        iterable = sorted(iterable)
+        self.micros = [iterable[i:i + self.block_size - 1] for i in range(0, len(iterable), self.block_size - 1)] or [[]]
+        self.macro = [i[0] for i in self.micros[1:]]
+        self.micro_size = [len(i) for i in self.micros]
+        self.fenwick = FenwickTree(self.micro_size)
+        self.size = len(iterable)
 
-    def _loc_left(self, value):
-        """Return an index pair that corresponds to the first position of `value` in the sorted list."""
-        if not self._len:
-            return 0, 0
+    def insert(self, x):
+        i = lower_bound(self.macro, x)
+        j = upper_bound(self.micros[i], x)
+        self.micros[i].insert(j, x)
+        self.size += 1
+        self.micro_size[i] += 1
+        self.fenwick.update(i, 1)
+        if len(self.micros[i]) >= self.block_size:
+            self.micros[i:i + 1] = self.micros[i][:self.block_size >> 1], self.micros[i][self.block_size >> 1:]
+            self.micro_size[i:i + 1] = self.block_size >> 1, self.block_size >> 1
+            self.fenwick = FenwickTree(self.micro_size)
+            self.macro.insert(i, self.micros[i + 1][0])
 
-        _lists = self._lists
-        _mins = self._mins
+    def pop(self, k=-1):
+        i, j = self._find_kth(k)
+        self.size -= 1
+        self.micro_size[i] -= 1
+        self.fenwick.update(i, -1)
+        return self.micros[i].pop(j)
 
-        lo, pos = -1, len(_lists) - 1
-        while lo + 1 < pos:
-            mi = (lo + pos) >> 1
-            if value <= _mins[mi]:
-                pos = mi
-            else:
-                lo = mi
+    def __getitem__(self, k):
+        i, j = self._find_kth(k)
+        return self.micros[i][j]
 
-        if pos and value <= _lists[pos - 1][-1]:
-            pos -= 1
+    def count(self, x):
+        return self.upper_bound(x) - self.lower_bound(x)
 
-        _list = _lists[pos]
-        lo, idx = -1, len(_list)
-        while lo + 1 < idx:
-            mi = (lo + idx) >> 1
-            if value <= _list[mi]:
-                idx = mi
-            else:
-                lo = mi
+    def __contains__(self, x):
+        return self.count(x) > 0
 
-        return pos, idx
+    def lower_bound(self, x):
+        i = lower_bound(self.macro, x)
+        return self.fenwick(i) + lower_bound(self.micros[i], x)
 
-    def _loc_right(self, value):
-        """Return an index pair that corresponds to the last position of `value` in the sorted list."""
-        if not self._len:
-            return 0, 0
+    def upper_bound(self, x):
+        i = upper_bound(self.macro, x)
+        return self.fenwick(i) + upper_bound(self.micros[i], x)
 
-        _lists = self._lists
-        _mins = self._mins
-
-        pos, hi = 0, len(_lists)
-        while pos + 1 < hi:
-            mi = (pos + hi) >> 1
-            if value < _mins[mi]:
-                hi = mi
-            else:
-                pos = mi
-
-        _list = _lists[pos]
-        lo, idx = -1, len(_list)
-        while lo + 1 < idx:
-            mi = (lo + idx) >> 1
-            if value < _list[mi]:
-                idx = mi
-            else:
-                lo = mi
-
-        return pos, idx
-
-    def add(self, value):
-        """Add `value` to sorted list."""
-        _load = self._load
-        _lists = self._lists
-        _mins = self._mins
-        _list_lens = self._list_lens
-
-        self._len += 1
-        if _lists:
-            pos, idx = self._loc_right(value)
-            self._fen_update(pos, 1)
-            _list = _lists[pos]
-            _list.insert(idx, value)
-            _list_lens[pos] += 1
-            _mins[pos] = _list[0]
-            if _load + _load < len(_list):
-                _lists.insert(pos + 1, _list[_load:])
-                _list_lens.insert(pos + 1, len(_list) - _load)
-                _mins.insert(pos + 1, _list[_load])
-                _list_lens[pos] = _load
-                del _list[_load:]
-                self._rebuild = True
-        else:
-            _lists.append([value])
-            _mins.append(value)
-            _list_lens.append(1)
-            self._rebuild = True
-
-    def discard(self, value):
-        """Remove `value` from sorted list if it is a member."""
-        _lists = self._lists
-        if _lists:
-            pos, idx = self._loc_right(value)
-            if idx and _lists[pos][idx - 1] == value:
-                self._delete(pos, idx - 1)
-
-    def remove(self, value):
-        """Remove `value` from sorted list; `value` must be a member."""
-        _len = self._len
-        self.discard(value)
-        if _len == self._len:
-            raise ValueError('{0!r} not in list'.format(value))
-
-    def pop(self, index=-1):
-        """Remove and return value at `index` in sorted list."""
-        pos, idx = self._fen_findkth(self._len + index if index < 0 else index)
-        value = self._lists[pos][idx]
-        self._delete(pos, idx)
-        return value
-
-    def bisect_left(self, value):
-        """Return the first index to insert `value` in the sorted list."""
-        pos, idx = self._loc_left(value)
-        return self._fen_query(pos) + idx
-
-    def bisect_right(self, value):
-        """Return the last index to insert `value` in the sorted list."""
-        pos, idx = self._loc_right(value)
-        return self._fen_query(pos) + idx
-
-    def count(self, value):
-        """Return number of occurrences of `value` in the sorted list."""
-        return self.bisect_right(value) - self.bisect_left(value)
+    def _find_kth(self, k):
+        return self.fenwick.find_kth(k + self.size if k < 0 else k)
 
     def __len__(self):
-        """Return the size of the sorted list."""
-        return self._len
-
-    def __getitem__(self, index):
-        """Lookup value at `index` in sorted list."""
-        pos, idx = self._fen_findkth(self._len + index if index < 0 else index)
-        return self._lists[pos][idx]
-
-    def __delitem__(self, index):
-        """Remove value at `index` from sorted list."""
-        pos, idx = self._fen_findkth(self._len + index if index < 0 else index)
-        self._delete(pos, idx)
-
-    def __contains__(self, value):
-        """Return true if `value` is an element of the sorted list."""
-        _lists = self._lists
-        if _lists:
-            pos, idx = self._loc_left(value)
-            return idx < len(_lists[pos]) and _lists[pos][idx] == value
-        return False
+        return self.size
 
     def __iter__(self):
-        """Return an iterator over the sorted list."""
-        return (value for _list in self._lists for value in _list)
-
-    def __reversed__(self):
-        """Return a reverse iterator over the sorted list."""
-        return (value for _list in reversed(self._lists) for value in reversed(_list))
+        return (x for micro in self.micros for x in micro)
 
     def __repr__(self):
-        """Return string representation of sorted list."""
-        return 'SortedList({0})'.format(list(self))
+        return str(list(self))

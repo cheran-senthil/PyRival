@@ -1,5 +1,5 @@
 def lcs(a, b):
-    lengths = [[0] * (len(b) + 1) for i in range(len(a) + 1)]
+    lengths = [[0] * (len(b) + 1) for _ in range(len(a) + 1)]
 
     for i, x in enumerate(a):
         for j, y in enumerate(b):

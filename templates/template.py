@@ -23,6 +23,7 @@ class FastIO(IOBase):
     newlines = 0
 
     def __init__(self, file):
+        self._file = file
         self._fd = file.fileno()
         self.buffer = BytesIO()
         self.writable = "x" in file.mode or "r" not in file.mode

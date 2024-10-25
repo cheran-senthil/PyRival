@@ -44,5 +44,4 @@ def max_xor(A):
         if not x & (1 << j):
             x ^= reduced_base[j]
             tmp ^= how[j]
-    I = [base[j] for j in range(len(base)) if tmp & (1 << j)]
-    return I
+    return [base[j] for j in range(len(base)) if tmp & (1 << j)]

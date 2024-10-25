@@ -22,6 +22,7 @@ BUFSIZE = 8192
 
 class FastI(IOBase):
     def __init__(self, file):
+        self._file = file
         self._fd = file.fileno()
         self._buffer = StringIO()
         self.newlines = 0
@@ -48,6 +49,7 @@ class FastI(IOBase):
 
 class FastO(IOBase):
     def __init__(self, file):
+        self._file = file
         self._fd = file.fileno()
         self._buffer = __pypy__.builders.StringBuilder()
         self.write = lambda s: self._buffer.append(s)

@@ -1,13 +1,13 @@
 class Trie:
     def __init__(self, *words):
-        self.root = dict()
+        self.root = {}
         for word in words:
             self.add(word)
 
     def add(self, word):
         current_dict = self.root
         for letter in word:
-            current_dict = current_dict.setdefault(letter, dict())
+            current_dict = current_dict.setdefault(letter, {})
         current_dict["_end_"] = True
 
     def __contains__(self, word):

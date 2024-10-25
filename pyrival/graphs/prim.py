@@ -5,7 +5,7 @@ def prim(n, adj):
 
     min_e[0][0] = 0
 
-    for i in range(n):
+    for _ in range(n):
         v = -1
 
         for j in range(n):
