@@ -21,5 +21,5 @@ def prime_list(n):
         res.append(3)
     if n > 4:
         sieve = prime_sieve(n + 1)
-        res.extend(3 * i + 1 | 1 for i in range(1, (n + 1) // 3 + (n % 6 == 1)) if not (sieve[i >> 3] >> (i & 7)) & 1)
+        res.extend([3 * i + 1 | 1 for i in range(1, (n + 1) // 3 + (n % 6 == 1)) if not (sieve[i >> 3] >> (i & 7)) & 1])
     return res
