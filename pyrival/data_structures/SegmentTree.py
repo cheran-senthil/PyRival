@@ -3,22 +3,21 @@ class SegmentTree:
         """initialize the segment tree with data"""
         self._default = default
         self._func = func
-        self._len = len(data)
-        self._size = _size = 1 << (self._len - 1).bit_length()
+        self._len = _len = len(data)
 
-        self.data = [default] * (2 * _size)
-        self.data[_size:_size + self._len] = data
-        for i in reversed(range(_size)):
+        self.data = [default] * (2 * _len)
+        self.data[_len:_len + _len] = data
+        for i in reversed(range(1, _len)):
             self.data[i] = func(self.data[i + i], self.data[i + i + 1])
 
     def __delitem__(self, idx):
         self[idx] = self._default
 
     def __getitem__(self, idx):
-        return self.data[idx + self._size]
+        return self.data[idx + self._len]
 
     def __setitem__(self, idx, value):
-        idx += self._size
+        idx += self._len
         self.data[idx] = value
         idx >>= 1
         while idx:
@@ -30,8 +29,8 @@ class SegmentTree:
 
     def query(self, start, stop):
         """func of data[start, stop)"""
-        start += self._size
-        stop += self._size
+        start += self._len
+        stop += self._len
 
         res_left = res_right = self._default
         while start < stop:
