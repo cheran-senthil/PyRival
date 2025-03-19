@@ -1,3 +1,4 @@
+# for usage see https://codeforces.com/blog/entry/124286
 
 def rerooter(graph, default, combine, finalize=lambda nodeDP, node, eind: nodeDP):
     n = len(graph)
