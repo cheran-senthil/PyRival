@@ -1,11 +1,20 @@
 
+"""
+Example Usage:
+ >>> adj = [[1],[0,2,3],[1],[1]]
+ >>> values = [1,5,3,2] 
+ >>> hld = HLD(adj,values)
+ >>> print("Max on path from 0 to 2: ",hld.query(0,2))
+ Max on path from 0 to 2: 5
+"""
+
 class HLD:
     def __init__(self, adj, values, root=0):
         """
-        Given an Tree, Heavy Light Decomposition supports querying on simple path between 
-        two vertices in O(log2n), change the value of res and max_val according to 
-        the range query type and the function named as func as well.
-        Recursion has not been used so as avoid having to use decorater.
+        Given a Tree, Heavy Light Decomposition supports querying on simple path between 
+        any two vertices in O(log2n), change the value of res, max_val and function func
+        according to the range query type. Recursion has not been used so as avoid 
+        having to use decorater and to avoid overhead.
         """
         self.n = len(adj)
         self.adj = adj
@@ -88,21 +97,25 @@ class SegmentTree:
     @staticmethod
     def func(a, b):
         return max(a, b)
+    
     def __init__(self, data):
         self.n = len(data)
         self.tree = [0] * (2 * self.n)
         self.build(data)
+
     def build(self, data):
         for i in range(self.n):
             self.tree[self.n + i] = data[i]
         for i in range(self.n - 1, 0, -1):
             self.tree[i] = self.func(self.tree[i * 2], self.tree[i * 2 + 1])
+
     def update(self, pos, value):
         pos += self.n
         self.tree[pos] += value
         while pos > 1:
             pos //= 2
             self.tree[pos] = self.func(self.tree[2 * pos], self.tree[2 * pos + 1])
+
     def query(self, left, right):
         left += self.n
         right += self.n
