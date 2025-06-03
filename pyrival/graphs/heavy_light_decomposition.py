@@ -9,10 +9,10 @@ Example Usage:
 """
 
 class HLD:
-    def __init__(self, adj, values, root=0):
+    def __init__(self, adj, values, root=0,func=max,unit=float('-inf')):
         """
         Given a Tree, Heavy Light Decomposition supports querying on simple path between 
-        any two vertices in O(log2n), change the value of res, max_val and function func
+        any two vertices in O(log2n), change the value of unit, max_val and function func
         according to the range query type. Recursion has not been used so as avoid 
         having to use decorater and to avoid overhead.
         """
@@ -28,9 +28,11 @@ class HLD:
         self.pos = [0] * self.n
         self.flat = [0] * self.n
         self.time = 0
+        self.unit = unit
+        self.func = func
         self._dfs(self.root)
         self._decompose(self.root, self.root)
-        self.seg = SegmentTree([self.values[self.flat[i]] for i in range(self.n)])
+        self.seg = SegmentTree([self.values[self.flat[i]] for i in range(self.n)],func,unit)
 
     def _dfs(self,start=0):
         graph = self.adj
@@ -73,15 +75,15 @@ class HLD:
                 stack.append((self.heavy[u], h))
 
     def query(self, u, v):
-        res = float('-inf') # update this depending upon the function being used for queries
+        res = self.unit
         while self.head[u] != self.head[v]:
             if self.depth[self.head[u]] < self.depth[self.head[v]]:
                 u, v = v, u
-            res = SegmentTree.func(res, self.seg.query(self.pos[self.head[u]], self.pos[u] + 1))
+            res = self.func(res, self.seg.query(self.pos[self.head[u]], self.pos[u] + 1))
             u = self.parent[self.head[u]]
         if self.depth[u] > self.depth[v]:
             u, v = v, u
-        res = SegmentTree.func(res, self.seg.query(self.pos[u], self.pos[v] + 1))
+        res = self.func(res, self.seg.query(self.pos[u], self.pos[v] + 1))
         return res
     
     def update(self, u, value):
@@ -90,15 +92,9 @@ class HLD:
 
 # Segment Tree for range queries in HLD
 class SegmentTree:
-    """
-    Update the Segment Tree according to the
-    type of queries being made.
-    """
-    @staticmethod
-    def func(a, b):
-        return max(a, b)
-    
-    def __init__(self, data):
+    def __init__(self, data,func=max,unit=float('-inf')):
+        self.func = func
+        self.unit = unit
         self.n = len(data)
         self.tree = [0] * (2 * self.n)
         self.build(data)
@@ -119,7 +115,7 @@ class SegmentTree:
     def query(self, left, right):
         left += self.n
         right += self.n
-        max_val = float('-inf')
+        max_val = self.unit
         while left < right:
             if left % 2:
                 max_val = self.func(max_val, self.tree[left])
