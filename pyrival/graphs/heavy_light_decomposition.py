@@ -107,7 +107,7 @@ class SegmentTree:
 
     def update(self, pos, value):
         pos += self.n
-        self.tree[pos] += value
+        self.tree[pos] = value
         while pos > 1:
             pos //= 2
             self.tree[pos] = self.func(self.tree[2 * pos], self.tree[2 * pos + 1])
