@@ -16,43 +16,37 @@ class HLD:
         according to the range query type. Recursion has not been used so as avoid 
         having to use decorater and to avoid overhead.
         """
-        self.n = len(adj)
         self.adj = adj
         self.values = values
-        self.root = root
-        self.parent = [-1] * self.n
-        self.depth = [0] * self.n
-        self.size = [0] * self.n
-        self.heavy = [-1] * self.n
-        self.head = [0] * self.n
-        self.pos = [0] * self.n
-        self.flat = [0] * self.n
-        self.time = 0
+        self.parent = [-1] * len(adj)
+        self.depth = [0] * len(adj)
+        self.size = [0] * len(adj)
+        self.heavy = [-1] * len(adj)
+        self.head = [0] * len(adj)
+        self.pos = [0] * len(adj)
+        self.flat = [0] * len(adj)
         self.unit = unit
         self.func = func
-        self._dfs(self.root)
-        self._decompose(self.root, self.root)
-        self.seg = SegmentTree([self.values[self.flat[i]] for i in range(self.n)],func,unit)
+        self._dfs(root)
+        self._decompose(root)
+        self.seg = SegmentTree([self.values[self.flat[i]] for i in range(len(self.adj))],func,unit)
 
     def _dfs(self,start=0):
-        graph = self.adj
-        n = self.n
-        visited = [False] * n
+        visited = [False] * len(self.adj)
         stack = [start]
         while stack:
             start = stack[-1]
             if not visited[start]:
                 visited[start] = True
-                for child in graph[start]:
+                for child in self.adj[start]:
                     if not visited[child]:
                         self.parent[child] = start
                         self.depth[child] = self.depth[start]+1
                         stack.append(child)
             else:
-                stack.pop()
-                self.size[start] = 1
+                self.size[stack.pop()] = 1
                 k = 0
-                for child in graph[start]:
+                for child in self.adj[start]:
                     if self.parent[start]!=child:
                         self.size[start] += self.size[child]
                         if self.size[child]>k:
@@ -60,14 +54,15 @@ class HLD:
                             self.heavy[start] = child
         return visited
     
-    def _decompose(self, root, h):
-        stack = [(root, h)]
+    def _decompose(self, root):
+        stack = [(root,root)]
+        time = 0
         while stack:
             u, h = stack.pop()
             self.head[u] = h
-            self.flat[self.time] = u
-            self.pos[u] = self.time
-            self.time += 1
+            self.flat[time] = u
+            self.pos[u] = time
+            time += 1
             for v in reversed(self.adj[u]):
                 if v!=self.parent[u] and v!=self.heavy[u]:
                     stack.append((v, v))
@@ -83,12 +78,25 @@ class HLD:
             u = self.parent[self.head[u]]
         if self.depth[u] > self.depth[v]:
             u, v = v, u
-        res = self.func(res, self.seg.query(self.pos[u], self.pos[v] + 1))
-        return res
+        return self.func(res, self.seg.query(self.pos[u], self.pos[v] + 1))
     
     def update(self, u, value):
         self.seg.update(self.pos[u], value)
 
+    def update_path(self, u, v, value):
+        # For this function, a Segment Tree with range update will be required
+        while self.head[u] != self.head[v]:
+            if self.depth[self.head[u]] < self.depth[self.head[v]]:
+                u, v = v, u
+            self.seg.update(self.pos[self.head[u]], self.pos[u]+1, value)
+            u = self.parent[self.head[u]]
+        if self.depth[u] > self.depth[v]:
+            u, v = v, u
+        self.seg.update(self.pos[u], self.pos[v]+1, value)
+    
+    def add_to_subtree(self, u, value):
+        # For this function, a Segment Tree with range update will be required
+        self.seg.update(self.pos[u], self.pos[u] + self.size[u], value)
 
 # Segment Tree for range queries in HLD
 class SegmentTree:
