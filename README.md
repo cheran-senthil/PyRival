@@ -150,7 +150,7 @@
   - [Bit Hacks](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/bit_hacks.py)
   - [32-bit Modular Arithmetic](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/mod.py)
   - [Memoize Decorators](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/memoize.py)
-  - [C++ syle cout](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/ostream.py)
+  - [C++ style cout](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/ostream.py)
   - [Interactive Runner](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/tools/interactive_runner.py)
   - [Stress Tester](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/tools/stress_tester.py)
   - [Alpha–Beta Pruning](https://github.com/cheran-senthil/PyRival/blob/master/pyrival/misc/alphabeta.py)
