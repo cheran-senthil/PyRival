@@ -26,7 +26,7 @@ Features:
 For how to use, see the following example:
 
 https://codeforces.com/contest/343/problem/D
-https://codeforces.com/contest/343/submission/327779874
+https://codeforces.com/contest/343/submission/327843774
 
 ```py
 HLD = HLD(graph)
