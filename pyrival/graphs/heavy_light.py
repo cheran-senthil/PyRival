@@ -101,11 +101,11 @@ class HLD:
     def _LCA(self, u, v):
         HPH = self.HPH
         P = self.P
-        while HPH[u] != HPH[v]:
-            if u < v:
-                u = P[HPH[u]]
-            else:
-                v = P[HPH[v]]
+        u,v = min(u,v),max(u,v)
+        while HPH[u] < HPH[v]:
+            u = P[HPH[u]]
+        while HPH[v] < HPH[u]:
+            v = P[HPH[v]]
         return max(u,v)
     
     def _subtree_query(self, u):
@@ -114,13 +114,13 @@ class HLD:
     def _path_query(self, u, v):
         HPH = self.HPH
         P = self.P
-        while HPH[u] != HPH[v]:
-            if u < v:
-                yield u, HPH[u] + 1
-                u = P[HPH[u]]
-            else:
-                yield v, HPH[v] + 1
-                v = P[HPH[v]]
+        u,v = min(u,v),max(u,v)
+        while HPH[u] < HPH[v]:
+            yield u, HPH[u] + 1
+            u = P[HPH[u]]
+        while HPH[v] < HPH[u]:
+            yield v, HPH[v] + 1
+            v = P[HPH[v]]
         yield min(u, v), max(u, v) + 1 
      
     def LCA(self, u, v):
