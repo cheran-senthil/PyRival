@@ -98,7 +98,7 @@ class HLD:
     
         self.node_query = post_trav.__getitem__
  
-     def _LCA(self, u, v):
+    def _LCA(self, u, v):
         HPH = self.HPH
         P = self.P
         u,v = min(u,v),max(u,v)
