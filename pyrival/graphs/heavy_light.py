@@ -26,7 +26,7 @@ Features:
 For how to use, see the following example:
 
 https://codeforces.com/contest/343/problem/D
-https://codeforces.com/contest/343/submission/327843774
+https://codeforces.com/contest/343/submission/327932478
 
 ```py
 HLD = HLD(graph)
@@ -98,15 +98,13 @@ class HLD:
     
         self.node_query = post_trav.__getitem__
  
-    def _LCA(self, u, v):
+     def _LCA(self, u, v):
         HPH = self.HPH
         P = self.P
         u,v = min(u,v),max(u,v)
-        while HPH[u] < HPH[v]:
+        while HPH[u] < v:
             u = P[HPH[u]]
-        while HPH[v] < HPH[u]:
-            v = P[HPH[v]]
-        return max(u,v)
+        return max(u,v)   
     
     def _subtree_query(self, u):
         return u + 1 - self.size[u], u + 1
@@ -115,13 +113,13 @@ class HLD:
         HPH = self.HPH
         P = self.P
         u,v = min(u,v),max(u,v)
-        while HPH[u] < HPH[v]:
+        while HPH[u] < v:
             yield u, HPH[u] + 1
             u = P[HPH[u]]
-        while HPH[v] < HPH[u]:
+        while HPH[v] < u:
             yield v, HPH[v] + 1
             v = P[HPH[v]]
-        yield min(u, v), max(u, v) + 1 
+        yield min(u,v), max(u,v) + 1 
      
     def LCA(self, u, v):
         return self.order[self._LCA(self.node_query(u), self.node_query(v))]
