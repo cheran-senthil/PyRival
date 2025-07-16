@@ -3,7 +3,7 @@
 # Input:
 #  function g: g(p,k) = f(p**k) where p is prime and k>0
 #  n: size of output
-#  u: Used as uninitialized value. Can by anything expect
+#  u: Used as uninitialized value. Can be anything expect
 #  that u != f(x) for x = 1,..,n-1.
  
 def compute_multiplicative_function(g, n, u=-2):
