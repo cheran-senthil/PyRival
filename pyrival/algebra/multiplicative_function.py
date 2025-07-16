@@ -1,14 +1,16 @@
-# Computes the multiplicative function f in O(n log log n) time
+# Computes f(x) for x = 1,...,n-1 in O(n log log n) time, 
+# where f is a multiplicative function.
 # Input:
 #  function g: g(p,k) = f(p**k) where p is prime and k>0
 #  n: size of output
-#  d: Used as default value. Requires f(x) != d for x = 1,..,n-1
+#  u: Used as uninitialized value. Can by anything expect
+#  that u != f(x) for x = 1,..,n-1.
  
-def compute_multiplicative_function(g, n, d=-2):
-    DP = [d] * n
+def compute_multiplicative_function(g, n, u=-2):
+    DP = [u] * n
     DP[1] = 1
     for p in range(2, n):
-        if DP[p] == d: # if p prime
+        if DP[p] == u: # if p prime
             k = 1
             upper = (n - 1)//p 
             while upper: # Overflow-safe check for (big-1)//p**k>0
