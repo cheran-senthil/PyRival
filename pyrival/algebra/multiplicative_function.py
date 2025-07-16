@@ -13,7 +13,7 @@ def compute_multiplicative_function(g, n, u=-2):
         if DP[p] == u: # if p prime
             k = 1
             upper = (n - 1)//p 
-            while upper: # Overflow-safe check for (big-1)//p**k>0
+            while upper: # Overflow-safe check for (n - 1)//p**k>0
                 pk = p**k
                 f_pk = g(p, k)
                 for j in range(1, upper + 1):
