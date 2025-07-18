@@ -1,5 +1,5 @@
 """
-Range Minimum Query (RMQ), also known as sparse table.
+Range Minimum Query (RMQ), also known as a sparse table.
 Precomputation takes O(n log n) time and memory.
 Query takes O(1) time.
 
@@ -26,7 +26,7 @@ class RangeMinimumQuery:
 Uses the above RMQ as a subroutine.
 
 Precomputation takes O(n) time and memory.
-Query takes O(1) time (but is slightly slower than above RMQ!).
+Query takes O(1) time (but with worse constant factor than above RMQ!).
 
 To switch to a max version, simply search replace min to max in both RMQs.
 """
@@ -45,6 +45,6 @@ class RangeMinimumQuery2:
     
     def query(self, start, stop):
         """min of data[start, stop)"""
-        if stop - start <= 63:
+        if stop - start < 64:
             return self.data[start + (self.A[start] & ~(-1 << stop - start)).bit_length() - 1]
         return min(self.B[start], self.B[stop - 32], self.RMQ.query((start + 31) >> 5, stop >> 5))
