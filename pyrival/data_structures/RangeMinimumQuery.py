@@ -43,7 +43,7 @@ class RangeMinimumQuery2:
         self.B = [data[i + (A[i] & ~(-1<<32)).bit_length() - 1] for i in range(n)]
         self.RMQ = RangeMinimumQuery(self.B[::32])
     
-    def __call__(self, start, stop):
+    def query(self, start, stop):
         """min of data[start, stop)"""
         if stop - start <= 63:
             return self.data[start + (self.A[start] & ~(-1 << stop - start)).bit_length() - 1]
