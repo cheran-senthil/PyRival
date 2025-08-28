@@ -22,37 +22,21 @@ Note that a node belongs to multiple node-bccs iff it is a cut-vertex.
 """
 
 """
-Given an undirected graph,
- 
-  1   4   7   10
- / \ / \ / \ /
-2   0   5   9
- \ / \ / \ /
-  3   6   8
- 
-the cut_tree function returns the cut-block tree made out of 2 sets of nodes, the original
-nodes U in the graph and new nodes V corresponding to each node biconnected component. 
-There is an edge between (u,v) for u in U and v in V if u lies in bicomponent v. 
-For the graph above, this is the tree returned by cut_tree:
- 
-    1        4        7        10
-    |        |        |        |
-2--(14)--0--(13)--5--(12)--9--(11)
-    |        |        | 
-    3        6        8
+Given a connected undirected graph, find_BCC returns a list of lists containing the nodes 
+of the different node-biconnected components.
+Note that a node belongs to multiple node-bccs iff it is an articulation point.
 
-Here the nodes in () denotes the bcc (the set V). The cut-vertices are 0,5,9.
-
-In the case of an unconnected graph, the function returns a forest of block-cut trees.
+In the case that the given graph is unconnected, find_BCC finds the BCCs of the connected
+component of 'root'.
 """
-def cut_tree(graph):
+
+def find_BCC(graph, root=0):
     n = len(graph)
-    new_graph = [[] for _ in range(n)]
+    BCC = []
  
     P = [-1] * n
     depth = [-1] * n
     biconnect = [None] * n
-    root = 0
  
     preorder = []
     stack = [root]
@@ -67,20 +51,19 @@ def cut_tree(graph):
                 P[nei] = node
                 stack.append(nei)
     preorder.pop(0)
+    
+    if not preorder:
+        return [[root]]
  
     for node in reversed(preorder):
         depth[node] = min(depth[nei] for nei in graph[node]) 
         if depth[P[node]] == depth[node]:
             bicon = biconnect[node] = [P[node], node]
-            new_graph.append(bicon)
+            BCC.append(bicon)
    
     for node in preorder:
         if biconnect[node] is None:
             bicon = biconnect[node] = biconnect[P[node]]
             bicon.append(node)
     
-    for bicon_ind in range(n, len(new_graph)):
-        for node in new_graph[bicon_ind]:
-            new_graph[node].append(bicon_ind)
- 
-    return new_graph
+    return BCC

@@ -64,6 +64,7 @@ Runs in O(n + m) time.
 
 This algorithm is based on https://cses.fi/problemset/task/2177
 """
+
 def find_BCC(graph):
     d = 0
     depth = [0] * len(graph)
