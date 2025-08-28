@@ -22,7 +22,7 @@ Note that a node belongs to multiple node-bccs iff it is a cut-vertex.
 """
 
 
-# Edge-bcc uses pyrivals scc.py as a subroutine
+# Edge-bcc uses pyrival's scc.py as a subroutine
 """
 Given a directed graph, find_SCC returns a list of lists containing 
 the strongly connected components in topological order.
