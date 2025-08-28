@@ -22,15 +22,12 @@ Note that a node belongs to multiple node-bccs iff it is a cut-vertex.
 """
 
 """
-Given a connected undirected graph, find_BCC returns a list of lists containing the nodes 
+Given a undirected graph, find_BCC returns a list of lists containing the nodes 
 of the different node-biconnected components.
 Note that a node belongs to multiple node-bccs iff it is an articulation point.
-
-In the case that the given graph is unconnected, find_BCC finds the BCCs of the connected
-component of 'root'.
 """
 
-def find_BCC(graph, root=0):
+def find_bcc(graph):
     n = len(graph)
     BCC = []
  
@@ -39,7 +36,7 @@ def find_BCC(graph, root=0):
     biconnect = [None] * n
  
     preorder = []
-    stack = [root]
+    stack = list(range(n))
     while stack:
         node = stack.pop()
         if depth[node] >= 0:
@@ -50,19 +47,18 @@ def find_BCC(graph, root=0):
             if depth[nei] == -1:
                 P[nei] = node
                 stack.append(nei)
-    preorder.pop(0)
-    
-    if not preorder:
-        return [[root]]
  
     for node in reversed(preorder):
-        depth[node] = min(depth[nei] for nei in graph[node]) 
-        if depth[P[node]] == depth[node]:
-            bicon = biconnect[node] = [P[node], node]
-            BCC.append(bicon)
+        if P[node] != -1:
+            depth[node] = min(depth[nei] for nei in graph[node]) 
+            if depth[P[node]] == depth[node]:
+                bicon = biconnect[node] = [P[node], node]
+                BCC.append(bicon)
    
     for node in preorder:
-        if biconnect[node] is None:
+        if not graph[node]:
+            BCC.append([node])
+        elif P[node] != -1 and biconnect[node] is None:
             bicon = biconnect[node] = biconnect[P[node]]
             bicon.append(node)
     
