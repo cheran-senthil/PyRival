@@ -22,7 +22,7 @@ Note that a node belongs to multiple node-bccs iff it is a cut-vertex.
 """
 
 """
-Given a undirected graph, find_BCC returns a list of lists containing the nodes 
+Given an undirected graph, find_BCC returns a list of lists containing the nodes 
 of the different node-biconnected components.
 Note that a node belongs to multiple node-bccs iff it is an articulation point.
 """
