@@ -1,6 +1,6 @@
 """
 REMARK: There are two definitions of biconnectedness of an undirected graph, 
-        either node-bcc or edge-bcc, corresponding to node_bbc.py and edge_bcc.py.
+        either node-bcc or edge-bcc, corresponding to node_bcc.py and edge_bcc.py.
 
 * In node-bcc, a "cut-vertex" (also called an articulation point) is a node where 
   removing it would split up the graph into multiple connected components.
