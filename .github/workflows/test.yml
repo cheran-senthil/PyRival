@@ -9,15 +9,16 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu, windows, macOs]
-        python-version: [3.9, pypy3]
+        python-version: [3.13, pypy3-3.10]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
-    - name: Install Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2.1.4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
+        cache: pip
 
     - name: Install Tox
       run: pip install tox
