@@ -1,4 +1,27 @@
 """
+REMARK: There are two definitions of biconnectedness of an undirected graph, 
+        either node-bcc or edge-bcc, corresponding to node_bbc.py and edge_bcc.py.
+
+* In node-bcc, a "cut-vertex" (also called an articulation point) is a node where 
+  removing it would split up the graph into multiple connected components.
+
+* In edge-bcc, a "bridge" is an edge where removing it would split up the graph 
+  into multiple connected components.
+
+For example, this graph
+
+  1   4   7   10
+ / \ / \ / \ /
+2   0   5   9
+ \ / \ / \ /
+  3   6   8
+
+has three cut vertices (nodes 0,5,9) and one bridge (edge between 9 and 10).
+The number of node-bcc = 4 and number of edge-bcc = 2.
+Note that a node belongs to multiple node-bccs iff it is a cut-vertex.
+"""
+
+"""
 Given an undirected graph,
  
   1   4   7   10
@@ -10,16 +33,17 @@ Given an undirected graph,
 the cut_tree function returns the cut-block tree made out of 2 sets of nodes, the original
 nodes U in the graph and new nodes V corresponding to each node biconnected component. 
 There is an edge between (u,v) for u in U and v in V if u lies in bicomponent v. 
-In the case of an unconnected graph, the function returns a forest of block-cut trees.
-For the graph above, this is the tree returned by cut_tree
+For the graph above, this is the tree returned by cut_tree:
  
     1        4        7        10
     |        |        |        |
 2--(14)--0--(13)--5--(12)--9--(11)
     |        |        | 
     3        6        8
- 
-Here the nodes in () denotes bicomponent nodes.
+
+Here the nodes in () denotes the bcc (the set V). The cut-vertices are 0,5,9.
+
+In the case of an unconnected graph, the function returns a forest of block-cut trees.
 """
 def cut_tree(graph):
     n = len(graph)
