@@ -24,6 +24,8 @@ Note that a node belongs to multiple node-bccs iff it is a cut-vertex.
 """
 Given an undirected graph, find_BCC returns a list of lists containing the nodes 
 of the different node-biconnected components.
+Node-biconnected components are maximal subgraphs that cannot be disconnected
+by removing a single node.
 Note that a node belongs to multiple node-bccs iff it is an articulation point.
 """
 
