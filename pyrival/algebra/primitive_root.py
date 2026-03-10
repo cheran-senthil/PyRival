@@ -80,7 +80,7 @@ def primitive_root(p):
     """returns a primitive root of p"""
     factors = prime_factors(p - 1)
 
-    for i in range(2, p + 1):
+    for i in range(1, p + 1):
         ok = True
         for j in factors:
             ok &= pow(i, (p - 1) // j, p) != 1
