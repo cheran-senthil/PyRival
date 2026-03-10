@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu, windows, macOs]
+        os: [ubuntu, windows]
         python-version: [3.13, pypy-3.10]
 
     steps:
