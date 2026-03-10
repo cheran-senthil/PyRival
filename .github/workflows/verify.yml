@@ -1,0 +1,23 @@
+name: Verify
+
+on: [push, pull_request]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up PyPy
+      uses: actions/setup-python@v5
+      with:
+        python-version: 'pypy-3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install online-judge-verify-helper
+        pip install -e .
+
+    - name: Run verification
+      run: oj-verify run --tle 5
