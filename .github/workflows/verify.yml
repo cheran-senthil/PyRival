@@ -12,7 +12,7 @@ jobs:
     - name: Set up PyPy
       uses: actions/setup-python@v5
       with:
-        python-version: 'pypy-3.10'
+        python-version: 'pypy-3.11'
 
     - name: Install dependencies
       run: |
