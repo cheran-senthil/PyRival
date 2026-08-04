@@ -7,6 +7,7 @@ def bfs(graph, start=0):
             if not used[w]:
                 used[w] = True
                 q.append(w)
+    return q
 
 
 def layers(graph, start=0):
