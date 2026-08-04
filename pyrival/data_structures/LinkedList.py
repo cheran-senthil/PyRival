@@ -15,7 +15,8 @@ class LinkedList:
         self.sentinel.prev = self.sentinel
         self.__len = 0
         if iterable is not None:
-            self += iterable
+            for value in iterable:
+                self.append(value)
 
     def get_node(self, index):
         node = self.sentinel
