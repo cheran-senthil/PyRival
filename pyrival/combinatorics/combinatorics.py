@@ -50,7 +50,7 @@ multinomial = lambda k: math.factorial(sum(k)) // reduce(op.mul, (math.factorial
 
 derangements = lambda n: int(math.factorial(n) / math.e + 0.5)
 
-bell = lambda n: sum(stirling_2_recursive(k, n) for k in range(n + 1))
+bell = lambda n: 1 if n == 0 else sum(stirling_2_recursive(n, k) for k in range(1, n + 1))
 
 catalan = lambda n: nCr(2 * n, n) // (n + 1)
 
