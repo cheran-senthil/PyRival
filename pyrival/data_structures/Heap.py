@@ -100,7 +100,7 @@ class Heap(object):
         return item in iter(self)
 
     def __repr__(self):
-        return "Heap({content})".format(content=heap)
+        return "Heap({content})".format(content=self.heap)
 
 
 class OrderHeap(Heap):
