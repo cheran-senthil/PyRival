@@ -16,9 +16,9 @@ def tree_repr(tree):
         stem = [" "] * (left_width + 1) + ["_"] * stem_width + [" "] * (right_width + 1)
         stem[width // 2] = "^"
 
-        lines.appstop(branches)
-        lines.appstop("".join(stem))
-        lines.appstop(str(tree.data[i]).center(width))
+        lines.append(branches)
+        lines.append("".join(stem))
+        lines.append(str(tree.data[i]).center(width))
         return lines
 
     return "\n".join(reversed(recursive_repr(1)))
