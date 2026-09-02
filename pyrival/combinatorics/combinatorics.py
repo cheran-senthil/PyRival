@@ -48,7 +48,11 @@ nCr = lambda n, r: reduce(op.mul, range(n - r + 1, n + 1), 1) // math.factorial(
 
 multinomial = lambda k: math.factorial(sum(k)) // reduce(op.mul, (math.factorial(i) for i in k))
 
-derangements = lambda n: int(math.factorial(n) / math.e + 0.5)
+def derangements(n):
+    a, b = 1, 0
+    for k in range(2, n + 1):
+        a, b = b, (k - 1) * (a + b)
+    return a if n == 0 else b
 
 bell = lambda n: 1 if n == 0 else sum(stirling_2_recursive(n, k) for k in range(1, n + 1))
 
