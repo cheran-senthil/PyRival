@@ -1,5 +1,5 @@
 class LazySegmentTree:
-    """Lazy segment tree whose update and merge operations can be specialized."""
+    """Lazy segment tree with source-editable commutative updates and aggregates."""
 
     def __init__(self, data, default=0, func=max):
         """initialize the lazy segment tree with data"""
@@ -10,7 +10,8 @@ class LazySegmentTree:
         self._size = _size = 1 << (self._len - 1).bit_length()
         self._buffer_idx = 2 * _size
 
-        # Replace these arrays and the four methods below for custom operations.
+        # For custom operations, replace this state and the four methods below.
+        # Multi-field state also requires changing the marked buffer operations.
         self._lazy = [0] * (2 * _size + 1)
         self.data = [default] * (2 * _size + 1)
         self.data[_size:_size + self._len] = data
@@ -65,6 +66,8 @@ class LazySegmentTree:
         start = start_copy = start + self._size
         stop = stop_copy = stop + self._size
         buffer_idx = self._buffer_idx
+
+        # For multi-field updates, initialize every lazy buffer field here.
         self._lazy[buffer_idx] = value
 
         while start < stop:
@@ -95,6 +98,8 @@ class LazySegmentTree:
         self._update(stop - 1)
 
         buffer_idx = self._buffer_idx
+
+        # For multi-field data, initialize every data buffer field here.
         self.data[buffer_idx] = default
         while start < stop:
             if start & 1:
@@ -105,6 +110,8 @@ class LazySegmentTree:
                 self._merge_data(buffer_idx, stop, buffer_idx)
             start >>= 1
             stop >>= 1
+
+        # For multi-field data, return every data buffer field here.
         return self.data[buffer_idx]
 
     def __repr__(self):
