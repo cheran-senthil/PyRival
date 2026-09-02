@@ -14,5 +14,5 @@ def divroot(a, x0):
     b, a[-1] = a[-1], 0
     for i in reversed(range(len(a) - 1)):
         a[i], b = a[i + 1] * x0 + b, a[i]
-        a.pop()
+    a.pop()
     return a
