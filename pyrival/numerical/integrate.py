@@ -11,7 +11,7 @@ def simpson(func, a, b):
 
 def rec(func, a, b, eps, S):
     c = (a + b) / 2
-    S1, S2 = simpson(func, a, b), simpson(func, c, b)
+    S1, S2 = simpson(func, a, c), simpson(func, c, b)
     if (abs(S1 + S2 - S) <= 15 * eps) or (b - a < 1e-6):
         return S1 + S2 + (S1 + S2 - S) / 15
     return rec(func, a, c, eps / 2, S1) + rec(func, c, b, eps / 2, S2)
