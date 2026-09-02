@@ -37,7 +37,7 @@ _heapops = [
     "heappushpop",
     "heapreplace",
     "_siftup",
-    "_siftdown"
+    "_siftdown",
     "_heapify_max",
     "_heappush_max",
     "_heappop_max",
