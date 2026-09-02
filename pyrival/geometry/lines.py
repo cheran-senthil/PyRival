@@ -30,7 +30,8 @@ get_line = lambda p1, p2: map(get_2dline, itertools.combinations(p1, 2), itertoo
 
 is_parallel = lambda l1, l2: l1[0] * l2[1] == l2[0] * l1[1]
 
-is_same = lambda l1, l2: is_parallel(l1, l2) and (l1[1] * l2[2] == l2[1] * l1[2])
+is_same = lambda l1, l2: (is_parallel(l1, l2) and l1[0] * l2[2] == l2[0] * l1[2]
+                          and l1[1] * l2[2] == l2[1] * l1[2])
 
 collinear = lambda p1, p2, p3: is_same(get_2dline(p1, p2), get_2dline(p2, p3))
 

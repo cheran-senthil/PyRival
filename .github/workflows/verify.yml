@@ -1,0 +1,39 @@
+name: Verify
+
+on: [push, pull_request]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        category: [convolution, data_structure, geo, graph, number_theory, other, string, tree]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up PyPy
+      uses: actions/setup-python@v5
+      with:
+        python-version: 'pypy-3.11'
+
+    - name: Install dependencies
+      run: |
+        pip install online-judge-verify-helper
+        pip install -e .
+
+    - name: Cache test cases
+      uses: actions/cache@v4
+      with:
+        path: |
+          .verify-helper/cache
+          ~/.cache/online-judge-tools/library-checker-problems
+        key: verify-${{ matrix.category }}-${{ hashFiles(format('verify/{0}/*.test.py', matrix.category)) }}
+        restore-keys: verify-${{ matrix.category }}-
+
+    - name: Run verification
+      run: |
+        for f in verify/${{ matrix.category }}/*.test.py; do
+          oj-verify run --tle 10 "$f"
+        done

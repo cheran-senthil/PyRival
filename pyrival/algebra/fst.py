@@ -23,5 +23,5 @@ def fst_conv(a, b):
     fst(a), fst(b)
     for i in range(len(a)):
         a[i] *= b[i]
-    fst(1, inv=True)
+    fst(a, inv=True)
     return a

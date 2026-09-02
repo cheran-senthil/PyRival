@@ -1,15 +1,14 @@
-def remove_middle(a, b, c):
-    cross = (a[0] - b[0]) * (c[1] - b[1]) - (a[1] - b[1]) * (c[0] - b[0])
-    dot = (a[0] - b[0]) * (c[0] - b[0]) + (a[1] - b[1]) * (c[1] - b[1])
-    return cross < 0 or cross == 0 and dot <= 0
+"""
+    Given a list P of n points in 2D, convex_hull computes its convex hull in O(n log n) time.
+    The points are returned clock-wise starting with the left-most upper-most point (i.e. min(P)).
+"""
 
-
-def convex_hull(points):
-    spoints = sorted(points)
-    hull = []
-    for p in spoints + spoints[::-1]:
-        while len(hull) >= 2 and remove_middle(hull[-2], hull[-1], p):
-            hull.pop()
-        hull.append(p)
-    hull.pop()
-    return hull
+def convex_hull(P):
+    P = sorted(P)
+    cross = lambda a,b,c: (a[0] - b[0]) * (c[1] - b[1]) - (a[1] - b[1]) * (c[0] - b[0])
+    H = []
+    for p in P + P[::-1]:
+        while len(H) > 1 and cross(H[-2], H[-1], p) <= 0 and not H[-2] < H[-1] > p:
+            H.pop()
+        H.append(p)
+    return H[:-1]

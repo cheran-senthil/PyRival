@@ -1,10 +1,7 @@
-MOD = 10**9 + 7
-
-
-def berlekamp_massey(s):
+def berlekamp_massey(s, MOD=10**9 + 7):
     n = len(s)
     L, m = 0, 0
-    C, B, T = [0] * n, [0] * n, []
+    C, B, T = [0] * (n + 1), [0] * (n + 1), []
     C[0], B[0] = 1, 1
 
     b = 1
@@ -29,7 +26,7 @@ def berlekamp_massey(s):
     return [-C[i] % MOD for i in range(1, L + 1)]
 
 
-def linear_rec(S, tr, k):
+def linear_rec(S, tr, k, MOD=10**9 + 7):
     n = len(S)
 
     def combine(a, b):
