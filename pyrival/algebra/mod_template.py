@@ -1,39 +1,14 @@
 """
 A template for usefull stuff involving prime modulo. It contains:
-1. Fast calculation of (a * b + c) % MOD (Especially usefull for PyPy users on windows).
-2. Calculation of factorial, inverse factorial and modular inverse
+1. Calculation of factorial, inverse factorial and modular inverse
    for all integers < maxN in O(maxN) time.
-3. Calculate n choose k in O(1) time using precalculated fac. and inv. fac.
-4. Multiply matrices mod MOD.
+2. Calculate n choose k in O(1) time using precalculated fac and inv_fac.
+3. Multiply matrices mod MOD.
 """
 MOD = 10 ** 9 + 7 # needs to be prime!
 maxN = 10 ** 6    # needs to be <= MOD
 
-
-def fast_modder(MOD):
-    """ Returns a function modmul(a,b,c=0) that quickly calculates (a * b + c) % MOD, assuming 0 <= a,b < MOD """
-    import sys, platform
-    impl = platform.python_implementation()
-    maxs = sys.maxsize
-    if 'PyPy' in impl and MOD <= maxs and MOD ** 2 > maxs:
-        import __pypy__
-        intsub = __pypy__.intop.int_sub
-        intmul = __pypy__.intop.int_mul
-        intmulmod = __pypy__.intop.int_mulmod
-        if MOD < 2**30 - 1000:
-            MODINV = 1.0 / MOD
-            def modmul(a, b, c=0):
-                return (intsub(intmul(a,b), intmul(MOD, int(MODINV * a * b))) + c) % MOD
-        else:
-            def modmul(a, b, c=0):
-                return (intmulmod(a, b, MOD) + c) % MOD
-    else:
-        def modmul(a, b, c=0):
-            return (a * b + c) % MOD
-    return modmul
-
-modmul = fast_modder(MOD)
-
+modmul = lambda a,b,c=0:(a*b + c) % MOD
 
 """ Precalculate factorial, inverse factorial and modular inverse """
 
@@ -62,10 +37,10 @@ def choose(n, k):
     """ Calculate n choose k in O(1) time """
     if k < 0 or k > n:
         return 0
-    return modmul(modmul(fac[n], fac_inv[k]), fac_inv[n - k])
+    return modmul(modmul(fac[n], inv_fac[k]), inv_fac[n - k])
 
 def matrix_modmul(A, B):
-    """ Multiplies matrices A and B, assuming 0 <= A[i][j], B[i][j] < MOD """
+    """ Multiplies matrices A and B mod MOD"""
     assert len(A[0]) == len(B)
     C = []
     for Ai in A:
