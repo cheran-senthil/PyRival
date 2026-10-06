@@ -1,0 +1,468 @@
+\documentclass[a4paper,10pt]{article}
+
+% ============================================================
+% Packages
+% ============================================================
+
+\usepackage[
+    a4paper,
+    landscape,
+    margin=10mm
+]{geometry}
+
+\usepackage{lmodern}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+
+% ============================================================
+% Layout
+% ============================================================
+
+\setlength{\columnsep}{3mm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% ============================================================
+% Pyrival root directory
+% ============================================================
+
+\newcommand{\pyrivalroot}{../pyrival/}
+\newcommand{\customroot}{./custom/}
+
+% ============================================================
+% Colors
+% ============================================================
+
+\definecolor{codewhite}{RGB}{255,255,255}
+\definecolor{codegray}{RGB}{245,245,245}
+\definecolor{commentgray}{RGB}{100,100,100}
+\definecolor{keywordblue}{RGB}{0,60,140}
+\definecolor{stringred}{RGB}{140,30,30}
+
+% ============================================================
+% Code font
+% ============================================================
+
+\newcommand{\codefont}{%
+    \ttfamily
+    \fontsize{8pt}{9pt}\selectfont
+}
+
+% ============================================================
+% Code listings
+% ============================================================
+
+\lstdefinestyle{python}{
+    language=Python,
+    basicstyle=\codefont,
+    keywordstyle=\color{keywordblue}\bfseries,
+    commentstyle=\color{commentgray},
+    stringstyle=\color{stringred},
+    backgroundcolor=\color{codewhite},
+    numbers=none,
+    frame=single,
+    framerule=0.2pt,
+    rulecolor=\color{black!25},
+    breaklines=true,
+    breakatwhitespace=true,
+    columns=fullflexible,
+    breakindent=0pt,
+    keepspaces=true,
+    showstringspaces=false,
+    % Tabs are displayed as 2 spaces.
+    tabsize=2,
+    % Four spaces in the source are displayed as two spaces.
+    %literate={\ \ }{{\ }}2,
+    literate={\ \ }{{\ }}2 {~}{{\textasciitilde}}1,
+    % Mark lines that have been wrapped around
+    prebreak=\mbox{\textcolor{red}\textbackslash},
+    aboveskip=2pt,
+    belowskip=4pt
+}
+
+\lstdefinestyle{cpp}{
+    language=C++,
+    basicstyle=\codefont,
+    keywordstyle=\color{keywordblue}\bfseries,
+    commentstyle=\color{commentgray},
+    stringstyle=\color{stringred},
+    backgroundcolor=\color{codewhite},
+    numbers=none,
+    frame=single,
+    framerule=0.2pt,
+    rulecolor=\color{black!25},
+    breaklines=true,
+    breakatwhitespace=true,
+    columns=fullflexible,
+    breakindent=0pt,
+    keepspaces=true,
+    showstringspaces=false,
+    % Tabs are displayed as 2 spaces.
+    tabsize=2,
+    % Four spaces in the source are displayed as two spaces.
+    %literate={\ \ }{{\ }}2,
+    literate={\ \ }{{\ }}2 {~}{{\textasciitilde}}1,
+    % Mark lines that have been wrapped around
+    prebreak=\mbox{\textcolor{red}\textbackslash},
+    aboveskip=2pt,
+    belowskip=4pt
+}
+
+\lstdefinelanguage{vim}{
+    % list of keywords
+    morekeywords={
+        set, let
+        map, nmap,
+        filetype,
+        on, off,
+        autocmd,
+        Plugin,
+        call,
+    },
+    morecomment=[l]{"}, % l is for line comment
+    morestring=[b]' % defines that strings are enclosed in double quotes
+}
+
+\lstdefinestyle{vimrc}{
+    language=vim,
+    basicstyle=\codefont,
+    keywordstyle=\color{keywordblue}\bfseries,
+    commentstyle=\color{commentgray},
+    stringstyle=\color{stringred},
+    backgroundcolor=\color{codewhite},
+    numbers=none,
+    frame=single,
+    framerule=0.2pt,
+    rulecolor=\color{black!25},
+    breaklines=true,
+    breakatwhitespace=true,
+    columns=fullflexible,
+    breakindent=0pt,
+    keepspaces=true,
+    showstringspaces=false,
+    % Tabs are displayed as 2 spaces.
+    tabsize=2,
+    % Four spaces in the source are displayed as two spaces.
+    %literate={\ \ }{{\ }}2,
+    literate={\ \ }{{\ }}2 {~}{{\textasciitilde}}1,
+    % Mark lines that have been wrapped around
+    prebreak=\mbox{\textcolor{red}\textbackslash},
+    aboveskip=2pt,
+    belowskip=4pt
+}
+
+\lstdefinestyle{markdown}{
+    language=html,
+    basicstyle=\codefont,
+    keywordstyle=\color{keywordblue}\bfseries,
+    commentstyle=\color{commentgray},
+    stringstyle=\color{stringred},
+    backgroundcolor=\color{codewhite},
+    numbers=none,
+    frame=single,
+    framerule=0.2pt,
+    rulecolor=\color{black!25},
+    breaklines=true,
+    breakatwhitespace=true,
+    columns=fullflexible,
+    breakindent=0pt,
+    keepspaces=true,
+    showstringspaces=false,
+    % Tabs are displayed as 2 spaces.
+    tabsize=2,
+    % Four spaces in the source are displayed as two spaces.
+    %literate={\ \ }{{\ }}2,
+    literate={\ \ }{{\ }}2 {~}{{\textasciitilde}}1,
+    % Mark lines that have been wrapped around
+    prebreak=\mbox{\textcolor{red}\textbackslash},
+    aboveskip=2pt,
+    belowskip=4pt
+}
+
+% ============================================================
+% File heading
+% ============================================================
+
+\newcommand{\codefile}[1]{%
+    \vspace{3pt}%
+    \parbox{\linewidth}{%
+        \raggedright
+        {\small\bfseries\ttfamily\detokenize{#1}}%
+    }%
+    \par\vspace{1pt}%
+}
+
+% ============================================================
+% Compact Table of Contents
+% ============================================================
+
+% We use LaTeX's normal .toc mechanism, but make the entries
+% extremely compact.
+
+\makeatletter
+
+% Remove the normal "Contents" heading formatting.
+% We don't want a "Contents" heading at all.
+\renewcommand{\tableofcontents}{%
+    \@starttoc{toc}%
+}
+
+% Make each TOC entry tiny and compact.
+%\renewcommand{\l@section}[2]{%
+%    \noindent
+%    \ttfamily\scriptsize
+%    #1%
+%    \leaders\hbox to 1em{\hss.\hss}\hfill
+%    #2%
+%    \par
+%}
+\renewcommand{\l@section}[2]{%
+    \noindent
+    \makebox[0.70\columnwidth][l]{%
+        \ttfamily\scriptsize
+        #1%
+        \leaders\hbox to 1.0em{\hss.\hss}\hfill
+    }%
+    \ttfamily\scriptsize #2%
+    \par
+}
+
+
+%% No indentation or extra vertical space.
+%\setlength{\tocloftparskip}{0pt}
+
+\makeatother
+
+% ============================================================
+% Include code file
+%
+% Every file automatically adds itself to the TOC.
+% ============================================================
+
+\usepackage{xstring}
+
+\newcommand{\mylisting}[2]{%
+    \IfEndWith{#1}{.py}{%
+        \lstinputlisting[style=python,inputpath=#2]{#1}%
+    }{%
+        \IfEndWith{#1}{.cpp}{%
+            \lstinputlisting[style=cpp,inputpath=#2]{#1}%
+        }{%
+            \IfEndWith{#1}{.h}{%
+                \lstinputlisting[style=cpp,inputpath=#2]{#1}%
+            }{%
+                \IfEndWith{#1}{.vimrc}{%
+                    \lstinputlisting[style=vimrc,inputpath=#2]{#1}%
+                }{%
+                    \IfEndWith{#1}{.md}{%
+                        \lstinputlisting[style=markdown,inputpath=#2]{#1}%
+                    }{%
+                        \PackageError{myfile}{Unknown file extension}{%
+                            No listings style is defined for `#1'.%
+                        }%
+                    }%
+                }%
+            }%
+        }%
+    }%
+}
+
+
+\newcommand{\pyrivalfile}[1]{%
+    %
+    % Add this file to the table of contents.
+    %
+    \addcontentsline{toc}{section}{\protect\detokenize{#1}}%
+    %
+    % Print the file itself.
+    %
+    \codefile{#1}%
+    \mylisting{#1}{\pyrivalroot}%
+}
+
+\newcommand{\customfile}[1]{%
+    %
+    % Add this file to the table of contents.
+    %
+    \addcontentsline{toc}{section}{\protect\detokenize{#1}}%
+    %
+    % Print the file itself.
+    %
+    \codefile{#1}%
+    \mylisting{#1}{\customroot}%
+}
+
+% ============================================================
+% Page style
+% ============================================================
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\renewcommand{\headrulewidth}{0pt}
+
+% Page number in the top-right corner.
+% Lowered slightly so it is not cut off.
+\fancyhead[R]{\raisebox{-10mm}{\scriptsize\thepage}}
+
+% ============================================================
+% Document
+% ============================================================
+
+\begin{document}
+
+% ============================================================
+% TITLE PAGE
+% ============================================================
+
+\thispagestyle{empty}
+
+%\vspace*{\fill}
+
+\begin{center}
+    \includegraphics[scale=0.2]{pythonk.png}
+    \vspace{2em}
+
+    {\Huge\bfseries Python TRD for ICPC Competitions based on Pyrival}\\[5mm]
+    %{\huge Made by Pajenegod}
+\end{center}
+
+\vspace*{\fill}
+
+\begin{center}
+    \today
+\end{center}
+
+\newpage
+
+% ============================================================
+% CODE
+%
+% The title page is excluded from the numbered reference.
+% The first page after the title page is page 1.
+% ============================================================
+
+\setcounter{page}{1}
+
+% ============================================================
+% TABLE OF CONTENTS
+% ============================================================
+
+\begin{multicols*}{3}
+
+\tableofcontents
+%\vspace{4pt}
+
+% ============================================================
+% Contest
+% ============================================================
+
+\customfile{python_template.py}
+\customfile{.vimrc}
+\customfile{kactl_template.cpp}
+\customfile{kactl_troubleshoot.md}
+\customfile{useful_stuff_in_python.py}
+
+% ============================================================
+% Algebra
+% ============================================================
+
+\pyrivalfile{algebra/discrete_log.py}
+\pyrivalfile{algebra/factors.py}
+\pyrivalfile{algebra/fft.py}
+\pyrivalfile{algebra/mod_sqrt.py}
+%\pyrivalfile{algebra/mod_template.py}
+\pyrivalfile{algebra/modinv.py}
+\pyrivalfile{algebra/ntt.py}
+\pyrivalfile{algebra/phi.py}
+
+% ============================================================
+% Combinatorics
+% ============================================================
+
+\pyrivalfile{combinatorics/nCr_mod.py}
+
+% ============================================================
+% Data Structures
+% ============================================================
+
+\pyrivalfile{data_structures/DisjointSetUnion.py}
+\pyrivalfile{data_structures/FenwickTree.py}
+\pyrivalfile{data_structures/LazySegmentTree.py}
+\pyrivalfile{data_structures/RangeMinimumQuery.py}
+\pyrivalfile{data_structures/SortedList.py}
+\pyrivalfile{data_structures/TwoSat.py}
+
+% ============================================================
+% Geometry
+% ============================================================
+
+\pyrivalfile{geometry/convex_hull.py}
+
+% ============================================================
+% Graphs
+% ============================================================
+
+\pyrivalfile{graphs/bellman_ford.py}
+\pyrivalfile{graphs/bfs.py}
+\pyrivalfile{graphs/dfs.py}
+\pyrivalfile{graphs/binary_lifting_on_tree.py}
+\pyrivalfile{graphs/bridges_and_articulation_points.md}
+\pyrivalfile{graphs/centroid_decomposition.py}
+%\pyrivalfile{graphs/centroid_shallowest_decomposition.py}
+\pyrivalfile{graphs/dijkstra.py}
+\pyrivalfile{graphs/dinic.py}
+\pyrivalfile{graphs/edge_bcc.py}
+\pyrivalfile{graphs/floyd_warshall.py}
+\pyrivalfile{graphs/heavy_light.py}
+\pyrivalfile{graphs/hopcroft_karp.py}
+\pyrivalfile{graphs/kruskal.py}
+\pyrivalfile{graphs/lca.py}
+\pyrivalfile{graphs/maximum_matching.py}
+\pyrivalfile{graphs/node_bcc.py}
+\pyrivalfile{graphs/prim.py}
+\pyrivalfile{graphs/rerooter.py}
+\pyrivalfile{graphs/scc.py}
+\pyrivalfile{graphs/toposort.py}
+
+% ============================================================
+% Linear algebra
+% ============================================================
+
+\pyrivalfile{linear_algebra/matrix.py}
+\pyrivalfile{linear_algebra/max_xor.py}
+
+% ============================================================
+% Misc
+% ============================================================
+
+\pyrivalfile{misc/bit_hacks.py}
+\pyrivalfile{misc/bootstrap.py}
+\pyrivalfile{misc/mod.py}
+
+% ============================================================
+% Numerical
+% ============================================================
+
+\pyrivalfile{numerical/berlekamp_massey.py}
+\pyrivalfile{numerical/integrate.py}
+\pyrivalfile{numerical/search.py}
+
+% ============================================================
+% Strings
+% ============================================================
+
+\pyrivalfile{strings/LPSubstr.py}
+\pyrivalfile{strings/hashing.py}
+\pyrivalfile{strings/kmp.py}
+\pyrivalfile{strings/lcs.py}
+\pyrivalfile{strings/min_rotation.py}
+\pyrivalfile{strings/suffix_array.py}
+\pyrivalfile{strings/z_algorithm.py}
+
+\end{multicols*}
+
+\end{document}
