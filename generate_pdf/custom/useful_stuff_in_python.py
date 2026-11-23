@@ -163,10 +163,16 @@ import math
 print(math.pi)  # 3.141592653589793
 print(math.gcd(24, 36))  # 12
 print(math.lcm(4, 6))  # 12
-print(math.comb(5, 2))  # 10 (nCr / binomial coefficient)
 print(math.perm(5, 2))  # 20 (nPr)
 print(math.isqrt(10))  # 3 (integer square root)
 print(math.inf)  # Infinity representation
+print(math.comb(5, 2))  # 10 (nCr / binomial coefficient)
+
+# Avoid exception if outside pascals triangle
+def choose(n, k):
+    if k < 0 or k > n:
+        return 0
+    return math.comb(n,k)
 
 # Division types:
 a, b = 7, 3
