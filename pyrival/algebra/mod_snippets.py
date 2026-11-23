@@ -16,6 +16,8 @@ It contains:
 5. Multiply matrix vector.
 
 6. Matrix powers using exponentiation by squaring.
+
+7. Matrix power times vector using exponentiation by squaring.
 """
 MOD = 10 ** 9 + 7 # needs to be prime!
 maxN = 10 ** 6
@@ -93,12 +95,23 @@ def matrix_modpow(A, power):
     n = len(A)
     assert n == len(A[0])
     assert power >= 0
-    
     res = [[+(i == j) for j in range(n)] for i in range(n)]
-
     while power:
         if power & 1:
             res = matrix_modmul(res, A)
         power //= 2
         A = power and matrix_modmul(A, A)
     return res
+
+def matrix_vec_modpow(A, power, b):
+    """Multiplies A ** power and vector b mod MOD: returns (A ** power) @ b."""
+    n = len(A)
+    assert n == len(A[0]) and n == len(b)
+    assert power >= 0
+    vec = b[:]
+    while power:
+        if power & 1:
+            vec = matrix_vec_modmul(A, vec)
+        power //= 2
+        A = power and matrix_modmul(A, A)
+    return vec
