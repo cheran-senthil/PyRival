@@ -95,13 +95,13 @@ def matrix_modpow(A, power):
     n = len(A)
     assert n == len(A[0])
     assert power >= 0
-    res = [[+(i == j) for j in range(n)] for i in range(n)]
+    res = None 
     while power:
         if power & 1:
-            res = matrix_modmul(res, A)
+            res = (res and matrix_modmul(res, A)) or A
         power //= 2
         A = power and matrix_modmul(A, A)
-    return res
+    return res or [[+(i == j) for j in range(n)] for i in range(n)]
 
 def matrix_vec_modpow(A, power, b):
     """Multiplies A ** power and vector b mod MOD: returns (A ** power) @ b."""
