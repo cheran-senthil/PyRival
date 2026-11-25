@@ -1,0 +1,138 @@
+\documentclass[a4paper,10pt]{article}
+
+\input{config.tex}
+\input{preamble.tex}
+
+\begin{document}
+
+\input{titlepage.tex}
+
+% ============================================================
+% CODE
+%
+% The title page is excluded from the numbered reference.
+% The first page after the title page is page 1.
+% ============================================================
+
+\setcounter{page}{1}
+
+% ============================================================
+% TABLE OF CONTENTS
+% ============================================================
+
+\begin{multicols*}{3}
+
+\tableofcontents
+%\vspace{4pt}
+
+% ============================================================
+% Contest
+% ============================================================
+
+\customfile{python_template.py}
+\customfile{.vimrc}
+\customfile{kactl_template.cpp}
+\customfile{kactl_troubleshoot.md}
+\customfile{useful_stuff_in_python.py}
+\customfile{useful_stuff_in_cpp.cpp}
+
+% ============================================================
+% Algebra
+% ============================================================
+
+\pyrivalfile{algebra/discrete_log.py}
+\pyrivalfile{algebra/factors.py}
+\pyrivalfile{algebra/fft.py}
+\pyrivalfile{algebra/mod_sqrt.py}
+\pyrivalfile{algebra/mod_snippets.py}
+\pyrivalfile{algebra/modinv.py}
+\pyrivalfile{algebra/ntt.py}
+\pyrivalfile{algebra/phi.py}
+
+% ============================================================
+% Combinatorics
+% ============================================================
+
+\pyrivalfile{combinatorics/nCr_mod.py}
+
+% ============================================================
+% Data Structures
+% ============================================================
+
+\pyrivalfile{data_structures/DisjointSetUnion.py}
+\pyrivalfile{data_structures/FenwickTree.py}
+\pyrivalfile{data_structures/LazySegmentTree.py}
+\pyrivalfile{data_structures/RangeMinimumQuery.py}
+\pyrivalfile{data_structures/SortedList.py}
+\pyrivalfile{data_structures/TwoSat.py}
+
+% ============================================================
+% Geometry
+% ============================================================
+
+\pyrivalfile{geometry/convex_hull.py}
+
+% ============================================================
+% Graphs
+% ============================================================
+
+\pyrivalfile{graphs/bellman_ford.py}
+\pyrivalfile{graphs/bfs.py}
+\pyrivalfile{graphs/dfs.py}
+\pyrivalfile{graphs/binary_lifting_on_tree.py}
+\pyrivalfile{graphs/bridges_and_articulation_points.md}
+\pyrivalfile{graphs/centroid_decomposition.py}
+\pyrivalfile{graphs/tree_decomposition.py}
+\pyrivalfile{graphs/dijkstra.py}
+\pyrivalfile{graphs/dinic.py}
+\pyrivalfile{graphs/edge_bcc.py}
+\pyrivalfile{graphs/floyd_warshall.py}
+\pyrivalfile{graphs/heavy_light.py}
+\pyrivalfile{graphs/hopcroft_karp.py}
+\pyrivalfile{graphs/kruskal.py}
+\pyrivalfile{graphs/lca.py}
+\pyrivalfile{graphs/maximum_matching.py}
+\pyrivalfile{graphs/node_bcc.py}
+\pyrivalfile{graphs/prim.py}
+\pyrivalfile{graphs/rerooter.py}
+\pyrivalfile{graphs/scc.py}
+\pyrivalfile{graphs/toposort.py}
+
+% ============================================================
+% Linear algebra
+% ============================================================
+
+\pyrivalfile{linear_algebra/matrix.py}
+\pyrivalfile{linear_algebra/max_xor.py}
+
+% ============================================================
+% Misc
+% ============================================================
+
+\pyrivalfile{misc/bit_hacks.py}
+\pyrivalfile{misc/bootstrap.py}
+\pyrivalfile{misc/mod.py}
+
+% ============================================================
+% Numerical
+% ============================================================
+
+\pyrivalfile{numerical/berlekamp_massey.py}
+\pyrivalfile{numerical/integrate.py}
+\pyrivalfile{numerical/search.py}
+
+% ============================================================
+% Strings
+% ============================================================
+
+\pyrivalfile{strings/LPSubstr.py}
+\pyrivalfile{strings/hashing.py}
+\pyrivalfile{strings/kmp.py}
+\pyrivalfile{strings/lcs.py}
+\pyrivalfile{strings/min_rotation.py}
+\pyrivalfile{strings/suffix_array.py}
+\pyrivalfile{strings/z_algorithm.py}
+
+\end{multicols*}
+
+\end{document}

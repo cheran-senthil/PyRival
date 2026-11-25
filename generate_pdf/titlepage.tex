@@ -1,0 +1,33 @@
+% ============================================================
+% TITLE PAGE
+% ============================================================
+
+\thispagestyle{empty}
+
+\begin{center}
+    \includegraphics[scale=\trdlogoscale]{\trdlogo}
+    \vspace{2em}
+
+    \ifx\univfull\empty
+        {\Large\bfseries \univabbr}%
+    \else
+        {\Large\bfseries \univfull}%
+    \fi\\[5mm]
+    
+    {\Huge\bfseries \trdtitle}
+
+    \ifx\teamname\empty\else
+        \par\vspace{4mm}{\Large\bfseries \teamname}%
+    \fi
+    \ifx\membernames\empty\else
+        \par\vspace{2mm}{\Large \membernames}%
+    \fi
+\end{center}
+
+\vspace*{\fill}
+
+\begin{center}
+    \today
+\end{center}
+
+\newpage
